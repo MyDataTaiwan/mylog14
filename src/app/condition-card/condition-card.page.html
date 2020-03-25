@@ -1,0 +1,25 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>自我檢查表</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid fixed>
+      <ion-segment (ionChange)="segmentChanged($event)" color="danger" value=false>
+        <ion-segment-button value=false>
+          <ion-label>無咳嗽</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value=true>
+          <ion-label>有咳嗽</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      <ion-segment (ionChange)="segmentChanged($event)" color="warning" value=true>
+          <ion-segment-button value=false>
+            <ion-label>無流鼻水</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value=true>
+            <ion-label>有流鼻水</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>

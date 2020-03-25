@@ -1,0 +1,7 @@
+{
+  "name": "mylog14",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
