@@ -7,7 +7,6 @@ import { TabDiaryPage } from './tab-diary.page';
 import { DiaryPage } from '../diary/diary.page';
 import { StatusCardPage } from '../status-card/status-card.page';
 import { ConditionCardPage } from '../condition-card/condition-card.page';
-import { DiaryPageModule } from '../diary/diary.module';
 
 @NgModule({
   imports: [
@@ -19,6 +18,8 @@ import { DiaryPageModule } from '../diary/diary.module';
   declarations: [
     TabDiaryPage,
     DiaryPage,
+    StatusCardPage,
+    ConditionCardPage,
   ]
 })
 export class TabDiaryPageModule {}
