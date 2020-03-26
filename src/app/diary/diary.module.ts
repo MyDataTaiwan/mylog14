@@ -9,13 +9,15 @@ import { DiaryPageRoutingModule } from './diary-routing.module';
 import { DiaryPage } from './diary.page';
 import { StatusCardPage } from '../status-card/status-card.page';
 import { ConditionCardPage } from '../condition-card/condition-card.page';
+import { StatusCardPageModule } from '../status-card/status-card.module';
+import { ConditionCardPageModule } from '../condition-card/condition-card.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DiaryPageRoutingModule
+    DiaryPageRoutingModule,
   ],
   declarations: [
     DiaryPage,

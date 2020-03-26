@@ -1,7 +1,15 @@
+import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { TabDiaryPage } from './tab-diary.page';
+
+@Component({
+  selector: 'app-diary',
+  template: ''
+})
+class MockDiaryPage {
+}
 
 describe('tabDiaryPage', () => {
   let component: TabDiaryPage;
@@ -9,8 +17,13 @@ describe('tabDiaryPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [TabDiaryPage],
-      imports: [IonicModule.forRoot()]
+      declarations: [
+        TabDiaryPage,
+        MockDiaryPage,
+      ],
+      imports: [
+        IonicModule.forRoot(),
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(TabDiaryPage);
