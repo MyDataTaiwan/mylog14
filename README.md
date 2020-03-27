@@ -44,7 +44,9 @@ Then run the App in XCode.
 
 1. Install Android Studio and Android SDK.
 
-2. Run
+1. Add `"linuxAndroidStudioPath": "<...>/android-studio/bin/studio.sh"` into `capacitor.config.json`.
+
+1. Run
 
 ```
 $ ionic capacitor add android
