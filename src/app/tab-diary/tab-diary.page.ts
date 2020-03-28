@@ -6,7 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['tab-diary.page.scss']
 })
 export class TabDiaryPage {
-
-  constructor() {}
-
 }

@@ -1,0 +1,14 @@
+{
+  "DIARY": {
+    "title": "14-Days Self-Care Diary",
+    "select": "漢語"
+  },
+  "SYMPTOM": {
+    "cardTitleMonitoring": "Self-Monitoring",
+    "coughingPositive": "coughing",
+    "coughingNegative": "no-coughing",
+    "runningNosePositive": "running nose",
+    "runningNoseNegative": "no-running nose"
+  }
+
+}
