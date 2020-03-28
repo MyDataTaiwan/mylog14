@@ -1,0 +1,13 @@
+{
+  "DIARY": {
+    "title": "十四天我的紀錄",
+    "select": "English"
+  },
+  "SYMPTOM": {
+    "cardTitleMonitoring": "自我檢查表",
+    "coughingPositive": "有咳嗽",
+    "coughingNegative": "無咳嗽",
+    "runningNosePositive": "有流鼻水",
+    "runningNoseNegative": "無有流鼻水"
+  }
+}
