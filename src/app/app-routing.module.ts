@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'condition-card',
     loadChildren: () => import('./condition-card/condition-card.module').then( m => m.ConditionCardPageModule)
+  },
+  {
+    path: 'view-by-date',
+    loadChildren: () => import('./view-by-date/view-by-date.module').then( m => m.ViewByDatePageModule)
   }
 ];
 @NgModule({

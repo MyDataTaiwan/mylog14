@@ -4,10 +4,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabDatePage } from './tab-date.page';
-import { DiaryPage } from '../diary/diary.page';
-import { StatusCardPage } from '../status-card/status-card.page';
-import { ConditionCardPage } from '../condition-card/condition-card.page';
 import {TranslateModule} from '@ngx-translate/core';
+import { ViewByDatePage } from '../view-by-date/view-by-date.page';
 
 @NgModule({
     imports: [
@@ -19,9 +17,7 @@ import {TranslateModule} from '@ngx-translate/core';
     ],
   declarations: [
     TabDatePage,
-    DiaryPage,
-    StatusCardPage,
-    ConditionCardPage,
+    ViewByDatePage,
   ]
 })
 export class TabDatePageModule {}
