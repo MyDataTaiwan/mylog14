@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { TabDiaryPage } from './tab-diary.page';
+import { TabDatePage } from './tab-date.page';
 
 @Component({
   selector: 'app-diary',
@@ -11,14 +11,14 @@ import { TabDiaryPage } from './tab-diary.page';
 class MockDiaryPage {
 }
 
-describe('tabDiaryPage', () => {
-  let component: TabDiaryPage;
-  let fixture: ComponentFixture<TabDiaryPage>;
+describe('tabDatePage', () => {
+  let component: TabDatePage;
+  let fixture: ComponentFixture<TabDatePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TabDiaryPage,
+        TabDatePage,
         MockDiaryPage,
       ],
       imports: [
@@ -26,7 +26,7 @@ describe('tabDiaryPage', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(TabDiaryPage);
+    fixture = TestBed.createComponent(TabDatePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
