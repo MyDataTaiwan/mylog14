@@ -30,4 +30,8 @@ export class ViewByDatePage implements OnInit {
   ngOnInit() {
   }
 
+  onCardClick(cardItem) {
+    
+  }
+
 }

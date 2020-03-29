@@ -14,7 +14,12 @@ const routes: Routes = [
             path: '',
             loadChildren: () =>
               import('../tab-date/tab-date.module').then(m => m.TabDatePageModule)
-          }
+          },
+          {
+            path: 'date-detail',
+            loadChildren: () =>
+              import('../date-detail/date-detail.module').then(m => m.DateDetailPageModule)
+          },
         ]
       },
       {

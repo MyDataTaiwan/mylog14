@@ -1,6 +1,6 @@
 <ion-content>
 <ion-virtual-scroll [items]="items" approxItemHeight="200px">
-  <ion-card *virtualItem="let item; let itemBounds = bounds;">
+  <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-date/date-detail']">
     <ion-grid fixed>
       <ion-row>
         <ion-col size="4">
