@@ -18,12 +18,12 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab-playground',
+        path: 'tab-category',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab-playground/tab-playground.module').then(m => m.TabPlaygroundPageModule)
+              import('../tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
           }
         ]
       },

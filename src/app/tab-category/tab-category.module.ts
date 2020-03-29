@@ -3,15 +3,15 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TabPlaygroundPage } from './tab-playground.page';
+import { TabCategoryPage } from './tab-category.page';
 
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    RouterModule.forChild([{ path: '', component: TabPlaygroundPage }])
+    RouterModule.forChild([{ path: '', component: TabCategoryPage }])
   ],
-  declarations: [TabPlaygroundPage]
+  declarations: [TabCategoryPage]
 })
-export class TabPlaygroundPageModule {}
+export class TabCategoryPageModule {}
