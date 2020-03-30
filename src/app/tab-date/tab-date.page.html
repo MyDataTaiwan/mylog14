@@ -1,14 +1,17 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       {{ 'DIARY.title' | translate:params }}
     </ion-title>
+      <ion-icon name="folder-open-outline" slot="end">
+        <ion-badge color="danger" slot="end">22</ion-badge>
+      </ion-icon>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-header collapse="condense">
-    <ion-toolbar>
+    <ion-toolbar color="primary">
       <ion-title size="large"></ion-title>
       <ion-list>
         <ion-item>

@@ -53,6 +53,10 @@ const routes: Routes = [
   {
     path: 'symptom-detail',
     loadChildren: () => import('./symptom-detail/symptom-detail.module').then( m => m.SymptomDetailPageModule)
+  },
+  {
+    path: 'add-record',
+    loadChildren: () => import('./add-record/add-record.module').then( m => m.AddRecordPageModule)
   }
 ];
 @NgModule({
