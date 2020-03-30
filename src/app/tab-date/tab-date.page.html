@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{ 'DIARY.title' | translate:params }}
+    </ion-title>
+    <!-- FIXME: Style is quite different from the wireframe -->
+    <ion-button slot="end" [routerLink]="['/categorize-data']" routerDirection="forward">
+      <ion-icon name="folder-open-outline"></ion-icon>
+      <ion-badge color="danger" slot="end">22</ion-badge>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <app-view-by-date></app-view-by-date>
+</ion-content>

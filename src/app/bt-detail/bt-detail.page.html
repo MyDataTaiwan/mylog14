@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            {{ 'DIARY.title' | translate:params }}
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="arrow-back-outline">
+            </ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-title class="ion-text-center">體溫</ion-title>
+<img src="https://cdn.pixabay.com/photo/2017/12/22/08/01/graph-3033203_1280.jpg">
+<ion-list>
+    <ion-card *ngFor="let day of days">
+        <ion-grid>
+            <ion-row class="ion-align-items-center">
+                <ion-col size="6">
+                    <ion-title class="ion-text-center">DAY {{ day }}</ion-title>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-toggle class="ion-align-self-center"></ion-toggle>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+</ion-list>
+</ion-content>

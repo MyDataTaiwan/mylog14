@@ -1,6 +1,6 @@
 {
   "DIARY": {
-    "title": "14-Days Self-Care Diary",
+    "title": "My Data",
     "select": "漢語"
   },
   "SYMPTOM": {
@@ -8,7 +8,12 @@
     "coughingPositive": "coughing",
     "coughingNegative": "no-coughing",
     "runningNosePositive": "running nose",
-    "runningNoseNegative": "no-running nose"
+    "runningNoseNegative": "no-running nose",
+    "cough": "Cough",
+    "runnyNose": "Running Nose",
+    "headache": "Headache",
+    "stuffyNose": "Stuffy Nose",
+    "fever": "Fever"
   }
 
 }

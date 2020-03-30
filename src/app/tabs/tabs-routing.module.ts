@@ -8,45 +8,55 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab-diary',
+        path: 'tab-date',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab-diary/tab-diary.module').then(m => m.TabDiaryPageModule)
-          }
+              import('../tab-date/tab-date.module').then(m => m.TabDatePageModule)
+          },
+          {
+            path: 'date-detail',
+            loadChildren: () =>
+              import('../date-detail/date-detail.module').then(m => m.DateDetailPageModule)
+          },
         ]
       },
       {
-        path: 'tab-playground',
+        path: 'tab-category',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab-playground/tab-playground.module').then(m => m.TabPlaygroundPageModule)
-          }
-        ]
-      },
-      {
-        path: 'tab3',
-        children: [
+              import('../tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
+          },
           {
-            path: '',
+            path: 'bt-detail',
             loadChildren: () =>
-              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
-          }
+              import('../bt-detail/bt-detail.module').then(m => m.BtDetailPageModule)
+          },
+          {
+            path: 'symptom-detail',
+            loadChildren: () =>
+              import('../symptom-detail/symptom-detail.module').then(m => m.SymptomDetailPageModule)
+          },
+          {
+            path: 'location-detail',
+            loadChildren: () =>
+              import('../location-detail/location-detail.module').then(m => m.LocationDetailPageModule)
+          },
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab-diary',
+        redirectTo: '/tabs/tab-date',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab-diary',
+    redirectTo: '/tabs/tab-date',
     pathMatch: 'full'
   }
 ];

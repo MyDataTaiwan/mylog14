@@ -1,0 +1,93 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      {{ 'DIARY.title' | translate:params }}
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<!-- FIXME: Body Temperature should show in this page, but the wireframe don't have the design. This is just a placeholder.-->
+<ion-title class="ion-text-center">體溫</ion-title>
+<ion-button expand="block" [textContent]="bt"></ion-button>
+
+<ion-title class="ion-text-center">是否有以下症狀？</ion-title>
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="6">
+      <ion-row>
+        <img src="https://cdn.pixabay.com/photo/2016/09/18/21/53/flu-1679104_1280.jpg" height="150">
+      </ion-row>
+      <ion-row>
+        <ion-segment value="no" (ionChange)="onCoughSegmentChanged($event)">
+          <ion-segment-button value="no">
+            <ion-label>否</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="yes">
+            <ion-label>是</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-row>
+    </ion-col>
+    <ion-col size="6">
+      <ion-row>
+        <img src="https://cdn.pixabay.com/photo/2013/07/13/09/49/influenza-156098_1280.png" height="150">
+      </ion-row>
+      <ion-row>
+        <ion-segment value="no" (ionChange)="onFeverSegmentChanged($event)">
+          <ion-segment-button value="no">
+            <ion-label>否</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="yes">
+            <ion-label>是</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="6">
+      <ion-row>
+        <img src="https://cdn.pixabay.com/photo/2014/03/26/19/54/ill-298909_1280.jpg" height="150">
+      </ion-row>
+      <ion-row>
+        <ion-segment value="no" (ionChange)="onRunnynoseSegmentChanged($event)">
+          <ion-segment-button value="no">
+            <ion-label>否</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="yes">
+            <ion-label>是</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-row>
+    </ion-col>
+    <ion-col size="6">
+      <ion-row>
+        <img src="https://cdn.pixabay.com/photo/2017/01/11/18/53/cold-1972619_1280.jpg" height="150">
+      </ion-row>
+      <ion-row>
+        <ion-segment value="no" (ionChange)="onStuffynoseSegmentChanged($event)">
+          <ion-segment-button value="no">
+            <ion-label>否</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="yes">
+            <ion-label>是</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+</ion-content>
+
+<!-- FIXME: There should be ways to confirm/cancel the record, but the wireframe don't have the design. This is just a placeholder.-->
+<ion-footer>
+  <ion-toolbar>
+    <ion-button slot="end" (click)="saveModal()">儲存</ion-button>
+    <ion-button slot="start" (click)="cancelModal()">取消</ion-button>
+  </ion-toolbar>
+</ion-footer>
