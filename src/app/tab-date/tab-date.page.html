@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
     <ion-title>
       {{ 'DIARY.title' | translate:params }}
@@ -12,20 +12,6 @@
 </ion-header>
 
 <ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar color="primary">
-      <ion-title size="large"></ion-title>
-      <ion-list>
-        <ion-item>
-          <ion-label>Select Language</ion-label>
-          <ion-select placeholder="Select One" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()">
-            <ion-select-option value="zh">{{ 'DIARY.select' | translate:params }}</ion-select-option>
-            <ion-select-option value="en">{{ 'DIARY.select' | translate:params }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </ion-toolbar>
-  </ion-header>
 
   <app-view-by-date></app-view-by-date>
 </ion-content>

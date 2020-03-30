@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar color="primary">
     <ion-title>
       {{ 'DIARY.title' | translate:params }}
@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content>
   <ion-list>
     <app-date-detail-overview></app-date-detail-overview>
     <app-date-detail-condition *ngIf="selectedSegment === 'condition'"></app-date-detail-condition>
