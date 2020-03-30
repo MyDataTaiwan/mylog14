@@ -11,5 +11,19 @@
       <ion-label>測試</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
-
 </ion-tabs>
+<ion-fab vertical="bottom" horizontal="center" slot="fixed" >
+  <ion-fab-button color="secondary">
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="start">
+    <ion-fab-button color="primary" (click)="onClickCameraButton()">
+      <ion-icon name="camera-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+  <ion-fab-list side="end">
+    <ion-fab-button color="primary" (click)="onClickRecordButton()">
+      <ion-icon name="eye-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

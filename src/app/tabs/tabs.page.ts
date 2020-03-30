@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { AddRecordPage } from '../add-record/add-record.page';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +9,23 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(
+    private modalController: ModalController,
+  ) {}
+
+  async presentAddRecordModal() {
+    const modal = await this.modalController.create({
+      component: AddRecordPage
+    });
+    return await modal.present();
+  }
+
+  onClickCameraButton() {
+
+  }
+
+  onClickRecordButton() {
+    this.presentAddRecordModal();
+  }
 
 }
