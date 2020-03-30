@@ -11,7 +11,9 @@
     "runningNoseNegative": "no-running nose",
     "cough": "Cough",
     "runnyNose": "Running Nose",
-    "headache": "Headache"
+    "headache": "Headache",
+    "stuffyNose": "Stuffy Nose",
+    "fever": "Fever"
   }
 
 }

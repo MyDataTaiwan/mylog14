@@ -11,6 +11,8 @@
     "runningNoseNegative": "無流鼻水",
     "cough": "咳嗽",
     "runnyNose": "流鼻水",
-    "headache": "頭痛"
+    "headache": "頭痛",
+    "stuffyNose": "鼻塞",
+    "fever": "發燒"
   }
 }

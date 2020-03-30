@@ -4,15 +4,15 @@
     <ion-toggle [(ngModel)]="cough"></ion-toggle>
   </ion-item>
   <ion-item>
+    <ion-label>{{ 'SYMPTOM.fever' | translate:params }}</ion-label>
+    <ion-toggle [(ngModel)]="fever"></ion-toggle>
+  </ion-item>
+  <ion-item>
     <ion-label>{{ 'SYMPTOM.runnyNose' | translate:params }}</ion-label>
     <ion-toggle [(ngModel)]="runnyNose"></ion-toggle>
   </ion-item>
   <ion-item>
-    <ion-label>{{ 'SYMPTOM.headache' | translate:params }}</ion-label>
-    <ion-toggle [(ngModel)]="headache"></ion-toggle>
-  </ion-item>
-  <ion-item>
-    <ion-label>{{ 'SYMPTOM.headache' | translate:params }}</ion-label>
-    <ion-toggle [(ngModel)]="headache"></ion-toggle>
+    <ion-label>{{ 'SYMPTOM.stuffyNose' | translate:params }}</ion-label>
+    <ion-toggle [(ngModel)]="stuffyNose"></ion-toggle>
   </ion-item>
 </ion-list>
