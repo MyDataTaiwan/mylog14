@@ -37,6 +37,22 @@ const routes: Routes = [
   {
     path: 'date-detail-picture',
     loadChildren: () => import('./date-detail-picture/date-detail-picture.module').then( m => m.DateDetailPicturePageModule)
+  },
+  {
+    path: 'view-by-category',
+    loadChildren: () => import('./view-by-category/view-by-category.module').then( m => m.ViewByCategoryPageModule)
+  },
+  {
+    path: 'bt-detail',
+    loadChildren: () => import('./bt-detail/bt-detail.module').then( m => m.BtDetailPageModule)
+  },
+  {
+    path: 'location-detail',
+    loadChildren: () => import('./location-detail/location-detail.module').then( m => m.LocationDetailPageModule)
+  },
+  {
+    path: 'symptom-detail',
+    loadChildren: () => import('./symptom-detail/symptom-detail.module').then( m => m.SymptomDetailPageModule)
   }
 ];
 @NgModule({

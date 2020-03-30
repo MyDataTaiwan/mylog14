@@ -29,7 +29,22 @@ const routes: Routes = [
             path: '',
             loadChildren: () =>
               import('../tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
-          }
+          },
+          {
+            path: 'bt-detail',
+            loadChildren: () =>
+              import('../bt-detail/bt-detail.module').then(m => m.BtDetailPageModule)
+          },
+          {
+            path: 'symptom-detail',
+            loadChildren: () =>
+              import('../symptom-detail/symptom-detail.module').then(m => m.SymptomDetailPageModule)
+          },
+          {
+            path: 'location-detail',
+            loadChildren: () =>
+              import('../location-detail/location-detail.module').then(m => m.LocationDetailPageModule)
+          },
         ]
       },
       {

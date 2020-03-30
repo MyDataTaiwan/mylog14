@@ -1,16 +1,26 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      上
+      {{ 'DIARY.title' | translate:params }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" style="height: 100%">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">上</ion-title>
+      <ion-title size="large"></ion-title>
+      <ion-list>
+        <ion-item>
+          <ion-label>Select Language</ion-label>
+          <ion-select placeholder="Select One" [(ngModel)]="selectedLanguage" (ionChange)="languageChanged()">
+            <ion-select-option value="zh">{{ 'DIARY.select' | translate:params }}</ion-select-option>
+            <ion-select-option value="en">{{ 'DIARY.select' | translate:params }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
     </ion-toolbar>
   </ion-header>
-  <ion-button expand="block" (click)="onClick()">{{ feature }} 功能測試</ion-button>
+
+  <app-view-by-category></app-view-by-category>
 </ion-content>

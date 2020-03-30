@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            {{ 'DIARY.title' | translate:params }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-title class="ion-text-center">症狀</ion-title>
+    <ion-list>
+        <ion-card *ngFor="let day of days">
+            <ion-grid>
+                <ion-row class="ion-align-items-center">
+                    <ion-col size="6">
+                        <ion-title class="ion-text-center">DAY {{ day }}</ion-title>
+                    </ion-col>
+                    <ion-col size="6">
+                        <ion-toggle class="ion-align-self-center"></ion-toggle>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+    </ion-list>
+</ion-content>
