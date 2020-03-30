@@ -57,6 +57,14 @@ const routes: Routes = [
   {
     path: 'add-record',
     loadChildren: () => import('./add-record/add-record.module').then( m => m.AddRecordPageModule)
+  },
+  {
+    path: 'categorize-data',
+    loadChildren: () => import('./categorize-data/categorize-data.module').then( m => m.CategorizeDataPageModule)
+  },
+  {
+    path: 'categorize-finish',
+    loadChildren: () => import('./categorize-finish/categorize-finish.module').then( m => m.CategorizeFinishPageModule)
   }
 ];
 @NgModule({

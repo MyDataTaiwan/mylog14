@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+    <ion-toolbar color="primary">
+        <ion-title>
+            將你的資料歸類吧！
+        </ion-title>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="arrow-back-outline">
+            </ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-button (click)="onSubmitClick()" expand="block" fill="clear" [routerLink]="['/categorize-finish']" routerDirection="forward">Submit</ion-button>
+<ion-button (click)="onLaterClick()" expand="full">晚點再歸類！</ion-button>
+</ion-content>

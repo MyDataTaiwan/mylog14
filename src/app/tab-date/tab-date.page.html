@@ -3,9 +3,11 @@
     <ion-title>
       {{ 'DIARY.title' | translate:params }}
     </ion-title>
-      <ion-icon name="folder-open-outline" slot="end">
-        <ion-badge color="danger" slot="end">22</ion-badge>
-      </ion-icon>
+    <!-- FIXME: Style is quite different from the wireframe -->
+    <ion-button slot="end" [routerLink]="['/categorize-data']" routerDirection="forward">
+      <ion-icon name="folder-open-outline"></ion-icon>
+      <ion-badge color="danger" slot="end">22</ion-badge>
+    </ion-button>
   </ion-toolbar>
 </ion-header>
 
