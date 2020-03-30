@@ -1,9 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>date-detail</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title>
+        {{ 'DIARY.title' | translate:params }}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <app-date-detail-overview></app-date-detail-overview>
+    <app-date-detail-condition *ngIf="selectedSegment === 'condition'"></app-date-detail-condition>
+    <app-date-detail-picture *ngIf="selectedSegment === 'picture'"></app-date-detail-picture>
+  </ion-list>
 </ion-content>
+
+<ion-footer>
+  <ion-segment value="condition" (ionChange)="onSegmentChanged($event)">
+    <ion-segment-button value="condition">
+      <ion-icon name="images-outline"></ion-icon>
+    </ion-segment-button>
+    <ion-segment-button value="picture">
+      <ion-icon name="grid-outline"></ion-icon>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>

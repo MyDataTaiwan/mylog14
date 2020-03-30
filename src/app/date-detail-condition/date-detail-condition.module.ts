@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { DateDetailConditionPageRoutingModule } from './date-detail-condition-routing.module';
 
 import { DateDetailConditionPage } from './date-detail-condition.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DateDetailConditionPageRoutingModule
+    DateDetailConditionPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [DateDetailConditionPage]
 })

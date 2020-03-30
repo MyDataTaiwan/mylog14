@@ -1,9 +1,9 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>date-detail-picture</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<ion-grid>
+  <ion-row *ngFor="let picRow of pics;" class="ion-justify-content-evenly">
+    <ion-col size="4" *ngFor="let pic of picRow">
+      <ion-thumbnail>
+        <ion-img [src]="pic.src" alt="No picture"></ion-img>
+      </ion-thumbnail>
+    </ion-col>
+  </ion-row>
+</ion-grid>

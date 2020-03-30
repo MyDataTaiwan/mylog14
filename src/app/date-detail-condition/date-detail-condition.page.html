@@ -1,9 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>date-detail-condition</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-
-</ion-content>
+<ion-list>
+  <ion-item>
+    <ion-label>{{ 'SYMPTOM.cough' | translate:params }}</ion-label>
+    <ion-toggle [(ngModel)]="cough"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>{{ 'SYMPTOM.runnyNose' | translate:params }}</ion-label>
+    <ion-toggle [(ngModel)]="runnyNose"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>{{ 'SYMPTOM.headache' | translate:params }}</ion-label>
+    <ion-toggle [(ngModel)]="headache"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>{{ 'SYMPTOM.headache' | translate:params }}</ion-label>
+    <ion-toggle [(ngModel)]="headache"></ion-toggle>
+  </ion-item>
+</ion-list>

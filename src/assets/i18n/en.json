@@ -8,7 +8,10 @@
     "coughingPositive": "coughing",
     "coughingNegative": "no-coughing",
     "runningNosePositive": "running nose",
-    "runningNoseNegative": "no-running nose"
+    "runningNoseNegative": "no-running nose",
+    "cough": "Cough",
+    "runnyNose": "Running Nose",
+    "headache": "Headache"
   }
 
 }

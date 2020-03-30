@@ -8,6 +8,9 @@
     "coughingPositive": "有咳嗽",
     "coughingNegative": "無咳嗽",
     "runningNosePositive": "有流鼻水",
-    "runningNoseNegative": "無有流鼻水"
+    "runningNoseNegative": "無流鼻水",
+    "cough": "咳嗽",
+    "runnyNose": "流鼻水",
+    "headache": "頭痛"
   }
 }
