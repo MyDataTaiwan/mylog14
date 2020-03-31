@@ -1,3 +1,48 @@
 ion-content ion-toolbar {
   --background: translucent;
 }
+
+ion-tab-button{
+  font-size: 10px;
+  --background: translucent;
+  // --background-focused: #a0a;
+  // --color-selected: #a0a;
+  --padding-end: 0px;
+  --padding-start: 10px;
+  --padding-bottom: 0px;
+  --margin-left:0px;
+  --margin-right:0px;
+  max-width:50px;
+  ion-icon{
+      font-size: 32px;
+  }}
+  .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-modal.show-page {
+    margin-top: constant(safe-area-inset-top); // for ios 11.1
+    margin-top: env(safe-area-inset-top); // for ios 11.2 and onwards
+    margin-bottom: env(safe-area-inset-bottom);
+    height: calc(100% - constant(safe-area-inset-top));
+    height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+}
+  ion-header{
+
+    ion-navbar:nth-child(1){
+    
+    padding-top:constant(safe-area-inset-top)!important;
+    
+    padding-top:env(safe-area-inset-top)!important;
+    
+    }
+    
+    }
+ 
+    @media (max-width: 380px){
+      .ios ion-toolbar{
+        padding-top: 40px;
+        ion-title{
+          padding-top: 35px;
+        }
+      }
+}
+.toolbar-ios {
+padding-top: env(safe-area-inset-top);
+}

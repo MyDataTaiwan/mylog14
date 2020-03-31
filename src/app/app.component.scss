@@ -1,0 +1,44 @@
+
+  ion-header{
+
+        ion-navbar:nth-child(1){
+        
+        padding-top:constant(safe-area-inset-top)!important;
+        
+        padding-top:env(safe-area-inset-top)!important;
+        
+        }
+        
+        }
+     
+        @media (max-width: 380px){
+          .ios ion-toolbar{
+            padding-top: 40px;
+            ion-title{
+              padding-top: 35px;
+            }
+          }
+    }
+    .toolbar-ios {
+    padding-top: env(safe-area-inset-top);
+    }
+
+    .tab-nav {
+        margin-bottom: constant(safe-area-inset-bottom);
+    }
+
+    body {
+        margin-top: 20px; /* Status bar height on iOS 10 */
+        margin-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+        margin-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+      
+      }
+      
+      ion-tab-bar {
+               margin-top: 20px; /* Status bar height on iOS 10 */
+  margin-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+  margin-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+        margin-bottom: env(safe-area-inset-bottom);
+      }
+
+     

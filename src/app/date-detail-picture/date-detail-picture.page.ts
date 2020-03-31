@@ -23,6 +23,10 @@ export class DateDetailPicturePage implements OnInit {
   pics = [
    [this.catPic, this.dogPic, this.catPic],
    [this.dogPic, this.catPic, this.dogPic],
+   [this.catPic, this.dogPic, this.catPic],
+   [this.dogPic, this.catPic, this.dogPic],
+   [this.catPic, this.dogPic, this.catPic],
+   [this.dogPic, this.catPic, this.dogPic],
   ];
   constructor() { }
 
