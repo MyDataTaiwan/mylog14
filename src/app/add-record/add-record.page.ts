@@ -7,6 +7,8 @@ import { SnapshotService } from '../services/snapshot.service';
 import { Snapshot } from '../interfaces/snapshot';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
+import { RecordService } from '../services/record.service';
+import { Record } from '../interfaces/record';
 
 @Component({
   selector: 'app-add-record',
@@ -40,6 +42,7 @@ export class AddRecordPage implements OnInit {
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private pickerCtrl: PickerController,
+    private record: RecordService,
     private snapshot: SnapshotService,
     private translate: TranslateService,
   ) {
@@ -89,7 +92,7 @@ export class AddRecordPage implements OnInit {
     await picker.present();
   }
 
-  async presentAlert(snapshot: Snapshot) {
+  async presentAlert() {
     const alert = await this.alertCtrl.create({
       header: this.text.recorded,
       cssClass: 'recordSaved',
@@ -97,7 +100,7 @@ export class AddRecordPage implements OnInit {
         {
           text: this.text.ok,
           handler: () => {
-            this.saveModal(snapshot);
+            this.modalCtrl.dismiss();
           }
         }
       ]
@@ -109,7 +112,7 @@ export class AddRecordPage implements OnInit {
   async presentLoading() {
     const loading = await this.loadingCtrl.create({
       message: '正在紀錄資料...',
-      duration: 5000
+      duration: 10000
     });
     loading.present();
     return Promise.resolve(loading);
@@ -133,18 +136,16 @@ export class AddRecordPage implements OnInit {
 
   async onSubmitClick() {
     const loading = await this.presentLoading();
-    const snapshot = await this.snapshot.createSnapshot();
-    await loading.dismiss();
-    await this.presentAlert(snapshot);
-  }
-
-  saveModal(snap: Snapshot) {
-    this.modalCtrl.dismiss({
-      bt: this.bt,
-      btUnit: this.btUnit,
+    const snap = await this.snapshot.createSnapshot();
+    const record: Record = {
+      bodyTemperature: +this.bt,
+      bodyTemperatureUnit: this.btUnit,
       condition: this.condition,
       snapshot: snap,
-    });
+    };
+    await this.record.createRecord(record);
+    await loading.dismiss();
+    await this.presentAlert();
   }
 
   resetPage() {

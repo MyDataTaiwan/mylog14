@@ -14,6 +14,12 @@
   <ion-fab-button color="secondary">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
+  <!-- TODO: Remove this fab button after we can view stored data elsewhere -->
+  <ion-fab-list side="top">
+    <ion-fab-button color="primary" (click)="onClickTestButton()">
+      <ion-icon name="bicycle-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
   <ion-fab-list side="start">
     <ion-fab-button color="primary" (click)="onClickCameraButton()">
       <ion-icon name="camera-outline"></ion-icon>

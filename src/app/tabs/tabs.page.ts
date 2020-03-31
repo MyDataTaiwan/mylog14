@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { AddRecordPage } from '../add-record/add-record.page';
+import { RecordService } from '../services/record.service';
 
 @Component({
   selector: 'app-tabs',
@@ -10,7 +11,9 @@ import { AddRecordPage } from '../add-record/add-record.page';
 export class TabsPage {
 
   constructor(
+    private alertCtrl: AlertController,
     private modalController: ModalController,
+    private record: RecordService,
   ) {}
 
   async presentAddRecordModal() {
@@ -23,12 +26,27 @@ export class TabsPage {
   }
 
   onClickCameraButton() {
-
   }
 
   async onClickRecordButton() {
     const data = await this.presentAddRecordModal();
     console.log(data);
+  }
+
+  async onClickTestButton() {
+    const data = await this.record.getRecords();
+    await this.presentTestAlert(data);
+  }
+
+  // TODO: Remove this alert after we can view stored data elsewhere
+  async presentTestAlert(data) {
+    const alert = await this.alertCtrl.create({
+      header: 'Records',
+      message: JSON.stringify(data, null, 2),
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }
