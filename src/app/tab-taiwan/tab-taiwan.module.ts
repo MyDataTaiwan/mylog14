@@ -7,13 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { TabTaiwanPageRoutingModule } from './tab-taiwan-routing.module';
 
 import { TabTaiwanPage } from './tab-taiwan.page';
+import { LottieModule } from 'ngx-lottie';
 
+export function playerFactory() {
+	return import('lottie-web');
+}
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabTaiwanPageRoutingModule
+    TabTaiwanPageRoutingModule,
+    LottieModule.forRoot({ player: playerFactory })
   ],
   declarations: [TabTaiwanPage]
 })

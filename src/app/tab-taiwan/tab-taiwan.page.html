@@ -17,15 +17,14 @@
   <ion-grid>
     <ion-row align-items-center justify-content-start>
       <ion-col>
-        <ion-label> 1 of 3</ion-label>
+        <ion-label> </ion-label>
       </ion-col>
       <ion-col>
         <ion-title class="ion-text-center">tab-taiwan</ion-title>
 
-
       </ion-col>
       <ion-col>
-        <ion-label> 3 of 3</ion-label>
+        <ion-label> </ion-label>
       </ion-col>
     </ion-row>
  
@@ -34,24 +33,25 @@
 
     <ion-row align-items-center justify-content-start >
       <ion-col>
-        <ion-label> 1 of 3</ion-label>
+        <ion-label> </ion-label>
       </ion-col>
       <ion-col>
         <div class="TA-AE" style="height: 80vw;width: 80vw;">
-          <img src="../../assets/ui/Taiwan_AE.svg" />
+          <!-- <img src="../../assets/ui/Taiwan_AE.svg" /> -->
+          <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+
         </div>
       </ion-col>
       <ion-col>
-        <ion-label> 3 of 3</ion-label>
+        <ion-label> </ion-label>
       </ion-col>
     </ion-row>
 
 
 
-
     <ion-row align-items-center justify-content-start>
       <ion-col>
-        <ion-label> 1 of 3 </ion-label>
+        <ion-label> </ion-label>
       </ion-col>
       <ion-col>
 
@@ -60,7 +60,6 @@
         <ion-icon slot="end" src="../../assets/ui/tw_icon_R.svg"></ion-icon>
       </ion-col>
       <ion-col>
-        3 of 3
       </ion-col>
     </ion-row>
   </ion-grid>
