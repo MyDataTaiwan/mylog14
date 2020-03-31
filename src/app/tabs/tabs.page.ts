@@ -17,15 +17,18 @@ export class TabsPage {
     const modal = await this.modalController.create({
       component: AddRecordPage
     });
-    return await modal.present();
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    return Promise.resolve(data);
   }
 
   onClickCameraButton() {
 
   }
 
-  onClickRecordButton() {
-    this.presentAddRecordModal();
+  async onClickRecordButton() {
+    const data = await this.presentAddRecordModal();
+    console.log(data);
   }
 
 }

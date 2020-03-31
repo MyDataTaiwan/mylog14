@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { PickerController, ModalController } from '@ionic/angular';
+import { PickerController, ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
+import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
+import { Condition } from '../interfaces/condition';
+import { SnapshotService } from '../services/snapshot.service';
+import { Snapshot } from '../interfaces/snapshot';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-record',
@@ -8,14 +14,41 @@ import { PickerOptions } from '@ionic/core';
   styleUrls: ['./add-record.page.scss'],
 })
 export class AddRecordPage implements OnInit {
-  bt = '';
-  btInteger = ['34', '35', '36', '37', '38', '39', '40', '41', '42'];
-  btDecimal = ['.0', '.1', '.2'];
+  btCIntegerList = this.genIntArr(35, 40).map(x => x.toString());
+  btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
+  btUnitList = ['°C', '°F'];
+  defaultBt = '-';
+  defaultBtUnit = '°C';
+  defaultCondition: Condition = {
+    coughing: false,
+    headache: false,
+    runnyNose: false,
+    soreThroat: false,
+  };
+  bt: string;
+  btUnit: string;
+  condition: Condition;
+  text = {
+    recorded: '',
+    ok: '',
+  };
+  recorded$: Observable<string>;
+  ok$: Observable<string>;
 
   constructor(
+    private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private pickerController: PickerController,
-  ) { }
+    private loadingCtrl: LoadingController,
+    private pickerCtrl: PickerController,
+    private snapshot: SnapshotService,
+    private translate: TranslateService,
+  ) {
+    this.resetPage();
+    this.recorded$ = this.translate.get('DAILY_RECORD.recorded');
+    this.recorded$.subscribe((t: string) => this.text.recorded = t);
+    this.ok$ = this.translate.get('DAILY_RECORD.ok');
+    this.ok$.subscribe((t: string) => this.text.ok = t);
+  }
 
   ngOnInit() {
     this.presentBtPicker();
@@ -32,52 +65,102 @@ export class AddRecordPage implements OnInit {
           text: 'Ok',
           handler: (value: any) => {
             console.log(value);
-            this.bt = value.bt.value;
+            this.bt = `${value.integer.value}${value.decimal.value}`;
+            this.btUnit = value.unit.value;
           }
         }
       ],
-      columns: [{
-        name: 'bt',
-        options: this.getColumnOptions()
-      }]
+      columns: [
+        {
+          name: 'integer',
+          options: this.getColumnOptions(this.btCIntegerList)
+        },
+        {
+          name: 'decimal',
+          options: this.getColumnOptions(this.btDecimalList)
+        },
+        {
+          name: 'unit',
+          options: this.getColumnOptions(this.btUnitList)
+        }
+      ]
     };
-    const picker = await this.pickerController.create(options);
+    const picker = await this.pickerCtrl.create(options);
     await picker.present();
   }
-  getColumnOptions() {
+
+  async presentAlert(snapshot: Snapshot) {
+    const alert = await this.alertCtrl.create({
+      header: this.text.recorded,
+      cssClass: 'recordSaved',
+      buttons: [
+        {
+          text: this.text.ok,
+          handler: () => {
+            this.saveModal(snapshot);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingCtrl.create({
+      message: '正在紀錄資料...',
+      duration: 5000
+    });
+    loading.present();
+    return Promise.resolve(loading);
+  }
+
+  getColumnOptions(column: string[]) {
     const options = [];
-    this.btInteger.forEach(x => {
+    column.forEach(x => {
       options.push({ text: x, value: x });
     });
     return options;
   }
 
-  onCoughSegmentChanged(event) {
-
+  onBodyTemperatureClick() {
+    this.presentBtPicker();
   }
 
-  onFeverSegmentChanged(event) {
-
+  onClearClick() {
+    this.resetPage();
   }
 
-  onRunnynoseSegmentChanged(event) {
-
+  async onSubmitClick() {
+    const loading = await this.presentLoading();
+    const snapshot = await this.snapshot.createSnapshot();
+    await loading.dismiss();
+    await this.presentAlert(snapshot);
   }
 
-  onStuffynoseSegmentChanged(event) {
-
-  }
-
-  saveModal() {
+  saveModal(snap: Snapshot) {
     this.modalCtrl.dismiss({
-      dismissed: true
+      bt: this.bt,
+      btUnit: this.btUnit,
+      condition: this.condition,
+      snapshot: snap,
     });
   }
 
-  cancelModal() {
-    this.modalCtrl.dismiss({
-      dismissed: true
-    });
+  resetPage() {
+    this.bt = this.defaultBt;
+    this.btUnit = this.defaultBtUnit;
+    this.condition = {
+      coughing: this.defaultCondition.coughing,
+      headache: this.defaultCondition.headache,
+      runnyNose: this.defaultCondition.runnyNose,
+      soreThroat: this.defaultCondition.soreThroat,
+    };
+  }
+
+  // Create an integer array [start..end]
+  private genIntArr(start: number, end: number, step = 1): number[] {
+    return Array.from({length: end - start + 1}, (_, k) => start + k);
   }
 
 }
