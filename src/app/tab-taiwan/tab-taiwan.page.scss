@@ -1,3 +1,7 @@
+ion-content ion-toolbar ion-grid  ion-row ion-col{
+        // --background: translucent;
+        background-color: green($color: #23F323);
+      }
 ion-tab-button{
         font-size: 10px;
         --background: translucent;
@@ -9,9 +13,8 @@ ion-tab-button{
         --margin-left:0px;
         --margin-right:0px;
         max-width:50px;
-        ion-icon{
-            font-size: 32px;
-        }}
+    
+}
         .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-modal.show-page {
           margin-top: constant(safe-area-inset-top); // for ios 11.1
           margin-top: env(safe-area-inset-top); // for ios 11.2 and onwards
@@ -19,3 +22,11 @@ ion-tab-button{
           height: calc(100% - constant(safe-area-inset-top));
           height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
       }
+
+      ion-button{
+        --background: translucent;
+border-color: blue($color: #A298fa);
+border-width: 5px;
+              height: 100px;
+      }
+      

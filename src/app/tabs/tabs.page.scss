@@ -4,15 +4,33 @@ ion-tab-bar{
         border-radius:  25px 25px 0px 0px;
        
               .ios {
-                height: 15px ;
+                // height: 15px ;
+                // margin-bottom: constant(safe-area-inset-bottom);
+
 
       }
       .tab-nav {
         margin-bottom: constant(safe-area-inset-bottom);
     }
+  
 
 }
+ion-tabs{
+        border-radius:  25px 25px 0px 0px;
+       
+        .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-modal.show-page {
+                margin-top: constant(safe-area-inset-top); // for ios 11.1
+                margin-top: env(safe-area-inset-top); // for ios 11.2 and onwards
+                margin-bottom: env(safe-area-inset-bottom);
+                height: calc(100% - constant(safe-area-inset-top));
+                height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+            }
+      .tab-nav {
+        margin-bottom: constant(safe-area-inset-bottom);
+    }
+  
 
+}
 // ion-content ion-toolbar {
 //         --background: translucent;
 // }
@@ -33,22 +51,16 @@ ion-tab-bar{
 //         }}
 
 
-        .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-menu.menu-enabled, .ios.platform-mobile ion-modal.show-page {
-          margin-top: constant(safe-area-inset-top); // for ios 11.1
-          margin-top: env(safe-area-inset-top); // for ios 11.2 and onwards
-          margin-bottom: env(safe-area-inset-bottom);
-          height: calc(100% - constant(safe-area-inset-top));
-          height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
-      }
+  
    
-@media (max-width: 380px){
-        .ios ion-toolbar{
-          padding-top: 40px;
-          ion-title{
-            padding-top: 35px;
-          }
-        }
-}
+// @media (max-width: 380px){
+//         .ios ion-toolbar{
+//           padding-top: 40px;
+//           ion-title{
+//             padding-top: 35px;
+//           }
+//         }
+// }
 
 // /* Set variables for all modes */
 // :root {

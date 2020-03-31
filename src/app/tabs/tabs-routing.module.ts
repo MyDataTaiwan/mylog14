@@ -48,6 +48,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'tab-taiwan',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab-date',
         pathMatch: 'full'
