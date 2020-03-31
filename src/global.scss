@@ -24,3 +24,24 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.recordSaved{
+     
+  .alert-title {
+    text-align: center;
+  }
+  .alert-sub-title {
+    text-align: center;
+  }
+
+  .alert-message {
+    text-align: center;
+  }
+
+  .alert-button-group {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+}

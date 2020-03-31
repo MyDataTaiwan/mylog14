@@ -14,5 +14,18 @@
     "headache": "頭痛",
     "stuffyNose": "鼻塞",
     "fever": "發燒"
+  },
+  "DAILY_RECORD": {
+    "title": "每日記錄",
+    "bodyTemperature": "體溫",
+    "condition": "症狀",
+    "coughing": "咳嗽",
+    "headache": "頭痛",
+    "runnyNose": "流鼻水",
+    "soreThroat": "喉嚨痛",
+    "submit": "送出",
+    "clear": "清除",
+    "recorded": "已紀錄",
+    "ok": "確定"
   }
 }
