@@ -1,3 +1,22 @@
-ion-content ion-toolbar {
+ion-content {
   --background: translucent;
 }
+ ion-toolbar {
+   color: #52C7F4;
+   .ios{
+     font-size: 16pt;
+   }
+  --backgroun:#FFFFFF;
+  // --border-style	:;
+  .header-md::after {
+    display: none;
+}
+ion-button{
+  --background: translucent;
+  --background-focused	:#FFFFFF;
+  --background-focused-opacity: translucent;
+  margin:  20px;
+  --padding:	100px;
+}
+}
+
