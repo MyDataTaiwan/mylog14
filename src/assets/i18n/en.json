@@ -14,6 +14,19 @@
     "headache": "Headache",
     "stuffyNose": "Stuffy Nose",
     "fever": "Fever"
+  },
+  "DAILY_RECORD": {
+    "title": "Daily Record",
+    "bodyTemperature": "Body Temperature",
+    "condition": "Condition",
+    "coughing": "Coughing",
+    "headache": "Headache",
+    "runnyNose": "Runny Nose",
+    "soreThroat": "Sore Throat",
+    "submit": "Submit",
+    "clear": "Clear",
+    "recorded": "Record Saved",
+    "ok": "OK"
   }
 
 }
