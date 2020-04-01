@@ -23,10 +23,6 @@ const routes: Routes = [
     loadChildren: () => import('./date-detail-picture/date-detail-picture.module').then( m => m.DateDetailPicturePageModule)
   },
   {
-    path: 'view-by-category',
-    loadChildren: () => import('./view-by-category/view-by-category.module').then( m => m.ViewByCategoryPageModule)
-  },
-  {
     path: 'bt-detail',
     loadChildren: () => import('./bt-detail/bt-detail.module').then( m => m.BtDetailPageModule)
   },

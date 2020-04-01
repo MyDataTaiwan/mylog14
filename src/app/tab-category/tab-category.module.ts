@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabCategoryPage } from './tab-category.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { ViewByCategoryPageModule } from '../view-by-category/view-by-category.module';
 
 @NgModule({
   imports: [
@@ -14,7 +13,6 @@ import { ViewByCategoryPageModule } from '../view-by-category/view-by-category.m
     FormsModule,
     RouterModule.forChild([{ path: '', component: TabCategoryPage }]),
     TranslateModule,
-    ViewByCategoryPageModule,
   ],
   declarations: [
     TabCategoryPage,
