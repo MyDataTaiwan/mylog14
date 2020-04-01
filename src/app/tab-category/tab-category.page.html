@@ -1,11 +1,17 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      {{ 'DIARY.title' | translate:params }}
+  <ion-toolbar   >
+    <ion-title slot="secondary">
+      MyLog14
     </ion-title>
+   
+    <ion-button  slot="end"  style="background-color:rgba(255, 255, 255, 0);" >
+      <img src="../../assets/ui/switch_icon.svg" />
+    </ion-button>
+    <!-- <ion-button slot="end" >
+      <ion-label class=".ion-text-center">category</ion-label>
+    </ion-button> -->
   </ion-toolbar>
 </ion-header>
-
 <ion-content style="height: 100%">
 
   <app-view-by-category></app-view-by-category>

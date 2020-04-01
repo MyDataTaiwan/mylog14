@@ -32,6 +32,8 @@
     "@numbersprotocol/niota": "^0.1.1",
     "bufferutil": "^4.0.1",
     "core-js": "^2.5.4",
+    "lottie-web": "^5.6.7",
+    "ngx-lottie": "^5.4.0",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "utf-8-validate": "^5.0.2",

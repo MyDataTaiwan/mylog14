@@ -17,6 +17,15 @@ export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
+
+// Note we need a separate function as it's required
+// by the AOT compiler.
+export function playerFactory() {
+	return player;
+}
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,7 +36,8 @@ export function LanguageLoader(http: HttpClient) {
       useFactory: (LanguageLoader),
       deps: [HttpClient]
       }
-    })
+    }),
+    LottieModule.forRoot({ player: playerFactory })
 ],
   providers: [
     StatusBar,

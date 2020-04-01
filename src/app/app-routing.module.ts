@@ -65,6 +65,10 @@ const routes: Routes = [
   {
     path: 'categorize-finish',
     loadChildren: () => import('./categorize-finish/categorize-finish.module').then( m => m.CategorizeFinishPageModule)
+  },
+  {
+    path: 'tab-taiwan',
+    loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
   }
 ];
 @NgModule({

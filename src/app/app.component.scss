@@ -1,0 +1,68 @@
+
+// ion-icon {
+//         &[class*="custom-"] {
+//           mask-size: contain;
+//           mask-position: 50% 50%;
+//           mask-repeat: no-repeat;
+//           background: currentColor;
+//           width: 1em;
+//           height: 1em;
+//         }
+      
+//         &[class*="custom-switch"] {
+//           mask-image: url(../assets/ui/switch_icon.svg);
+//         }
+//         &[class*="custom-category"] {
+//           mask-image: url(../assets/ui/category_icon.svg);
+//         }
+//         &[class*="custom-twl"] {
+//           mask-image: url(../assets/ui/tw_icon_L.svg);
+//         }
+//         &[class*="custom-twr"] {
+//                 mask-image: url(../assets/ui/tw_icon_R.svg);
+//               }
+//       }
+  
+  ion-header{
+
+        ion-navbar:nth-child(1){
+        
+        padding-top:constant(safe-area-inset-top)!important;
+        
+        padding-top:env(safe-area-inset-top)!important;
+        
+        }
+        
+        }
+     
+        @media (max-width: 380px){
+          .ios ion-toolbar{
+            padding-top: 40px;
+            ion-title{
+              padding-top: 35px;
+            }
+          }
+    }
+    .toolbar-ios {
+    padding-top: env(safe-area-inset-top);
+    }
+
+    .tab-nav {
+        margin-bottom: constant(safe-area-inset-bottom);
+    }
+
+    body {
+        margin-top: 20px; /* Status bar height on iOS 10 */
+        margin-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+        margin-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+      
+      }
+      
+      ion-tab-bar {
+               margin-top: 20px; /* Status bar height on iOS 10 */
+  margin-top: constant(safe-area-inset-top); /* Status bar height on iOS 11.0 */
+  margin-top: env(safe-area-inset-top); /* Status bar height on iOS 11+ */
+        margin-bottom: env(safe-area-inset-bottom);
+      }
+
+     
