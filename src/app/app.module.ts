@@ -19,6 +19,7 @@ export function LanguageLoader(http: HttpClient) {
 
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { AddRecordPageModule } from './add-record/add-record.module';
 
 // Note we need a separate function as it's required
 // by the AOT compiler.
@@ -28,7 +29,9 @@ export function playerFactory() {
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TranslateModule.forRoot({
     loader:{
@@ -37,6 +40,7 @@ export function playerFactory() {
       deps: [HttpClient]
       }
     }),
+    AddRecordPageModule,
     LottieModule.forRoot({ player: playerFactory })
 ],
   providers: [

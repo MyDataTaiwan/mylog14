@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { AddRecordPageRoutingModule } from './add-record-routing.module';
 
 import { AddRecordPage } from './add-record.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AddRecordPageRoutingModule
+    AddRecordPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [AddRecordPage],
+  entryComponents: [AddRecordPage],
 })
 export class AddRecordPageModule {}
