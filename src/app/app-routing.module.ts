@@ -7,10 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'view-by-date',
-    loadChildren: () => import('./view-by-date/view-by-date.module').then( m => m.ViewByDatePageModule)
-  },
-  {
     path: 'date-detail',
     loadChildren: () => import('./date-detail/date-detail.module').then( m => m.DateDetailPageModule)
   },
