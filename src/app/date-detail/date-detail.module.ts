@@ -8,9 +8,9 @@ import { DateDetailPageRoutingModule } from './date-detail-routing.module';
 
 import { DateDetailPage } from './date-detail.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { DateDetailOverviewPage } from '../date-detail-overview/date-detail-overview.page';
-import { DateDetailConditionPage } from '../date-detail-condition/date-detail-condition.page';
-import { DateDetailPicturePage } from '../date-detail-picture/date-detail-picture.page';
+import { DateDetailOverviewPageModule } from '../date-detail-overview/date-detail-overview.module';
+import { DateDetailConditionPageModule } from '../date-detail-condition/date-detail-condition.module';
+import { DateDetailPicturePageModule } from '../date-detail-picture/date-detail-picture.module';
 
 @NgModule({
   imports: [
@@ -19,12 +19,12 @@ import { DateDetailPicturePage } from '../date-detail-picture/date-detail-pictur
     IonicModule,
     DateDetailPageRoutingModule,
     TranslateModule,
+    DateDetailOverviewPageModule,
+    DateDetailConditionPageModule,
+    DateDetailPicturePageModule,
   ],
   declarations: [
     DateDetailPage,
-    DateDetailOverviewPage,
-    DateDetailConditionPage,
-    DateDetailPicturePage,
   ]
 })
 export class DateDetailPageModule {}

@@ -15,6 +15,7 @@ import { DateDetailPicturePage } from './date-detail-picture.page';
     IonicModule,
     DateDetailPicturePageRoutingModule
   ],
-  declarations: [DateDetailPicturePage]
+  declarations: [DateDetailPicturePage],
+  exports: [DateDetailPicturePage],
 })
 export class DateDetailPicturePageModule {}

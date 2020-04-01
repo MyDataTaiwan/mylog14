@@ -15,6 +15,7 @@ import { DateDetailOverviewPage } from './date-detail-overview.page';
     IonicModule,
     DateDetailOverviewPageRoutingModule
   ],
-  declarations: [DateDetailOverviewPage]
+  declarations: [DateDetailOverviewPage],
+  exports: [DateDetailOverviewPage],
 })
 export class DateDetailOverviewPageModule {}
