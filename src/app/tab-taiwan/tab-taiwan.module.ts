@@ -8,9 +8,10 @@ import { TabTaiwanPageRoutingModule } from './tab-taiwan-routing.module';
 
 import { TabTaiwanPage } from './tab-taiwan.page';
 import { LottieModule } from 'ngx-lottie';
+import { MainHeaderModule } from '../main-header/main-header.module';
 
 export function playerFactory() {
-	return import('lottie-web');
+  return import('lottie-web');
 }
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ export function playerFactory() {
     FormsModule,
     IonicModule,
     TabTaiwanPageRoutingModule,
-    LottieModule.forRoot({ player: playerFactory })
+    LottieModule.forRoot({ player: playerFactory }),
+    MainHeaderModule,
   ],
   declarations: [TabTaiwanPage]
 })

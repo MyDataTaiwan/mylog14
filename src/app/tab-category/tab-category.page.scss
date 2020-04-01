@@ -2,21 +2,21 @@ ion-content {
   --background: translucent;
 }
 ion-toolbar {
-  color: #52C7F4;
-  .ios{
+  color: #52c7f4;
+  .ios {
     font-size: 16pt;
   }
-  --backgroun:#FFFFFF;
+  --backgroun: #ffffff;
   // --border-style	:;
   .header-md::after {
     display: none;
   }
   ion-button {
     --background: translucent;
-    --background-focused	:#FFFFFF;
+    --background-focused: #ffffff;
     --background-focused-opacity: translucent;
-    margin:  20px;
-    --padding:	100px;
+    margin: 20px;
+    --padding: 100px;
   }
 }
 
@@ -27,11 +27,10 @@ ion-content {
     //   background-image: url('../../assets/ui/category_icon_D_L.svg');
     //   background-position: center center;
     //   background-repeat: no-repeat;
-    //   background-size: cover;   
+    //   background-size: cover;
   }
 
-  ion-label{
+  ion-label {
     color: #000000;
   }
 }
-
