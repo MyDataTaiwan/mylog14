@@ -17,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     DateDetailConditionPageRoutingModule,
     TranslateModule,
   ],
-  declarations: [DateDetailConditionPage]
+  declarations: [DateDetailConditionPage],
+  exports: [DateDetailConditionPage],
 })
 export class DateDetailConditionPageModule {}

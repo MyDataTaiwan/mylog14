@@ -3,8 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,29 +17,33 @@ export function LanguageLoader(http: HttpClient) {
 
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { AddRecordPageModule } from './add-record/add-record.module';
+import { ViewByDatePageModule } from './view-by-date/view-by-date.module';
 
 // Note we need a separate function as it's required
 // by the AOT compiler.
 export function playerFactory() {
-	return player;
+  return player;
 }
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TranslateModule.forRoot({
-    loader:{
+    loader: {
       provide: TranslateLoader,
       useFactory: (LanguageLoader),
       deps: [HttpClient]
       }
     }),
+    AddRecordPageModule,
+    ViewByDatePageModule,
     LottieModule.forRoot({ player: playerFactory })
 ],
   providers: [
-    StatusBar,
-    SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

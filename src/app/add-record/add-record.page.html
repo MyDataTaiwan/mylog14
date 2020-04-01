@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      {{ 'DAILY_RECORD.title' | translate:params }}
+      {{ 'DAILY_RECORD.title' | translate }}
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button text="" icon="arrow-back-outline">
@@ -13,36 +13,36 @@
 <ion-content>
 <ion-list>
   <ion-item (click)="onBodyTemperatureClick()">
-    <ion-label color="primary">{{ 'DAILY_RECORD.bodyTemperature' | translate:params }}</ion-label>
+    <ion-label color="primary">{{ 'DAILY_RECORD.bodyTemperature' | translate }}</ion-label>
     <ion-label class="ion-text-right" slot="end">{{ bt }}{{ btUnit }}</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label color="primary">{{ 'DAILY_RECORD.condition' | translate:params }}</ion-label>
+    <ion-label color="primary">{{ 'DAILY_RECORD.condition' | translate }}</ion-label>
   </ion-item>
   <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.coughing' | translate:params }}</ion-label>
+    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.coughing' | translate }}</ion-label>
     <ion-toggle [(ngModel)]="condition.coughing"></ion-toggle>
   </ion-item>
   <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.headache' | translate:params }}</ion-label>
+    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.headache' | translate }}</ion-label>
     <ion-toggle [(ngModel)]="condition.headache"></ion-toggle>
   </ion-item>
   <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.runnyNose' | translate:params }}</ion-label>
+    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.runnyNose' | translate }}</ion-label>
     <ion-toggle [(ngModel)]="condition.runnyNose"></ion-toggle>
   </ion-item>
   <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.soreThroat' | translate:params }}</ion-label>
+    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.soreThroat' | translate }}</ion-label>
     <ion-toggle [(ngModel)]="condition.soreThroat"></ion-toggle>
   </ion-item>
 </ion-list>
 <ion-grid>
   <ion-row class="ion-justify-content-center">
     <ion-col size="3" class="ion-align-self-center">
-      <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate:params }}</ion-button>
+      <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
     </ion-col>
     <ion-col size="3" class="ion-align-self-center">
-      <ion-button (click)="onSubmitClick()">{{ 'DAILY_RECORD.submit' | translate:params }}</ion-button>
+      <ion-button (click)="onSubmitClick()">{{ 'DAILY_RECORD.submit' | translate }}</ion-button>
     </ion-col>
   </ion-row>
 </ion-grid>

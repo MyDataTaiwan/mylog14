@@ -15,6 +15,7 @@ import { ViewByCategoryPage } from './view-by-category.page';
     IonicModule,
     ViewByCategoryPageRoutingModule
   ],
-  declarations: [ViewByCategoryPage]
+  declarations: [ViewByCategoryPage],
+  exports: [ViewByCategoryPage],
 })
 export class ViewByCategoryPageModule {}

@@ -7,8 +7,6 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 
 import { TabsPage } from './tabs.page';
 import { TranslateModule } from '@ngx-translate/core';
-import { AddRecordPage } from '../add-record/add-record.page';
-import { AddRecordPageModule } from '../add-record/add-record.module';
 
 @NgModule({
   imports: [
@@ -20,8 +18,6 @@ import { AddRecordPageModule } from '../add-record/add-record.module';
   ],
   declarations: [
     TabsPage,
-    AddRecordPage,
   ],
-  entryComponents: [AddRecordPage],
 })
 export class TabsPageModule {}

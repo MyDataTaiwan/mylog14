@@ -15,6 +15,7 @@ import { ViewByDatePage } from './view-by-date.page';
     IonicModule,
     ViewByDatePageRoutingModule
   ],
-  declarations: [ViewByDatePage]
+  declarations: [ViewByDatePage],
+  exports: [ViewByDatePage],
 })
 export class ViewByDatePageModule {}
