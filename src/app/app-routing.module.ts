@@ -7,18 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'diary',
-    loadChildren: () => import('./diary/diary.module').then( m => m.DiaryPageModule)
-  },
-  {
-    path: 'status-card',
-    loadChildren: () => import('./status-card/status-card.module').then( m => m.StatusCardPageModule)
-  },
-  {
-    path: 'condition-card',
-    loadChildren: () => import('./condition-card/condition-card.module').then( m => m.ConditionCardPageModule)
-  },
-  {
     path: 'view-by-date',
     loadChildren: () => import('./view-by-date/view-by-date.module').then( m => m.ViewByDatePageModule)
   },

@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabDatePage } from './tab-date.page';
 
 @Component({
-  selector: 'app-diary',
+  selector: 'app-tab-date',
   template: ''
 })
 class MockDiaryPage {
