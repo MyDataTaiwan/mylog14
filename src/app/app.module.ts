@@ -23,7 +23,7 @@ import { ViewByDatePageModule } from './view-by-date/view-by-date.module';
 // Note we need a separate function as it's required
 // by the AOT compiler.
 export function playerFactory() {
-	return player;
+  return player;
 }
 
 
@@ -33,7 +33,7 @@ export function playerFactory() {
   ],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TranslateModule.forRoot({
-    loader:{
+    loader: {
       provide: TranslateLoader,
       useFactory: (LanguageLoader),
       deps: [HttpClient]
