@@ -9,7 +9,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
+<!-- FIXME :  (click)="isShow=!isShow" ADD RECOR UI 中 icon 隨者 <ion-toggle> 撥動而改變顏色-->
 <ion-content>
 <ion-list>
   <ion-item (click)="onBodyTemperatureClick()">
@@ -21,19 +21,31 @@
   </ion-item>
   <ion-item>
     <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.coughing' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.coughing"></ion-toggle>
+    <ion-toggle [(ngModel)]="condition.coughing" (click)="isShow=!isShow"></ion-toggle>
+            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow"  />
+            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow"  />
+
   </ion-item>
   <ion-item>
     <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.headache' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.headache"></ion-toggle>
+    <ion-toggle [(ngModel)]="condition.headache" (click)="isShow1=!isShow1"></ion-toggle>
+            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow1"  />
+            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow1"  />
+
   </ion-item>
   <ion-item>
     <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.runnyNose' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.runnyNose"></ion-toggle>
+    <ion-toggle [(ngModel)]="condition.runnyNose" (click)="isShow2=!isShow2"></ion-toggle>
+            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow2"  />
+            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow2"  />
+
   </ion-item>
   <ion-item>
     <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.soreThroat' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.soreThroat"></ion-toggle>
+    <ion-toggle [(ngModel)]="condition.soreThroat" (click)="isShow3=!isShow3"></ion-toggle>
+            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow3"  />
+            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow3"  />
+
   </ion-item>
 </ion-list>
 <ion-grid>

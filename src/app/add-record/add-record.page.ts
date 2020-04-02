@@ -16,6 +16,10 @@ import { Record } from '../interfaces/record';
   styleUrls: ['./add-record.page.scss'],
 })
 export class AddRecordPage implements OnInit {
+  isShow=true;
+  isShow1=true;
+  isShow2=true;
+  isShow3=true;
   btCIntegerList = this.genIntArr(35, 40).map(x => x.toString());
   btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
   btUnitList = ['°C', '°F'];
