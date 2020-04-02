@@ -12,6 +12,81 @@
 <ion-content>
   <ion-title class="ion-text-center">地點</ion-title>
   <img src="https://cdn.pixabay.com/photo/2011/12/13/17/07/earth-11047_1280.jpg">
+
+
+
+
+
+
+  <ion-item detail>
+    <ion-label>
+      用戶信息
+    </ion-label>
+    <ion-icon name="bicycle-outline" (click)="isShow=!isShow"></ion-icon>
+
+  <!-- <ion-icon name="ios-arrow-down" item-right *ngIf="isShow" (click)="isShow=!isShow"></ion-icon>
+  <ion-icon name="ios-arrow-forward" item- right *ngIf="!isShow" (click)="isShow=!isShow"></ion-icon> -->
+  <ion-icon name="ios-arrow-down" item-right ></ion-icon>
+  <ion-icon name="ios-arrow-forward" item- right ></ion-icon>
+  </ion-item>
+  <ion-list *ngIf="isShow">
+    <ion-item *ngFor=" let item of items">
+      姓名：{{item.name}}年齡：{{item.age}}
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        Item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <ion-text color="primary">
+          <h3>H3 Primary Title</h3>
+        </ion-text>
+        <p>Paragraph line 1</p>
+        <ion-text color="secondary">
+          <p>Paragraph line 2 secondary</p>
+        </ion-text>
+      </ion-label>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label>
+        No Lines Item
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        Multiline text that should wrap when it is too long
+        to fit on one line in the item.
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+  <ion-item detail>
+    <ion-label>
+      Standard Item with Detail Arrow
+    </ion-label>
+  </ion-item>
+
+  <ion-item button (click)="buttonClick()" detail>
+    <ion-label>
+      Button Item with Detail Arrow
+    </ion-label>
+  </ion-item>
+
+  <ion-item detail="false" href="https://www.ionicframework.com">
+    <ion-label>
+      Anchor Item with no Detail Arrow
+    </ion-label>
+  </ion-item>
+
   <ion-list>
     <ion-card *ngFor="let day of days">
       <ion-grid>
