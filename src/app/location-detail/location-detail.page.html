@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>
-      {{ 'DIARY.title' | translate }}
+    <ion-title class="ion-text-center">
+      <!-- {{ 'DIARY.title' | translate }} -->
+      地點
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button text="" icon="arrow-back-outline">
@@ -12,12 +13,11 @@
 
 
 <ion-content>
-  <ion-title class="ion-text-center">地點</ion-title>
+  <!-- <ion-title class="ion-text-center">地點</ion-title> -->
+  <!-- 25.060018,121.5307651 -->
   <!-- <img src="https://cdn.pixabay.com/photo/2011/12/13/17/07/earth-11047_1280.jpg"> -->
-  <iframe
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4803.663456910487!2d121.53076512847508!3d25.060017950795636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a95eb2364b21%3A0x1bc55eaa0839a777!2z5p2-5rGf5biC5aC0!5e0!3m2!1szh-TW!2stw!4v1585827521554!5m2!1szh-TW!2stw"
-    width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-    tabindex="0"></iframe>
+  <!-- <iframe  width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no" src="'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q='+tempLocation"></iframe> -->
+  <iframe  width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no" src='https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=25.035221,121.557612'></iframe>
 
   <!-- FIXME: location-detail.page state & data 需要調整，目前缺少資料與分享功能-->
   <ion-item button (click)="isSelect=!isSelect" detail="false">

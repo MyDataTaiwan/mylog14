@@ -1,7 +1,8 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-title>
-            {{ 'DIARY.title' | translate }}
+    <ion-toolbar color="primary" >
+        <ion-title class="ion-text-center">
+            <!-- {{ 'DIARY.title' | translate }} -->
+            體溫
         </ion-title>
         <ion-buttons slot="start">
             <ion-back-button text="" icon="arrow-back-outline">
@@ -10,7 +11,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-<ion-title class="ion-text-center">體溫</ion-title>
+<!-- <ion-title class="ion-text-center">體溫</ion-title> -->
 <img src="https://cdn.pixabay.com/photo/2017/12/22/08/01/graph-3033203_1280.jpg">
 <ion-item button (click)="isSelect=!isSelect" detail="false">
     <img src="../../assets/ui/add_icon_2.svg" />

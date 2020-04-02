@@ -9,6 +9,8 @@ export class LocationDetailPage implements OnInit {
   isShow: true;
   isSelect: true;
   isSelectlist = [];
+  tempLocation = '25.035221,121.557612'
+  url='https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q='+this.tempLocation;
   list = [
     {
       date: "2020/03/28",

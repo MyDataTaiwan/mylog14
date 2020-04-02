@@ -1,7 +1,8 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-title>
-            {{ 'DIARY.title' | translate }}
+        <ion-title class="ion-text-center">
+            <!-- {{ 'DIARY.title' | translate }} -->
+            症狀
         </ion-title>
         <ion-buttons slot="start">
             <ion-back-button text="" icon="arrow-back-outline">
@@ -10,7 +11,7 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-title class="ion-text-center">症狀</ion-title>
+    <!-- <ion-title class="ion-text-center">症狀</ion-title> -->
     <ion-item button (click)="isSelect=!isSelect" detail="false">
         <img src="../../assets/ui/add_icon_2.svg" />
         <ion-label>選擇要分享的資料</ion-label>
