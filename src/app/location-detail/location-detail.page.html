@@ -9,47 +9,75 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+
 <ion-content>
   <ion-title class="ion-text-center">地點</ion-title>
   <!-- <img src="https://cdn.pixabay.com/photo/2011/12/13/17/07/earth-11047_1280.jpg"> -->
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4803.663456910487!2d121.53076512847508!3d25.060017950795636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a95eb2364b21%3A0x1bc55eaa0839a777!2z5p2-5rGf5biC5aC0!5e0!3m2!1szh-TW!2stw!4v1585827521554!5m2!1szh-TW!2stw" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4803.663456910487!2d121.53076512847508!3d25.060017950795636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a95eb2364b21%3A0x1bc55eaa0839a777!2z5p2-5rGf5biC5aC0!5e0!3m2!1szh-TW!2stw!4v1585827521554!5m2!1szh-TW!2stw"
+    width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+    tabindex="0"></iframe>
 
+  <!-- FIXME: location-detail.page state & data 需要調整，目前缺少資料與分享功能-->
+  <ion-item button (click)="isSelect=!isSelect" detail="false">
+    <img src="../../assets/ui/add_icon_2.svg" />
+    <ion-label>選擇要分享的資料</ion-label>
+    <ion-label>{{isSelectlist.length}}</ion-label>
+    <img (click)="alert('未完成')" src="../../assets/ui/add_icon_4.svg" />
 
-  <!-- FIXME: state & data 需要調整，目前缺少時間紀錄-->
-
-  
+    <!-- <img *ngIf="isSelect" (click)="isSelect=!isSelect" src="../../assets/ui/add_icon_2.svg" /> -->
+  </ion-item>
   <ion-list>
+
     <div *ngFor="let ToDay of list">
-    <ion-item button (click)="ToDay.isShow=!ToDay.isShow"  detail="false">
-      <ion-label>{{ ToDay.date }}</ion-label>
-      <ion-label class="ion-text-start">
-        day {{ ToDay.day }}
-      </ion-label>
-      <ion-icon name="caret-forward-outline"  *ngIf="!isShow" (click)="isShow=!isShow"></ion-icon>
-      <ion-icon name="caret-down-outline"  *ngIf="isShow"(click)="isShow=!isShow"></ion-icon>
-    </ion-item>
-    <ion-list *ngIf="ToDay.isShow">
-      <ion-item  *ngFor="let ToDayList of ToDay.location">
-        <ion-label class="ion-text-center" color="dark">{{ToDayList.latitude}},{{ToDayList.longitude}}</ion-label>
-        <ion-note slot="end">{{ ToDayList.time }}</ion-note>
+      <ion-item detail="false">
+        <div *ngIf="isSelect">
+          <img *ngIf="!ToDay.isSelect" (click)="addSelect(ToDay)" src="../../assets/ui/add_icon_2.svg" />
+          <img *ngIf="ToDay.isSelect" (click)="delSelect(ToDay)" src="../../assets/ui/add_icon_3.svg" />
+        </div>
+
+        <ion-label>{{ ToDay.date }}</ion-label>
+        <ion-label class="ion-text-start">
+          day {{ ToDay.day }}
+        </ion-label>
+        <div onclick="ToDay.isShow=!ToDay.isShow">
+          <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow">
+          </ion-icon>
+        </div>
+        <div onclick="ToDay.isShow=!ToDay.isShow">
+          <ion-icon name="caret-down-outline" *ngIf="ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow">
+          </ion-icon>
+        </div>
       </ion-item>
-    </ion-list>
-  </div>
+      <ion-list *ngIf="ToDay.isShow">
+        <ion-item *ngFor="let ToDayList of ToDay.location">
+          <ion-label class="ion-text-center" color="dark">{{ToDayList.latitude}},{{ToDayList.longitude}}</ion-label>
+          <ion-note slot="end">{{ ToDayList.time }}</ion-note>
+        </ion-item>
+      </ion-list>
+    </div>
   </ion-list>
 
+  <ion-list>
 
-  <!-- <ion-list>
-    <ion-card *ngFor="let day of days">
-      <ion-grid>
-        <ion-row class="ion-align-items-center">
-          <ion-col size="6">
-            <ion-title class="ion-text-center">DAY {{ day }}</ion-title>
-          </ion-col>
-          <ion-col size="6">
-            <ion-toggle class="ion-align-self-center"></ion-toggle>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-list> -->
+    <div *ngFor="let ToDay of list">
+      <ion-item button (click)="ToDay.isShow=!ToDay.isShow" detail="false">
+        <img *ngIf="isSelect" (click)="isSelect=!isSelect" src="../../assets/ui/add_icon_2.svg" />
+        <ion-label>{{ ToDay.date }}</ion-label>
+        <ion-label class="ion-text-start">
+          day {{ ToDay.day }}
+        </ion-label>
+        <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow">
+        </ion-icon>
+        <ion-icon name="caret-down-outline" *ngIf="ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow"></ion-icon>
+      </ion-item>
+      <ion-list *ngIf="ToDay.isShow">
+        <ion-item *ngFor="let ToDayList of ToDay.location">
+          <ion-label class="ion-text-center" color="dark">{{ToDayList.latitude}},{{ToDayList.longitude}}</ion-label>
+          <ion-note slot="end">{{ ToDayList.time }}</ion-note>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-list>
 </ion-content>
