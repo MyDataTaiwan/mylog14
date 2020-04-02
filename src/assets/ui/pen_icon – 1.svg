@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="69" height="69" viewBox="0 0 69 69">
+  <defs>
+    <filter id="Ellipse_283" x="0" y="0" width="69" height="69" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feFlood flood-color="#050505" flood-opacity="0.224"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-pen_icon_1">
+      <rect width="69" height="69"/>
+    </clipPath>
+  </defs>
+  <g id="pen_icon_1" data-name="pen_icon – 1" clip-path="url(#clip-pen_icon_1)">
+    <g id="Group_809" data-name="Group 809" transform="translate(-7536 4323)">
+      <g transform="matrix(1, 0, 0, 1, 7536, -4323)" filter="url(#Ellipse_283)">
+        <circle id="Ellipse_283-2" data-name="Ellipse 283" cx="28.5" cy="28.5" r="28.5" transform="translate(6 6)" fill="#fff"/>
+      </g>
+      <g id="drop" transform="translate(7521.725 -4309)">
+        <g id="Group_793" data-name="Group 793" transform="translate(35.275 0)">
+          <path id="Path_1311" data-name="Path 1311" d="M50.911,1.348c-1.072-1.828-2.207-1.765-3.278,0C42.715,8.662,35.275,19.632,35.275,25.117a14,14,0,1,0,27.993,0C63.268,19.569,55.828,8.662,50.911,1.348Zm8.448,30.01a11.971,11.971,0,0,1-4.224,4.1A1.693,1.693,0,0,1,53.5,32.493a8.346,8.346,0,0,0,3.026-2.9,8.219,8.219,0,0,0,1.261-4.035,1.673,1.673,0,0,1,3.341.189A12.49,12.49,0,0,1,59.359,31.358Z" transform="translate(-35.275 0)" fill="#52c7f4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

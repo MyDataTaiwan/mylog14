@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="69" height="69" viewBox="0 0 69 69">
+  <defs>
+    <clipPath id="clip-add_icon_2">
+      <rect width="69" height="69"/>
+    </clipPath>
+  </defs>
+  <g id="add_icon_2" clip-path="url(#clip-add_icon_2)">
+    <g id="android-checkbox-outline-blank" transform="translate(24 24.279)">
+      <g id="Group_121" data-name="Group 121" transform="translate(3 3)">
+        <path id="Path_566" data-name="Path 566" d="M17.032,4.754V17.032H4.754V4.754H17.032m0-1.754H4.754A1.759,1.759,0,0,0,3,4.754V17.032a1.759,1.759,0,0,0,1.754,1.754H17.032a1.759,1.759,0,0,0,1.754-1.754V4.754A1.759,1.759,0,0,0,17.032,3Z" transform="translate(-3 -3)" fill="#f9ad35"/>
+      </g>
+    </g>
+  </g>
+</svg>
