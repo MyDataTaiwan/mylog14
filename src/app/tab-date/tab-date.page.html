@@ -1,43 +1,26 @@
-<ion-header>
-  
-
-    <ion-toolbar color="primary">
-      <ion-title slot="secondary">
-       MyLog14
-      </ion-title>  
-      <ion-tab-button slot="end" tab="tab-category">
-        <ion-icon name="grid-outline"></ion-icon>
-        <ion-label class=".ion-text-center" >category</ion-label>
-      </ion-tab-button>
-    </ion-toolbar>
-
-  <!-- <ion-toolbar color="primary">
-    <ion-title slot="secondary">
-      {{ 'DIARY.title' | translate }}
-    </ion-title>
-    <ion-tab-button slot="end" tab="tab-category">
-      <ion-icon name="grid-outline"></ion-icon>
-      <ion-label>Abosut</ion-label>
-    </ion-tab-button>
-
-
-  </ion-toolbar> -->
-      <!-- FIXME: Style is quite different from the wireframe -->
-    <!-- <ion-button slot="end" [routerLink]="['/categorize-data']" routerDirection="forward">
-      <ion-icon name="folder-open-outline"></ion-icon>
-      <ion-badge color="danger" slot="end">22</ion-badge>
-    </ion-button> -->
-  <!-- <ion-toolbar color="primary">
-     
-      <ion-title class=".ion-text-center">Right side menu toggle</ion-title>
-  
-      <ion-tab-button slot="end" tab="tab-category">
-        <ion-icon name="grid-outline"></ion-icon>
-      </ion-tab-button>
-    </ion-toolbar> -->
-
-</ion-header>
+<app-main-header></app-main-header>
 
 <ion-content>
-  <app-view-by-date></app-view-by-date>
+  <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
+  <ion-virtual-scroll [items]="items" approxItemHeight="220px" height="100%">
+    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-date/date-detail']"
+      routerDirection="forward">
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="4">
+            <ion-card-header>
+              <ion-card-title class="ion-text-center">DAY {{ item.day }}</ion-card-title>
+              <ion-card-title class="ion-text-center">{{ item.month }}/{{ item.date }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-text-center">BT: {{ item.bt }}</ion-card-content>
+          </ion-col>
+          <ion-col size="8">
+            <div>
+              <ion-img [src]="item.imgSrc" alt="No picture"></ion-img>
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </ion-virtual-scroll>
 </ion-content>

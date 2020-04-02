@@ -18,7 +18,6 @@ export function LanguageLoader(http: HttpClient) {
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { AddRecordPageModule } from './add-record/add-record.module';
-import { ViewByDatePageModule } from './view-by-date/view-by-date.module';
 
 // Note we need a separate function as it's required
 // by the AOT compiler.
@@ -40,7 +39,6 @@ export function playerFactory() {
       }
     }),
     AddRecordPageModule,
-    ViewByDatePageModule,
     LottieModule.forRoot({ player: playerFactory })
 ],
   providers: [

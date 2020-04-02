@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabDatePage } from './tab-date.page';
 import {TranslateModule} from '@ngx-translate/core';
-import { ViewByDatePageModule } from '../view-by-date/view-by-date.module';
+import { MainHeaderModule } from '../main-header/main-header.module';
 
 @NgModule({
     imports: [
@@ -14,7 +14,7 @@ import { ViewByDatePageModule } from '../view-by-date/view-by-date.module';
         FormsModule,
         RouterModule.forChild([{path: '', component: TabDatePage}]),
         TranslateModule,
-        ViewByDatePageModule,
+        MainHeaderModule,
     ],
   declarations: [
     TabDatePage,

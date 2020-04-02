@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ViewByCategoryPage } from './view-by-category.page';
+import { MainHeaderComponent } from './main-header.component';
 
-describe('ViewByCategoryPage', () => {
-  let component: ViewByCategoryPage;
-  let fixture: ComponentFixture<ViewByCategoryPage>;
+describe('MainHeaderComponent', () => {
+  let component: MainHeaderComponent;
+  let fixture: ComponentFixture<MainHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ViewByCategoryPage ],
+      declarations: [ MainHeaderComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ViewByCategoryPage);
+    fixture = TestBed.createComponent(MainHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -7,10 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'view-by-date',
-    loadChildren: () => import('./view-by-date/view-by-date.module').then( m => m.ViewByDatePageModule)
-  },
-  {
     path: 'date-detail',
     loadChildren: () => import('./date-detail/date-detail.module').then( m => m.DateDetailPageModule)
   },
@@ -25,10 +21,6 @@ const routes: Routes = [
   {
     path: 'date-detail-picture',
     loadChildren: () => import('./date-detail-picture/date-detail-picture.module').then( m => m.DateDetailPicturePageModule)
-  },
-  {
-    path: 'view-by-category',
-    loadChildren: () => import('./view-by-category/view-by-category.module').then( m => m.ViewByCategoryPageModule)
   },
   {
     path: 'bt-detail',
