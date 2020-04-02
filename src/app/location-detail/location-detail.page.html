@@ -11,83 +11,39 @@
 </ion-header>
 <ion-content>
   <ion-title class="ion-text-center">地點</ion-title>
-  <img src="https://cdn.pixabay.com/photo/2011/12/13/17/07/earth-11047_1280.jpg">
+  <!-- <img src="https://cdn.pixabay.com/photo/2011/12/13/17/07/earth-11047_1280.jpg"> -->
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4803.663456910487!2d121.53076512847508!3d25.060017950795636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a95eb2364b21%3A0x1bc55eaa0839a777!2z5p2-5rGf5biC5aC0!5e0!3m2!1szh-TW!2stw!4v1585827521554!5m2!1szh-TW!2stw" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 
 
+  <!-- FIXME: state & data 需要調整，目前缺少時間紀錄-->
 
-
-
-
-  <ion-item detail>
-    <ion-label>
-      用戶信息
-    </ion-label>
-    <ion-icon name="bicycle-outline" (click)="isShow=!isShow"></ion-icon>
-
-  <!-- <ion-icon name="ios-arrow-down" item-right *ngIf="isShow" (click)="isShow=!isShow"></ion-icon>
-  <ion-icon name="ios-arrow-forward" item- right *ngIf="!isShow" (click)="isShow=!isShow"></ion-icon> -->
-  <ion-icon name="ios-arrow-down" item-right ></ion-icon>
-  <ion-icon name="ios-arrow-forward" item- right ></ion-icon>
-  </ion-item>
-  <ion-list *ngIf="isShow">
-    <ion-item *ngFor=" let item of items">
-      姓名：{{item.name}}年齡：{{item.age}}
-    </ion-item>
-    <ion-item>
-      <ion-label>
-        Item
+  
+  <ion-list>
+    <div *ngFor="let day of days">
+    <ion-item button (click)="isShow=!isShow"  detail="false">
+      <ion-label>2020/08/22</ion-label>
+      <ion-label class="ion-text-start">
+        day {{ day }}
       </ion-label>
-    </ion-item>
+      <ion-icon name="caret-forward-outline"  *ngIf="!isShow" (click)="isShow=!isShow"></ion-icon>
+      <ion-icon name="caret-down-outline"  *ngIf="isShow"(click)="isShow=!isShow"></ion-icon>
 
-    <ion-item>
-      <ion-label class="ion-text-wrap">
-        <ion-text color="primary">
-          <h3>H3 Primary Title</h3>
-        </ion-text>
-        <p>Paragraph line 1</p>
-        <ion-text color="secondary">
-          <p>Paragraph line 2 secondary</p>
-        </ion-text>
-      </ion-label>
     </ion-item>
-
-    <ion-item lines="none">
-      <ion-label>
-        No Lines Item
-      </ion-label>
-    </ion-item>
-
-    <ion-item>
-      <ion-label class="ion-text-wrap">
-        Multiline text that should wrap when it is too long
-        to fit on one line in the item.
-      </ion-label>
-    </ion-item>
+    <ion-list *ngIf="isShow">
+      <ion-item>
+        <ion-label class="ion-text-center" color="dark">(121°20’10’’E，45°10’20’’ N)</ion-label>
+        <ion-note slot="end">09:10</ion-note>
+      </ion-item>
+      <ion-item>
+        <ion-label class="ion-text-center" color="dark">(121°20’10’’E，45°10’20’’ N)</ion-label>
+        <ion-note slot="end">09:10</ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
   </ion-list>
 
 
-
-
-
-  <ion-item detail>
-    <ion-label>
-      Standard Item with Detail Arrow
-    </ion-label>
-  </ion-item>
-
-  <ion-item button (click)="buttonClick()" detail>
-    <ion-label>
-      Button Item with Detail Arrow
-    </ion-label>
-  </ion-item>
-
-  <ion-item detail="false" href="https://www.ionicframework.com">
-    <ion-label>
-      Anchor Item with no Detail Arrow
-    </ion-label>
-  </ion-item>
-
-  <ion-list>
+  <!-- <ion-list>
     <ion-card *ngFor="let day of days">
       <ion-grid>
         <ion-row class="ion-align-items-center">
@@ -100,5 +56,5 @@
         </ion-row>
       </ion-grid>
     </ion-card>
-  </ion-list>
+  </ion-list> -->
 </ion-content>
