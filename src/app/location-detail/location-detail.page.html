@@ -19,24 +19,19 @@
 
   
   <ion-list>
-    <div *ngFor="let day of days">
-    <ion-item button (click)="isShow=!isShow"  detail="false">
-      <ion-label>2020/08/22</ion-label>
+    <div *ngFor="let ToDay of list">
+    <ion-item button (click)="ToDay.isShow=!ToDay.isShow"  detail="false">
+      <ion-label>{{ ToDay.date }}</ion-label>
       <ion-label class="ion-text-start">
-        day {{ day }}
+        day {{ ToDay.day }}
       </ion-label>
       <ion-icon name="caret-forward-outline"  *ngIf="!isShow" (click)="isShow=!isShow"></ion-icon>
       <ion-icon name="caret-down-outline"  *ngIf="isShow"(click)="isShow=!isShow"></ion-icon>
-
     </ion-item>
-    <ion-list *ngIf="isShow">
-      <ion-item>
-        <ion-label class="ion-text-center" color="dark">(121°20’10’’E，45°10’20’’ N)</ion-label>
-        <ion-note slot="end">09:10</ion-note>
-      </ion-item>
-      <ion-item>
-        <ion-label class="ion-text-center" color="dark">(121°20’10’’E，45°10’20’’ N)</ion-label>
-        <ion-note slot="end">09:10</ion-note>
+    <ion-list *ngIf="ToDay.isShow">
+      <ion-item  *ngFor="let ToDayList of ToDay.location">
+        <ion-label class="ion-text-center" color="dark">{{ToDayList.latitude}},{{ToDayList.longitude}}</ion-label>
+        <ion-note slot="end">{{ ToDayList.time }}</ion-note>
       </ion-item>
     </ion-list>
   </div>
