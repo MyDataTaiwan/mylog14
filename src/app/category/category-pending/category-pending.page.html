@@ -22,7 +22,7 @@
     <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let pic of photoService.photos$ | async">
       <ion-thumbnail (click)="onClickShowImageSnapshot(pic)">
         <img *ngIf="isSelect" (click)="isSelect=!isSelect" src="../../assets/ui/add_icon_3.svg" />
-        <ion-img [src]="pic.webviewPath"></ion-img>
+        <ion-img  [src]="pic.webviewPath"></ion-img>
       </ion-thumbnail>
     </div>
   </ion-row>

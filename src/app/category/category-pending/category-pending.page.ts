@@ -37,6 +37,7 @@ export class CategoryPendingPage implements OnInit, AfterViewInit {
   }
 
   onClickShowImageSnapshot(photo) {
+    alert(photo.snapshot.timestamp+"|"+photo.snapshot.locationStamp.latitude+"|"+photo.snapshot.locationStamp.longitude);
     console.log(photo.snapshot);
     /* Example photo.snapshot:
     {
