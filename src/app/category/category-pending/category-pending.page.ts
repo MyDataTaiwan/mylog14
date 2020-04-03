@@ -26,7 +26,7 @@ export class CategoryPendingPage implements OnInit, AfterViewInit {
    [this.dogPic, this.catPic, this.dogPic],
   ];
   constructor(
-    private photoService: PhotoService,
+    public photoService: PhotoService,
   ) { }
 
   ngOnInit() {

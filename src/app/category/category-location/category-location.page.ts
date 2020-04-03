@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category-location.page.scss'],
 })
 export class CategoryLocationPage implements OnInit {
-  isShow: true;
-  isSelect: true;
+  isShow = true;
+  isSelect = true;
   isSelectlist = [];
   tempLocation = '25.035221,121.557612'
   url='https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q='+this.tempLocation;
@@ -83,6 +83,10 @@ export class CategoryLocationPage implements OnInit {
       this.isSelectlist.splice(index, 1);
     }
     console.log("isSelectlist", this.isSelectlist)
+  }
+
+  showAlert(msg: string) {
+    alert(msg);
   }
 
 }
