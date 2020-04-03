@@ -20,16 +20,6 @@ const routes: Routes = [
             loadChildren: () =>
               import('../daily/daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
           },
-        ]
-      },
-      {
-        path: 'tab-category',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('../tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
-          },
           {
             path: 'category-bt',
             loadChildren: () =>
