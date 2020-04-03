@@ -6,6 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./main-header.component.scss'],
 })
 export class MainHeaderComponent implements OnInit {
+  @Input() headerTitle: string;
   @Input() componentId: number;
   @Input() componentNum: number;
   @Output() idChanged = new EventEmitter<number>();
