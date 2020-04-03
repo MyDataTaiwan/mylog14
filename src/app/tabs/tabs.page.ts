@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { RecordService } from '../core/services/record.service';
-import { PhotoService } from '../services/photo.service';
+import { PhotoService } from '../core/services/photo.service';
 import { take, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
