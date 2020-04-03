@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { Snapshot } from '../interfaces/snapshot';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -10,6 +12,7 @@ const { Camera, Filesystem, Storage } = Plugins;
 })
 export class PhotoService {
   public photos: Photo[] = [];
+  public photos$ = new Subject<Photo[]>();
   private platform: Platform;
   private PHOTO_STORAGE = 'photos';
   constructor(
@@ -18,17 +21,18 @@ export class PhotoService {
     this.platform = platform;
   }
 
-  async takePicture() {
+  async takePicture(snapshot?: Snapshot) {
     const capturedPhoto = await Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
     });
-    const savedImageFile = await this.savePicture(capturedPhoto);
+    const savedImageFile = await this.savePicture(capturedPhoto, snapshot);
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
+    this.photos$.next(this.photos);
 
     // Cache all photo data for future retrieval
     Storage.set({
@@ -50,6 +54,9 @@ export class PhotoService {
     // Retrieve cached photo array data
     const photos = await Storage.get({ key: this.PHOTO_STORAGE });
     this.photos = JSON.parse(photos.value) || [];
+    this.photos = this.photos.filter(photo => {
+      return photo != null;
+    });
 
     // If running on the web...
     if (!this.platform.is('hybrid')) {
@@ -65,16 +72,18 @@ export class PhotoService {
         photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
       }
     }
-    return photos;
+
+    this.photos$.next(this.photos);
+    return this.photos;
   }
 
   // Save picture to file on device
-  private async savePicture(cameraPhoto: CameraPhoto) {
+  private async savePicture(cameraPhoto: CameraPhoto, snapshot?: Snapshot) {
     // Convert photo to base64 format, required by Filesystem API to save
     const base64Data = await this.readAsBase64(cameraPhoto);
 
     // Write the file to the data directory
-    const fileName = formatDate(new Date(), '%Y-%m-%DT%H-%M-%S', 'en-us') + '.jpeg';
+    const fileName = formatDate(new Date(), 'yy-MM-ddThh-mm-ss', 'en-us') + '.jpeg';
     await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
@@ -82,7 +91,11 @@ export class PhotoService {
     });
 
     // Get platform-specific photo filepaths
-    return await this.getPhotoFile(cameraPhoto, fileName);
+    const photo = await this.getPhotoFile(cameraPhoto, fileName);
+    if (snapshot !== undefined) {
+      photo.snapshot = snapshot;
+    }
+    return photo;
   }
 
   // Read camera photo into base64 format based on the platform the app is running on
@@ -162,4 +175,5 @@ interface Photo {
   filepath: string;
   webviewPath: string;
   base64?: string;
+  snapshot?: Snapshot;
 }
