@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
+import { Observable, defer, from, of } from 'rxjs';
+import { map, flatMap, mergeMap } from 'rxjs/operators';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -36,7 +38,7 @@ export class PhotoService {
       value: this.platform.is('hybrid')
         ? JSON.stringify(this.photos)
         : JSON.stringify(this.photos.map(p => {
-          // Don't save the base64 representation of the photo data, 
+          // Don't save the base64 representation of the photo data,
           // since it's already saved on the Filesystem
           const photoCopy = { ...p };
           delete photoCopy.base64;
@@ -44,6 +46,26 @@ export class PhotoService {
           return photoCopy;
         }))
     });
+  }
+
+  public getSavedPhotoStream(): Observable<any> {
+    return from(Storage.get({ key: this.PHOTO_STORAGE }))
+      .pipe(
+        map((photoData: { value: string }) => (JSON.parse(photoData.value))),
+        map((photos: Photo[]) => {
+          from(photos)
+            .pipe(
+              mergeMap((photo: Photo) => {
+                console.log('Im in merge map!');
+                return from(Filesystem.readFile({
+                  path: photo.filepath,
+                  directory: FilesystemDirectory.Data
+                }))
+                  .pipe(map(readFile => `data:image/jpeg;base64,${readFile.data}`));
+              })
+            );
+        })
+      );
   }
 
   public async loadSaved() {
@@ -65,6 +87,7 @@ export class PhotoService {
         photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
       }
     }
+    return photos;
   }
 
   // Save picture to file on device
