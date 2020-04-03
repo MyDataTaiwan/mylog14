@@ -8,12 +8,12 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab-date',
+        path: 'tab-data',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab-date/tab-date.module').then(m => m.TabDatePageModule)
+              import('../tab-data/tab-data.module').then(m => m.TabDataPageModule)
           },
           {
             path: 'date-detail',
@@ -58,14 +58,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab-date',
+        redirectTo: '/tabs/tab-data',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab-date',
+    redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
   }
 ];

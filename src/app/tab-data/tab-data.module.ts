@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TabDatePage } from './tab-date.page';
+import { TabDataPage } from './tab-data.page';
 import {TranslateModule} from '@ngx-translate/core';
 import { MainHeaderModule } from '../main-header/main-header.module';
 
@@ -12,12 +12,12 @@ import { MainHeaderModule } from '../main-header/main-header.module';
         IonicModule,
         CommonModule,
         FormsModule,
-        RouterModule.forChild([{path: '', component: TabDatePage}]),
+        RouterModule.forChild([{path: '', component: TabDataPage}]),
         TranslateModule,
         MainHeaderModule,
     ],
   declarations: [
-    TabDatePage,
+    TabDataPage,
   ]
 })
-export class TabDatePageModule {}
+export class TabDataPageModule {}

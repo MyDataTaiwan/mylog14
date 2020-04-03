@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tab-date',
-  templateUrl: 'tab-date.page.html',
-  styleUrls: ['tab-date.page.scss']
+  selector: 'app-tab-data',
+  templateUrl: 'tab-data.page.html',
+  styleUrls: ['tab-data.page.scss']
 })
-export class TabDatePage implements OnInit {
+export class TabDataPage implements OnInit {
   items = [
     {
       day: 8,
