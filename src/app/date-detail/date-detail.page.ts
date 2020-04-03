@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./date-detail.page.scss'],
 })
 export class DateDetailPage implements OnInit {
-  selectedSegment = 'condition';
+  selectedSegment = true;
   constructor() { }
 
   ngOnInit() {
   }
 
-  onSegmentChanged(event) {
-    this.selectedSegment = event.target.value;
+  onSegmentChanged(data) {
+    this.selectedSegment = data;
   }
 
 }
