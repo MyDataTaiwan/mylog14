@@ -11,6 +11,21 @@
 </ion-header>
 
 <ion-content>
+
 <ion-button (click)="onSubmitClick()" expand="block" fill="clear" [routerLink]="['/categorize-finish']" routerDirection="forward">Submit</ion-button>
 <ion-button (click)="onLaterClick()" expand="full">晚點再歸類！</ion-button>
+<ion-button (click)="isSelect=!isSelect" expand="full">Select</ion-button>
+
+<ion-grid>
+    <ion-row  *ngFor="let picRow of pics;" class="ion-justify-content-evenly">
+      <!-- <ion-virtual-scroll [items]="items" approxItemHeight="220px" height="100%"> -->
+        <div  *ngFor="let pic of picRow">
+          <ion-thumbnail >
+
+            <img *ngIf="isSelect"  (click)="isSelect=!isSelect" src="../../assets/ui/add_icon_3.svg" />
+            <ion-img [src]="pic.src"></ion-img>
+          </ion-thumbnail>
+        </div>
+    </ion-row>
+  </ion-grid>
 </ion-content>

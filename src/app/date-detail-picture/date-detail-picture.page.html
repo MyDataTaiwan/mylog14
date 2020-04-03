@@ -1,8 +1,6 @@
 <ion-grid>
   <ion-row  *ngFor="let picRow of pics;" class="ion-justify-content-evenly">
     <!-- <ion-virtual-scroll [items]="items" approxItemHeight="220px" height="100%"> -->
-     
-
       <div  *ngFor="let pic of picRow">
         <ion-thumbnail >
           <ion-img [src]="pic.src"></ion-img>
