@@ -37,6 +37,10 @@ const routes: Routes = [
   {
     path: 'tab-taiwan',
     loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
+  },
+  {
+    path: 'daily-detail',
+    loadChildren: () => import('./daily/daily-detail/daily-detail.module').then( m => m.DailyDetailPageModule)
   }
 ];
 @NgModule({

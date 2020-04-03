@@ -1,30 +1,4 @@
 <app-main-header></app-main-header>
-
 <ion-content>
-  {{items.length}}
-  <div style="border-bottom: 2pt;"></div>
-  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
-    </div>
-  <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
-  <ion-virtual-scroll [items]="items" approxItemHeight="220px" height="100%">
-    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/date-detail']"
-      routerDirection="forward">
-      <ion-grid fixed>
-        <ion-row>
-          <ion-col size="4">
-            <ion-card-header>
-              <ion-card-title class="ion-text-center">DAY {{ item.day }}</ion-card-title>
-              <ion-card-title class="ion-text-center">{{ item.month }}/{{ item.date }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content class="ion-text-center">BT: {{ item.bt }}</ion-card-content>
-          </ion-col>
-          <ion-col size="8">
-            <div>
-              <ion-img [src]="item.imgSrc" alt="No picture"></ion-img>
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-virtual-scroll>
+    <app-daily-overview></app-daily-overview>
 </ion-content>
