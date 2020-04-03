@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
-import { AddRecordPage } from '../add-record/add-record.page';
+import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { RecordService } from '../core/services/record.service';
 
 @Component({

@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { PickerController, ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
-import { Condition } from '../core/interfaces/condition';
-import { SnapshotService } from '../core/services/snapshot.service';
-import { Snapshot } from '../core/interfaces/snapshot';
+import { Condition } from '../../interfaces/condition';
+import { SnapshotService } from '../../services/snapshot.service';
+import { Snapshot } from '../../interfaces/snapshot';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { RecordService } from '../core/services/record.service';
-import { Record } from '../core/interfaces/record';
+import { RecordService } from '../../services/record.service';
+import { Record } from '../../interfaces/record';
 
 @Component({
   selector: 'app-add-record',

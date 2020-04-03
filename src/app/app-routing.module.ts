@@ -8,11 +8,7 @@ const routes: Routes = [
   },
   {
     path: 'add-record',
-    loadChildren: () => import('./add-record/add-record.module').then( m => m.AddRecordPageModule)
-  },
-  {
-    path: 'tab-taiwan',
-    loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
+    loadChildren: () => import('./core/pages/add-record/add-record.module').then( m => m.AddRecordPageModule)
   },
 ];
 @NgModule({
