@@ -8,7 +8,7 @@ import { TabTaiwanPageRoutingModule } from './tab-taiwan-routing.module';
 
 import { TabTaiwanPage } from './tab-taiwan.page';
 import { LottieModule } from 'ngx-lottie';
-import { MainHeaderModule } from '../core/components/main-header/main-header.module';
+import { MainHeaderModule } from '../../core/components/main-header/main-header.module';
 
 export function playerFactory() {
   return import('lottie-web');

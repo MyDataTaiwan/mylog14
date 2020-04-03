@@ -13,7 +13,7 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () =>
-              import('../tab-data/tab-data.module').then(m => m.TabDataPageModule)
+              import('./tab-data/tab-data.module').then(m => m.TabDataPageModule)
           },
           {
             path: 'daily-detail',
@@ -47,7 +47,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('../tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
+            loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
           }
         ]
       },
