@@ -43,7 +43,7 @@ const routes: Routes = [
           {
             path: 'location-detail',
             loadChildren: () =>
-              import('../categorize-data/categorize-data.module').then(m => m.CategorizeDataPageModule)
+              import('../location-detail/location-detail.module').then(m => m.LocationDetailPageModule)
           },
         ]
       },
