@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="69" height="69" viewBox="0 0 69 69">
+  <defs>
+    <filter id="Ellipse_278" x="4.5" y="6.5" width="60" height="60" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-camer_icon">
+      <rect width="69" height="69"/>
+    </clipPath>
+  </defs>
+  <g id="camer_icon" clip-path="url(#clip-camer_icon)">
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Ellipse_278)">
+      <circle id="Ellipse_278-2" data-name="Ellipse 278" cx="22.5" cy="22.5" r="22.5" transform="translate(12 12)" fill="#fff"/>
+    </g>
+    <g id="android-camera" transform="translate(21.5 22)">
+      <circle id="Ellipse_30" data-name="Ellipse 30" cx="3.191" cy="3.191" r="3.191" transform="translate(9.478 10.553)" fill="#52c7f4"/>
+      <path id="Path_559" data-name="Path 559" d="M21.818,4.6H17.456L15.861,3H9.478l-1.6,1.6H3.521A2.02,2.02,0,0,0,1.5,6.617V20.233a2.02,2.02,0,0,0,2.021,2.021h18.4a2.02,2.02,0,0,0,2.021-2.021V6.617A2.112,2.112,0,0,0,21.818,4.6ZM12.669,19.382a5.675,5.675,0,0,1-5.638-5.638,5.585,5.585,0,0,1,5.638-5.532,5.675,5.675,0,0,1,5.638,5.638A5.585,5.585,0,0,1,12.669,19.382Z" transform="translate(0)" fill="#52c7f4"/>
+    </g>
+  </g>
+</svg>

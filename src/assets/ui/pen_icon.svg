@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="69" height="69" viewBox="0 0 69 69">
+  <defs>
+    <filter id="Ellipse_279" x="4.5" y="6.5" width="60" height="60" filterUnits="userSpaceOnUse">
+      <feOffset dy="2" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-pen_icon">
+      <rect width="69" height="69"/>
+    </clipPath>
+  </defs>
+  <g id="pen_icon" clip-path="url(#clip-pen_icon)">
+    <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Ellipse_279)">
+      <circle id="Ellipse_279-2" data-name="Ellipse 279" cx="22.5" cy="22.5" r="22.5" transform="translate(12 12)" fill="#fff"/>
+    </g>
+    <g id="edit" transform="translate(18.132 25.731)">
+      <path id="Path_1338" data-name="Path 1338" d="M156.367,42.524l10.2-10.2,3.288,3.288-10.2,10.2Zm0,0" transform="translate(-146.836 -29.821)" fill="#52c7f4"/>
+      <path id="Path_1339" data-name="Path 1339" d="M132.543,200.853l3.634-1.007-2.627-2.627Zm0,0" transform="translate(-124.675 -183.197)" fill="#52c7f4"/>
+      <path id="Path_1340" data-name="Path 1340" d="M319.737.779a1.748,1.748,0,0,0-2.469,0l-.741.741,3.288,3.288.741-.741a1.747,1.747,0,0,0,0-2.469Zm0,0" transform="translate(-295.812)" fill="#52c7f4"/>
+    </g>
+  </g>
+</svg>

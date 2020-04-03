@@ -1,5 +1,7 @@
 ion-content {
-  --background: translucent;
+  // --background: translucent;
+  --background: #F8F8F8;
+height: 100%;
 }
 ion-toolbar {
   color: #52c7f4;
@@ -12,11 +14,13 @@ ion-toolbar {
     display: none;
   }
   ion-button {
-    --background: translucent;
-    --background-focused: #ffffff;
-    --background-focused-opacity: translucent;
-    margin: 20px;
-    --padding: 100px;
+    // --box-shadow	:50px;
+    --background: #ffffff;
+    --background-focused: #000;
+    height:50px ;
+    // --background-focused-opacity: translucent;
+    // margin: 20px;
+    // --padding: 100px;
   }
 }
 
@@ -24,6 +28,7 @@ ion-content {
   ion-button {
     height: 40vw;
     --background: none;
+    
     //   background-image: url('../../assets/ui/category_icon_D_L.svg');
     //   background-position: center center;
     //   background-repeat: no-repeat;

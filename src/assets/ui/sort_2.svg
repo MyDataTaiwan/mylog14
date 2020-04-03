@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="13" height="35" viewBox="0 0 13 35">
+  <defs>
+    <clipPath id="clip-sort_2">
+      <rect width="13" height="35"/>
+    </clipPath>
+  </defs>
+  <g id="sort_2" clip-path="url(#clip-sort_2)">
+    <rect width="13" height="35" fill="#fff"/>
+    <line id="Line_144" data-name="Line 144" y2="17" transform="translate(6.5 8.5)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="1"/>
+  </g>
+</svg>
