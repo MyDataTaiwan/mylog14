@@ -7,10 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'date-detail',
-    loadChildren: () => import('./date-detail/date-detail.module').then( m => m.DateDetailPageModule)
-  },
-  {
     path: 'bt-detail',
     loadChildren: () => import('./bt-detail/bt-detail.module').then( m => m.BtDetailPageModule)
   },

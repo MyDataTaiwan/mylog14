@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DateDetailOverviewComponent } from './date-detail-overview.component';
+import { DailyDetailPhotosComponent } from './daily-detail-photos.component';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { DateDetailOverviewComponent } from './date-detail-overview.component';
     FormsModule,
     IonicModule,
   ],
-  declarations: [DateDetailOverviewComponent],
-  exports: [DateDetailOverviewComponent],
+  declarations: [DailyDetailPhotosComponent],
+  exports: [DailyDetailPhotosComponent],
 })
-export class DateDetailOverviewComponentModule {}
+export class DailyDetailPhotosModule {}

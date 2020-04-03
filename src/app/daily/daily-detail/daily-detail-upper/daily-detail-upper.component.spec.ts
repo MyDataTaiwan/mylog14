@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DateDetailConditionComponent } from './date-detail-condition.component';
+import { DailyDetailUpperComponent } from './daily-detail-upper.component';
 
-describe('DateDetailConditionComponent', () => {
-  let component: DateDetailConditionComponent;
-  let fixture: ComponentFixture<DateDetailConditionComponent>;
+describe('DailyDetailUpperComponent', () => {
+  let component: DailyDetailUpperComponent;
+  let fixture: ComponentFixture<DailyDetailUpperComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DateDetailConditionComponent ],
+      declarations: [DailyDetailUpperComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DateDetailConditionComponent);
+    fixture = TestBed.createComponent(DailyDetailUpperComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-date-detail-condition',
-  templateUrl: './date-detail-condition.component.html',
-  styleUrls: ['./date-detail-condition.component.scss'],
+  selector: 'app-daily-detail-symptoms',
+  templateUrl: './daily-detail-symptoms.component.html',
+  styleUrls: ['./daily-detail-symptoms.component.scss'],
 })
-export class DateDetailConditionComponent implements OnInit {
+export class DailyDetailSymptomsComponent implements OnInit {
   data = {
     cough: {
       isShow: true,

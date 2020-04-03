@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DateDetailConditionComponent } from './date-detail-condition.component';
+import { DailyDetailSymptomsComponent } from './daily-detail-symptoms.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     TranslateModule,
   ],
-  declarations: [DateDetailConditionComponent],
-  exports: [DateDetailConditionComponent],
+  declarations: [DailyDetailSymptomsComponent],
+  exports: [DailyDetailSymptomsComponent],
 })
-export class DateDetailConditionComponentModule {}
+export class DailyDetailSymptomsModule {}

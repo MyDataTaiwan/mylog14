@@ -16,9 +16,9 @@ const routes: Routes = [
               import('../tab-data/tab-data.module').then(m => m.TabDataPageModule)
           },
           {
-            path: 'date-detail',
+            path: 'daily-detail',
             loadChildren: () =>
-              import('../date-detail/date-detail.module').then(m => m.DateDetailPageModule)
+              import('../daily/daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
           },
         ]
       },

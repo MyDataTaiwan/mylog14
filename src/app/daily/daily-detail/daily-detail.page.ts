@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./daily-detail.page.scss'],
 })
 export class DailyDetailPage implements OnInit {
-
+  selectedSegment = true;
   constructor() { }
 
   ngOnInit() {
+  }
+  
+  onSegmentChanged(data) {
+    this.selectedSegment = data;
   }
 
 }
