@@ -3,13 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { TabDataPage } from './tab-data.page';
-
-@Component({
-  selector: 'app-tab-data',
-  template: ''
-})
-class MockDiaryPage {
-}
+import { MainHeaderModule } from 'src/app/core/components/main-header/main-header.module';
+import { DailyOverviewModule } from 'src/app/daily/daily-overview/daily-overview.module';
+import { CategoryOverviewModule } from 'src/app/category/category-overview/category-overview.module';
+import { RouterModule } from '@angular/router';
 
 describe('tabDataPage', () => {
   let component: TabDataPage;
@@ -19,10 +16,13 @@ describe('tabDataPage', () => {
     TestBed.configureTestingModule({
       declarations: [
         TabDataPage,
-        MockDiaryPage,
       ],
       imports: [
         IonicModule.forRoot(),
+        RouterModule.forRoot([]),
+        MainHeaderModule,
+        DailyOverviewModule,
+        CategoryOverviewModule,
       ]
     }).compileComponents();
 

@@ -11,14 +11,11 @@ import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 
-export function LanguageLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
-}
-
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { CoreModule } from './core/core.module';
 import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
+import { LanguageLoader } from './core/pages/add-record/add-record.page.spec';
 
 // Note we need a separate function as it's required
 // by the AOT compiler.
