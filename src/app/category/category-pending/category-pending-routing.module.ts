@@ -6,7 +6,13 @@ import { CategoryPendingPage } from './category-pending.page';
 const routes: Routes = [
   {
     path: '',
-    component: CategoryPendingPage
+    component: CategoryPendingPage,
+    children: [
+      {
+        path: 'categorize-finish',
+        loadChildren: () => import('./categorize-finish/categorize-finish.module').then(m => m.CategorizeFinishPageModule)
+      },
+    ]
   }
 ];
 

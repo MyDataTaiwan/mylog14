@@ -11,10 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./add-record/add-record.module').then( m => m.AddRecordPageModule)
   },
   {
-    path: 'categorize-finish',
-    loadChildren: () => import('./categorize-finish/categorize-finish.module').then( m => m.CategorizeFinishPageModule)
-  },
-  {
     path: 'tab-taiwan',
     loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
   },
