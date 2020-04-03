@@ -11,15 +11,53 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <app-date-detail-overview></app-date-detail-overview>
-    <app-date-detail-condition *ngIf="selectedSegment === 'condition'"></app-date-detail-condition>
-    <app-date-detail-picture *ngIf="selectedSegment === 'picture'"></app-date-detail-picture>
-  </ion-list>
+  <ion-slides>
+
+    <ion-slide>
+  <ion-card>
+    <ion-list>
+      <app-date-detail-overview></app-date-detail-overview>
+      <div
+        style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+      </div>
+      <!-- FIXME:  button state -->
+      <div style=" display: flex;flex: 1;flex-direction:row-reverse;">
+        <img (click)="selectedSegment=!selectedSegment" src="../../assets/ui/sort_3.svg" />
+        <img src="../../assets/ui/sort_2.svg" />
+        <img (click)="selectedSegment=!selectedSegment" src="../../assets/ui/sort_1.svg" />
+      </div>
+      <app-date-detail-condition *ngIf="selectedSegment"></app-date-detail-condition>
+      <app-date-detail-picture *ngIf="!selectedSegment"></app-date-detail-picture>
+    </ion-list>
+  </ion-card>
+
+</ion-slide>
+
+  <ion-slide>
+    <ion-card>
+      <ion-list>
+        <app-date-detail-overview></app-date-detail-overview>
+        <div
+          style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+        </div>
+        <!-- FIXME:  button state -->
+        <div style=" display: flex;flex: 1;flex-direction:row-reverse;">
+          <img (click)="selectedSegment=!selectedSegment" src="../../assets/ui/sort_3.svg" />
+          <img src="../../assets/ui/sort_2.svg" />
+          <img (click)="selectedSegment=!selectedSegment" src="../../assets/ui/sort_1.svg" />
+        </div>
+        <app-date-detail-condition *ngIf="selectedSegment"></app-date-detail-condition>
+        <app-date-detail-picture *ngIf="!selectedSegment"></app-date-detail-picture>
+      </ion-list>
+    </ion-card>
+  </ion-slide>
+
+</ion-slides>
+  
 </ion-content>
 
 <!-- FIXME: The segment button should be smaller to match the wireframe -->
-<ion-footer>
+<!-- <ion-footer>
   <ion-segment value="condition" (ionChange)="onSegmentChanged($event)">
     <ion-segment-button value="condition">
       <ion-icon name="documents-outline"></ion-icon>
@@ -28,4 +66,4 @@
       <ion-icon name="images-outline"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-</ion-footer>
+</ion-footer> -->

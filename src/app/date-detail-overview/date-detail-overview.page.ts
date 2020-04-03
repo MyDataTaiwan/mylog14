@@ -6,9 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./date-detail-overview.page.scss'],
 })
 export class DateDetailOverviewPage implements OnInit {
+  n2s=['不想減一','January','February','March','April','May','June','July','August','September','ctober','November','December']
   card = {
     day: 1,
-    month: '03',
+    month: '3',
     date: '30',
     bt: 37.9,
     // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
