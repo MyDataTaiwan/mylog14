@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TabDataPage } from './tab-data.page';
 import {TranslateModule} from '@ngx-translate/core';
-import { MainHeaderModule } from '../main-header/main-header.module';
+import { MainHeaderModule } from '../core/components/main-header/main-header.module';
 import { DailyOverviewModule } from '../daily/daily-overview/daily-overview.module';
 import { CategoryOverviewModule } from '../category/category-overview/category-overview.module';
 
