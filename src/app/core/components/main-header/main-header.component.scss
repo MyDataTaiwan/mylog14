@@ -1,0 +1,20 @@
+ion-toolbar {
+  color: #52c7f4;
+  .ios {
+    font-size: 16pt;
+  }
+  --backgroun: #ffffff;
+  // --border-style	:;
+  .header-md::after {
+    display: none;
+  }
+  ion-button {
+    // --box-shadow	:50px;
+    --background: #ffffff;
+    --background-focused: #000;
+    height:50px ;
+    // --background-focused-opacity: translucent;
+    // margin: 20px;
+    // --padding: 100px;
+  }
+}

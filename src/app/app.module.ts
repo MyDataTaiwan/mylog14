@@ -17,7 +17,8 @@ export function LanguageLoader(http: HttpClient) {
 
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
-import { AddRecordPageModule } from './add-record/add-record.module';
+import { CoreModule } from './core/core.module';
+import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
 
 // Note we need a separate function as it's required
 // by the AOT compiler.
@@ -38,6 +39,7 @@ export function playerFactory() {
       deps: [HttpClient]
       }
     }),
+    CoreModule,
     AddRecordPageModule,
     LottieModule.forRoot({ player: playerFactory })
 ],

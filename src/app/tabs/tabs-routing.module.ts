@@ -8,42 +8,37 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab-date',
+        path: 'tab-data',
         children: [
           {
             path: '',
             loadChildren: () =>
-              import('../tab-date/tab-date.module').then(m => m.TabDatePageModule)
+              import('./tab-data/tab-data.module').then(m => m.TabDataPageModule)
           },
           {
-            path: 'date-detail',
+            path: 'daily-detail',
             loadChildren: () =>
-              import('../date-detail/date-detail.module').then(m => m.DateDetailPageModule)
-          },
-        ]
-      },
-      {
-        path: 'tab-category',
-        children: [
-          {
-            path: '',
-            loadChildren: () =>
-              import('../tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
+              import('../daily/daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
           },
           {
-            path: 'bt-detail',
+            path: 'category-bt',
             loadChildren: () =>
-              import('../bt-detail/bt-detail.module').then(m => m.BtDetailPageModule)
+              import('../category/category-bt/category-bt.module').then(m => m.CategoryBtPageModule)
           },
           {
-            path: 'symptom-detail',
+            path: 'category-symptoms',
             loadChildren: () =>
-              import('../symptom-detail/symptom-detail.module').then(m => m.SymptomDetailPageModule)
+              import('../category/category-symptoms/category-symptoms.module').then(m => m.CategorySymptomsPageModule)
           },
           {
-            path: 'location-detail',
+            path: 'category-location',
             loadChildren: () =>
-              import('../location-detail/location-detail.module').then(m => m.LocationDetailPageModule)
+              import('../category/category-location/category-location.module').then(m => m.CategoryLocationPageModule)
+          },
+          {
+            path: 'category-pending',
+            loadChildren: () =>
+              import('../category/category-pending/category-pending.module').then(m => m.CategoryPendingPageModule)
           },
         ]
       },
@@ -52,20 +47,20 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('../tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
+            loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab-date',
+        redirectTo: '/tabs/tab-data',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab-date',
+    redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
   }
 ];
