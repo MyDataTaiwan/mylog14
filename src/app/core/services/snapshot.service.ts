@@ -42,8 +42,8 @@ export class SnapshotService {
   }
 
   async createPhotoWithSnapshot(): Promise<Record> {
-    const photoBase64 = await this.photoService.takePicture();
     const snap = await this.createSnapshot();
+    const photoBase64 = await this.photoService.takePicture(snap);
     return {
       snapshot: snap,
       photos: [

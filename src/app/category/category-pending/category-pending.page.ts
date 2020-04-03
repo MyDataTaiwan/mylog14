@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { PhotoService } from 'src/app/core/services/photo.service';
 
 @Component({
   selector: 'app-category-pending',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category-pending.page.scss'],
 })
 
-export class CategoryPendingPage implements OnInit {
+export class CategoryPendingPage implements OnInit, AfterViewInit {
   isSelect= false;
   catPic = {
     // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
@@ -24,9 +25,29 @@ export class CategoryPendingPage implements OnInit {
    [this.catPic, this.dogPic, this.catPic],
    [this.dogPic, this.catPic, this.dogPic],
   ];
-  constructor() { }
+  constructor(
+    private photoService: PhotoService,
+  ) { }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.photoService.loadSaved();
+  }
+
+  onClickShowImageSnapshot(photo) {
+    console.log(photo.snapshot);
+    /* Example photo.snapshot:
+    {
+      timestamp: 1585922525831,
+      locationStamp: {
+        latitude: 24.9985271,
+        longitude: 121.4570335,
+        accuracy: 2794,
+      }
+    }
+    */
   }
 
   onSubmitClick() {
