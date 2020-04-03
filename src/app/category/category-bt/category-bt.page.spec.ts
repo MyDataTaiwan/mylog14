@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { BtDetailPage } from './bt-detail.page';
+import { CategoryBtPage } from './category-bt.page';
 
-describe('BtDetailPage', () => {
-  let component: BtDetailPage;
-  let fixture: ComponentFixture<BtDetailPage>;
+describe('CategoryBtPage', () => {
+  let component: CategoryBtPage;
+  let fixture: ComponentFixture<CategoryBtPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BtDetailPage ],
+      declarations: [ CategoryBtPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(BtDetailPage);
+    fixture = TestBed.createComponent(CategoryBtPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

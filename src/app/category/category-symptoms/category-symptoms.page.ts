@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-symptom-detail',
-  templateUrl: './symptom-detail.page.html',
-  styleUrls: ['./symptom-detail.page.scss'],
+  selector: 'app-category-symptoms',
+  templateUrl: './category-symptoms.page.html',
+  styleUrls: ['./category-symptoms.page.scss'],
 })
-export class SymptomDetailPage implements OnInit {
+export class CategorySymptomsPage implements OnInit {
   isShow: true;
   isSelect: true;
   isSelectlist = [];

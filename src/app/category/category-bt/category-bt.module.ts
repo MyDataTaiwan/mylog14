@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { LocationDetailPageRoutingModule } from './location-detail-routing.module';
+import { CategoryBtPageRoutingModule } from './category-bt-routing.module';
 
-import { LocationDetailPage } from './location-detail.page';
+import { CategoryBtPage } from './category-bt.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    LocationDetailPageRoutingModule,
+    CategoryBtPageRoutingModule,
     TranslateModule,
   ],
-  declarations: [LocationDetailPage]
+  declarations: [CategoryBtPage]
 })
-export class LocationDetailPageModule {}
+export class CategoryBtPageModule {}

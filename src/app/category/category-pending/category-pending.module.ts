@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { CategorizeDataPageRoutingModule } from './categorize-data-routing.module';
+import { CategoryPendingPageRoutingModule } from './category-pending-routing.module';
 
-import { CategorizeDataPage } from './categorize-data.page';
+import { CategoryPendingPage } from './category-pending.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CategorizeDataPageRoutingModule
+    CategoryPendingPageRoutingModule
   ],
-  declarations: [CategorizeDataPage]
+  declarations: [CategoryPendingPage]
 })
-export class CategorizeDataPageModule {}
+export class CategoryPendingPageModule {}

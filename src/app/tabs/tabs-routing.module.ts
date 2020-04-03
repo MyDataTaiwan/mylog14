@@ -31,19 +31,24 @@ const routes: Routes = [
               import('../tab-category/tab-category.module').then(m => m.TabCategoryPageModule)
           },
           {
-            path: 'bt-detail',
+            path: 'category-bt',
             loadChildren: () =>
-              import('../bt-detail/bt-detail.module').then(m => m.BtDetailPageModule)
+              import('../category/category-bt/category-bt.module').then(m => m.CategoryBtPageModule)
           },
           {
-            path: 'symptom-detail',
+            path: 'category-symptoms',
             loadChildren: () =>
-              import('../symptom-detail/symptom-detail.module').then(m => m.SymptomDetailPageModule)
+              import('../category/category-symptoms/category-symptoms.module').then(m => m.CategorySymptomsPageModule)
           },
           {
-            path: 'location-detail',
+            path: 'category-location',
             loadChildren: () =>
-              import('../location-detail/location-detail.module').then(m => m.LocationDetailPageModule)
+              import('../category/category-location/category-location.module').then(m => m.CategoryLocationPageModule)
+          },
+          {
+            path: 'category-pending',
+            loadChildren: () =>
+              import('../category/category-pending/category-pending.module').then(m => m.CategoryPendingPageModule)
           },
         ]
       },

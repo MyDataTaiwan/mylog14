@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { SymptomDetailPageRoutingModule } from './symptom-detail-routing.module';
+import { CategorySymptomsPageRoutingModule } from './category-symptoms-routing.module';
 
-import { SymptomDetailPage } from './symptom-detail.page';
+import { CategorySymptomsPage } from './category-symptoms.page';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    SymptomDetailPageRoutingModule,
+    CategorySymptomsPageRoutingModule,
     TranslateModule,
   ],
-  declarations: [SymptomDetailPage]
+  declarations: [CategorySymptomsPage]
 })
-export class SymptomDetailPageModule {}
+export class CategorySymptomsPageModule {}

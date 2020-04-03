@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-categorize-data',
-  templateUrl: './categorize-data.page.html',
-  styleUrls: ['./categorize-data.page.scss'],
+  selector: 'app-category-pending',
+  templateUrl: './category-pending.page.html',
+  styleUrls: ['./category-pending.page.scss'],
 })
 
-export class CategorizeDataPage implements OnInit {
+export class CategoryPendingPage implements OnInit {
   isSelect= false;
   catPic = {
     // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
