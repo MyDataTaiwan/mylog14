@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { RecordService } from '../core/services/record.service';
+import { SnapshotService } from '../core/services/snapshot.service';
 
 @Component({
   selector: 'app-tabs',
@@ -13,6 +14,7 @@ export class TabsPage {
   constructor(
     private alertCtrl: AlertController,
     private modalController: ModalController,
+    private snapshotService: SnapshotService,
     private record: RecordService,
   ) {}
 
@@ -26,6 +28,7 @@ export class TabsPage {
   }
 
   onClickCameraButton() {
+    this.snapshotService.snapCapture();
   }
 
   async onClickRecordButton() {

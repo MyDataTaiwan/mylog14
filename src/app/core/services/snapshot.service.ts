@@ -3,6 +3,9 @@ import { Plugins, GeolocationPosition } from '@capacitor/core';
 import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
+import { PhotoService } from './photo.service';
+import { Record } from '../interfaces/record';
+import { RecordService } from './record.service';
 
 const { Geolocation } = Plugins;
 
@@ -12,11 +15,13 @@ const { Geolocation } = Plugins;
 export class SnapshotService {
 
   constructor(
-    private geolocation: GeolocationService,
+    private geolocationService: GeolocationService,
+    private photoService: PhotoService,
+    private recordService: RecordService,
   ) { }
 
   async getLocationStamp(): Promise<LocationStamp> {
-    const pos = await this.geolocation.getCurrentPosition();
+    const pos = await this.geolocationService.getCurrentPosition();
     return Promise.resolve({
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude,
@@ -30,10 +35,28 @@ export class SnapshotService {
 
   async createSnapshot(): Promise<Snapshot> {
     const location = await this.getLocationStamp();
-    return Promise.resolve({
+    return {
       timestamp: this.getTimestamp(),
       locationStamp: location,
-    });
+    };
+  }
+
+  async createPhotoWithSnapshot(): Promise<Record> {
+    const snap = await this.createSnapshot();
+    const photoBase64 = await this.photoService.takePicture(snap);
+    return {
+      snapshot: snap,
+      photos: [
+        {
+          byteString: photoBase64,
+        }
+      ]
+    };
+  }
+
+  async snapCapture(): Promise<void> {
+    const record = await this.createPhotoWithSnapshot();
+    return this.recordService.createRecord(record);
   }
 
 }
