@@ -4,9 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DateDetailConditionPageRoutingModule } from './date-detail-condition-routing.module';
-
-import { DateDetailConditionPage } from './date-detail-condition.page';
+import { DateDetailConditionComponent } from './date-detail-condition.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
@@ -14,10 +12,9 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    DateDetailConditionPageRoutingModule,
     TranslateModule,
   ],
-  declarations: [DateDetailConditionPage],
-  exports: [DateDetailConditionPage],
+  declarations: [DateDetailConditionComponent],
+  exports: [DateDetailConditionComponent],
 })
-export class DateDetailConditionPageModule {}
+export class DateDetailConditionComponentModule {}

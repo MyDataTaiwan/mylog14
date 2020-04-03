@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-date-detail-overview',
-  templateUrl: './date-detail-overview.page.html',
-  styleUrls: ['./date-detail-overview.page.scss'],
+  templateUrl: './date-detail-overview.component.html',
+  styleUrls: ['./date-detail-overview.component.scss'],
 })
-export class DateDetailOverviewPage implements OnInit {
+export class DateDetailOverviewComponent implements OnInit {
   n2s=['不想減一','January','February','March','April','May','June','July','August','September','ctober','November','December']
   card = {
     day: 1,

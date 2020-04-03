@@ -4,18 +4,15 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DateDetailPicturePageRoutingModule } from './date-detail-picture-routing.module';
-
-import { DateDetailPicturePage } from './date-detail-picture.page';
+import { DateDetailPictureComponent } from './date-detail-picture.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DateDetailPicturePageRoutingModule
   ],
-  declarations: [DateDetailPicturePage],
-  exports: [DateDetailPicturePage],
+  declarations: [DateDetailPictureComponent],
+  exports: [DateDetailPictureComponent],
 })
-export class DateDetailPicturePageModule {}
+export class DateDetailPictureComponentModule {}

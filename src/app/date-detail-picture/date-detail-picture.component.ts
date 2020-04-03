@@ -8,10 +8,10 @@ export interface Pic {
 
 @Component({
   selector: 'app-date-detail-picture',
-  templateUrl: './date-detail-picture.page.html',
-  styleUrls: ['./date-detail-picture.page.scss'],
+  templateUrl: './date-detail-picture.component.html',
+  styleUrls: ['./date-detail-picture.component.scss'],
 })
-export class DateDetailPicturePage implements OnInit {
+export class DateDetailPictureComponent implements OnInit {
   catPic: Pic = {
     // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
     src: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',

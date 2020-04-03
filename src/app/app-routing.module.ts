@@ -11,18 +11,6 @@ const routes: Routes = [
     loadChildren: () => import('./date-detail/date-detail.module').then( m => m.DateDetailPageModule)
   },
   {
-    path: 'date-detail-overview',
-    loadChildren: () => import('./date-detail-overview/date-detail-overview.module').then( m => m.DateDetailOverviewPageModule)
-  },
-  {
-    path: 'date-detail-condition',
-    loadChildren: () => import('./date-detail-condition/date-detail-condition.module').then( m => m.DateDetailConditionPageModule)
-  },
-  {
-    path: 'date-detail-picture',
-    loadChildren: () => import('./date-detail-picture/date-detail-picture.module').then( m => m.DateDetailPicturePageModule)
-  },
-  {
     path: 'bt-detail',
     loadChildren: () => import('./bt-detail/bt-detail.module').then( m => m.BtDetailPageModule)
   },

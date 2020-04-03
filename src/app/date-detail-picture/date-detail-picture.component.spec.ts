@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DateDetailConditionPage } from './date-detail-condition.page';
+import { DateDetailPictureComponent } from './date-detail-picture.component';
 
-describe('DateDetailConditionPage', () => {
-  let component: DateDetailConditionPage;
-  let fixture: ComponentFixture<DateDetailConditionPage>;
+describe('DateDetailPictureComponent', () => {
+  let component: DateDetailPictureComponent;
+  let fixture: ComponentFixture<DateDetailPictureComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateDetailConditionPage ],
+      declarations: [DateDetailPictureComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DateDetailConditionPage);
+    fixture = TestBed.createComponent(DateDetailPictureComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
