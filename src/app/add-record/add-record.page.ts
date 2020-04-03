@@ -3,11 +3,11 @@ import { PickerController, ModalController, AlertController, LoadingController }
 import { PickerOptions } from '@ionic/core';
 import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { Condition } from '../interfaces/condition';
-import { SnapshotService } from '../services/snapshot.service';
+import { SnapshotService } from '../core/services/snapshot.service';
 import { Snapshot } from '../interfaces/snapshot';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { RecordService } from '../services/record.service';
+import { RecordService } from '../core/services/record.service';
 import { Record } from '../interfaces/record';
 
 @Component({

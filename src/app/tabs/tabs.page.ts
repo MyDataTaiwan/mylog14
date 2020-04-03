@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AddRecordPage } from '../add-record/add-record.page';
-import { RecordService } from '../services/record.service';
+import { RecordService } from '../core/services/record.service';
 
 @Component({
   selector: 'app-tabs',
