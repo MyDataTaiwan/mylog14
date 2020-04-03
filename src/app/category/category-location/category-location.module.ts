@@ -8,6 +8,7 @@ import { CategoryLocationPageRoutingModule } from './category-location-routing.m
 
 import { CategoryLocationPage } from './category-location.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     IonicModule,
     CategoryLocationPageRoutingModule,
     TranslateModule,
+    CoreModule,
   ],
   declarations: [CategoryLocationPage]
 })

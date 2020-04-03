@@ -16,8 +16,7 @@
   <!-- <ion-title class="ion-text-center">地點</ion-title> -->
   <!-- 25.060018,121.5307651 -->
   <!-- <img src="https://cdn.pixabay.com/photo/2011/12/13/17/07/earth-11047_1280.jpg"> -->
-  <!-- <iframe  width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no" src="'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q='+tempLocation"></iframe> -->
-  <iframe  width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no" src='https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=25.035221,121.557612'></iframe>
+  <iframe  width="400" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
 
   <!-- FIXME: category-location.page state & data 需要調整，目前缺少資料與分享功能-->
   <ion-item button (click)="isSelect=!isSelect" detail="false">
