@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-tab-data',
@@ -6,13 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['tab-data.page.scss']
 })
 export class TabDataPage implements OnInit {
-
+  componentId = 0;
   constructor() { }
   ngOnInit() {
   }
 
-  onCardClick(cardItem) {
-
+  onComponentIdChanged(newId: number) {
+    this.componentId = newId;
   }
 
 }

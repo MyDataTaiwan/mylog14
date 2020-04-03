@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { DailyOverviewComponent } from './daily-overview.component';
 import { RouterModule } from '@angular/router';
+import { CategoryOverviewComponent } from './category-overview.component';
+
+
 
 @NgModule({
+  declarations: [
+    CategoryOverviewComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule,
   ],
-  declarations: [DailyOverviewComponent],
-  exports: [DailyOverviewComponent],
+  exports: [
+    CategoryOverviewComponent,
+  ]
 })
-export class DailyOverviewModule {}
+export class CategoryOverviewModule { }

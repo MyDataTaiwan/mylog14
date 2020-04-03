@@ -1,4 +1,5 @@
-<app-main-header></app-main-header>
+<app-main-header [componentId]="componentId" [componentNum]="2" (idChanged)="onComponentIdChanged($event)"></app-main-header>
 <ion-content>
-    <app-daily-overview></app-daily-overview>
+    <app-daily-overview *ngIf="componentId === 0"></app-daily-overview>
+    <app-category-overview *ngIf="componentId === 1"></app-category-overview>
 </ion-content>

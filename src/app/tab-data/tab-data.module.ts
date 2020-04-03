@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { TabDataPage } from './tab-data.page';
 import {TranslateModule} from '@ngx-translate/core';
 import { MainHeaderModule } from '../main-header/main-header.module';
-import { DailyOverviewPageModule } from '../daily/daily-overview/daily-overview.module';
+import { DailyOverviewModule } from '../daily/daily-overview/daily-overview.module';
+import { CategoryOverviewModule } from '../category/category-overview/category-overview.module';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { DailyOverviewPageModule } from '../daily/daily-overview/daily-overview.
         RouterModule.forChild([{path: '', component: TabDataPage}]),
         TranslateModule,
         MainHeaderModule,
-        DailyOverviewPageModule,
+        DailyOverviewModule,
+        CategoryOverviewModule,
     ],
   declarations: [
     TabDataPage,
