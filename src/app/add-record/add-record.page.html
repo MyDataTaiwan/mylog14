@@ -11,52 +11,73 @@
 </ion-header>
 <!-- FIXME :  (click)="isShow=!isShow" ADD RECOR UI 中 icon 隨者 <ion-toggle> 撥動而改變顏色-->
 <ion-content>
-<ion-list>
-  <ion-item (click)="onBodyTemperatureClick()">
-    <ion-label color="primary">{{ 'DAILY_RECORD.bodyTemperature' | translate }}</ion-label>
-    <ion-label class="ion-text-right" slot="end">{{ bt }}{{ btUnit }}</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label color="primary">{{ 'DAILY_RECORD.condition' | translate }}</ion-label>
-  </ion-item>
-  <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.coughing' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.coughing" (click)="isShow=!isShow"></ion-toggle>
-            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow"  />
-            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow"  />
+  <ion-list>
+    <ion-item (click)="onBodyTemperatureClick()">
+      <ion-label color="primary">{{ 'DAILY_RECORD.bodyTemperature' | translate }}</ion-label>
+      <ion-label class="ion-text-right" slot="end">{{ bt }}{{ btUnit }}</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">{{ 'DAILY_RECORD.condition' | translate }}</ion-label>
+    </ion-item>
+    <ion-list>
+      <ion-item>
+        <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.coughing' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="condition.coughing" (click)="isShow=!isShow"></ion-toggle>
+        <img src="../../assets/ui/msg_icon.svg" button (click)="isShow=!isShow" *ngIf="isShow" />
+        <img src="../../assets/ui/msg_icon_0.svg" button (click)="isShow=!isShow" *ngIf="!isShow" />
+      </ion-item>
+      <ion-item *ngIf="!isShow">
+        <ion-label position="stacked">Notes</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.headache' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="condition.headache" (click)="isShow1=!isShow1"></ion-toggle>
+        <img src="../../assets/ui/msg_icon.svg" *ngIf="isShow1" />
+        <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow1" />
+      </ion-item>
+      <ion-item *ngIf="!isShow1">
+        <ion-label position="stacked">Notes</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.runnyNose' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="condition.runnyNose" (click)="isShow2=!isShow2"></ion-toggle>
+        <img src="../../assets/ui/msg_icon.svg" *ngIf="isShow2" />
+        <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow2" />
+      </ion-item>
+      <ion-item *ngIf="!isShow2">
+        <ion-label position="stacked">Notes</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item>
+        <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.soreThroat' | translate }}</ion-label>
+        <ion-toggle [(ngModel)]="condition.soreThroat" (click)="isShow3=!isShow3"></ion-toggle>
+        <img src="../../assets/ui/msg_icon.svg" *ngIf="isShow3" />
+        <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow3" />
+      </ion-item>
+      <ion-item *ngIf="!isShow3">
+        <ion-label position="stacked">Notes</ion-label>
+        <ion-textarea></ion-textarea>
+      </ion-item>
+    </ion-list>
 
-  </ion-item>
-  <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.headache' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.headache" (click)="isShow1=!isShow1"></ion-toggle>
-            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow1"  />
-            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow1"  />
-
-  </ion-item>
-  <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.runnyNose' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.runnyNose" (click)="isShow2=!isShow2"></ion-toggle>
-            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow2"  />
-            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow2"  />
-
-  </ion-item>
-  <ion-item>
-    <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.soreThroat' | translate }}</ion-label>
-    <ion-toggle [(ngModel)]="condition.soreThroat" (click)="isShow3=!isShow3"></ion-toggle>
-            <img src="../../assets/ui/msg_icon.svg"  *ngIf="isShow3"  />
-            <img src="../../assets/ui/msg_icon_0.svg" *ngIf="!isShow3"  />
-
-  </ion-item>
-</ion-list>
-<ion-grid>
-  <ion-row class="ion-justify-content-center">
-    <ion-col size="3" class="ion-align-self-center">
-      <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
-    </ion-col>
-    <ion-col size="3" class="ion-align-self-center">
-      <ion-button (click)="onSubmitClick()">{{ 'DAILY_RECORD.submit' | translate }}</ion-button>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+  </ion-list>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="3" class="ion-align-self-center">
+        <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
+      </ion-col>
+      <ion-col size="3" class="ion-align-self-center">
+        <ion-button (click)="onSubmitClick()">{{ 'DAILY_RECORD.submit' | translate }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 <ng-container *ngIf="recorded$ | async"></ng-container>
