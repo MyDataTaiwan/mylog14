@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit ,NgZone} from '@angular/core';
+import { AnimationItem } from 'lottie-web';
+import { AnimationOptions } from 'ngx-lottie';
 @Component({
   selector: 'app-daily-overview',
   templateUrl: './daily-overview.component.html',
@@ -84,9 +85,40 @@ export class DailyOverviewComponent implements OnInit {
       imgHeight: 400,
     },
   ];
-  constructor() { }
+  options: AnimationOptions = {
+    // path: '/assets/lottie-animation.json',
+    path: '/assets/14Days.json',
+	};
+  private animationItem: AnimationItem;
+
+  constructor(private ngZone: NgZone) {}
 
   ngOnInit() {
   }
+  animationCreated(animationItem: AnimationItem): void {
+    this.animationItem = animationItem;
 
+		console.log(animationItem);
+	}
+
+  stop(): void {
+    this.ngZone.runOutsideAngular(() => this.animationItem.stop());
+  }
+
+  play(): void {
+    this.ngZone.runOutsideAngular(() => this.animationItem.play());
+  }
+  // BMSegmentStartEvent(t,this.firstFrame,this.totalFrames));
+
+  playSegments(): void {
+    
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments([616,674],true));
+  
+}
+
+  pause(): void {
+    
+      this.ngZone.runOutsideAngular(() => this.animationItem.pause());
+    
+  }
 }

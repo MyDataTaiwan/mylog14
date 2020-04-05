@@ -9,7 +9,8 @@ import { AnimationOptions } from 'ngx-lottie';
 })
 export class TabTaiwanPage implements OnInit {
 	options: AnimationOptions = {
-		path: '/assets/lottie-animation.json',
+    path: '/assets/lottie-animation.json',
+    // path: '/assets/14Days.json',
 	};
   constructor() { }
 
