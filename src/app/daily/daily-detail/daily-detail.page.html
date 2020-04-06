@@ -27,6 +27,8 @@
             <img (click)="selectedSegment=!selectedSegment" src="../../assets/ui/sort_1.svg" />
           </div>
           <app-daily-detail-symptoms *ngIf="selectedSegment"></app-daily-detail-symptoms>
+        
+        
           <app-daily-detail-photos *ngIf="!selectedSegment"></app-daily-detail-photos>
         </ion-list>
       </ion-card>
