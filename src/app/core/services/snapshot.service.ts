@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Plugins, GeolocationPosition } from '@capacitor/core';
+import { GeolocationPosition } from '@capacitor/core';
 import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';

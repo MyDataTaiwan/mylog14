@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { Record } from '../../interfaces/record';
 import { StorageService } from '../../services/storage.service';
 import { map, switchMap } from 'rxjs/operators';
-import { GeolocationWatchCallback } from '@capacitor/core';
 import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
