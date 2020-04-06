@@ -4,8 +4,9 @@ import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
-import { Record } from '../interfaces/record';
-import { RecordService } from './record.service';
+import { Observable, pipe, forkJoin, from, of, combineLatest } from 'rxjs';
+import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
+import { StorageService } from './storage.service';
 
 const { Geolocation } = Plugins;
 
@@ -17,47 +18,84 @@ export class SnapshotService {
   constructor(
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
-    private recordService: RecordService,
+    private storageService: StorageService,
   ) { }
 
-  async getLocationStamp(): Promise<LocationStamp> {
-    const pos = await this.geolocationService.getCurrentPosition();
-    return Promise.resolve({
-      latitude: pos.coords.latitude,
-      longitude: pos.coords.longitude,
-      accuracy: pos.coords.accuracy,
-    });
+  getLocationStamp(): Observable<LocationStamp> {
+    return this.geolocationService.getPosition()
+      .pipe(
+        catchError(err => {
+          console.log(err);
+          const fakePos: GeolocationPosition = {
+            coords: {
+              latitude: 0, longitude: 0, accuracy: 0,
+            },
+            timestamp: 0,
+          };
+          return of(fakePos);
+        }),
+        map(pos => pos.coords),
+        map(coords => {
+          return {
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            accuracy: coords.accuracy,
+          };
+        }),
+      );
   }
 
   getTimestamp(): string {
-    return (new Date()).getTime().toString() + '.json';
+    return Date.now().toString() + '.json';
   }
 
-  async createSnapshot(): Promise<Snapshot> {
-    const location = await this.getLocationStamp();
-    return {
-      timestamp: this.getTimestamp(),
-      locationStamp: location,
-    };
+  createSnapshot(): Observable<Snapshot> {
+    return this.getLocationStamp()
+      .pipe(
+        catchError(err => {
+          console.log('Error Error', err);
+          return of({latitude: 0, longitude: 0, accuracy: 0});
+        }),
+        map(location => {
+          return {
+            timestamp: this.getTimestamp(),
+            locationStamp: location,
+          };
+        })
+      );
   }
 
-  async createPhotoWithSnapshot(): Promise<Record> {
-    const snap = await this.createSnapshot();
-    const photoBase64 = await this.photoService.takePicture(snap);
-    return {
-      timestamp: snap.timestamp,
-      locationStamp: snap.locationStamp,
-      photos: [
-        {
-          byteString: photoBase64,
-        }
-      ]
-    };
+  createPhotoWithSnapshot(): Observable<any> {
+    return this.createSnapshot()
+      .pipe(
+        mergeMap(snap => {
+          return from(this.photoService.takePicture(snap))
+            .pipe(map((photoBase64) => {
+                return {s: snap, p: photoBase64};
+            }));
+        }),
+        map(({s, p}) => {
+          return {
+            timestamp: s.timestamp,
+            locationStamp: s.locationStamp,
+            photos: [
+              {
+                byteString: p,
+              }
+            ]
+          };
+        })
+      );
   }
 
-  async snapCapture(): Promise<void> {
-    const record = await this.createPhotoWithSnapshot();
-    return this.recordService.createRecord(record);
+  snapCapture(): Observable<void> {
+    return this.createPhotoWithSnapshot()
+      .pipe(
+        switchMap(record => {
+          console.log('Record:', record);
+          return this.storageService.saveRecord(record);
+        })
+      );
   }
 
 }

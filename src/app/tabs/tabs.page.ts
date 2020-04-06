@@ -28,7 +28,7 @@ export class TabsPage {
   }
 
   onClickCameraButton() {
-    this.snapshotService.snapCapture();
+    this.snapshotService.snapCapture().subscribe();
   }
 
   async onClickRecordButton() {

@@ -63,26 +63,19 @@ export class StorageService {
             directory: this.RECORD_DIRECTORY,
             hash: this.getFileHash(fileName),
           };
-          console.log('recordmeta', recordMeta);
           // Check if a record with the same filename (timestamp) exists
           const oldRecordMeta = recordMetaList.find(r => r.path === fileName);
-          console.log('oldrecord', oldRecordMeta);
           // Update or create recordMeta
           if (oldRecordMeta) {
-            console.log('1');
             recordMetaList[recordMetaList.indexOf(oldRecordMeta)] = recordMeta;
-            console.log('2');
           } else {
-            console.log('3');
             recordMetaList.unshift(recordMeta);
-            console.log('4');
           }
           console.log(recordMetaList);
           return recordMetaList;
         }),
       switchMap((recordMetaList: RecordMeta[]) => {
           // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
-          console.log('Hello?');
           this.recordMetaCache = recordMetaList;
           console.log('cache:', this.recordMetaCache);
           return from(Storage.set({
