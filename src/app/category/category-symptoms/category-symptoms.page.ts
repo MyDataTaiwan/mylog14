@@ -6,8 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./category-symptoms.page.scss'],
 })
 export class CategorySymptomsPage implements OnInit {
-  isShow: true;
-  isSelect: true;
+  isShow = true;
+  isSelect = true;
   isSelectlist = [];
   list = [
     {
@@ -91,5 +91,9 @@ export class CategorySymptomsPage implements OnInit {
       this.isSelectlist.splice(index, 1);
     }
     console.log("isSelectlist", this.isSelectlist)
+  }
+  
+  showAlert(msg: string) {
+    alert(msg);
   }
 }

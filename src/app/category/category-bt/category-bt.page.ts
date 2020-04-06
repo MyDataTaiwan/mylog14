@@ -7,8 +7,8 @@ import { Chart } from 'chart.js';
   styleUrls: ['./category-bt.page.scss'],
 })
 export class CategoryBtPage implements OnInit {
-  isShow: true;
-  isSelect: true;
+  isShow = true;
+  isSelect = true;
   isSelectlist = [];
   list = [
     {
@@ -193,6 +193,10 @@ export class CategoryBtPage implements OnInit {
       },
       options: {}
     });
+  }
+
+  showAlert(msg: string) {
+    alert(msg);
   }
 
 }
