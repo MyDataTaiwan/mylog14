@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategorySymptomsPage implements OnInit {
   isShow = true;
-  isSelect = true;
+  isSelect = false;
   isSelectlist = [];
   list = [
     {

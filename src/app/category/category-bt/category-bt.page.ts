@@ -8,7 +8,7 @@ import { Chart } from 'chart.js';
 })
 export class CategoryBtPage implements OnInit {
   isShow = true;
-  isSelect = true;
+  isSelect = false;
   isSelectlist = [];
   list = [
     {
