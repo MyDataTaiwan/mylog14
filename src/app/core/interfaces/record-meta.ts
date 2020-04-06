@@ -1,4 +1,5 @@
 export interface RecordMeta {
+    timestamp: number;
     path: string;
     directory: string;
     hash: string;

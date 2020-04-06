@@ -4,6 +4,7 @@ import { Record } from '../interfaces/record';
 import { from, defer, forkJoin, of } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { RecordMeta } from '../interfaces/record-meta';
+import { UserData } from '../interfaces/user-data';
 
 const { Filesystem, Storage } = Plugins;
 
@@ -14,6 +15,9 @@ export class StorageService {
   RECORD_REPOSITORY = 'records';
   RECORD_DIRECTORY: string = FilesystemDirectory.Data;
   cachedRecordMeta: RecordMeta[];
+  USER_DATA_REPOSITORY = 'userData';
+  USER_DATA_DIRECTORY: string = FilesystemDirectory.Data;
+  cachedUserData: UserData;
   constructor() { }
 
   saveRecordJSON(record: Record) {
@@ -58,6 +62,7 @@ export class StorageService {
         console.log('value', repoRaw.value);
         const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
         const recordMeta: RecordMeta = {
+          timestamp: +fileName.slice(0, -4),
           path: fileName,
           directory: this.RECORD_DIRECTORY,
           hash: this.getFileHash(fileName),
@@ -99,8 +104,18 @@ export class StorageService {
   }
 
   getRecords(useCache = true) {
-    const record$ = (useCache) ? of(this.cachedRecordMeta) : this.updateRecordMetaCache();
-    return record$.pipe(take(1));
+    return (useCache && this.cachedRecordMeta) ? of(this.cachedRecordMeta) : this.updateRecordMetaCache();
+  }
+
+  getUserData(useCache = true) {
+    return (useCache && this.cachedUserData) ? of(this.cachedUserData) : this.updateUserDataCache();
+  }
+
+  saveUserData(userData: UserData) {
+    return from(Storage.set({
+      key: this.RECORD_REPOSITORY,
+      value: JSON.stringify(userData),
+    }));
   }
 
   updateRecordMetaCache() {
@@ -111,6 +126,18 @@ export class StorageService {
           const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
           this.cachedRecordMeta = recordMetaList;
           return this.cachedRecordMeta;
+        })
+      );
+  }
+
+  updateUserDataCache() {
+    return from(Storage.get({ key: this.USER_DATA_REPOSITORY }))
+      .pipe(
+        take(1),
+        map(repoRaw => {
+          const userData: UserData = (repoRaw.value) ? JSON.parse(repoRaw.value) : {};
+          this.cachedUserData = userData;
+          return this.cachedUserData;
         })
       );
   }
