@@ -1,11 +1,12 @@
-import { Snapshot } from './snapshot';
-import { Condition } from './condition';
+import { Symptoms } from './symptoms';
 import { PhotoRecord } from './photo-record';
+import { LocationStamp } from './location-stamp';
 
 export interface Record {
+    timestamp: string;
+    locationStamp?: LocationStamp;
     bodyTemperature?: number;
     bodyTemperatureUnit?: string;
-    condition?: Condition;
-    snapshot: Snapshot;
+    symptoms?: Symptoms;
     photos?: PhotoRecord[];
 }

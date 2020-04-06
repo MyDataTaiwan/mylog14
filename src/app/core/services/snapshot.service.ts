@@ -29,8 +29,8 @@ export class SnapshotService {
     });
   }
 
-  getTimestamp(): number {
-    return Date.now();
+  getTimestamp(): string {
+    return (new Date()).getTime().toString() + '.json';
   }
 
   async createSnapshot(): Promise<Snapshot> {
@@ -45,7 +45,8 @@ export class SnapshotService {
     const snap = await this.createSnapshot();
     const photoBase64 = await this.photoService.takePicture(snap);
     return {
-      snapshot: snap,
+      timestamp: snap.timestamp,
+      locationStamp: snap.locationStamp,
       photos: [
         {
           byteString: photoBase64,
