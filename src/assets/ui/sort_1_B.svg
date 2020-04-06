@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="35" viewBox="0 0 32 35">
+  <defs>
+    <clipPath id="clip-sort_1_B">
+      <rect width="32" height="35"/>
+    </clipPath>
+  </defs>
+  <g id="sort_1_B" clip-path="url(#clip-sort_1_B)">
+    <rect width="32" height="35" fill="#fff"/>
+    <g id="Group_829" data-name="Group 829" transform="translate(-140 -513)">
+      <g id="list" transform="translate(144.049 443.096)">
+        <g id="Group_816" data-name="Group 816" transform="translate(5.476 86.247)">
+          <g id="Group_815" data-name="Group 815">
+            <path id="Path_1344" data-name="Path 1344" d="M140.422,236H125.141a.879.879,0,1,0,0,1.758h15.281a.879.879,0,1,0,0-1.758Z" transform="translate(-124.262 -236)" fill="#d4d4d4"/>
+          </g>
+        </g>
+        <g id="Group_818" data-name="Group 818" transform="translate(5.476 79.655)">
+          <g id="Group_817" data-name="Group 817" transform="translate(0 0)">
+            <path id="Path_1345" data-name="Path 1345" d="M140.422,86H125.141a.879.879,0,0,0,0,1.758h15.281a.879.879,0,1,0,0-1.758Z" transform="translate(-124.262 -86)" fill="#d4d4d4"/>
+          </g>
+        </g>
+        <g id="Group_820" data-name="Group 820" transform="translate(5.476 92.838)">
+          <g id="Group_819" data-name="Group 819">
+            <path id="Path_1346" data-name="Path 1346" d="M140.422,386H125.141a.879.879,0,0,0,0,1.758h15.281a.879.879,0,1,0,0-1.758Z" transform="translate(-124.262 -386)" fill="#d4d4d4"/>
+          </g>
+        </g>
+        <g id="Group_826" data-name="Group 826" transform="translate(0.951 92.788)">
+          <g id="Group_825" data-name="Group 825" transform="translate(0 0)">
+            <circle id="Ellipse_290" data-name="Ellipse 290" cx="1" cy="1" r="1" transform="translate(0 0.115)" fill="#d4d4d4"/>
+          </g>
+        </g>
+      </g>
+      <g id="Group_827" data-name="Group 827" transform="translate(145 528.885)">
+        <g id="Group_825-2" data-name="Group 825" transform="translate(0 0)">
+          <circle id="Ellipse_290-2" data-name="Ellipse 290" cx="1" cy="1" r="1" transform="translate(0 0.115)" fill="#d4d4d4"/>
+        </g>
+      </g>
+      <g id="Group_828" data-name="Group 828" transform="translate(145 522.885)">
+        <g id="Group_825-3" data-name="Group 825" transform="translate(0 0)">
+          <circle id="Ellipse_290-3" data-name="Ellipse 290" cx="1" cy="1" r="1" transform="translate(0 0.115)" fill="#d4d4d4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
