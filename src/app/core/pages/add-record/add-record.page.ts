@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PickerController, ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
-import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
-import { Condition } from '../../interfaces/condition';
+import { Symptoms } from '../../interfaces/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
-import { Snapshot } from '../../interfaces/snapshot';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { RecordService } from '../../services/record.service';
 import { Record } from '../../interfaces/record';
+import { StorageService } from '../../services/storage.service';
+import { map, switchMap } from 'rxjs/operators';
+import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
   selector: 'app-add-record',
@@ -25,7 +25,7 @@ export class AddRecordPage implements OnInit {
   btUnitList = ['°C', '°F'];
   defaultBt = '-';
   defaultBtUnit = '°C';
-  defaultCondition: Condition = {
+  defaultCondition: Symptoms = {
     coughing: false,
     headache: false,
     runnyNose: false,
@@ -33,7 +33,7 @@ export class AddRecordPage implements OnInit {
   };
   bt: string;
   btUnit: string;
-  condition: Condition;
+  condition: Symptoms;
   text = {
     recorded: '',
     ok: '',
@@ -46,8 +46,9 @@ export class AddRecordPage implements OnInit {
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private pickerCtrl: PickerController,
-    private record: RecordService,
-    private snapshot: SnapshotService,
+    private geolocationService: GeolocationService,
+    private storageService: StorageService,
+    private snapshotService: SnapshotService,
     private translate: TranslateService,
   ) {
     this.resetPage();
@@ -58,6 +59,8 @@ export class AddRecordPage implements OnInit {
   }
 
   ngOnInit() {
+    // Trigger location cache update
+    this.geolocationService.getPosition().subscribe();
     this.presentBtPicker();
   }
 
@@ -140,16 +143,26 @@ export class AddRecordPage implements OnInit {
 
   async onSubmitClick() {
     const loading = await this.presentLoading();
-    const snap = await this.snapshot.createSnapshot();
-    const record: Record = {
-      bodyTemperature: +this.bt,
-      bodyTemperatureUnit: this.btUnit,
-      condition: this.condition,
-      snapshot: snap,
-    };
-    await this.record.createRecord(record);
-    await loading.dismiss();
-    await this.presentAlert();
+    this.snapshotService.createSnapshot()
+      .pipe(
+        map(snap => {
+          const record: Record = {
+            bodyTemperature: +this.bt,
+            bodyTemperatureUnit: this.btUnit,
+            symptoms: this.condition,
+            timestamp: snap.timestamp,
+            locationStamp: snap.locationStamp,
+          };
+          return record;
+        }),
+        switchMap(record => {
+          return this.storageService.saveRecord(record);
+        }),
+        map(() => {
+          loading.dismiss();
+          this.presentAlert();
+        }),
+      ).subscribe();
   }
 
   resetPage() {

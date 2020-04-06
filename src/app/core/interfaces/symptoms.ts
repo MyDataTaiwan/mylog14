@@ -1,4 +1,4 @@
-export interface Condition {
+export interface Symptoms {
     coughing: boolean;
     headache: boolean;
     runnyNose: boolean;

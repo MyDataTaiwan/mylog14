@@ -15,7 +15,10 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { CoreModule } from './core/core.module';
 import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
-import { LanguageLoader } from './core/pages/add-record/add-record.page.spec';
+
+export function LanguageLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
+}
 
 // Note we need a separate function as it's required
 // by the AOT compiler.

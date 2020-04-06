@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plugins, GeolocationOptions, GeolocationPosition } from '@capacitor/core';
-import { bindCallback, Observable } from 'rxjs';
+import { bindCallback, Observable, from, of } from 'rxjs';
+import { take, map } from 'rxjs/operators';
 
 const { Geolocation } = Plugins;
 
@@ -8,10 +9,22 @@ const { Geolocation } = Plugins;
   providedIn: 'root'
 })
 export class GeolocationService {
+  cachedPosition: GeolocationPosition;
+  cachedPositionTime: number;
+  cacheTimeout = 60000; // ms
   constructor() { }
 
-  async getCurrentPosition(): Promise<GeolocationPosition> {
-    return Geolocation.getCurrentPosition();
+  getPosition(useCache = true): Observable<GeolocationPosition> {
+    const position$ = (this.isCachedPositionValid() && useCache) ? of(this.cachedPosition) : from(Geolocation.getCurrentPosition());
+    return position$
+      .pipe(
+        take(1),
+        map(position => {
+          console.log('Geolocation retrieved', position);
+          this.cachedPositionTime = Date.now();
+          return this.cachedPosition = position;
+        }),
+        );
   }
 
   watchPosition(geolocationOptions: GeolocationOptions = {}): Observable<any> {
@@ -19,4 +32,10 @@ export class GeolocationService {
     return watch(geolocationOptions);
   }
 
+  private isCachedPositionValid(): boolean {
+    const cached: boolean = !(!this.cachedPosition || !this.cachedPositionTime);
+    const isTimeout = (Date.now() - this.cachedPositionTime > this.cacheTimeout);
+    console.log('Use cached postion: ', (cached && !isTimeout));
+    return (cached && !isTimeout);
+  }
 }
