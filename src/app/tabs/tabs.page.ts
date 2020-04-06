@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
-import { RecordService } from '../core/services/record.service';
 import { SnapshotService } from '../core/services/snapshot.service';
+import { StorageService } from '../core/services/storage.service';
 
 @Component({
   selector: 'app-tabs',
@@ -15,7 +15,7 @@ export class TabsPage {
     private alertCtrl: AlertController,
     private modalController: ModalController,
     private snapshotService: SnapshotService,
-    private record: RecordService,
+    private storage: StorageService,
   ) {}
 
   async presentAddRecordModal() {
@@ -37,8 +37,10 @@ export class TabsPage {
   }
 
   async onClickTestButton() {
-    const data = await this.record.getRecords();
-    await this.presentTestAlert(data);
+    this.storage.getRecords().subscribe(recordMeta => {
+      console.log(recordMeta);
+      this.presentTestAlert(recordMeta);
+    });
   }
 
   // TODO: Remove this alert after we can view stored data elsewhere
