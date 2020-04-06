@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plugins, GeolocationOptions, GeolocationPosition } from '@capacitor/core';
 import { bindCallback, Observable, from, of } from 'rxjs';
-import { take, map, timeout } from 'rxjs/operators';
+import { take, map } from 'rxjs/operators';
 
 const { Geolocation } = Plugins;
 
@@ -19,9 +19,8 @@ export class GeolocationService {
     return position$
       .pipe(
         take(1),
-        timeout(3000),
         map(position => {
-          console.log('Not timeout?', position);
+          console.log('Geolocation retrieved', position);
           this.cachedPositionTime = Date.now();
           return this.cachedPosition = position;
         }),
@@ -35,7 +34,7 @@ export class GeolocationService {
 
   private isCachedPositionValid(): boolean {
     const cached: boolean = !(!this.cachedPosition || !this.cachedPositionTime);
-    const isTimeout = (Date.now() - this.cachedPositionTime < this.cacheTimeout);
+    const isTimeout = (Date.now() - this.cachedPositionTime > this.cacheTimeout);
     console.log('Use cached postion: ', (cached && !isTimeout));
     return (cached && !isTimeout);
   }

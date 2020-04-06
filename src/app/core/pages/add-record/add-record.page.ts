@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { PickerController, ModalController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
-import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { Symptoms } from '../../interfaces/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
-import { Snapshot } from '../../interfaces/snapshot';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import { RecordService } from '../../services/record.service';
 import { Record } from '../../interfaces/record';
 import { StorageService } from '../../services/storage.service';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-record',
@@ -141,21 +139,26 @@ export class AddRecordPage implements OnInit {
 
   async onSubmitClick() {
     const loading = await this.presentLoading();
-    const snap = await this.snapshot.createSnapshot();
-    const record: Record = {
-      bodyTemperature: +this.bt,
-      bodyTemperatureUnit: this.btUnit,
-      symptoms: this.condition,
-      timestamp: snap.timestamp,
-      locationStamp: snap.locationStamp,
-    };
-    this.storage.saveRecord(record)
-      .subscribe(metaList => {
-        console.log('Record saved!');
-      }
-    );
-    await loading.dismiss();
-    await this.presentAlert();
+    this.snapshot.createSnapshot()
+      .pipe(
+        map(snap => {
+          const record: Record = {
+            bodyTemperature: +this.bt,
+            bodyTemperatureUnit: this.btUnit,
+            symptoms: this.condition,
+            timestamp: snap.timestamp,
+            locationStamp: snap.locationStamp,
+          };
+          return record;
+        }),
+        switchMap(record => {
+          return this.storage.saveRecord(record);
+        }),
+        map(() => {
+          loading.dismiss();
+          this.presentAlert();
+        }),
+      );
   }
 
   resetPage() {

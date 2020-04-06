@@ -4,17 +4,14 @@ import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
-import { Observable, pipe, forkJoin, from, of, combineLatest } from 'rxjs';
-import { catchError, map, switchMap, mergeMap } from 'rxjs/operators';
+import { Observable, pipe, forkJoin, from, of, combineLatest, Subject } from 'rxjs';
+import { catchError, map, switchMap, mergeMap, takeUntil } from 'rxjs/operators';
 import { StorageService } from './storage.service';
-
-const { Geolocation } = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnapshotService {
-
   constructor(
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
@@ -25,7 +22,7 @@ export class SnapshotService {
     return this.geolocationService.getPosition()
       .pipe(
         catchError(err => {
-          console.log(err);
+          console.log('Geolocation timeout. Set all value to 0.');
           const fakePos: GeolocationPosition = {
             coords: {
               latitude: 0, longitude: 0, accuracy: 0,
@@ -52,10 +49,6 @@ export class SnapshotService {
   createSnapshot(): Observable<Snapshot> {
     return this.getLocationStamp()
       .pipe(
-        catchError(err => {
-          console.log('Error Error', err);
-          return of({latitude: 0, longitude: 0, accuracy: 0});
-        }),
         map(location => {
           return {
             timestamp: this.getTimestamp(),
@@ -66,21 +59,28 @@ export class SnapshotService {
   }
 
   createPhotoWithSnapshot(): Observable<any> {
-    return this.createSnapshot()
+    // Start trying to get geolocation as soon as this function is called.
+    // In the meanwhile, open the built-in camera. If the user finished taking a photo,
+    // takePhotoSignal$ is used to trigger complete signal for createSnapshot observable
+    // The observable then yields fake location data
+    const takePhotoSignal$ = new Subject();
+    const subscription = takePhotoSignal$.subscribe();
+    return forkJoin([
+      this.photoService.startCapture(takePhotoSignal$),
+      this.createSnapshot().pipe(takeUntil(takePhotoSignal$)),
+    ])
       .pipe(
-        mergeMap(snap => {
-          return from(this.photoService.takePicture(snap))
-            .pipe(map((photoBase64) => {
-                return {s: snap, p: photoBase64};
-            }));
+        switchMap(([capturedPhoto, snapshot]) => {
+          subscription.unsubscribe();
+          return from(this.photoService.createPicture(capturedPhoto, snapshot));
         }),
-        map(({s, p}) => {
+        map(({base64, metadata}) => {
           return {
-            timestamp: s.timestamp,
-            locationStamp: s.locationStamp,
+            timestamp: metadata.timestamp,
+            locationStamp: metadata.locationStamp,
             photos: [
               {
-                byteString: p,
+                byteString: base64,
               }
             ]
           };
