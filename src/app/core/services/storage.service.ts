@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Plugins, FilesystemDirectory, FileWriteResult } from '@capacitor/core';
+import { Plugins, FilesystemDirectory } from '@capacitor/core';
 import { Record } from '../interfaces/record';
-import { formatDate } from '@angular/common';
-import { Observable, from, defer, forkJoin, of } from 'rxjs';
-import { map, mergeMap, catchError, switchMap, take, filter } from 'rxjs/operators';
+import { from, defer, forkJoin, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 import { RecordMeta } from '../interfaces/record-meta';
 
 const { Filesystem, Storage } = Plugins;
@@ -14,7 +13,7 @@ const { Filesystem, Storage } = Plugins;
 export class StorageService {
   RECORD_REPOSITORY = 'records';
   RECORD_DIRECTORY: string = FilesystemDirectory.Data;
-  recordMetaCache: RecordMeta[];
+  cachedRecordMeta: RecordMeta[];
   constructor() { }
 
   saveRecordJSON(record: Record) {
@@ -54,53 +53,53 @@ export class StorageService {
       this.saveRecordJSON(record).pipe(take(1)),
       from(Storage.get({ key: this.RECORD_REPOSITORY })).pipe(take(1)),
     ]).pipe(
-        map(([fileName, repoRaw]) => {
-          console.log('filename:', fileName);
-          console.log('value', repoRaw.value);
-          const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
-          const recordMeta: RecordMeta = {
-            path: fileName,
-            directory: this.RECORD_DIRECTORY,
-            hash: this.getFileHash(fileName),
-          };
-          // Check if a record with the same filename (timestamp) exists
-          const oldRecordMeta = recordMetaList.find(r => r.path === fileName);
-          // Update or create recordMeta
-          if (oldRecordMeta) {
-            recordMetaList[recordMetaList.indexOf(oldRecordMeta)] = recordMeta;
-          } else {
-            recordMetaList.unshift(recordMeta);
-          }
-          console.log(recordMetaList);
-          return recordMetaList;
-        }),
-      switchMap((recordMetaList: RecordMeta[]) => {
-          // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
-          this.recordMetaCache = recordMetaList;
-          console.log('cache:', this.recordMetaCache);
-          return from(Storage.set({
-            key: this.RECORD_REPOSITORY,
-            value: JSON.stringify(recordMetaList),
-          }));
+      map(([fileName, repoRaw]) => {
+        console.log('filename:', fileName);
+        console.log('value', repoRaw.value);
+        const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
+        const recordMeta: RecordMeta = {
+          path: fileName,
+          directory: this.RECORD_DIRECTORY,
+          hash: this.getFileHash(fileName),
+        };
+        // Check if a record with the same filename (timestamp) exists
+        const oldRecordMeta = recordMetaList.find(r => r.path === fileName);
+        // Update or create recordMeta
+        if (oldRecordMeta) {
+          recordMetaList[recordMetaList.indexOf(oldRecordMeta)] = recordMeta;
+        } else {
+          recordMetaList.unshift(recordMeta);
         }
+        console.log(recordMetaList);
+        return recordMetaList;
+      }),
+      switchMap((recordMetaList: RecordMeta[]) => {
+        // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
+        this.cachedRecordMeta = recordMetaList;
+        console.log('cache:', this.cachedRecordMeta);
+        return from(Storage.set({
+          key: this.RECORD_REPOSITORY,
+          value: JSON.stringify(recordMetaList),
+        }));
+      }
       ),
     );
   }
 
   getRecord(timestamp: string, useCache = true) {
-    const record$ = (useCache) ? of(this.recordMetaCache) : this.updateRecordMetaCache();
+    const record$ = (useCache) ? of(this.cachedRecordMeta) : this.updateRecordMetaCache();
     return record$
       .pipe(
         take(1),
         map(recordMetaList => {
-            return recordMetaList.find(r => r.path === timestamp);
-          }
+          return recordMetaList.find(r => r.path === timestamp);
+        }
         )
       );
   }
 
   getRecords(useCache = true) {
-    const record$ = (useCache) ? of(this.recordMetaCache) : this.updateRecordMetaCache();
+    const record$ = (useCache) ? of(this.cachedRecordMeta) : this.updateRecordMetaCache();
     return record$.pipe(take(1));
   }
 
@@ -110,8 +109,8 @@ export class StorageService {
         take(1),
         map(repoRaw => {
           const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
-          this.recordMetaCache = recordMetaList;
-          return this.recordMetaCache;
+          this.cachedRecordMeta = recordMetaList;
+          return this.cachedRecordMeta;
         })
       );
   }
