@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { Record } from '../../interfaces/record';
 import { StorageService } from '../../services/storage.service';
 import { map, switchMap } from 'rxjs/operators';
+import { GeolocationWatchCallback } from '@capacitor/core';
+import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
   selector: 'app-add-record',
@@ -45,8 +47,9 @@ export class AddRecordPage implements OnInit {
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private pickerCtrl: PickerController,
-    private storage: StorageService,
-    private snapshot: SnapshotService,
+    private geolocationService: GeolocationService,
+    private storageService: StorageService,
+    private snapshotService: SnapshotService,
     private translate: TranslateService,
   ) {
     this.resetPage();
@@ -57,6 +60,8 @@ export class AddRecordPage implements OnInit {
   }
 
   ngOnInit() {
+    // Trigger location cache update
+    this.geolocationService.getPosition().subscribe();
     this.presentBtPicker();
   }
 
@@ -139,7 +144,7 @@ export class AddRecordPage implements OnInit {
 
   async onSubmitClick() {
     const loading = await this.presentLoading();
-    this.snapshot.createSnapshot()
+    this.snapshotService.createSnapshot()
       .pipe(
         map(snap => {
           const record: Record = {
@@ -152,13 +157,13 @@ export class AddRecordPage implements OnInit {
           return record;
         }),
         switchMap(record => {
-          return this.storage.saveRecord(record);
+          return this.storageService.saveRecord(record);
         }),
         map(() => {
           loading.dismiss();
           this.presentAlert();
         }),
-      );
+      ).subscribe();
   }
 
   resetPage() {
