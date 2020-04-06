@@ -3,6 +3,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { CategoryLocationPage } from './category-location.page';
 import { RouterModule } from '@angular/router';
+import { CoreModule } from 'src/app/core/core.module';
+import { SafeUrlPipe } from 'src/app/core/pipes/safe-url.pipe';
 
 describe('CategoryLocationPage', () => {
   let component: CategoryLocationPage;
@@ -10,7 +12,7 @@ describe('CategoryLocationPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CategoryLocationPage ],
+      declarations: [ CategoryLocationPage, SafeUrlPipe ],
       imports: [
         IonicModule.forRoot(),
         RouterModule.forRoot([]),
