@@ -5,13 +5,19 @@
   border:1px solid #000;">
     <div class="TA-AE" style="height: 50vw;width: 50vw; ">
     <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
-  </div> <button (click)="stop()">Stop</button>
-  <button (click)="play()">Play</button>
-  <button (click)="playSegments()">playSegments</button>
-
-  
-  <button (click)="pause()">pause</button>
-
+  </div>
+    <!-- DEBUG_UI: The bottom of the last card will be cut by the virtual scroll container-->
+   <div>
+    <button (click)="stop()">Stop</button>
+    <button (click)="play()">Play</button>
+    <button (click)="playSegments()">playSegments</button>  
+    <button (click)="day1()">day1</button>  
+    <button (click)="day2()">day2</button>  
+    <button (click)="day3()">day3</button>  
+    <button (click)="day15()">day15</button>  
+    <button (click)="day()">day</button>  
+    <button (click)="pause()">pause</button>
+  </div> 
 </div>
   {{items.length}}
   <div style="border-bottom: 2pt;"></div>

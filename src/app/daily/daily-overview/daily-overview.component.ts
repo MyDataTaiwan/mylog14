@@ -1,4 +1,4 @@
-import { Component, OnInit ,NgZone} from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 @Component({
@@ -6,6 +6,8 @@ import { AnimationOptions } from 'ngx-lottie';
   templateUrl: './daily-overview.component.html',
   styleUrls: ['./daily-overview.component.scss'],
 })
+
+
 export class DailyOverviewComponent implements OnInit {
   items = [
     {
@@ -85,21 +87,45 @@ export class DailyOverviewComponent implements OnInit {
       imgHeight: 400,
     },
   ];
+  // arry= [[616, 674], [125, 184], [195, 246], [254, 306]]
+  // TimeArry:{
+  //   [616, 674], [125, 184], [195, 246], [254, 306]
+  // }
+  
+  arry: [number, number][] = [[35, 36], [125, 184], [195, 246], [254, 306],[313,365],[372,420],[436,490],[494,548],[555,611],[613,670],[677,734],[740,792],[797,850],[860,902],[952,922],[999,1200]];
+  // arry: [number, number][] = [[35, 36], [125, 184], [125, 246], [125, 306],[125,365],[125,420],[125,490],[125,548],[125,611],[125,670],[125,734],[125,792],[125,850],[125,902],[125,922],[999,1200]];
+
   options: AnimationOptions = {
     // path: '/assets/lottie-animation.json',
-    path: '/assets/14Days.json',
-	};
+    path: '/assets/MyLog14BBT.json',
+  };
   private animationItem: AnimationItem;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone) { }
 
   ngOnInit() {
+    // this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[this.items.length],true));
+    this.day("12132");
+
   }
+  ngOnChanges()	{
+  }
+
   animationCreated(animationItem: AnimationItem): void {
     this.animationItem = animationItem;
+   
 
-		console.log(animationItem);
-	}
+    console.log(animationItem);
+    console.log("is animation");
+
+    animationItem.playSegments(this.arry[this.items.length],true);
+    this.ngZone.runOutsideAngular(() => animationItem.playSegments(this.arry[this.items.length],true));
+
+        this.day("12132");
+
+
+  }
+  
 
   stop(): void {
     this.ngZone.runOutsideAngular(() => this.animationItem.stop());
@@ -110,15 +136,32 @@ export class DailyOverviewComponent implements OnInit {
   }
   // BMSegmentStartEvent(t,this.firstFrame,this.totalFrames));
 
-  playSegments(): void {
-    
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments([616,674],true));
-  
-}
+  // playSegments(): void {
+  //   this.ngZone.runOutsideAngular(() => this.animationItem.playSegments([616, 674], true));
+  // }
+  day1(): void {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[1], true));
+  }
+  day2(): void {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[2],true));
+  }
+  day3(): void {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[3],true));
+  }
+  day15(): void {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[15],true));
+  }
 
-  pause(): void {
-    
-      this.ngZone.runOutsideAngular(() => this.animationItem.pause());
-    
+  day(data) {
+    let days=this.items.length
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[days],true));
+    console.log("to day animation"+data);
+
+  }
+
+
+  pause() {
+    this.ngZone.runOutsideAngular(() => this.animationItem.pause());
   }
 }
+
