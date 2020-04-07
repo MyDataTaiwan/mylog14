@@ -24,7 +24,7 @@
     <ion-list *ngFor="let symptoms of list.symptoms">
       <ion-item>
         <ion-label class="ion-padding-start">{{ symptoms.name}}</ion-label>
-        <ion-toggle [(ngModel)]="symptoms.state" (click)="symptoms.state=!symptoms.state"></ion-toggle>
+        <ion-toggle [(ngModel)]="symptoms.state"></ion-toggle>
         <img src="../../assets/ui/msg_icon.svg" button (click)="symptoms.isNote=!symptoms.isNote"
           *ngIf="symptoms.isNote" />
         <img src="../../assets/ui/msg_icon_0.svg" button (click)="symptoms.isNote=!symptoms.isNote"
