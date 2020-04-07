@@ -19,7 +19,7 @@
     <ion-col>
 
       <div style="display: flex;flex-direction: column;height: 40vw;">
-        <img [src]="webviewPath" style="height: 39vw;" />
+        <img [src]="webviewPath | safeUrl" style="height: 39vw;" />
       </div>
 
     </ion-col>
