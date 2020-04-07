@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PhotoService } from 'src/app/core/services/photo.service';
 import { ModalController,PopoverController } from '@ionic/angular';
 import { CategorizeFinishPage } from './categorize-finish/categorize-finish.page';
-import { CategorizeImgPopoverPage } from './categorize-img-popover/categorize-img-popover/categorize-img-popover.page';
+import { CategorizeImgPopoverPage } from './categorize-img-popover/categorize-img-popover.page';
 
 
 @Component({
