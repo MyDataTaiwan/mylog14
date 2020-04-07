@@ -32,7 +32,9 @@
       </ion-item>
       <ion-item *ngIf="symptoms.isNote">
         <ion-label position="stacked">Notes</ion-label>
-        <ion-textarea></ion-textarea>
+        <!-- <ion-input  value="symptoms.note"></ion-input> -->
+
+        <ion-textarea  type="text"  [(ngModel)]="symptoms.note"></ion-textarea>
       </ion-item>
     </ion-list>
 
@@ -74,7 +76,7 @@
       </ion-item>
     </ion-list> -->
 
-    <ion-list *ngIf="isShow">
+    <!-- <ion-list *ngIf="isShow">
       <ion-item>
 
         <div>
@@ -85,17 +87,14 @@
           day {{ ToDay.day }}
         </ion-label>
       </ion-item>
-
-
-
-    </ion-list>
+    </ion-list> -->
 
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="3" class="ion-align-self-center">
+      <!-- <ion-col size="3" class="ion-align-self-center">
         <ion-button (click)="onClearClick()" fill="clear">其他</ion-button>
-      </ion-col>
+      </ion-col> -->
       <ion-col size="3" class="ion-align-self-center">
         <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
       </ion-col>
