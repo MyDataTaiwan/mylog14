@@ -45,3 +45,15 @@
   }
 
 }
+.popover-content {
+  --min-width: 80%;
+  --min-height:  40% !important;
+
+}
+.popover_class {
+  // --min-hight: 300px !important;
+  --min-width: 100%;
+
+  width: 30px !important;
+  height:  80vw !important;
+}

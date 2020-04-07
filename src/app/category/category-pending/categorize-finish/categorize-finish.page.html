@@ -1,3 +1,50 @@
-<ion-content>
+<!-- <ion-content>
 <ion-title class="ion-text-center">恭喜！<br />你已紀錄完資料...</ion-title>
+</ion-content> -->
+
+<ion-content >
+        <ion-row >
+            <ion-col text-center>
+               請選擇類別
+            </ion-col>
+        </ion-row>
+        <div
+        style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+      </div>
+      <ion-row style="height: 40vw;margin-top: 10vh;">
+        <ion-col >
+          <ion-button size="large" [routerLink]="['/tabs/tab-data/category-bt']"
+            routerDirection="forward">
+            <div style="display: flex;flex-direction: column;">
+              <img src="../../assets/ui/category_icon_T_L.svg" />
+              <ion-label class=".ion-text-center">體溫</ion-label>
+            </div>
+          </ion-button>
+        </ion-col>
+        <ion-col >
+          <ion-button   [routerLink]="['/tabs/tab-data/category-symptoms']"
+            routerDirection="forward">
+            <div style="display: flex;flex-direction: column;">
+              <img src="../../assets/ui/category_icon_T_R.svg" />
+              <ion-label class=".ion-text-center">症狀</ion-label>
+            </div>
+          </ion-button>
+        </ion-col>
+        <ion-col >
+            <ion-button  [routerLink]="['/tabs/tab-data/category-location']"
+              routerDirection="forward">
+              <div style="display: flex;flex-direction: column;">
+                <img src="../../assets/ui/category_icon_D_L.svg" />
+                <ion-label class=".ion-text-center">地點</ion-label>
+              </div>
+            </ion-button>
+          </ion-col>
+      </ion-row>
+        <div
+        style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+      </div>
+        <ion-row >
+            <ion-button (click)="closeModal()">取消</ion-button>
+                <ion-button (click)="closeModal()">確認</ion-button>
+        </ion-row>
 </ion-content>

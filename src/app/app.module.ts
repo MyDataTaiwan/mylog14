@@ -15,6 +15,8 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { CoreModule } from './core/core.module';
 import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
+import { CategorizeFinishPageModule } from './category/category-pending/categorize-finish/categorize-finish.module';
+import { CategorizeImgPopoverPageModule } from './category/category-pending/categorize-img-popover/categorize-img-popover/categorize-img-popover.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -32,11 +34,12 @@ export function playerFactory() {
     AppComponent,
   ],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, TranslateModule.forRoot({
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule, CategorizeFinishPageModule,CategorizeImgPopoverPageModule,TranslateModule.forRoot({
     loader: {
       provide: TranslateLoader,
       useFactory: (LanguageLoader),
-      deps: [HttpClient]
+      deps: [HttpClient],
+      
       }
     }),
     CoreModule,
