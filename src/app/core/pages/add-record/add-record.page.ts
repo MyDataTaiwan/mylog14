@@ -17,6 +17,7 @@ import { GeolocationService } from '../../services/geolocation.service';
 })
 export class AddRecordPage implements OnInit {
   isShow=true;
+  isSelect=true;
   isShow1=true;
   isShow2=true;
   isShow3=true;

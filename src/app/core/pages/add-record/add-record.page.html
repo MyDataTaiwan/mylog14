@@ -68,9 +68,28 @@
       </ion-item>
     </ion-list>
 
+    <ion-list *ngIf="isShow">
+      <ion-item>
+
+        <div>
+          <img *ngIf="!isSelect" (click)="addSelect(ToDay)" src="../../assets/ui/add_icon_2.svg" />
+          <img *ngIf="isSelect" (click)="delSelect(ToDay)" src="../../assets/ui/add_icon_3.svg" />
+        </div>
+        <ion-label class="ion-text-start">
+          day {{ ToDay.day }}
+        </ion-label>
+      </ion-item>
+
+
+
+    </ion-list>
+
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
+      <ion-col size="3" class="ion-align-self-center">
+        <ion-button (click)="onClearClick()" fill="clear">其他</ion-button>
+      </ion-col>
       <ion-col size="3" class="ion-align-self-center">
         <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
       </ion-col>
