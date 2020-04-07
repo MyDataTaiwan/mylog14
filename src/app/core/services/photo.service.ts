@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
-import { Subject, Observable, from } from 'rxjs';
+import { Subject, Observable, from, BehaviorSubject } from 'rxjs';
 import { Snapshot } from '../interfaces/snapshot';
 import { map } from 'rxjs/operators';
 
@@ -13,13 +13,15 @@ const { Camera, Filesystem, Storage } = Plugins;
 })
 export class PhotoService {
   public photos: Photo[] = [];
-  public photos$ = new Subject<Photo[]>();
+  private photosSubject = new BehaviorSubject<Photo[]>([]);
+  public readonly photos$ = this.photosSubject.asObservable();
   private platform: Platform;
   private PHOTO_STORAGE = 'photos';
   constructor(
     platform: Platform,
   ) {
     this.platform = platform;
+    this.loadSaved();
   }
 
   startCapture(takePhotoSignal$: Subject<any>): Observable<CameraPhoto> {
@@ -43,7 +45,7 @@ export class PhotoService {
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
-    this.photos$.next(this.photos);
+    this.photosSubject.next(this.photos);
 
     // Cache all photo data for future retrieval
     Storage.set({
@@ -87,7 +89,7 @@ export class PhotoService {
       }
     }
 
-    this.photos$.next(this.photos);
+    this.photosSubject.next(this.photos);
     return this.photos;
   }
 

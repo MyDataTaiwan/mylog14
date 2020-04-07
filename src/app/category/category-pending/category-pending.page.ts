@@ -43,7 +43,6 @@ export class CategoryPendingPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.photoService.loadSaved();
   }
 
   onClickShowImageSnapshot(photo) {
