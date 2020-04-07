@@ -1,5 +1,9 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { PhotoService } from 'src/app/core/services/photo.service';
+import { ModalController,PopoverController } from '@ionic/angular';
+import { CategorizeFinishPage } from './categorize-finish/categorize-finish.page';
+import { CategorizeImgPopoverPage } from './categorize-img-popover/categorize-img-popover/categorize-img-popover.page';
+
 
 @Component({
   selector: 'app-category-pending',
@@ -8,6 +12,7 @@ import { PhotoService } from 'src/app/core/services/photo.service';
 })
 
 export class CategoryPendingPage implements OnInit, AfterViewInit {
+  
   isSelect= false;
   catPic = {
     // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
@@ -25,9 +30,14 @@ export class CategoryPendingPage implements OnInit, AfterViewInit {
    [this.catPic, this.dogPic, this.catPic],
    [this.dogPic, this.catPic, this.dogPic],
   ];
+  dataReturned:any;
+
   constructor(
+    public popoverController: PopoverController,
+    public modalController: ModalController,
     public photoService: PhotoService,
   ) { }
+ 
 
   ngOnInit() {
   }
@@ -57,5 +67,63 @@ export class CategoryPendingPage implements OnInit, AfterViewInit {
 
   onLaterClick() {
 
+  }
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: CategorizeFinishPage,
+      event: ev,
+      translucent: true
+    });
+    return await popover.present();
+  }
+  async openIMGModal(photo,ev: any) {
+   
+
+    const popover = await this.popoverController.create({
+      component: CategorizeImgPopoverPage,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        
+        "paramID": 123,
+        "paramTitle": "Test Title",
+        "timestamp":photo.snapshot.timestamp,
+        "latitude":photo.snapshot.locationStamp.latitude,
+        "longitude":photo.snapshot.locationStamp.longitude,
+        "webviewPath":photo.webviewPath
+      }
+    });
+    return await popover.present();
+  }
+  async openModal() {
+    const modal = await this.modalController.create({
+      component: CategorizeFinishPage,
+      componentProps: {
+        "paramID": 123,
+        "paramTitle": "Test Title",
+        translucent: true,
+        cssClass: "popover_class"
+      }
+    });
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+        //alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+    return await modal.present();
+  }
+
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: CategorizeFinishPage,
+      componentProps: {
+        'firstName': 'Douglas',
+        'lastName': 'Adams',
+        'middleInitial': 'N'
+      }
+    });
+    return await modal.present();
   }
 }
