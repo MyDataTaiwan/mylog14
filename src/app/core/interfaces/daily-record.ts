@@ -1,7 +1,7 @@
 import { Record } from './record';
 
 export interface DailyRecord {
-    date: Date;
-    dayCount: number;
+    date: string;
+    countdown: number;
     records: Record[];
 }

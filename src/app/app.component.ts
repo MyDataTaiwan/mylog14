@@ -37,8 +37,6 @@ export class AppComponent {
       }
     }
     forkJoin([
-      this.storageService.loadUserData(),
-      this.storageService.loadRecordMetaList(),
       this.geolocationService.getPosition(),
     ]).pipe(
       tap(() => SplashScreen.hide())

@@ -32,12 +32,11 @@ export class TabsPage {
   }
 
   async onClickRecordButton() {
-    const data = await this.presentAddRecordModal();
-    console.log(data);
+    await this.presentAddRecordModal();
   }
 
   async onClickTestButton() {
-    const recordMeta = this.storage.getRecords();
+    const recordMeta = this.storage.getRecordMetaList();
     this.presentTestAlert(recordMeta);
   }
 

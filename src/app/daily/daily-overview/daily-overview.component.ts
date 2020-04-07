@@ -1,7 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
-import { promise } from 'protractor';
+import { RecordService } from 'src/app/core/services/record.service';
+import { Observable, forkJoin } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { DailyRecord } from 'src/app/core/interfaces/daily-record';
+
 @Component({
   selector: 'app-daily-overview',
   templateUrl: './daily-overview.component.html',
@@ -10,6 +14,7 @@ import { promise } from 'protractor';
 
 
 export class DailyOverviewComponent implements OnInit {
+  items$ = new Observable<Map<string, DailyRecord>>();
   items = [
     {
       day: 8,
@@ -104,9 +109,25 @@ export class DailyOverviewComponent implements OnInit {
   private animationItem: AnimationItem;
   private isAnimationCreated: boolean = false;
 
-  constructor(private ngZone: NgZone) { }
+  constructor(
+    public recordService: RecordService,
+    private ngZone: NgZone
+  ) {
+    this.items$ = this.recordService.
+    .pipe(
+      mergeMap(dailyRecords => {
+        return forkJoin(dailyRecords.map(dailyRecord => ))
+      })
+    );
+  }
 
   ngOnInit() {
+    this.items$.subscribe(r => console.log('items$ Map', r));
+  }
+
+  parseItemToReverseCountdown(dailyRecord: DailyRecord): string {
+    console.log('countdown', dailyRecord.countdown);
+    return (14 - dailyRecord.countdown).toString();
   }
   ngOnChanges() {
   }
@@ -187,3 +208,11 @@ export class DailyOverviewComponent implements OnInit {
   }
 }
 
+export interface CardItem {
+  day: string;
+  month: string;
+  date: string;
+  bt: string;
+  imgSrc: string;
+  imgHeight: number;
+}
