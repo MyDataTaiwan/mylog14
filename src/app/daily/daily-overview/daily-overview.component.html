@@ -4,7 +4,9 @@
   justify-content:center;
   border:1px solid #000;">
     <div class="TA-AE" style="height: 50vw;width: 50vw; ">
-    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+    <!-- <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie> -->
+    <ng-lottie [options]="options" (animationCreated)="AC($event)"></ng-lottie>
+
   </div>
     <!-- DEBUG_UI: The bottom of the last card will be cut by the virtual scroll container-->
    <div>
