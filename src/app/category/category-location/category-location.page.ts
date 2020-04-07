@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class CategoryLocationPage implements OnInit, OnDestroy {
   isShow = true;
-  isSelect = true;
+  isSelect = false;
   isSelectlist = [];
   tempLocation = '25.035221,121.557612';
   photoLocation = '';

@@ -1,0 +1,44 @@
+ion-popover {
+        &.popover-ios, &.popover-md {
+        div.popover-content {
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 90%;
+        overflow: initial;
+        }
+        }
+        }
+
+        $popover-md-width: 320px; $popover-ios-width: 320px; $popover-wp-width: 320px;
+
+        ion-label{
+                color: #555555; 
+                font-size: 10pt;
+        }
+        ion-col{
+        ion-button {
+                --background: none;
+                height: 20vw;
+                width: 20vw;
+                background-color: rgb(255, 255, 255) !important;
+                background-color: #555555;
+                border-width: 5px;
+                //   background-image: url('../../assets/ui/category_icon_D_L.svg');
+                //   background-position: center center;
+                //   background-repeat: no-repeat;
+                //   background-size: cover;
+            }}
+
+              ion-button {
+                --background: none;
+                color: #555555; 
+
+                background-color: rgb(255, 255, 255) !important;
+                background-color: #555555;
+                border-width: 5px;
+                //   background-image: url('../../assets/ui/category_icon_D_L.svg');
+                //   background-position: center center;
+                //   background-repeat: no-repeat;
+                //   background-size: cover;
+            }
