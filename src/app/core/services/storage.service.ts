@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Plugins, FilesystemDirectory } from '@capacitor/core';
 import { Record } from '../interfaces/record';
-import { from, defer, forkJoin, of } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+import { from, defer, forkJoin, of, BehaviorSubject } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
 
@@ -14,41 +14,39 @@ const { Filesystem, Storage } = Plugins;
 export class StorageService {
   RECORD_REPOSITORY = 'records';
   RECORD_DIRECTORY: string = FilesystemDirectory.Data;
-  cachedRecordMeta: RecordMeta[];
+  private recordMetaList = new BehaviorSubject<RecordMeta[]>([]);
+  recordMetaList$ = this.recordMetaList.asObservable();
   USER_DATA_REPOSITORY = 'userData';
   USER_DATA_DIRECTORY: string = FilesystemDirectory.Data;
-  cachedUserData: UserData;
+  private userData = new BehaviorSubject<UserData>({});
+  userData$ = this.userData.asObservable();
   constructor() { }
 
-  saveRecordJSON(record: Record) {
-    const fileName = record.timestamp;
-    return defer(
-      () => from(Filesystem.writeFile({
-        path: fileName,
-        data: JSON.stringify(record),
-        directory: FilesystemDirectory.Data,
-      }))
-        .pipe(
-          take(1),
-          map(_ => {
-            console.log(_);
-            return fileName;
-          }),
-        )
-    );
+
+  loadRecordMetaList() {
+    return from(Storage.get({ key: this.RECORD_REPOSITORY }))
+      .pipe(
+        take(1),
+        tap(() => console.log('Record Meta loaded')),
+        map(repoRaw => {
+          const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
+          this.recordMetaList.next(recordMetaList);
+          return this.recordMetaList.value;
+        })
+      );
   }
 
-  getRecordJSON(fileName: string) {
-    return defer(
-      () => from(Filesystem.readFile({
-        path: fileName,
-        directory: FilesystemDirectory.Data,
-      }))
-        .pipe(
-          take(1),
-          map(readResult => JSON.parse(readResult.data)),
-        )
-    );
+  loadUserData() {
+    return from(Storage.get({ key: this.USER_DATA_REPOSITORY }))
+      .pipe(
+        take(1),
+        tap(() => console.log('User data loaded')),
+        map(repoRaw => {
+          const userData: UserData = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
+          this.userData.next(userData);
+          return this.userData.value;
+        })
+      );
   }
 
   saveRecord(record: Record) {
@@ -58,8 +56,6 @@ export class StorageService {
       from(Storage.get({ key: this.RECORD_REPOSITORY })).pipe(take(1)),
     ]).pipe(
       map(([fileName, repoRaw]) => {
-        console.log('filename:', fileName);
-        console.log('value', repoRaw.value);
         const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
         const recordMeta: RecordMeta = {
           timestamp: +fileName.slice(0, -4),
@@ -80,35 +76,26 @@ export class StorageService {
       }),
       switchMap((recordMetaList: RecordMeta[]) => {
         // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
-        this.cachedRecordMeta = recordMetaList;
-        console.log('cache:', this.cachedRecordMeta);
+        this.recordMetaList.next(recordMetaList);
         return from(Storage.set({
           key: this.RECORD_REPOSITORY,
           value: JSON.stringify(recordMetaList),
         }));
-      }
-      ),
+      }),
     );
   }
 
-  getRecord(timestamp: string, useCache = true) {
-    const record$ = (useCache) ? of(this.cachedRecordMeta) : this.updateRecordMetaCache();
-    return record$
-      .pipe(
-        take(1),
-        map(recordMetaList => {
-          return recordMetaList.find(r => r.path === timestamp);
-        }
-        )
-      );
+  getRecord(timestamp: string) {
+    return this.recordMetaList.value
+      .find(recordMeta => recordMeta.path === timestamp);
   }
 
-  getRecords(useCache = true) {
-    return (useCache && this.cachedRecordMeta) ? of(this.cachedRecordMeta) : this.updateRecordMetaCache();
+  getRecords() {
+    return this.recordMetaList.value;
   }
 
-  getUserData(useCache = true) {
-    return (useCache && this.cachedUserData) ? of(this.cachedUserData) : this.updateUserDataCache();
+  getUserData() {
+    return this.userData.value;
   }
 
   saveUserData(userData: UserData) {
@@ -118,31 +105,41 @@ export class StorageService {
     }));
   }
 
-  updateRecordMetaCache() {
-    return from(Storage.get({ key: this.RECORD_REPOSITORY }))
-      .pipe(
-        take(1),
-        map(repoRaw => {
-          const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
-          this.cachedRecordMeta = recordMetaList;
-          return this.cachedRecordMeta;
-        })
-      );
-  }
-
-  updateUserDataCache() {
-    return from(Storage.get({ key: this.USER_DATA_REPOSITORY }))
-      .pipe(
-        take(1),
-        map(repoRaw => {
-          const userData: UserData = (repoRaw.value) ? JSON.parse(repoRaw.value) : {};
-          this.cachedUserData = userData;
-          return this.cachedUserData;
-        })
-      );
-  }
 
   getFileHash(fileName: string) {
     return '<file-hash-placeholder>';
+  }
+
+  // Get Record JSON from Filesystem
+  private getRecordJSON(fileName: string) {
+    return defer(
+      () => from(Filesystem.readFile({
+        path: fileName,
+        directory: FilesystemDirectory.Data,
+      }))
+        .pipe(
+          take(1),
+          map(readResult => JSON.parse(readResult.data)),
+        )
+    );
+  }
+
+  // Save Record JSON to Filesystem
+  private saveRecordJSON(record: Record) {
+    const fileName = record.timestamp;
+    return defer(
+      () => from(Filesystem.writeFile({
+        path: fileName,
+        data: JSON.stringify(record),
+        directory: FilesystemDirectory.Data,
+      }))
+        .pipe(
+          take(1),
+          map(_ => {
+            console.log(_);
+            return fileName;
+          }),
+        )
+    );
   }
 }

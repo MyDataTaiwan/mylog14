@@ -37,10 +37,8 @@ export class TabsPage {
   }
 
   async onClickTestButton() {
-    this.storage.getRecords().subscribe(recordMeta => {
-      console.log(recordMeta);
-      this.presentTestAlert(recordMeta);
-    });
+    const recordMeta = this.storage.getRecords();
+    this.presentTestAlert(recordMeta);
   }
 
   // TODO: Remove this alert after we can view stored data elsewhere
