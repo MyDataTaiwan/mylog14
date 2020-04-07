@@ -15,18 +15,25 @@
         <ion-label> </ion-label>
       </ion-col>
     </ion-row>
- 
 
 
 
-    <ion-row align-items-center justify-content-start >
+
+    <ion-row align-items-center justify-content-start>
       <ion-col>
         <ion-label> </ion-label>
       </ion-col>
       <ion-col>
-        <div class="TA-AE" style="height: 80vw;width: 80vw;">
+        <div class="TA-AE" style="height: 80vw;width: 80vw;     position: relative;         ">
           <!-- <img src="../../assets/ui/Taiwan_AE.svg" /> -->
-          <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"></ng-lottie>
+          <ng-lottie [options]="optionsBG" (animationCreated)="animationCreated($event)"></ng-lottie>
+          <ng-lottie style="position: absolute; 
+          z-index: 100; 
+          /* background: red;  */
+          top:0; left:0; 
+          width:100%; height:100%; " [options]="options"    (loopComplete)="stop()"
+          
+ (animationCreated)="animationCreated($event)"></ng-lottie>
 
         </div>
       </ion-col>
@@ -41,11 +48,13 @@
       <ion-col>
         <ion-label> </ion-label>
       </ion-col>
-      <ion-col>
-
-
-        <ion-icon slot="start" src="../assets/ui/tw_icon_L.svg"></ion-icon>
-        <ion-icon slot="end" src="../../assets/ui/tw_icon_R.svg"></ion-icon>
+      <ion-col >
+        <!-- <button (click)="stop()">Stop
+          <ion-icon slot="start" src="../assets/ui/tw_icon_L.svg"></ion-icon>
+        </button>
+        <button (click)="play()">Play
+          <ion-icon slot="end" src="../../assets/ui/tw_icon_R.svg"></ion-icon>
+        </button> -->
       </ion-col>
       <ion-col>
       </ion-col>
@@ -66,17 +75,18 @@ left:0;" item-left>
   <img src="../../assets/ui/Taiwan_AE.svg" />
 </div>
  -->
- <div style="position:absolute; top:50%; width:100%; background-color:rgba(255, 255, 255, 0); ">
+<div style="position:absolute;z-index: 100;; top:50%; width:100%; background-color:rgba(255, 255, 255, 0); ">
 
-  <div style=" width:100%; background-color:rgba(255, 255, 255, 0);display: flex;flex-direction: row; align-items: center;">
-<div  style="flex: 1;"></div>
-    <ion-button style="flex: 1; background-color:rgba(255, 255, 255, 0);" col-3>
-      <img src="../../assets/ui/tw_icon_L.svg" />
+  <div
+    style=" width:100%; background-color:rgba(255, 255, 255, 0);display: flex;flex-direction: row; align-items: center;">
+    <div style="flex: 1;"></div>
+    <ion-button (click)="play()" style="flex: 1; background-color:rgba(255, 255, 255, 0);" col-3>
+      <img src="../../assets/ui/rain_icon .svg" />
     </ion-button>
-    <ion-button  style="flex: 1;background-color:rgba(255, 255, 255, 0);" col-3>
+    <ion-button  (click)="stop()" style="flex: 1;background-color:rgba(255, 255, 255, 0);" col-3>
       <img src="../../assets/ui/tw_icon_R.svg" />
     </ion-button>
-    <div  style="flex: 1;"></div>
+    <div style="flex: 1;"></div>
 
   </div>
 

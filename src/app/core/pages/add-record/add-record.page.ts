@@ -136,7 +136,7 @@ export class AddRecordPage implements OnInit {
       date: "2020/03/28",
       day: 1,
       isShhow: true,
-      temperature: 36.5,
+      bodyTemperature: 36.5,
       time: '09:11',
       symptoms:[{
         id: "cough",
@@ -244,6 +244,7 @@ export class AddRecordPage implements OnInit {
         state: false
       }]
       }
+      
   bt: string;
   btUnit: string;
   condition: Symptoms;
