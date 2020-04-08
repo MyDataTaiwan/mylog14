@@ -360,10 +360,16 @@ export class AddRecordPage implements OnInit {
     this.snapshotService.createSnapshot()
       .pipe(
         map(snap => {
+          const symp: Symptoms = {
+            coughing: this.list.symptoms[0].state,
+            runnyNose: this.list.symptoms[1].state,
+            headache: false,
+            soreThroat: false,
+          };
           const record: Record = {
             bodyTemperature: +this.bt,
             bodyTemperatureUnit: this.btUnit,
-            symptoms: this.condition,
+            symptoms: symp,
             timestamp: snap.timestamp,
             locationStamp: snap.locationStamp,
           };
