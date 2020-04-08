@@ -32,15 +32,12 @@ export class TabsPage {
   }
 
   async onClickRecordButton() {
-    const data = await this.presentAddRecordModal();
-    console.log(data);
+    await this.presentAddRecordModal();
   }
 
   async onClickTestButton() {
-    this.storage.getRecords().subscribe(recordMeta => {
-      console.log(recordMeta);
-      this.presentTestAlert(recordMeta);
-    });
+    const recordMeta = this.storage.getRecordMetaList();
+    this.presentTestAlert(recordMeta);
   }
 
   // TODO: Remove this alert after we can view stored data elsewhere

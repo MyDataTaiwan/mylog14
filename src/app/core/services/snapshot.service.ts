@@ -43,7 +43,7 @@ export class SnapshotService {
   }
 
   getTimestamp(): string {
-    return Date.now().toString() + '.json';
+    return Date.now().toString();
   }
 
   createSnapshot(): Observable<Snapshot> {
