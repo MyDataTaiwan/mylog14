@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'categorize-img-popover',
-    loadChildren: () => import('./categorize-img-popover/categorize-img-popover/categorize-img-popover.module').then( m => m.CategorizeImgPopoverPageModule)
+    loadChildren: () => import('./categorize-img-popover/categorize-img-popover.module').then( m => m.CategorizeImgPopoverPageModule)
   }
 ];
 

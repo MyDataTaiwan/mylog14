@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { CategorizeImgPopoverPageRoutingModule } from './categorize-img-popover-routing.module';
 
 import { CategorizeImgPopoverPage } from './categorize-img-popover.page';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CategorizeImgPopoverPageRoutingModule
+    CategorizeImgPopoverPageRoutingModule,
+    CoreModule,
   ],
-  declarations: [CategorizeImgPopoverPage]
+  declarations: [CategorizeImgPopoverPage],
+  entryComponents: [CategorizeImgPopoverPage],
 })
 export class CategorizeImgPopoverPageModule {}

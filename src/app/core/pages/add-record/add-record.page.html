@@ -19,19 +19,27 @@
     <ion-item>
       <ion-label color="primary">{{ 'DAILY_RECORD.condition' | translate }}</ion-label>
     </ion-item>
-    <ion-list>
+
+
+    <ion-list *ngFor="let symptoms of list.symptoms">
       <ion-item>
-        <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.coughing' | translate }}</ion-label>
-        <ion-toggle [(ngModel)]="condition.coughing" (click)="isShow=!isShow"></ion-toggle>
-        <img src="../../assets/ui/msg_icon.svg" button (click)="isShow=!isShow" *ngIf="isShow" />
-        <img src="../../assets/ui/msg_icon_0.svg" button (click)="isShow=!isShow" *ngIf="!isShow" />
+        <ion-label class="ion-padding-start">{{ symptoms.name}}</ion-label>
+        <ion-toggle [(ngModel)]="symptoms.state"></ion-toggle>
+        <img src="../../assets/ui/msg_icon.svg" button (click)="symptoms.isNote=!symptoms.isNote"
+          *ngIf="symptoms.isNote" />
+        <img src="../../assets/ui/msg_icon_0.svg" button (click)="symptoms.isNote=!symptoms.isNote"
+          *ngIf="!symptoms.isNote" />
       </ion-item>
-      <ion-item *ngIf="!isShow">
+      <ion-item *ngIf="symptoms.isNote">
         <ion-label position="stacked">Notes</ion-label>
-        <ion-textarea></ion-textarea>
+        <!-- <ion-input  value="symptoms.note"></ion-input> -->
+
+        <ion-textarea  type="text"  [(ngModel)]="symptoms.note"></ion-textarea>
       </ion-item>
     </ion-list>
-    <ion-list>
+
+
+    <!-- <ion-list>
       <ion-item>
         <ion-label class="ion-padding-start">{{ 'DAILY_RECORD.headache' | translate }}</ion-label>
         <ion-toggle [(ngModel)]="condition.headache" (click)="isShow1=!isShow1"></ion-toggle>
@@ -66,11 +74,27 @@
         <ion-label position="stacked">Notes</ion-label>
         <ion-textarea></ion-textarea>
       </ion-item>
-    </ion-list>
+    </ion-list> -->
+
+    <!-- <ion-list *ngIf="isShow">
+      <ion-item>
+
+        <div>
+          <img *ngIf="!isSelect" (click)="addSelect(ToDay)" src="../../assets/ui/add_icon_2.svg" />
+          <img *ngIf="isSelect" (click)="delSelect(ToDay)" src="../../assets/ui/add_icon_3.svg" />
+        </div>
+        <ion-label class="ion-text-start">
+          day {{ ToDay.day }}
+        </ion-label>
+      </ion-item>
+    </ion-list> -->
 
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
+      <!-- <ion-col size="3" class="ion-align-self-center">
+        <ion-button (click)="onClearClick()" fill="clear">其他</ion-button>
+      </ion-col> -->
       <ion-col size="3" class="ion-align-self-center">
         <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
       </ion-col>
