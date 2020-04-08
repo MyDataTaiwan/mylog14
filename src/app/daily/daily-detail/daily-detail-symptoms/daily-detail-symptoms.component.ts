@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DailyDetail } from '../daily-detail.page';
 
 @Component({
   selector: 'app-daily-detail-symptoms',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./daily-detail-symptoms.component.scss'],
 })
 export class DailyDetailSymptomsComponent implements OnInit {
+  @Input() dailyDetail: DailyDetail;
   isShow = true;
 
   list = [

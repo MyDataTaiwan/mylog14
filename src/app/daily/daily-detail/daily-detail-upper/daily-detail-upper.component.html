@@ -1,15 +1,16 @@
 <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
   <div style="display: flex;flex: 1;flex-direction: column;align-items: stretch;">
     <div style="display: flex;flex: 1;flex-direction: column;">
-      <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
-      <ion-label class="ion-text-center">{{ n2s[card.month] }}</ion-label>
+      <ion-label style="font-size: 32px;" class="ion-text-center">{{ dailyDetail.date }}</ion-label>
+      <ion-label class="ion-text-center">{{ dailyDetail.month }}</ion-label>
     </div>
     <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-      <ion-label class="ion-text-center" style="font-size: 12px;"> <img src="../../assets/ui/W_icon.svg" />體溫: {{ card.bt }}°C</ion-label>
-      <ion-label class="ion-text-center" > DAY{{ card.day }}</ion-label>
+      <ion-label class="ion-text-center" style="font-size: 12px;"> <img src="../../assets/ui/W_icon.svg" />體溫: {{ dailyDetail.bt }}°C</ion-label>
+      <ion-label class="ion-text-center" > DAY{{ dailyDetail.day }}</ion-label>
     </div>
   </div>
   <div style="flex: 3;">
-    <img src="https://cdn.pixabay.com/photo/2018/01/31/05/43/web-3120321_1280.png">
+    <iframe width="200" height="150" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no"
+      [src]="url | safeUrl"></iframe>
   </div>
 </div>

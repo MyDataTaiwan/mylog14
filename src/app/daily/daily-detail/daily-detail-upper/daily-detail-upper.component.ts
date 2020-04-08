@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { DailyDetail } from '../daily-detail.page';
 
 @Component({
   selector: 'app-daily-detail-upper',
   templateUrl: './daily-detail-upper.component.html',
   styleUrls: ['./daily-detail-upper.component.scss'],
 })
-export class DailyDetailUpperComponent implements OnInit {
+export class DailyDetailUpperComponent implements OnInit, OnChanges {
+  @Input() dailyDetail: DailyDetail;
+  tempLocation = '&q=25.035221,121.557612';
+  baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
+  url = this.baseUrl + this.tempLocation;
   n2s=['不想減一','January','February','March','April','May','June','July','August','September','ctober','November','December']
   card = {
     day: 1,
@@ -19,6 +24,16 @@ export class DailyDetailUpperComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    const dailyDetail: DailyDetail = changes.dailyDetail.currentValue;
+    const latitude = dailyDetail.mapDots[0].latitude;
+    const longitude = dailyDetail.mapDots[0].longitude;
+    if (!latitude || !longitude) {
+      return;
+    }
+    this.url = this.baseUrl + `${latitude},${longitude}`;
   }
 
 }

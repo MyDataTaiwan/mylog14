@@ -1,76 +1,51 @@
 <ion-list style="width:100%;height:300px;overflow:scroll;"a>
-  <div *ngFor="let ToDay of list[0].temperatureList">
-
+  <div *ngFor="let recordRow of dailyDetail.recordRows">
     <ion-item detail="false">
-      <ion-label>{{ ToDay.time }}</ion-label>
+      <ion-label>{{ recordRow.time }}</ion-label>
       <ion-label class="ion-text-start">
-        {{ ToDay.temperature }}
+        {{ recordRow.bt }}
       </ion-label>
       <div>
         <!-- <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow"> -->
-        <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow;">
+        <ion-icon name="caret-forward-outline" *ngIf="!recordRow.expand" button (click)="recordRow.expand=!recordRow.expand;">
         </ion-icon>
       </div>
       <div>
-        <ion-icon name="caret-down-outline" *ngIf="ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow;">
+        <ion-icon name="caret-down-outline" *ngIf="recordRow.expand" button (click)="recordRow.expand=!recordRow.expand;">
           <!-- 加入選擇器 -->
 
         </ion-icon>
       </div>
     </ion-item>
-    <ion-list *ngIf="ToDay.isShow">
+    <ion-list *ngIf="recordRow.expand">
       <ion-item>
-        <img *ngIf="ToDay.cough.isShow" src="../../assets/ui/today_icon_a.svg" />
-        <ion-label *ngIf="ToDay.cough.isShow" class="ion-text-center" style="color: #F9AD35;">{{ToDay.cough.detail}}
+        <img *ngIf="recordRow.symptoms.coughing" src="../../assets/ui/today_icon_a.svg" />
+        <ion-label *ngIf="recordRow.symptoms.coughing" class="ion-text-center" style="color: #F9AD35;">{{mockCoughdetail}}
         </ion-label>
-        <img *ngIf="!ToDay.cough.isShow" src="../../assets/ui/today_icon_a_d.svg" />
-        <ion-label *ngIf="!ToDay.cough.isShow" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <img *ngIf="!recordRow.symptoms.coughing" src="../../assets/ui/today_icon_a_d.svg" />
+        <ion-label *ngIf="!recordRow.symptoms.coughing" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
       <ion-item>
-        <img *ngIf="ToDay.fever.isShow" src="../../assets/ui/today_icon_b.svg" />
-        <ion-label *ngIf="ToDay.fever.isShow" class="ion-text-center" style="color: #F9AD35;">{{ToDay.fever.detail}}
+        <img *ngIf="recordRow.symptoms.fever" src="../../assets/ui/today_icon_b.svg" />
+        <ion-label *ngIf="recordRow.symptoms.fever" class="ion-text-center" style="color: #F9AD35;">{{mockFever}}
         </ion-label>
-        <img *ngIf="!ToDay.fever.isShow" src="../../assets/ui/today_icon_b_d.svg" />
-        <ion-label *ngIf="!ToDay.fever.isShow" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <img *ngIf="!recordRow.symptoms.coughing" src="../../assets/ui/today_icon_b_d.svg" />
+        <ion-label *ngIf="!recordRow.symptoms.coughing" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
       <ion-item>
-        <img *ngIf="ToDay.runnyNose.isShow" src="../../assets/ui/today_icon_c.svg" />
-        <ion-label *ngIf="ToDay.runnyNose.isShow" class="ion-text-center" style="color: #F9AD35;">
-          {{ToDay.runnyNose.detail}}</ion-label>
-        <img *ngIf="!ToDay.runnyNose.isShow" src="../../assets/ui/today_icon_c_d.svg" />
-        <ion-label *ngIf="!ToDay.runnyNose.isShow" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <img *ngIf="recordRow.symptoms.runnyNose" src="../../assets/ui/today_icon_c.svg" />
+        <ion-label *ngIf="recordRow.symptoms.runnyNose" class="ion-text-center" style="color: #F9AD35;">
+          {{mockRunnyNoseDetail}}</ion-label>
+        <img *ngIf="!recordRow.symptoms.runnyNose" src="../../assets/ui/today_icon_c_d.svg" />
+        <ion-label *ngIf="!recordRow.symptoms.runnyNose" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
       <ion-item>
-        <img *ngIf="ToDay.stuffyNose.isShow" src="../../assets/ui/today_icon_d.svg" />
-        <ion-label *ngIf="ToDay.stuffyNose.isShow" class="ion-text-center" style="color: #F9AD35;">
-          {{ToDay.stuffyNose.detail}}</ion-label>
-        <img *ngIf="!ToDay.stuffyNose.isShow" src="../../assets/ui/today_icon_d_d.svg" />
-        <ion-label *ngIf="!ToDay.stuffyNose.isShow" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <img *ngIf="recordRow.symptoms.stuffyNose" src="../../assets/ui/today_icon_d.svg" />
+        <ion-label *ngIf="recordRow.symptoms.stuffyNose" class="ion-text-center" style="color: #F9AD35;">
+          {{mockStuffyNosedetail}}</ion-label>
+        <img *ngIf="!recordRow.symptoms.stuffyNose" src="../../assets/ui/today_icon_d_d.svg" />
+        <ion-label *ngIf="!recordRow.symptoms.stuffyNose" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
     </ion-list>
   </div>
-  <!-- <ion-item>
-    <img *ngIf="data.cough.isShow" src="../../assets/ui/today_icon_a.svg" />
-    <ion-label  *ngIf="data.cough.isShow" class="ion-text-center" style="color: #F9AD35;">{{data.cough.detail}}</ion-label>
-    <img *ngIf="!data.cough.isShow" src="../../assets/ui/today_icon_a_d.svg" />
-    <ion-label  *ngIf="!data.cough.isShow"class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-  </ion-item>
-  <ion-item>
-    <img *ngIf="data.fever.isShow" src="../../assets/ui/today_icon_b.svg" />
-    <ion-label  *ngIf="data.fever.isShow" class="ion-text-center" style="color: #F9AD35;">{{data.fever.detail}}</ion-label>
-    <img *ngIf="!data.fever.isShow" src="../../assets/ui/today_icon_b_d.svg" />
-    <ion-label  *ngIf="!data.fever.isShow"class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-  </ion-item>
-  <ion-item>
-    <img *ngIf="data.runnyNose.isShow" src="../../assets/ui/today_icon_c.svg" />
-    <ion-label  *ngIf="data.runnyNose.isShow" class="ion-text-center" style="color: #F9AD35;">{{data.runnyNose.detail}}</ion-label>
-    <img *ngIf="!data.runnyNose.isShow" src="../../assets/ui/today_icon_c_d.svg" />
-    <ion-label  *ngIf="!data.runnyNose.isShow"class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-  </ion-item>
-  <ion-item>
-    <img *ngIf="data.stuffyNose.isShow" src="../../assets/ui/today_icon_d.svg" />
-    <ion-label  *ngIf="data.stuffyNose.isShow" class="ion-text-center" style="color: #F9AD35;">{{data.stuffyNose.detail}}</ion-label>
-    <img *ngIf="!data.stuffyNose.isShow" src="../../assets/ui/today_icon_d_d.svg" />
-    <ion-label  *ngIf="!data.stuffyNose.isShow"class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-  </ion-item> -->
 </ion-list>

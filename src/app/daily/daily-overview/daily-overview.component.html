@@ -29,7 +29,7 @@
   </div>
   <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
   <ion-virtual-scroll [items]="items$ | async" approxItemHeight="220px" height="100%">
-    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail']"
+    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.day]"
       routerDirection="forward">
       <ion-grid fixed>
         <ion-row>
