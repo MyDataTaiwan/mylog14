@@ -29,8 +29,8 @@
         <img *ngIf="recordRow.symptoms.fever" src="../../assets/ui/today_icon_b.svg" />
         <ion-label *ngIf="recordRow.symptoms.fever" class="ion-text-center" style="color: #F9AD35;">{{mockFeverDetail}}
         </ion-label>
-        <img *ngIf="!recordRow.symptoms.coughing" src="../../assets/ui/today_icon_b_d.svg" />
-        <ion-label *ngIf="!recordRow.symptoms.coughing" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <img *ngIf="!recordRow.symptoms.fever" src="../../assets/ui/today_icon_b_d.svg" />
+        <ion-label *ngIf="!recordRow.symptoms.fever" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
       <ion-item>
         <img *ngIf="recordRow.symptoms.runnyNose" src="../../assets/ui/today_icon_c.svg" />
@@ -42,7 +42,7 @@
       <ion-item>
         <img *ngIf="recordRow.symptoms.stuffyNose" src="../../assets/ui/today_icon_d.svg" />
         <ion-label *ngIf="recordRow.symptoms.stuffyNose" class="ion-text-center" style="color: #F9AD35;">
-          {{mockStuffyNosedetail}}</ion-label>
+          {{mockStuffyNoseDetail}}</ion-label>
         <img *ngIf="!recordRow.symptoms.stuffyNose" src="../../assets/ui/today_icon_d_d.svg" />
         <ion-label *ngIf="!recordRow.symptoms.stuffyNose" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
