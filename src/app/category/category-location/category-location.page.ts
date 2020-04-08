@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PhotoService } from 'src/app/core/services/photo.service';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil, map, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
 })
 export class CategoryLocationPage implements OnInit, OnDestroy {
   isShow = true;
-  isSelect = true;
+  isSelect = false;
   isSelectlist = [];
   tempLocation = '25.035221,121.557612';
   photoLocation = '';
@@ -79,6 +79,7 @@ export class CategoryLocationPage implements OnInit, OnDestroy {
   ngOnInit() {
     this.photoService.photos$.pipe(
       takeUntil(this.destroyer$),
+      filter(photos => (photos[0]) && true),
       map(photos => photos[0].snapshot.locationStamp)
       ).subscribe(location => {
         this.photoLocation = `${location.latitude},${location.longitude}`;

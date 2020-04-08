@@ -13,6 +13,10 @@ const routes: Routes = [
         loadChildren: () => import('./categorize-finish/categorize-finish.module').then(m => m.CategorizeFinishPageModule)
       },
     ]
+  },
+  {
+    path: 'categorize-img-popover',
+    loadChildren: () => import('./categorize-img-popover/categorize-img-popover.module').then( m => m.CategorizeImgPopoverPageModule)
   }
 ];
 

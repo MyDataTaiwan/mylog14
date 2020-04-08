@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
+import { Plugins, StatusBarStyle } from '@capacitor/core';
 
 import { TranslateConfigService } from './translate-config.service';
 
-const { SplashScreen } = Plugins;
+const { SplashScreen, StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -22,10 +22,15 @@ export class AppComponent {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
     this.initializeApp();
   }
-  initializeApp() {
-    this.platform.ready().then(async() => {
-      await SplashScreen.hide();
-    });
+  async initializeApp() {
+    if (this.platform.is('hybrid')) {
+      try {
+        await StatusBar.setStyle({ style: StatusBarStyle.Light });
+      } catch {
+        console.log('Status Bar is not implemented in web');
+      }
+    }
+    await SplashScreen.hide();
   }
   languageChanged(){
     this.translateConfigService.setLanguage(this.selectedLanguage);

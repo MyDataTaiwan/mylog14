@@ -1,33 +1,50 @@
 <ion-header>
-    <ion-toolbar color="primary">
-        <ion-title>
-            將你的資料歸類吧！
-        </ion-title>
-        <ion-buttons slot="start">
-            <ion-back-button text="" icon="arrow-back-outline">
-            </ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title>
+      將你的資料歸類吧！
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
+<!-- DEBUG_UI -->
+  <!-- <ion-button (click)="presentPopover()">Open presentPopover</ion-button>
+  <ion-button (click)="openIMGModal()">Open openIMGModal</ion-button>
 
-<ion-button (click)="onSubmitClick()" expand="block" fill="clear" [routerLink]="['/categorize-finish']" routerDirection="forward">Submit</ion-button>
-<ion-button (click)="onLaterClick()" expand="full">晚點再歸類！</ion-button>
-<ion-button (click)="isSelect=!isSelect" expand="full">Select</ion-button>
 
+  <ion-button (click)="onSubmitClick()" expand="block" fill="clear" [routerLink]="['/categorize-finish']"
+    routerDirection="forward">Submit</ion-button>
+  <ion-button (click)="onLaterClick()" expand="full">晚點再歸類！!!</ion-button>
+  <ion-button (click)="isSelect=!isSelect" expand="full">Select</ion-button>
 
-<ion-grid>
-  <ion-row>
-    <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let pic of photoService.photos$ | async">
-      <ion-thumbnail (click)="onClickShowImageSnapshot(pic)">
-        <img *ngIf="isSelect" (click)="isSelect=!isSelect" src="../../assets/ui/add_icon_3.svg" />
-        <ion-img  [src]="pic.webviewPath"></ion-img>
-      </ion-thumbnail>
-    </div>
-  </ion-row>
-</ion-grid>
-<!-- 
+  <ion-button (click)="openModal()">Open Modal</ion-button> -->
+
+  <p *ngIf="dataReturned">{{dataReturned}}</p>
+  <ion-grid>
+    <ion-row>
+      <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let pic of photoService.photos$ | async">
+        <!-- <ion-thumbnail (click)="onClickShowImageSnapshot(pic)"> -->
+        <ion-thumbnail >
+          <!-- <img *ngIf="isSelect" (click)="isSelect=!isSelect" src="../../assets/ui/add_icon_3.svg" /> -->
+          <ion-row >
+            <ion-col >
+              <img (click)="openIMGModal(pic)" style="width: 60px;height:60px ;" (click)="isSelect=!isSelect" src="../../assets/ui/img_icon_R.svg" />
+
+            </ion-col>
+            <ion-col>
+              <img   (click)="presentPopover()" style="width: 60px;height:60px ;" (click)="isSelect=!isSelect" src="../../assets/ui/img_icon_L.svg" />
+            </ion-col>
+          </ion-row>
+          <ion-img [src]="pic.webviewPath"></ion-img>
+        </ion-thumbnail>
+      </div>
+    </ion-row>
+  </ion-grid>
+  <!-- 
 <ion-grid>
   <ion-row>
     <ion-col *ngFor="let pic of photoService.photos$ | async">

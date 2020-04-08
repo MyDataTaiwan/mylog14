@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
-import { Subject } from 'rxjs';
+import { Subject, Observable, from, BehaviorSubject } from 'rxjs';
 import { Snapshot } from '../interfaces/snapshot';
+import { map } from 'rxjs/operators';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -12,27 +13,39 @@ const { Camera, Filesystem, Storage } = Plugins;
 })
 export class PhotoService {
   public photos: Photo[] = [];
-  public photos$ = new Subject<Photo[]>();
+  private photosSubject = new BehaviorSubject<Photo[]>([]);
+  public readonly photos$ = this.photosSubject.asObservable();
   private platform: Platform;
   private PHOTO_STORAGE = 'photos';
   constructor(
     platform: Platform,
   ) {
     this.platform = platform;
+    this.loadSaved();
   }
 
-  async takePicture(snapshot?: Snapshot) {
-    const capturedPhoto = await Camera.getPhoto({
+  startCapture(takePhotoSignal$: Subject<any>): Observable<CameraPhoto> {
+    return from(Camera.getPhoto({
       quality: 90,
       allowEditing: false,
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
-    });
+    }))
+      .pipe(
+        map(res => {
+          takePhotoSignal$.next();
+          takePhotoSignal$.complete();
+          return res;
+        })
+      );
+  }
+
+  async createPicture(capturedPhoto: CameraPhoto, snapshot?: Snapshot) {
     const savedImageFile = await this.savePicture(capturedPhoto, snapshot);
 
     // Add new photo to Photos array
     this.photos.unshift(savedImageFile);
-    this.photos$.next(this.photos);
+    this.photosSubject.next(this.photos);
 
     // Cache all photo data for future retrieval
     Storage.set({
@@ -47,7 +60,10 @@ export class PhotoService {
         }))
     });
     const photoBase64 = await this.readAsBase64(capturedPhoto);
-    return photoBase64;
+    return {
+      base64: photoBase64,
+      metadata: snapshot,
+    };
   }
 
   public async loadSaved() {
@@ -73,7 +89,7 @@ export class PhotoService {
       }
     }
 
-    this.photos$.next(this.photos);
+    this.photosSubject.next(this.photos);
     return this.photos;
   }
 

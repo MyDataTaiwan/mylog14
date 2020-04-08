@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { CategorySymptomsPage } from './category-symptoms.page';
+import { RouterModule } from '@angular/router';
 
 describe('CategorySymptomsPage', () => {
   let component: CategorySymptomsPage;
@@ -10,7 +11,10 @@ describe('CategorySymptomsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CategorySymptomsPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [
+        IonicModule.forRoot(),
+        RouterModule.forRoot([]),
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CategorySymptomsPage);

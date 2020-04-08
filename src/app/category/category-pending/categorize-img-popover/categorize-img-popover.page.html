@@ -1,0 +1,45 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>categorize-img-popover</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<!-- <ion-content>
+<ion-title class="ion-text-center">恭喜！<br />你已紀錄完資料...</ion-title>
+</ion-content> -->
+
+<ion-content>
+  <ion-row>
+    <ion-col text-center>
+      確定要刪除這張照片嗎？ </ion-col>
+  </ion-row>
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
+  <ion-row style="height: 40vw;">
+    <ion-col>
+
+      <div style="display: flex;flex-direction: column;height: 40vw;">
+        <img [src]="webviewPath | safeUrl" style="height: 39vw;" />
+      </div>
+
+    </ion-col>
+    <ion-col>
+      <div style="display: flex; flex-direction:column;">
+
+        <ion-label class=".ion-text-center">ID</ion-label>
+        <ion-label class=".ion-text-center">{{localData}}</ion-label>
+        <ion-label class=".ion-text-center">{{latitude}}</ion-label>
+        <ion-label class=".ion-text-center">{{longitude}}</ion-label>
+        <ion-label class=".ion-text-center">{{timestamp}}</ion-label>
+      </div>
+
+    </ion-col>
+
+  </ion-row>
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
+  <ion-row>
+    <ion-button (click)="closePopover()">取消</ion-button>
+    <ion-button (click)="closePopover()">確認</ion-button>
+  </ion-row>
+</ion-content>

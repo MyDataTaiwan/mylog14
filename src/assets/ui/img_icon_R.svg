@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="37" height="39" viewBox="0 0 37 39">
+  <defs>
+    <clipPath id="clip-img_icon_R">
+      <rect width="37" height="39"/>
+    </clipPath>
+  </defs>
+  <g id="img_icon_R" clip-path="url(#clip-img_icon_R)">
+    <g id="Group_856" data-name="Group 856" transform="translate(-7101 4244)">
+      <g id="Ellipse_293" data-name="Ellipse 293" transform="translate(7103 -4241)" fill="none" stroke="#cecece" stroke-width="1">
+        <circle cx="16.5" cy="16.5" r="16.5" stroke="none"/>
+        <circle cx="16.5" cy="16.5" r="16" fill="none"/>
+      </g>
+      <g id="bin" transform="translate(7112.003 -4234.583)">
+        <path id="Path_1314" data-name="Path 1314" d="M222.857,154.7a.459.459,0,0,0-.459.459v8.669a.459.459,0,0,0,.917,0v-8.669A.459.459,0,0,0,222.857,154.7Zm0,0" transform="translate(-212.2 -147.608)" fill="#cecece"/>
+        <path id="Path_1315" data-name="Path 1315" d="M104.857,154.7a.459.459,0,0,0-.459.459v8.669a.459.459,0,0,0,.917,0v-8.669A.459.459,0,0,0,104.857,154.7Zm0,0" transform="translate(-99.613 -147.608)" fill="#cecece"/>
+        <path id="Path_1316" data-name="Path 1316" d="M1.3,5.83v11.3a2.531,2.531,0,0,0,.673,1.745,2.259,2.259,0,0,0,1.639.709H12.29a2.258,2.258,0,0,0,1.639-.709,2.531,2.531,0,0,0,.673-1.745V5.83a1.752,1.752,0,0,0-.45-3.446H11.8V1.811A1.8,1.8,0,0,0,9.987,0H5.914A1.8,1.8,0,0,0,4.1,1.811v.573H1.749A1.752,1.752,0,0,0,1.3,5.83ZM12.29,18.668H3.611a1.453,1.453,0,0,1-1.394-1.537V5.87H13.684V17.131A1.453,1.453,0,0,1,12.29,18.668ZM5.015,1.811a.884.884,0,0,1,.9-.894H9.987a.884.884,0,0,1,.9.894v.573H5.015ZM1.749,3.3h12.4a.826.826,0,0,1,0,1.651H1.749a.826.826,0,0,1,0-1.651Zm0,0" transform="translate(0 0)" fill="#cecece"/>
+        <path id="Path_1317" data-name="Path 1317" d="M163.857,154.7a.459.459,0,0,0-.459.459v8.669a.459.459,0,0,0,.917,0v-8.669A.459.459,0,0,0,163.857,154.7Zm0,0" transform="translate(-155.906 -147.608)" fill="#cecece"/>
+      </g>
+    </g>
+  </g>
+</svg>

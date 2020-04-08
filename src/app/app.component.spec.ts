@@ -2,28 +2,26 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestBed, async } from '@angular/core/testing';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
+import { TranslateConfigService } from './translate-config.service';
 
 describe('AppComponent', () => {
 
-  let statusBarSpy, splashScreenSpy, platformReadySpy, platformSpy;
+  let platformIsSpy, platformSpy, translateConfigSpy;
 
   beforeEach(async(() => {
-    statusBarSpy = jasmine.createSpyObj('StatusBar', ['styleDefault']);
-    splashScreenSpy = jasmine.createSpyObj('SplashScreen', ['hide']);
-    platformReadySpy = Promise.resolve();
-    platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
+    platformIsSpy = Promise.resolve();
+    platformSpy = jasmine.createSpyObj('Platform', { is: platformIsSpy });
+    translateConfigSpy = jasmine.createSpyObj('TranslateConfigService', ['getDefaultLanguage']);
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      imports: [],
       providers: [
-        { provide: StatusBar, useValue: statusBarSpy },
-        { provide: SplashScreen, useValue: splashScreenSpy },
         { provide: Platform, useValue: platformSpy },
+        { provide: TranslateConfigService, useValue: translateConfigSpy },
       ],
     }).compileComponents();
   }));
@@ -36,10 +34,8 @@ describe('AppComponent', () => {
 
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
-    expect(platformSpy.ready).toHaveBeenCalled();
-    await platformReadySpy;
-    expect(statusBarSpy.styleDefault).toHaveBeenCalled();
-    expect(splashScreenSpy.hide).toHaveBeenCalled();
+    expect(platformSpy.is).toHaveBeenCalled();
+    expect(translateConfigSpy.getDefaultLanguage).toHaveBeenCalled();
   });
 
   // TODO: add more tests!
