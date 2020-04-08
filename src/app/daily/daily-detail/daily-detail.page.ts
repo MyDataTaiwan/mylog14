@@ -6,6 +6,7 @@ import { MainHeaderComponent } from 'src/app/core/components/main-header/main-he
 import { Observable } from 'rxjs';
 import { Record } from 'src/app/core/interfaces/record';
 import { formatDate } from '@angular/common';
+import { Symptoms } from 'src/app/core/interfaces/symptoms';
 
 @Component({
   selector: 'app-daily-detail',
@@ -49,6 +50,8 @@ export class DailyDetailPage implements OnInit {
             dailyDetail.recordRows.push({
               time: this.getTime(record.timestamp),
               bt: this.getBt(record),
+              expand: false,
+              symptoms: record.symptoms,
             });
           });
           console.log('dailyDetail', dailyDetail);
@@ -87,6 +90,8 @@ export interface MapDot {
 export interface RecordRow {
   time: string;
   bt: string;
+  symptoms: Symptoms;
+  expand: boolean;
 }
 export interface DailyDetail {
   date: string;
