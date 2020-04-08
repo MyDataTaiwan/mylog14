@@ -2,8 +2,8 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
 import { RecordService } from 'src/app/core/services/record.service';
-import { Observable, forkJoin } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Observable, forkJoin, of } from 'rxjs';
+import { map, mergeMap, filter } from 'rxjs/operators';
 import { DailyRecord } from 'src/app/core/interfaces/daily-record';
 
 @Component({
@@ -14,7 +14,7 @@ import { DailyRecord } from 'src/app/core/interfaces/daily-record';
 
 
 export class DailyOverviewComponent implements OnInit {
-  items$ = new Observable<Map<string, DailyRecord>>();
+  items$ = new Observable<CardItem[]>();
   items = [
     {
       day: 8,
@@ -108,16 +108,44 @@ export class DailyOverviewComponent implements OnInit {
   };
   private animationItem: AnimationItem;
   private isAnimationCreated: boolean = false;
+  emptyCardItem = {
+    hasData: false,
+    day: null,
+    month: null,
+    date: null,
+    bt: null,
+    imgSrc: null,
+    imgHeight: null,
+  };
 
   constructor(
     public recordService: RecordService,
     private ngZone: NgZone
   ) {
-    this.items$ = this.recordService.
+    this.items$ = this.recordService.dailyRecords$
     .pipe(
       mergeMap(dailyRecords => {
-        return forkJoin(dailyRecords.map(dailyRecord => ))
-      })
+        console.log('page dailyRecords', dailyRecords);
+        return forkJoin(
+          dailyRecords.map(dailyRecord => {
+            if (dailyRecord.records.length === 0) {
+              return this.emptyCardItem;
+            }
+            const cardItem: CardItem = {
+              hasData: true,
+              day: (14 - dailyRecord.countdown).toString(),
+              month: dailyRecord.date.split('-')[1],
+              date: dailyRecord.date.split('-')[2],
+              bt: dailyRecord.records[0].bodyTemperature + dailyRecord.records[0].bodyTemperatureUnit,
+              imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
+              imgHeight: 400,
+            };
+            return cardItem;
+          })
+            .filter(cardItem => cardItem.hasData === true)
+            .map(cardItem => of(cardItem))
+        );
+      }),
     );
   }
 
@@ -209,10 +237,11 @@ export class DailyOverviewComponent implements OnInit {
 }
 
 export interface CardItem {
-  day: string;
-  month: string;
-  date: string;
-  bt: string;
-  imgSrc: string;
-  imgHeight: number;
+  hasData: boolean;
+  day?: string;
+  month?: string;
+  date?: string;
+  bt?: string;
+  imgSrc?: string;
+  imgHeight?: number;
 }

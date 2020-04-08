@@ -4,7 +4,7 @@ import { StorageService } from './storage.service';
 import { map, take, mergeMap, toArray, switchMap, tap } from 'rxjs/operators';
 import { UserData } from '../interfaces/user-data';
 import { formatDate } from '@angular/common';
-import { Subject, BehaviorSubject, from, forkJoin } from 'rxjs';
+import { Subject, BehaviorSubject, from, forkJoin, of } from 'rxjs';
 import { Record } from '../interfaces/record';
 
 @Injectable({
@@ -20,7 +20,10 @@ export class RecordService {
       this.storageService.loadRecordMetaList(),
       this.createDummyUserData(),
     ])
-      .subscribe(() => this.loadDailyRecords());
+      .subscribe(() => {
+        console.log('user data created');
+        this.loadDailyRecords().subscribe();
+      });
   }
 
   createDummyUserData() {
@@ -43,6 +46,7 @@ export class RecordService {
       .pipe(
         map(
           userData => {
+            console.log('userdata', userData);
             // TODO: Brutally initiated array, too ugly
             dailyRecords[0] = {
               date: userData.endDate,
@@ -68,10 +72,15 @@ export class RecordService {
           return forkJoin(
             records.map(record => {
               dailyRecords.some(dailyRecord => {
+                console.log('formatted record timestamp', this.formatDate(record.timestamp));
+                console.log('dailyRecord date', dailyRecord.date);
                 if (this.formatDate(record.timestamp) === dailyRecord.date) {
                   dailyRecord.records.push(record);
+                  console.log('push record', record);
+                  return true;
                 }
               });
+              return of(record);
             })
           );
         }),
@@ -80,6 +89,7 @@ export class RecordService {
             dailyRecord.records = dailyRecord.records.sort((a, b) => +a.timestamp - +b.timestamp);
           });
           this.dailyRecords.next(dailyRecords);
+          console.log('update dailyrecord', dailyRecords);
         })
       );
   }
