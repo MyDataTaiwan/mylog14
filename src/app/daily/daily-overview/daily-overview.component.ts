@@ -123,30 +123,30 @@ export class DailyOverviewComponent implements OnInit {
     private ngZone: NgZone
   ) {
     this.items$ = this.recordService.dailyRecords$
-    .pipe(
-      mergeMap(dailyRecords => {
-        console.log('page dailyRecords', dailyRecords);
-        return forkJoin(
-          dailyRecords.map(dailyRecord => {
-            if (dailyRecord.records.length === 0) {
-              return this.emptyCardItem;
-            }
-            const cardItem: CardItem = {
-              hasData: true,
-              day: (14 - dailyRecord.countdown).toString(),
-              month: dailyRecord.date.split('-')[1],
-              date: dailyRecord.date.split('-')[2],
-              bt: dailyRecord.records[0].bodyTemperature + dailyRecord.records[0].bodyTemperatureUnit,
-              imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
-              imgHeight: 400,
-            };
-            return cardItem;
-          })
-            .filter(cardItem => cardItem.hasData === true)
-            .map(cardItem => of(cardItem))
-        );
-      }),
-    );
+      .pipe(
+        mergeMap(dailyRecords => {
+          console.log('page dailyRecords', dailyRecords);
+          return forkJoin(
+            dailyRecords.map(dailyRecord => {
+              if (dailyRecord.records.length === 0) {
+                return this.emptyCardItem;
+              }
+              const cardItem: CardItem = {
+                hasData: true,
+                day: (14 - dailyRecord.countdown).toString(),
+                month: dailyRecord.date.split('-')[1],
+                date: dailyRecord.date.split('-')[2],
+                bt: dailyRecord.records[0].bodyTemperature + dailyRecord.records[0].bodyTemperatureUnit,
+                imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
+                imgHeight: 400,
+              };
+              return cardItem;
+            })
+              .filter(cardItem => cardItem.hasData === true)
+              .map(cardItem => of(cardItem))
+          );
+        }),
+      );
   }
 
   ngOnInit() {
@@ -157,44 +157,40 @@ export class DailyOverviewComponent implements OnInit {
     console.log('countdown', dailyRecord.countdown);
     return (14 - dailyRecord.countdown).toString();
   }
-  ngOnChanges() {
-  }
+
   AC($event) {
-    var temp;
-    temp;
     this.animationCreated($event);
     this.today();
-    return temp;
   }
+
   animationCreated(animationItem: AnimationItem) {
     this.animationItem = animationItem;
     console.log("is animation");
     console.log(animationItem);
     console.log("is animation");
   }
+
   async today() {
-    var data = this.items.length;
-     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
+    const data = this.items.length;
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
     await new Promise((resolve) => {
-      var timer = setInterval(() => {
-       
-          clearInterval(timer);
-          resolve();
-        
-      }, (data-1)*1000);
+      const timer = setInterval(() => {
+
+        clearInterval(timer);
+        resolve();
+
+      }, (data - 1) * 1000);
     });
     this.Stopday();
   }
   Stopday() {
-    var data = this.items.length;
+    const data = this.items.length;
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[data], true))
   }
 
-
-  
   async day(data) {
     await new Promise((resolve) => {
-      var timer = setInterval(() => {
+      const timer = setInterval(() => {
         if (this.isAnimationCreated) {
           clearInterval(timer);
           resolve();
@@ -205,7 +201,7 @@ export class DailyOverviewComponent implements OnInit {
     console.log("to day animation" + "dfdfd");
 
     this.ngZone.runOutsideAngular(() =>
-      this.animationItem.playSegments(this.arry[this.items.length], true))
+      this.animationItem.playSegments(this.arry[this.items.length], true));
   }
 
 
