@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, PopoverController } from '@ionic/angular';
 // import { HTTP } from '@ionic-native/http/ngx';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; //加入http類別
 
@@ -27,7 +27,7 @@ export class CategorizeImgPopoverPage implements OnInit {
 
   data = "szds";
   constructor(
-    private modalController: ModalController,
+    private popoverCtrl: PopoverController,
     private navParams: NavParams,
     private http: HttpClient, 
   ) {
@@ -54,8 +54,8 @@ export class CategorizeImgPopoverPage implements OnInit {
     this.startBackgroundGeolocation();
   }
 
-  async closeModal() {
+  async closePopover() {
     const onClosedData: string = "Wrapped Up!";
-    await this.modalController.dismiss(onClosedData);
+    await this.popoverCtrl.dismiss(onClosedData);
   }
 }

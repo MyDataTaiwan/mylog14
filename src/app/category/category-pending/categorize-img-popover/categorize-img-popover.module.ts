@@ -17,6 +17,7 @@ import { CoreModule } from 'src/app/core/core.module';
     CategorizeImgPopoverPageRoutingModule,
     CoreModule,
   ],
-  declarations: [CategorizeImgPopoverPage]
+  declarations: [CategorizeImgPopoverPage],
+  entryComponents: [CategorizeImgPopoverPage],
 })
 export class CategorizeImgPopoverPageModule {}
