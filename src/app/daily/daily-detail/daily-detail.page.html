@@ -16,7 +16,7 @@
     <ion-slide> -->
       <ion-card>
         <ion-list>
-          <app-daily-detail-upper></app-daily-detail-upper>
+          <app-daily-detail-upper [dailyDetail]="dailyDetail$ | async"></app-daily-detail-upper>
           <div
             style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
           </div>
@@ -30,7 +30,7 @@
             <img *ngIf="!selectedSegment" (click)="selectedSegment=true" src="../../assets/ui/sort_1_B.svg" />
 
           </div>
-          <app-daily-detail-symptoms *ngIf="selectedSegment"></app-daily-detail-symptoms>
+          <app-daily-detail-symptoms *ngIf="selectedSegment" [dailyDetail]="dailyDetail$ | async"></app-daily-detail-symptoms>
         
         
           <app-daily-detail-photos *ngIf="!selectedSegment"></app-daily-detail-photos>

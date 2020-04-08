@@ -1,12 +1,12 @@
 <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
   <div style="display: flex;flex: 1;flex-direction: column;align-items: stretch;">
     <div style="display: flex;flex: 1;flex-direction: column;">
-      <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
-      <ion-label class="ion-text-center">{{ n2s[card.month] }}</ion-label>
+      <ion-label style="font-size: 32px;" class="ion-text-center">{{ dailyDetail.date }}</ion-label>
+      <ion-label class="ion-text-center">{{ dailyDetail.month }}</ion-label>
     </div>
     <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-      <ion-label class="ion-text-center" style="font-size: 12px;"> <img src="../../assets/ui/W_icon.svg" />體溫: {{ card.bt }}°C</ion-label>
-      <ion-label class="ion-text-center" > DAY{{ card.day }}</ion-label>
+      <ion-label class="ion-text-center" style="font-size: 12px;"> <img src="../../assets/ui/W_icon.svg" />體溫: {{ dailyDetail.bt }}°C</ion-label>
+      <ion-label class="ion-text-center" > DAY{{ dailyDetail.day }}</ion-label>
     </div>
   </div>
   <div style="flex: 3;">

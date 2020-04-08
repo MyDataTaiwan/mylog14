@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DailyDetail } from '../daily-detail.page';
 
 @Component({
   selector: 'app-daily-detail-upper',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./daily-detail-upper.component.scss'],
 })
 export class DailyDetailUpperComponent implements OnInit {
+  @Input() dailyDetail: DailyDetail;
   n2s=['不想減一','January','February','March','April','May','June','July','August','September','ctober','November','December']
   card = {
     day: 1,
