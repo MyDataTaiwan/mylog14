@@ -4,7 +4,7 @@ import { AnimationOptions, } from 'ngx-lottie';
 import { RecordService } from 'src/app/core/services/record.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map, mergeMap, filter } from 'rxjs/operators';
-import { DailyRecord } from 'src/app/core/interfaces/daily-record';
+import { DailyRecord } from 'src/app/core/classes/daily-record';
 
 @Component({
   selector: 'app-daily-overview',
@@ -133,11 +133,11 @@ export class DailyOverviewComponent implements OnInit {
               }
               const cardItem: CardItem = {
                 hasData: true,
-                day: (14 - dailyRecord.countdown).toString(),
+                day: dailyRecord.dayCount.toString(),
                 month: dailyRecord.date.split('-')[1],
                 date: dailyRecord.date.split('-')[2],
-                bt: dailyRecord.records[0].bodyTemperature + dailyRecord.records[0].bodyTemperatureUnit,
-                imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
+                bt: `${dailyRecord.getHighestBt()}`,
+                imgSrc: dailyRecord.getLatestPhotoPath(),
                 imgHeight: 400,
               };
               return cardItem;
@@ -151,11 +151,6 @@ export class DailyOverviewComponent implements OnInit {
 
   ngOnInit() {
     this.items$.subscribe(r => console.log('items$ Map', r));
-  }
-
-  parseItemToReverseCountdown(dailyRecord: DailyRecord): string {
-    console.log('countdown', dailyRecord.countdown);
-    return (14 - dailyRecord.countdown).toString();
   }
 
   AC($event) {

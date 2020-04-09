@@ -4,6 +4,6 @@ export interface Photo {
     filepath: string;
     webviewPath: string;
     base64?: string;
-    timetamp?: string;
+    timestamp?: string;
     locationStamp?: LocationStamp;
 }

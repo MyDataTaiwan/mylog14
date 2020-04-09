@@ -5,6 +5,7 @@ import { Platform } from '@ionic/angular';
 import { Subject, Observable, from, BehaviorSubject } from 'rxjs';
 import { Snapshot } from '../interfaces/snapshot';
 import { map } from 'rxjs/operators';
+import { Photo } from '../interfaces/photo';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -59,9 +60,9 @@ export class PhotoService {
           delete photoCopy.base64;
         }))
     });
-    const photoBase64 = await this.readAsBase64(capturedPhoto);
+    // const photoBase64 = await this.readAsBase64(capturedPhoto);
     return {
-      base64: photoBase64,
+      photo: savedImageFile,
       metadata: snapshot,
     };
   }
@@ -185,11 +186,4 @@ export class PhotoService {
     };
     reader.readAsDataURL(blob);
   })
-}
-
-interface Photo {
-  filepath: string;
-  webviewPath: string;
-  base64?: string;
-  snapshot?: Snapshot;
 }
