@@ -7,6 +7,8 @@ import { PhotoService } from './photo.service';
 import { Observable, pipe, forkJoin, from, of, combineLatest, Subject } from 'rxjs';
 import { catchError, map, switchMap, mergeMap, takeUntil } from 'rxjs/operators';
 import { StorageService } from './storage.service';
+import { Photo } from '../interfaces/photo';
+import { RecordService } from './record.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,7 @@ export class SnapshotService {
   constructor(
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
+    private recordService: RecordService,
     private storageService: StorageService,
   ) { }
 
@@ -58,7 +61,7 @@ export class SnapshotService {
       );
   }
 
-  createPhotoWithSnapshot(): Observable<any> {
+  createPhotoWithSnapshot(): Observable<Photo> {
     // Start trying to get geolocation as soon as this function is called.
     // In the meanwhile, open the built-in camera. If the user finished taking a photo,
     // takePhotoSignal$ is used to trigger complete signal for createSnapshot observable
@@ -74,25 +77,22 @@ export class SnapshotService {
           subscription.unsubscribe();
           return from(this.photoService.createPicture(capturedPhoto, snapshot));
         }),
-        map(({base64, metadata}) => {
-          return {
-            timestamp: metadata.timestamp,
-            locationStamp: metadata.locationStamp,
-            photos: [
-              {
-                byteString: base64,
-              }
-            ]
-          };
+        map(({ photo, metadata }) => {
+          photo.timetamp = metadata.timestamp;
+          photo.locationStamp = metadata.locationStamp;
+          return photo;
         })
       );
   }
 
-  snapCapture(): Observable<void> {
-    return this.createPhotoWithSnapshot()
+  snapCapture() {
+    return forkJoin([
+    this.createPhotoWithSnapshot(),
+    this.recordService.getLatestRecord(),
+    ])
       .pipe(
-        switchMap(record => {
-          console.log('Record:', record);
+        switchMap(([photo, record]) => {
+          record.photos.push(photo);
           return this.storageService.saveRecord(record);
         })
       );
