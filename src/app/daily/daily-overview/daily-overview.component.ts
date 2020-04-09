@@ -174,7 +174,7 @@ export class DailyOverviewComponent implements OnInit {
 
   async today() {
     // const data = this.items.length;
-    // const data = 0;
+    // const data = 4;
     const data = this.WhatIsItToday;
 
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
@@ -184,7 +184,7 @@ export class DailyOverviewComponent implements OnInit {
         clearInterval(timer);
         resolve();
 
-      }, (data - 1) * 1000);
+      }, (data ) * 1000);
     });
     this.Stopday(data);
   }
