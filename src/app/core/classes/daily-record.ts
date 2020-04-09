@@ -15,7 +15,9 @@ export class DailyRecord {
     }
 
     getHighestBt(): string {
-        const sortedRecords = this.records.sort((a, b) => {
+        const sortedRecords = this.records
+            .filter(record => !isNaN(record.bodyTemperature))
+            .sort((a, b) => {
             if (!a.bodyTemperature || !b.bodyTemperature) {
                 return;
             }
@@ -37,7 +39,10 @@ export class DailyRecord {
         const nestedPhotos = this.records.map(record => record.photos);
         const photos = flatten(nestedPhotos);
         console.log('Flattened photo array', photos);
-        const sortedPhotos = photos.sort((a, b) => +b.timestamp - +a.timestamp);
+        const sortedPhotos = photos
+            .filter(photo => photo !== undefined)
+            .sort((a, b) => +b.timestamp - +a.timestamp);
+        console.log('Sorted photo array', sortedPhotos);
         if (sortedPhotos[0]) {
             return sortedPhotos[0].webviewPath;
         } else {

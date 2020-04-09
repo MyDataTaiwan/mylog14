@@ -5,7 +5,7 @@ import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
 import { Observable, pipe, forkJoin, from, of, combineLatest, Subject } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, takeUntil } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap, takeUntil, tap } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { Photo } from '../interfaces/photo';
 import { RecordService } from './record.service';
@@ -78,23 +78,30 @@ export class SnapshotService {
           return from(this.photoService.createPicture(capturedPhoto, snapshot));
         }),
         map(({ photo, metadata }) => {
-          photo.timetamp = metadata.timestamp;
+          photo.timestamp = metadata.timestamp;
           photo.locationStamp = metadata.locationStamp;
           return photo;
-        })
+        }),
       );
   }
 
   snapCapture() {
     return forkJoin([
-    this.createPhotoWithSnapshot(),
-    this.recordService.getLatestRecord(),
+      this.createPhotoWithSnapshot(),
+      this.recordService.getLatestRecord(),
     ])
       .pipe(
-        switchMap(([photo, record]) => {
+        tap(e => console.log('WAAAAAAAAGH', e)),
+        mergeMap(([photo, record]) => {
+          if (!record.timestamp) {
+            record.timestamp = photo.timestamp;
+          }
+          console.log('Did you get here?', photo, record);
           record.photos.push(photo);
           return this.storageService.saveRecord(record);
-        })
+        }),
+        // Trigger Daily Record cache update
+        tap(() => this.recordService.loadDailyRecords),
       );
   }
 

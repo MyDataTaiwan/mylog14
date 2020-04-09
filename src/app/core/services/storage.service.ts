@@ -15,7 +15,9 @@ export class StorageService {
   RECORD_META_REPOSITORY = 'records';
   RECORD_META_DIRECTORY = FilesystemDirectory.Data;
   private recordMetaList = new BehaviorSubject<RecordMeta[]>([]);
-  recordMetaList$ = this.recordMetaList.asObservable();
+  recordMetaList$ = this.recordMetaList.asObservable().pipe(
+    tap(() => console.log('Record Meta List updated'))
+  );
   USER_DATA_REPOSITORY = 'userData';
   USER_DATA_DIRECTORY = FilesystemDirectory.Data;
   private userData = new BehaviorSubject<UserData>({});
@@ -127,7 +129,7 @@ export class StorageService {
         .pipe(
           take(1),
           map(readResult => {
-            let record: Record = { timestamp: '' };
+            let record: Record = { timestamp: '', photos: [] };
             try {
               record = JSON.parse(readResult.data);
             } catch {

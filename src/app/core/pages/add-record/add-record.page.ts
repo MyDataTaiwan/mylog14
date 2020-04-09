@@ -372,6 +372,7 @@ export class AddRecordPage implements OnInit {
             symptoms: symp,
             timestamp: snap.timestamp,
             locationStamp: snap.locationStamp,
+            photos: [],
           };
           return record;
         }),
