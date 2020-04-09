@@ -72,7 +72,7 @@ export class StorageService {
         if (oldRecordMeta) {
           recordMetaList[recordMetaList.indexOf(oldRecordMeta)] = recordMeta;
         } else {
-          recordMetaList.unshift(recordMeta);
+          recordMetaList.push(recordMeta);
         }
         return recordMetaList;
       }),
@@ -111,7 +111,6 @@ export class StorageService {
       value: JSON.stringify(userData),
     })).pipe(tap(() => this.userData.next(userData)));
   }
-
 
   getFileHash(fileName: string) {
     return '<file-hash-placeholder>';
