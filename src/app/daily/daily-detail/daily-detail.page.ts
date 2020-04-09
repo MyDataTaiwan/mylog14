@@ -27,26 +27,27 @@ export class DailyDetailPage implements OnInit {
       .pipe(
         map(params => params.get('day')),
         switchMap(day => {
-          this.day = day;
           return this.recordService.dailyRecords$
-            .pipe(map(dailyRecords => dailyRecords[+day]));
+            .pipe(map(dailyRecords => dailyRecords[+day - 1]));
         }),
-        tap(d => console.log('dailyRecord', d)),
-        map(dailyRecord => dailyRecord.records),
-        map(records => {
+        map(dailyRecord => {
           const dailyDetail: DailyDetail = {
-            date: this.getDate(records[0].timestamp),
-            month: this.getMonth(records[0].timestamp),
-            day: this.day,
-            bt: this.getBt(records[0]),
+            date: this.getDate(dailyRecord.date),
+            month: this.getMonth(dailyRecord.date),
+            day: dailyRecord.dayCount.toString(),
+            bt: dailyRecord.getHighestBt(),
             mapDots: [],
             recordRows: [],
           };
-          records.forEach(record => {
-            dailyDetail.mapDots.push({
-              latitude: record.locationStamp.latitude,
-              longitude: record.locationStamp.longitude,
-            });
+          console.log('DailyDetail 1', dailyDetail);
+          dailyRecord.records.forEach(record => {
+            if (record.locationStamp) {
+              dailyDetail.mapDots.push({
+                latitude: record.locationStamp.latitude,
+                longitude: record.locationStamp.longitude,
+              });
+            }
+            console.log('DailyDetail 3', dailyDetail);
             dailyDetail.recordRows.push({
               time: this.getTime(record.timestamp),
               bt: this.getBt(record),
@@ -54,7 +55,7 @@ export class DailyDetailPage implements OnInit {
               symptoms: record.symptoms,
             });
           });
-          console.log('dailyDetail', dailyDetail);
+          console.log('dailyDetail 2', dailyDetail);
           return dailyDetail;
         }),
       );
@@ -65,6 +66,9 @@ export class DailyDetailPage implements OnInit {
   }
 
   private getBt(record: Record) {
+    if (!record.bodyTemperature || !record.bodyTemperatureUnit) {
+      return 'N/A';
+    }
     return record.bodyTemperature + record.bodyTemperatureUnit;
   }
 
