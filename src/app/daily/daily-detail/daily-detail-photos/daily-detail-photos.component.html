@@ -1,7 +1,7 @@
 <ion-grid style="width:100%;height:300px;overflow:scroll;">
     <ion-row  *ngFor="let picRow of pics;" class="ion-justify-content-evenly">
       <div *ngFor="let pic of picRow">
-        <ion-thumbnail>
+        <ion-thumbnail *ngIf="toDayPhotos(pic,today)">
           <ion-img [src]="pic.src"></ion-img>
         </ion-thumbnail>
       </div>
