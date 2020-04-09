@@ -93,6 +93,8 @@ export class DailyOverviewComponent implements OnInit {
       imgHeight: 400,
     },
   ];
+  WhatIsItToday=0;
+
   // arry= [[616, 674], [125, 184], [195, 246], [254, 306]]
   // TimeArry:{
   //   [616, 674], [125, 184], [195, 246], [254, 306]
@@ -171,7 +173,10 @@ export class DailyOverviewComponent implements OnInit {
   }
 
   async today() {
-    const data = this.items.length;
+    // const data = this.items.length;
+    // const data = 4;
+    const data = this.WhatIsItToday;
+
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
     await new Promise((resolve) => {
       const timer = setInterval(() => {
@@ -179,30 +184,29 @@ export class DailyOverviewComponent implements OnInit {
         clearInterval(timer);
         resolve();
 
-      }, (data - 1) * 1000);
+      }, (data ) * 1000);
     });
-    this.Stopday();
+    this.Stopday(data);
   }
-  Stopday() {
-    const data = this.items.length;
+  Stopday(data) {
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[data], true))
   }
 
-  async day(data) {
-    await new Promise((resolve) => {
-      const timer = setInterval(() => {
-        if (this.isAnimationCreated) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, 1);
-    });
-    console.log(this.isAnimationCreated);
-    console.log("to day animation" + "dfdfd");
+  // async day(data) {
+  //   await new Promise((resolve) => {
+  //     const timer = setInterval(() => {
+  //       if (this.isAnimationCreated) {
+  //         clearInterval(timer);
+  //         resolve();
+  //       }
+  //     }, 1);
+  //   });
+  //   console.log(this.isAnimationCreated);
+  //   console.log("to day animation" + "dfdfd");
 
-    this.ngZone.runOutsideAngular(() =>
-      this.animationItem.playSegments(this.arry[this.items.length], true));
-  }
+  //   this.ngZone.runOutsideAngular(() =>
+  //     this.animationItem.playSegments(this.arry[this.items.length], true));
+  // }
 
 
   stop(): void {

@@ -8,7 +8,7 @@
         <ion-label> </ion-label>
       </ion-col>
       <ion-col>
-        <ion-title class="ion-text-center">tab-taiwan</ion-title>
+        <ion-title class="ion-text-center">Coming Soon</ion-title>
 
       </ion-col>
       <ion-col>
@@ -27,13 +27,18 @@
         <div class="TA-AE" style="height: 80vw;width: 80vw;     position: relative;         ">
           <!-- <img src="../../assets/ui/Taiwan_AE.svg" /> -->
           <ng-lottie [options]="optionsBG" (animationCreated)="animationCreated($event)"></ng-lottie>
-          <ng-lottie style="position: absolute; 
+          <!-- <ng-lottie style="position: absolute; 
           z-index: 100; 
           /* background: red;  */
           top:0; left:0; 
-          width:100%; height:100%; " [options]="options"    (loopComplete)="stop()"
-          
- (animationCreated)="animationCreated($event)"></ng-lottie>
+          width:100%; height:100%; " [options]="options"  
+           (loopComplete)="stop()"
+ (animationCreated)="animationCreated($event)"></ng-lottie> -->
+          <ng-lottie style="position: absolute; 
+ z-index: 100; 
+ /* background: red;  */
+ top:0; left:0; 
+ width:100%; height:100%; " [options]="options"></ng-lottie>
 
         </div>
       </ion-col>
@@ -48,7 +53,7 @@
       <ion-col>
         <ion-label> </ion-label>
       </ion-col>
-      <ion-col >
+      <ion-col>
         <!-- <button (click)="stop()">Stop
           <ion-icon slot="start" src="../assets/ui/tw_icon_L.svg"></ion-icon>
         </button>
@@ -80,12 +85,12 @@ left:0;" item-left>
   <div
     style=" width:100%; background-color:rgba(255, 255, 255, 0);display: flex;flex-direction: row; align-items: center;">
     <div style="flex: 1;"></div>
-    <ion-button (click)="play()" style="flex: 1; background-color:rgba(255, 255, 255, 0);" col-3>
+    <!-- <ion-button (click)="play()" style="flex: 1; background-color:rgba(255, 255, 255, 0);" col-3>
       <img src="../../assets/ui/rain_icon .svg" />
     </ion-button>
     <ion-button  (click)="stop()" style="flex: 1;background-color:rgba(255, 255, 255, 0);" col-3>
       <img src="../../assets/ui/tw_icon_R.svg" />
-    </ion-button>
+    </ion-button> -->
     <div style="flex: 1;"></div>
 
   </div>

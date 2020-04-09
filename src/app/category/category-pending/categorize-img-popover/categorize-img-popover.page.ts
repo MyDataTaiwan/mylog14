@@ -18,7 +18,7 @@ export class CategorizeImgPopoverPage implements OnInit {
 
   modalTitle: string;
   modelId: number;
-
+  time: any;
   timestamp: any;
   latitude: any;
   longitude: any;
