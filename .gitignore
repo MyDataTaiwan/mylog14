@@ -29,8 +29,8 @@ npm-debug.log*
 /platforms
 /plugins
 /www
-/android
-/ios
+# /android
+# /ios
 /.gradle
 
 capacitor.config.json
