@@ -3,6 +3,8 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { SnapshotService } from '../core/services/snapshot.service';
 import { StorageService } from '../core/services/storage.service';
+import { take, debounce } from 'rxjs/operators';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-tabs',
@@ -28,7 +30,12 @@ export class TabsPage {
   }
 
   onClickCameraButton() {
-    this.snapshotService.snapCapture().subscribe();
+    this.snapshotService.snapCapture()
+      .pipe(
+        debounce((() => interval(1000))),
+        take(1),
+      )
+      .subscribe();
   }
 
   async onClickRecordButton() {
