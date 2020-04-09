@@ -8,5 +8,5 @@ export interface Record {
     bodyTemperature?: number;
     bodyTemperatureUnit?: string;
     symptoms?: Symptoms;
-    photos?: Photo[];
+    photos: Photo[];
 }

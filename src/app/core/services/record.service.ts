@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { DailyRecord } from '../classes/daily-record';
 import { StorageService } from './storage.service';
-import { map, take, mergeMap, toArray, switchMap, tap } from 'rxjs/operators';
+import { map, take, mergeMap, toArray, switchMap, tap, defaultIfEmpty, catchError, takeWhile } from 'rxjs/operators';
 import { UserData } from '../interfaces/user-data';
 import { formatDate } from '@angular/common';
-import { Subject, BehaviorSubject, from, forkJoin, of, Observable } from 'rxjs';
+import { Subject, BehaviorSubject, from, forkJoin, of, Observable, throwError } from 'rxjs';
 import { Record } from '../interfaces/record';
 
 @Injectable({
@@ -34,8 +34,19 @@ export class RecordService {
   getLatestRecord() {
     return this.storageService.recordMetaList$
       .pipe(
+        take(1),
         map(recordMetaList => recordMetaList[recordMetaList.length - 1]),
-        switchMap(recordMeta => this.storageService.getRecord(recordMeta)),
+        switchMap(recordMeta => {
+          if (recordMeta) {
+            return this.storageService.getRecord(recordMeta);
+          } else {
+            const newRecord: Record = {
+              timestamp: null,
+              photos: [],
+            }
+            return of(newRecord);
+          }
+        }),
       );
   }
 
@@ -110,7 +121,7 @@ export class RecordService {
           });
           this.dailyRecords.next(dailyRecords);
           console.log('update dailyrecord', dailyRecords);
-        })
+        }),
       );
   }
 
