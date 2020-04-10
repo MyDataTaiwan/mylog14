@@ -152,7 +152,6 @@ export class DailyOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.items$.subscribe(r => console.log('items$ Map', r));
   }
 
   AC($event) {

@@ -7,6 +7,7 @@ import { StorageService } from './core/services/storage.service';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { GeolocationService } from './core/services/geolocation.service';
+import { RecordService } from './core/services/record.service';
 
 const { SplashScreen, StatusBar } = Plugins;
 
@@ -23,6 +24,7 @@ export class AppComponent {
     private platform: Platform,
     private geolocationService: GeolocationService,
     private storageService: StorageService,
+    private recordService: RecordService,
     private translateConfigService: TranslateConfigService
   ) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
