@@ -17,12 +17,14 @@ export class DailyRecord {
     getHighestBt(): string {
         const sortedRecords = this.records
             .filter(record => !isNaN(record.bodyTemperature))
+            .filter(record => record.bodyTemperature !== null)
             .sort((a, b) => {
             if (!a.bodyTemperature || !b.bodyTemperature) {
                 return;
             }
             return (b.bodyTemperature - a.bodyTemperature);
         });
+        console.log('Sorted Records', sortedRecords);
         if (sortedRecords.length < 1) {
             return 'N/A';
         } else if (!sortedRecords[0].bodyTemperature || !sortedRecords[0].bodyTemperatureUnit) {

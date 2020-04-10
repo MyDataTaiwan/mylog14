@@ -22,7 +22,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <!-- TODO: Remove this fab button after we can view stored data elsewhere -->
-    <ion-fab-list side="top">
+    <ion-fab-list side="top" *ngIf="showDebugButton">
       <ion-fab-button color="primary" (click)="onClickTestButton()">
         <ion-icon name="bicycle-outline"></ion-icon>
       </ion-fab-button>

@@ -12,6 +12,7 @@ import { interval } from 'rxjs';
   styleUrls: ['tabs.page.scss']
 })
 export class TabsPage {
+  showDebugButton = false;
 
   constructor(
     private alertCtrl: AlertController,

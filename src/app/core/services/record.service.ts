@@ -94,7 +94,7 @@ export class RecordService {
   }
 
   initDailyRecordDates(dailyRecords: DailyRecord[], records: Record[]): DailyRecord[] {
-    const recordZero = records.sort((a, b) => +b.timestamp - +a.timestamp)[0];
+    const recordZero = records.sort((a, b) => +a.timestamp - +b.timestamp)[0];
     const DayOne = formatDate(recordZero.timestamp, 'yyyy-MM-dd', 'en-us');
     dailyRecords.forEach((dailyRecord, idx) => {
       dailyRecord.date = this.dateDelta(DayOne, idx);
