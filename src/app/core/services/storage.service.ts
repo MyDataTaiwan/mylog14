@@ -154,7 +154,7 @@ export class StorageService {
         .pipe(
           take(1),
           map(fileWriteResult => {
-            console.log('fileWriteResult', fileWriteResult);
+            console.log('Record successfully saved, filename: ', fileName);
             return fileName;
           }),
         )

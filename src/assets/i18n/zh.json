@@ -4,15 +4,20 @@
     "select": "English"
   },
   "SYMPTOM": {
-    "cardTitleMonitoring": "自我檢查表",
-    "coughingPositive": "有咳嗽",
-    "coughingNegative": "無咳嗽",
-    "runningNosePositive": "有流鼻水",
-    "runningNoseNegative": "無流鼻水",
-    "cough": "咳嗽",
+    "coughing": "咳嗽",
     "runnyNose": "流鼻水",
-    "headache": "頭痛",
-    "stuffyNose": "鼻塞",
+    "nasalCongestion": "鼻塞",
+    "sneezing": "打噴嚏",
+    "shortnessOfBreath": "呼吸不順",
+    "malaiseOrTiredness": "四肢無力/全身倦怠",
+    "lossOfTasteOrSmell": "嗅覺/味覺遲鈍",
+    "diarrhea": "腹瀉",
+    "abdominalPain": "腹痛",
+    "vomiting": "嘔吐",
+    "chills": "發冷、畏寒",
+    "muscleOrJointSoreness": "肌肉或關節痠痛",
+    "soreThroat": "喉嚨癢/腫痛",
+    "sputum": "有痰",
     "fever": "發燒"
   },
   "DAILY_RECORD": {
