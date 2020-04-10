@@ -1,8 +1,8 @@
 <ion-grid style="width:100%;height:300px;overflow:scroll;">
-    <ion-row  *ngFor="let picRow of pics;" class="ion-justify-content-evenly">
-      <div *ngFor="let pic of picRow">
-        <ion-thumbnail *ngIf="toDayPhotos(pic,today)">
-          <ion-img [src]="pic.src"></ion-img>
+    <ion-row>
+      <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let photo of (photos$ | async).reverse()">
+        <ion-thumbnail>
+          <ion-img [src]="photo.webviewPath"></ion-img>
         </ion-thumbnail>
       </div>
     </ion-row>

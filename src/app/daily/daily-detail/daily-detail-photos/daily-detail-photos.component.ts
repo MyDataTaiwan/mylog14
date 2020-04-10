@@ -1,5 +1,8 @@
-import { Component, OnInit,AfterViewInit } from '@angular/core';
+import { Component, OnInit,AfterViewInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { PhotoService } from 'src/app/core/services/photo.service';
+import { DailyDetail } from '../daily-detail.page';
+import { BehaviorSubject } from 'rxjs';
+import { Photo } from 'src/app/core/interfaces/photo';
 
 export interface Pic {
   src: string;
@@ -12,43 +15,26 @@ export interface Pic {
   templateUrl: './daily-detail-photos.component.html',
   styleUrls: ['./daily-detail-photos.component.scss'],
 })
-export class DailyDetailPhotosComponent implements OnInit {
-  // <FIXME>
-   today=new Date();///換成想要的日期  // <FIXME>
+export class DailyDetailPhotosComponent implements OnInit, OnChanges {
+  @Input() dailyDetail: DailyDetail;
+  private photos = new BehaviorSubject<Photo[]>([]);
+  public photos$ = this.photos.asObservable();
 
-  catPic: Pic = {
-    // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
-    src: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
-  };
-  dogPic: Pic = {
-    // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-    src: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-  };
-  pics = [
-   [this.catPic, this.dogPic, this.catPic],
-   [this.dogPic, this.catPic, this.dogPic],
-   [this.catPic, this.dogPic, this.catPic],
-   [this.dogPic, this.catPic, this.dogPic],
-   [this.catPic, this.dogPic, this.catPic],
-   [this.dogPic, this.catPic, this.dogPic],
-  ];
-  constructor(
-    public photoService: PhotoService,
-
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }
-  toDayPhotos(photo,today) {//篩選當日照片
-    // console.log("photoList" + photo.snapshot.timestamp);
 
-    if (new Date(parseInt(photo.snapshot.timestamp,10)).getUTCMonth() == new Date(today).getUTCMonth() &&new Date(parseInt(photo.snapshot.timestamp,10)).getUTCDate() == new Date(today).getUTCDate()){
-      // if (new Date(parseInt(photo.snapshot.timestamp,10)).getUTCMonth() == new Date().getUTCMonth() ){
-        // console.log("photoY" + photo.snapshot.path);
-      return true;
-    }else{
-      // console.log("photoN" + photo.snapshot.path);
-      return false;
-    }
+  ngOnChanges(changes: SimpleChanges) {
+    const dailyDetail: DailyDetail = changes.dailyDetail.currentValue;
+    const photos = [];
+    dailyDetail.recordRows.forEach(recordRow => {
+      recordRow.photos.forEach(photo => {
+        if (!photos.find(p => p.timestamp === photo.timestamp)) {
+          photos.push(photo);
+        }
+      });
+    });
+    this.photos.next(photos);
   }
 }

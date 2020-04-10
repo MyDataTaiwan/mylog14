@@ -23,10 +23,12 @@ export class DailyRecord {
             }
             return (b.bodyTemperature - a.bodyTemperature);
         });
-        if (sortedRecords[0].bodyTemperature) {
-            return `${sortedRecords[0].bodyTemperature} ${sortedRecords[0].bodyTemperatureUnit}`;
-        } else {
+        if (sortedRecords.length < 1) {
             return 'N/A';
+        } else if (!sortedRecords[0].bodyTemperature || !sortedRecords[0].bodyTemperatureUnit) {
+            return 'N/A';
+        } else {
+            return `${sortedRecords[0].bodyTemperature} ${sortedRecords[0].bodyTemperatureUnit}`;
         }
     }
 
