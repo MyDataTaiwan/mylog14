@@ -1,5 +1,5 @@
 import { Symptoms } from './symptoms';
-import { PhotoRecord } from './photo-record';
+import { Photo } from './photo';
 import { LocationStamp } from './location-stamp';
 
 export interface Record {
@@ -8,5 +8,5 @@ export interface Record {
     bodyTemperature?: number;
     bodyTemperatureUnit?: string;
     symptoms?: Symptoms;
-    photos?: PhotoRecord[];
+    photos: Photo[];
 }

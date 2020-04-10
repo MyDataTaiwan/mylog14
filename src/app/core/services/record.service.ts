@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DailyRecord } from '../interfaces/daily-record';
+import { DailyRecord } from '../classes/daily-record';
 import { StorageService } from './storage.service';
-import { map, take, mergeMap, toArray, switchMap, tap } from 'rxjs/operators';
+import { map, take, mergeMap, toArray, switchMap, tap, defaultIfEmpty, catchError, takeWhile } from 'rxjs/operators';
 import { UserData } from '../interfaces/user-data';
 import { formatDate } from '@angular/common';
-import { Subject, BehaviorSubject, from, forkJoin, of } from 'rxjs';
+import { Subject, BehaviorSubject, from, forkJoin, of, Observable, throwError } from 'rxjs';
 import { Record } from '../interfaces/record';
 
 @Injectable({
@@ -13,6 +13,11 @@ import { Record } from '../interfaces/record';
 export class RecordService {
   private dailyRecords = new BehaviorSubject<DailyRecord[]>([]);
   public dailyRecords$ = this.dailyRecords.asObservable();
+  public dailyRecordToday$ = this.dailyRecords.asObservable()
+    .pipe(
+      switchMap(dailyRecords => this.getDailyRecordToday(dailyRecords)),
+    );
+
   constructor(
     private storageService: StorageService,
   ) {
@@ -26,57 +31,83 @@ export class RecordService {
       });
   }
 
-  createDummyUserData() {
-    const dateToday = new Date();
-    const dateStart = this.formatDate(dateToday.setDate(dateToday.getDate() - 5));
-    const dateEnd = this.formatDate(dateToday.setDate(dateToday.getDate() + 14));
+  getLatestRecord() {
+    return this.storageService.recordMetaList$
+      .pipe(
+        take(1),
+        map(recordMetaList => recordMetaList[recordMetaList.length - 1]),
+        switchMap(recordMeta => {
+          if (recordMeta) {
+            return this.storageService.getRecord(recordMeta);
+          } else {
+            const newRecord: Record = {
+              timestamp: null,
+              photos: [],
+            }
+            return of(newRecord);
+          }
+        }),
+      );
+  }
+
+  getDailyRecordToday(dailyRecords: DailyRecord[]) {
+    const today = formatDate(Date.now(), 'yyyy-MM-dd', 'en-us');
+    return of(dailyRecords.find(dailyRecord => dailyRecord.date === today));
+  }
+
+  createDummyUserData(): Observable<void> {
     const userData: UserData = {
       uuid: '<uuid-placeholder>',
       language: 'zh-TW',
       timezone: '+0800',
-      startDate: dateStart,
-      endDate: dateEnd,
+      startDate: null,
+      endDate: null,
     };
     return this.storageService.saveUserData(userData);
   }
 
-  loadDailyRecords() {
-    const dailyRecords: DailyRecord[] = new Array(14);
-    return this.storageService.userData$
+  updateUserDataDate(timestamp: string): Observable<void> {
+    const userData = this.storageService.getUserData();
+    userData.startDate = formatDate(timestamp, 'yyyy-MM-dd', 'en-us');
+    userData.endDate = this.dateDelta(userData.startDate, 14);
+    return this.storageService.saveUserData(userData);
+  }
+
+  newDailyRecords(): DailyRecord[] {
+    const DAY_LENGTH = 14;
+    const dailyRecords: DailyRecord[] = new Array(DAY_LENGTH);
+    for (let i = 0; i < DAY_LENGTH; i ++) {
+      dailyRecords[i] = new DailyRecord(i + 1);
+    }
+    return dailyRecords;
+  }
+
+  initDailyRecordDates(dailyRecords: DailyRecord[], records: Record[]): DailyRecord[] {
+    const recordZero = records.sort((a, b) => +b.timestamp - +a.timestamp)[0];
+    const DayOne = formatDate(recordZero.timestamp, 'yyyy-MM-dd', 'en-us');
+    dailyRecords.forEach((dailyRecord, idx) => {
+      dailyRecord.date = this.dateDelta(DayOne, idx);
+      dailyRecords[idx] = dailyRecord;
+    });
+    return dailyRecords;
+  }
+
+  loadDailyRecords(): Observable<Record[]> {
+    let dailyRecords = this.newDailyRecords();
+    return this.storageService.recordMetaList$
       .pipe(
-        map(
-          userData => {
-            console.log('userdata', userData);
-            // TODO: Brutally initiated array, too ugly
-            dailyRecords[0] = {
-              date: userData.endDate,
-              countdown: 14,
-              records: [],
-            };
-            for (let i = 1; i < 14; i++) {
-              dailyRecords[i] = {
-                date: this.dateDelta(userData.endDate, -i),
-                countdown: 14 - i,
-                records: [],
-              };
-            }
-          }
-        ),
-        switchMap(() => this.storageService.recordMetaList$),
         mergeMap(recordMetaList => {
           return forkJoin(
             recordMetaList.map(recordMeta => this.storageService.getRecord(recordMeta))
           );
         }),
+        tap(records => dailyRecords = this.initDailyRecordDates(dailyRecords, records)),
         mergeMap(records => {
           return forkJoin(
             records.map(record => {
               dailyRecords.some(dailyRecord => {
-                console.log('formatted record timestamp', this.formatDate(record.timestamp));
-                console.log('dailyRecord date', dailyRecord.date);
                 if (this.formatDate(record.timestamp) === dailyRecord.date) {
                   dailyRecord.records.push(record);
-                  console.log('push record', record);
                   return true;
                 }
               });
@@ -90,16 +121,8 @@ export class RecordService {
           });
           this.dailyRecords.next(dailyRecords);
           console.log('update dailyrecord', dailyRecords);
-        })
+        }),
       );
-  }
-
-  private createDailyRecord(recordDate: string): DailyRecord {
-    return {
-      date: recordDate,
-      countdown: this.getCountdown(recordDate),
-      records: [],
-    };
   }
 
   private getCountdown(currentDate: string) {
