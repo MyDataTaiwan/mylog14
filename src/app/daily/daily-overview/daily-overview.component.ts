@@ -142,7 +142,8 @@ export class DailyOverviewComponent implements OnInit {
                 imgSrc: dailyRecord.getLatestPhotoPath(),
                 imgHeight: 400,
               };
-            this.todate(dailyRecord.dayCount);
+            // this.todate(dailyRecord.dayCount);
+             
               return cardItem;
             })
               .filter(cardItem => cardItem.hasData === true)
@@ -150,6 +151,9 @@ export class DailyOverviewComponent implements OnInit {
           );
         }),
       );
+                  this.todate( Object.keys(this.items).length);
+
+      
   }
 
   ngOnInit() {
@@ -183,7 +187,6 @@ export class DailyOverviewComponent implements OnInit {
     });
     this.Stopday(data);
   }
-
   async todate(date) {
     // const data = this.items.length;
     // const data = 4;
