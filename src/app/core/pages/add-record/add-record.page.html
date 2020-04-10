@@ -23,7 +23,7 @@
 
     <ion-list *ngFor="let symptom of symptoms.list">
       <ion-item>
-        <ion-label class="ion-padding-start">{{ symptom.name }}</ion-label>
+        <ion-label class="ion-padding-start">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
         <ion-toggle [(ngModel)]="symptom.present"></ion-toggle>
         <img src="../../assets/ui/msg_icon.svg" button (click)="symptom.present=!symptom.present"
           *ngIf="symptom.present" />
