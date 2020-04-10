@@ -28,6 +28,9 @@ export class DailyDetailUpperComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const dailyDetail: DailyDetail = changes.dailyDetail.currentValue;
+    if (dailyDetail.mapDots.length < 1) {
+      return;
+    }
     const latitude = dailyDetail.mapDots[0].latitude;
     const longitude = dailyDetail.mapDots[0].longitude;
     if (!latitude || !longitude) {

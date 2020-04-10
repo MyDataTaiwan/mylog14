@@ -5,7 +5,7 @@ import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
 import { Observable, pipe, forkJoin, from, of, combineLatest, Subject } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs/operators';
 import { StorageService } from './storage.service';
 import { Photo } from '../interfaces/photo';
 import { RecordService } from './record.service';
@@ -88,9 +88,10 @@ export class SnapshotService {
   snapCapture() {
     return forkJoin([
       this.createPhotoWithSnapshot(),
-      this.recordService.getLatestRecord(),
+      this.recordService.newRecord(),
     ])
       .pipe(
+        take(1),
         mergeMap(([photo, record]) => {
           if (!record.timestamp) {
             record.timestamp = photo.timestamp;
@@ -98,8 +99,6 @@ export class SnapshotService {
           record.photos.push(photo);
           return this.storageService.saveRecord(record);
         }),
-        // Trigger Daily Record cache update
-        tap(() => this.recordService.loadDailyRecords),
       );
   }
 

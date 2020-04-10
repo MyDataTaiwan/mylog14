@@ -8,6 +8,7 @@ import { Record } from 'src/app/core/interfaces/record';
 import { formatDate } from '@angular/common';
 import { Symptoms } from 'src/app/core/classes/symptoms';
 import { DailyRecord } from 'src/app/core/classes/daily-record';
+import { Photo } from 'src/app/core/interfaces/photo';
 
 @Component({
   selector: 'app-daily-detail',
@@ -53,6 +54,7 @@ export class DailyDetailPage implements OnInit {
               bt: this.getBt(record),
               expand: false,
               symptoms: record.symptoms,
+              photos: record.photos,
             });
           });
           return dailyDetail;
@@ -109,6 +111,7 @@ export interface RecordRow {
   bt: string;
   symptoms: Symptoms;
   expand: boolean;
+  photos: Photo[];
 }
 export interface DailyDetail {
   date: string;

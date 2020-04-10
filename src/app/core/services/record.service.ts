@@ -6,6 +6,7 @@ import { UserData } from '../interfaces/user-data';
 import { formatDate } from '@angular/common';
 import { Subject, BehaviorSubject, from, forkJoin, of, Observable, throwError } from 'rxjs';
 import { Record } from '../interfaces/record';
+import { Symptoms } from '../classes/symptoms';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,16 @@ export class RecordService {
       });
   }
 
+  // FIXME: This doesn't have to be an Observable, just fix it later
+  newRecord() {
+    const newRecord: Record = {
+      timestamp: (new Date()).getTime().toString(),
+      symptoms: new Symptoms(),
+      photos: [],
+    };
+    return of(newRecord);
+  }
+
   getLatestRecord() {
     return this.storageService.recordMetaList$
       .pipe(
@@ -41,8 +52,9 @@ export class RecordService {
           } else {
             const newRecord: Record = {
               timestamp: null,
+              symptoms: new Symptoms(),
               photos: [],
-            }
+            };
             return of(newRecord);
           }
         }),
