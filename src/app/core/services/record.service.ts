@@ -26,7 +26,6 @@ export class RecordService {
       this.createDummyUserData(),
     ])
       .subscribe(() => {
-        console.log('user data created');
         this.loadDailyRecords().subscribe();
       });
   }
@@ -120,16 +119,8 @@ export class RecordService {
             dailyRecord.records = dailyRecord.records.sort((a, b) => +a.timestamp - +b.timestamp);
           });
           this.dailyRecords.next(dailyRecords);
-          console.log('update dailyrecord', dailyRecords);
         }),
       );
-  }
-
-  private getCountdown(currentDate: string) {
-    const start = new Date(this.storageService.getUserData().startDate).getTime();
-    const current = new Date(currentDate).getTime();
-    console.log('start current', start, current);
-    return Math.floor((current - start) / (1000 * 60 * 60 * 24));
   }
 
   private dateDelta(dateString: string, delta: number) {

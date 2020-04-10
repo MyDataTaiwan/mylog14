@@ -127,7 +127,7 @@ export class DailyOverviewComponent implements OnInit {
     this.items$ = this.recordService.dailyRecords$
       .pipe(
         mergeMap(dailyRecords => {
-          console.log('page dailyRecords', dailyRecords);
+          console.log('Page DailyRecords Updated', dailyRecords);
           return forkJoin(
             dailyRecords.map(dailyRecord => {
               if (dailyRecord.records.length === 0) {

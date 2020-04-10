@@ -91,12 +91,10 @@ export class SnapshotService {
       this.recordService.getLatestRecord(),
     ])
       .pipe(
-        tap(e => console.log('WAAAAAAAAGH', e)),
         mergeMap(([photo, record]) => {
           if (!record.timestamp) {
             record.timestamp = photo.timestamp;
           }
-          console.log('Did you get here?', photo, record);
           record.photos.push(photo);
           return this.storageService.saveRecord(record);
         }),

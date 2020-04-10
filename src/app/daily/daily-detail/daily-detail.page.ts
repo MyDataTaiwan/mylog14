@@ -39,7 +39,6 @@ export class DailyDetailPage implements OnInit {
             mapDots: [],
             recordRows: [],
           };
-          console.log('DailyDetail 1', dailyDetail);
           dailyRecord.records.forEach(record => {
             if (record.locationStamp) {
               dailyDetail.mapDots.push({
@@ -47,7 +46,6 @@ export class DailyDetailPage implements OnInit {
                 longitude: record.locationStamp.longitude,
               });
             }
-            console.log('DailyDetail 3', dailyDetail);
             dailyDetail.recordRows.push({
               time: this.getTime(record.timestamp),
               bt: this.getBt(record),
@@ -55,7 +53,6 @@ export class DailyDetailPage implements OnInit {
               symptoms: record.symptoms,
             });
           });
-          console.log('dailyDetail 2', dailyDetail);
           return dailyDetail;
         }),
       );

@@ -23,7 +23,6 @@ export class DailyRecord {
             }
             return (b.bodyTemperature - a.bodyTemperature);
         });
-        console.log('sortedRecords', sortedRecords);
         if (sortedRecords[0].bodyTemperature) {
             return `${sortedRecords[0].bodyTemperature} ${sortedRecords[0].bodyTemperatureUnit}`;
         } else {
@@ -38,11 +37,9 @@ export class DailyRecord {
 
         const nestedPhotos = this.records.map(record => record.photos);
         const photos = flatten(nestedPhotos);
-        console.log('Flattened photo array', photos);
         const sortedPhotos = photos
             .filter(photo => photo !== undefined)
             .sort((a, b) => +b.timestamp - +a.timestamp);
-        console.log('Sorted photo array', sortedPhotos);
         if (sortedPhotos[0]) {
             return sortedPhotos[0].webviewPath;
         } else {

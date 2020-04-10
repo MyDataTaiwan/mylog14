@@ -32,7 +32,6 @@ export class StorageService {
     return from(Storage.get({ key: this.RECORD_META_REPOSITORY }))
       .pipe(
         take(1),
-        tap(() => console.log('Record Meta loaded')),
         map(repoRaw => {
           const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
           this.recordMetaList.next(recordMetaList);
@@ -45,7 +44,6 @@ export class StorageService {
     return from(Storage.get({ key: this.USER_DATA_REPOSITORY }))
       .pipe(
         take(1),
-        tap(() => console.log('User data loaded')),
         map(repoRaw => {
           const userData: UserData = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
           this.userData.next(userData);
@@ -80,7 +78,6 @@ export class StorageService {
       }),
       switchMap((recordMetaList: RecordMeta[]) => {
         // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
-        console.log('next record meta list', recordMetaList);
         this.recordMetaList.next(recordMetaList);
         return from(Storage.set({
           key: this.RECORD_META_REPOSITORY,

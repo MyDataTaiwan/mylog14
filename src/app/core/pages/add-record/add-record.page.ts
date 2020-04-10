@@ -69,7 +69,6 @@ export class AddRecordPage implements OnInit {
         {
           text: 'Ok',
           handler: (value: any) => {
-            console.log(value);
             this.bt = `${value.integer.value}${value.decimal.value}`;
             this.btUnit = value.unit.value;
           }
