@@ -142,7 +142,7 @@ export class DailyOverviewComponent implements OnInit {
                 imgSrc: dailyRecord.getLatestPhotoPath(),
                 imgHeight: 400,
               };
-            // this.todate(dailyRecord.dayCount);
+            this.todate(dailyRecord.dayCount);
              
               return cardItem;
             })
@@ -151,7 +151,9 @@ export class DailyOverviewComponent implements OnInit {
           );
         }),
       );
-                  this.todate( Object.keys(this.items).length);
+                  // this.todate( Object.keys(this.items).length);
+                  this.todate(this.items$.subscribe(res=>{this.todate(res.length)}));
+
 
       
   }
