@@ -5,12 +5,26 @@
       <ion-label class="ion-text-center">{{ dailyDetail.month }}</ion-label>
     </div>
     <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-      <ion-label class="ion-text-center" style="font-size: 12px;"> <img src="../../assets/ui/W_icon.svg" />體溫: {{ dailyDetail.bt }}°C</ion-label>
-      <ion-label class="ion-text-center" > DAY{{ dailyDetail.day }}</ion-label>
+      <ion-label class="ion-text-center"> DAY{{ dailyDetail.day }}</ion-label>
     </div>
   </div>
   <div style="flex: 3;">
-    <iframe width="200" height="150" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" scrolling="no"
-      [src]="url | safeUrl"></iframe>
+    <div>
+    <ion-label class="ion-text-center" style="font-size: 12px;">
+      <img src="../../assets/ui/W_icon.svg" />
+      體溫: {{ dailyDetail.bt }}
+    </ion-label>
+    </div>
+    <div>
+    <ion-label class="ion-text-center" style="font-size: 12px;">
+      <img src="../../assets/ui/W_icon.svg" />
+      症狀: 
+      <span *ngFor="let symptom of dailyDetail.presentedSymptoms ; let isLast=last">
+        {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : '、'}}
+      </span>
+    </ion-label>
+    </div>
+    <iframe width="250" height="100" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+      scrolling="no" [src]="url | safeUrl"></iframe>
   </div>
 </div>

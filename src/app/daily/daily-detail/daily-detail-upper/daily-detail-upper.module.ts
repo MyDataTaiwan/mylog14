@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { DailyDetailUpperComponent } from './daily-detail-upper.component';
 import { CoreModule } from 'src/app/core/core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { CoreModule } from 'src/app/core/core.module';
     FormsModule,
     IonicModule,
     CoreModule,
+    TranslateModule,
   ],
   declarations: [DailyDetailUpperComponent],
   exports: [DailyDetailUpperComponent],

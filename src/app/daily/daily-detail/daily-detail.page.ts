@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap, mergeMap, tap } from 'rxjs/operators';
+import { map, switchMap, mergeMap, tap, take } from 'rxjs/operators';
 import { RecordService } from 'src/app/core/services/record.service';
 import { MainHeaderComponent } from 'src/app/core/components/main-header/main-header.component';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { Record } from 'src/app/core/interfaces/record';
 import { formatDate } from '@angular/common';
 import { Symptoms } from 'src/app/core/classes/symptoms';
+import { DailyRecord } from 'src/app/core/classes/daily-record';
 
 @Component({
   selector: 'app-daily-detail',
@@ -36,6 +37,7 @@ export class DailyDetailPage implements OnInit {
             month: this.getMonth(dailyRecord.date),
             day: dailyRecord.dayCount.toString(),
             bt: dailyRecord.getHighestBt(),
+            presentedSymptoms: this.getSymptoms(dailyRecord),
             mapDots: [],
             recordRows: [],
           };
@@ -81,6 +83,20 @@ export class DailyDetailPage implements OnInit {
     return formatDate(timestamp, 'HH:mm', 'en-us');
   }
 
+  private getSymptoms(dailyRecord: DailyRecord) {
+    const symptoms: string[] = [];
+    dailyRecord.records.forEach(record => {
+      record.symptoms.list
+        .filter(symptom => (symptom.present))
+        .forEach(symptom => {
+          if (!symptoms.includes(symptom.name)) {
+            symptoms.push(symptom.name);
+          }
+        });
+    });
+    return symptoms;
+  }
+
 }
 
 export interface MapDot {
@@ -99,6 +115,7 @@ export interface DailyDetail {
   month: string;
   day: string;
   bt: string;
+  presentedSymptoms: string[];
   mapDots: MapDot[];
   recordRows: RecordRow[];
 }
