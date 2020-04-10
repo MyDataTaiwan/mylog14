@@ -3,7 +3,7 @@ import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
 import { RecordService } from 'src/app/core/services/record.service';
 import { Observable, forkJoin, of } from 'rxjs';
-import { map, mergeMap, filter } from 'rxjs/operators';
+import { map, mergeMap, filter, tap } from 'rxjs/operators';
 import { DailyRecord } from 'src/app/core/classes/daily-record';
 
 @Component({
@@ -93,7 +93,7 @@ export class DailyOverviewComponent implements OnInit {
       imgHeight: 400,
     },
   ];
-  WhatIsItToday=0;
+  WhatIsItToday = 0;
 
   // arry= [[616, 674], [125, 184], [195, 246], [254, 306]]
   // TimeArry:{
@@ -142,20 +142,21 @@ export class DailyOverviewComponent implements OnInit {
                 imgSrc: dailyRecord.getLatestPhotoPath(),
                 imgHeight: 400,
               };
-            this.todate(dailyRecord.dayCount);
-             
+              // this.todate(dailyRecord.dayCount);
+
               return cardItem;
             })
               .filter(cardItem => cardItem.hasData === true)
               .map(cardItem => of(cardItem))
           );
         }),
+        tap((cardItems: CardItem[]) => this.todate(cardItems.length))
       );
                   // this.todate( Object.keys(this.items).length);
-                  this.todate(this.items$.subscribe(res=>{this.todate(res.length)}));
+                  // this.todate(this.items$.subscribe(res=>{this.todate(res.length)}));
+    // this.todate(Object.keys(this.items).length);
 
 
-      
   }
 
   ngOnInit() {
@@ -185,7 +186,7 @@ export class DailyOverviewComponent implements OnInit {
         clearInterval(timer);
         resolve();
 
-      }, (data ) * 1000);
+      }, (data) * 1000);
     });
     this.Stopday(data);
   }
@@ -200,7 +201,7 @@ export class DailyOverviewComponent implements OnInit {
         clearInterval(timer);
         resolve();
 
-      }, (date ) * 1000);
+      }, (date) * 1000);
     });
     this.Stopday(date);
   }
