@@ -110,7 +110,8 @@ export class PhotoService {
     // Get platform-specific photo filepaths
     const photo = await this.getPhotoFile(cameraPhoto, fileName);
     if (snapshot !== undefined) {
-      photo.snapshot = snapshot;
+      photo.timestamp = snapshot.timestamp;
+      photo.locationStamp = snapshot.locationStamp;
     }
     return photo;
   }

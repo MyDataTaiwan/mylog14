@@ -6,7 +6,7 @@ import { MainHeaderComponent } from 'src/app/core/components/main-header/main-he
 import { Observable } from 'rxjs';
 import { Record } from 'src/app/core/interfaces/record';
 import { formatDate } from '@angular/common';
-import { Symptoms } from 'src/app/core/interfaces/symptoms';
+import { Symptoms } from 'src/app/core/classes/symptoms';
 
 @Component({
   selector: 'app-daily-detail',

@@ -80,7 +80,7 @@ export class CategoryLocationPage implements OnInit, OnDestroy {
     this.photoService.photos$.pipe(
       takeUntil(this.destroyer$),
       filter(photos => (photos[0]) && true),
-      map(photos => photos[0].snapshot.locationStamp)
+      map(photos => photos[0].locationStamp)
       ).subscribe(location => {
         this.photoLocation = `${location.latitude},${location.longitude}`;
         this.url = this.baseUrl + this.photoLocation;

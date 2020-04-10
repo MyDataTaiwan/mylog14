@@ -1,4 +1,4 @@
-import { Symptoms } from './symptoms';
+import { Symptoms } from '../classes/symptoms';
 import { Photo } from './photo';
 import { LocationStamp } from './location-stamp';
 
