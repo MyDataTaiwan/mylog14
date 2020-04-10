@@ -18,33 +18,14 @@
       </div>
     </ion-item>
     <ion-list *ngIf="recordRow.expand">
-      <ion-item>
-        <img *ngIf="recordRow.symptoms.coughing" src="../../assets/ui/today_icon_a.svg" />
-        <ion-label *ngIf="recordRow.symptoms.coughing" class="ion-text-center" style="color: #F9AD35;">{{mockCoughDetail}}
+      <ion-item *ngFor="let symptom of recordRow.symptoms.list">
+        <!-- <img *ngIf="symptom.present" src="../../assets/ui/today_icon_a.svg" /> -->
+        <ion-label *ngIf="symptom.present" style="color: #F9AD35;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
+        <ion-label *ngIf="symptom.present" class="ion-text-center" style="color: #F9AD35;">{{symptom.note}}
         </ion-label>
-        <img *ngIf="!recordRow.symptoms.coughing" src="../../assets/ui/today_icon_a_d.svg" />
-        <ion-label *ngIf="!recordRow.symptoms.coughing" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-      </ion-item>
-      <ion-item>
-        <img *ngIf="recordRow.symptoms.fever" src="../../assets/ui/today_icon_b.svg" />
-        <ion-label *ngIf="recordRow.symptoms.fever" class="ion-text-center" style="color: #F9AD35;">{{mockFeverDetail}}
-        </ion-label>
-        <img *ngIf="!recordRow.symptoms.fever" src="../../assets/ui/today_icon_b_d.svg" />
-        <ion-label *ngIf="!recordRow.symptoms.fever" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-      </ion-item>
-      <ion-item>
-        <img *ngIf="recordRow.symptoms.runnyNose" src="../../assets/ui/today_icon_c.svg" />
-        <ion-label *ngIf="recordRow.symptoms.runnyNose" class="ion-text-center" style="color: #F9AD35;">
-          {{mockRunnyNoseDetail}}</ion-label>
-        <img *ngIf="!recordRow.symptoms.runnyNose" src="../../assets/ui/today_icon_c_d.svg" />
-        <ion-label *ngIf="!recordRow.symptoms.runnyNose" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
-      </ion-item>
-      <ion-item>
-        <img *ngIf="recordRow.symptoms.stuffyNose" src="../../assets/ui/today_icon_d.svg" />
-        <ion-label *ngIf="recordRow.symptoms.stuffyNose" class="ion-text-center" style="color: #F9AD35;">
-          {{mockStuffyNoseDetail}}</ion-label>
-        <img *ngIf="!recordRow.symptoms.stuffyNose" src="../../assets/ui/today_icon_d_d.svg" />
-        <ion-label *ngIf="!recordRow.symptoms.stuffyNose" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <!-- <img *ngIf="!symptom.present" src="../../assets/ui/today_icon_a_d.svg" /> -->
+        <ion-label *ngIf="!symptom.present" style="color: #D6D6D6;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
+        <ion-label *ngIf="!symptom.present" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
       </ion-item>
     </ion-list>
   </div>
