@@ -151,6 +151,7 @@ export class AddRecordPage implements OnInit {
           return record;
         }),
         switchMap(record => {
+          console.log('Add record page: saving record', record);
           return this.storageService.saveRecord(record);
         }),
         map(() => {

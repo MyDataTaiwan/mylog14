@@ -27,6 +27,8 @@ export class RecordService {
       this.createDummyUserData(),
     ])
       .subscribe(() => {
+        console.log('Record service constructor: forkJoin [loadRecordMetaList, createDummyUserData] finished');
+        console.log('Record service constructor: start subscribing loadDailyRecords');
         this.loadDailyRecords().subscribe();
       });
   }
@@ -94,6 +96,7 @@ export class RecordService {
   }
 
   initDailyRecordDates(dailyRecords: DailyRecord[], records: Record[]): DailyRecord[] {
+    console.log('Record service: initDailyRecordDates => dailyRecords', dailyRecords);
     const recordZero = records.sort((a, b) => +a.timestamp - +b.timestamp)[0];
     const DayOne = formatDate(recordZero.timestamp, 'yyyy-MM-dd', 'en-us');
     dailyRecords.forEach((dailyRecord, idx) => {
@@ -103,17 +106,43 @@ export class RecordService {
     return dailyRecords;
   }
 
-  loadDailyRecords(): Observable<Record[]> {
+  createDailyRecords(records: Record[]) {
+    let dailyRecords: DailyRecord[] = this.newDailyRecords();
+    dailyRecords = this.initDailyRecordDates(dailyRecords, records);
+    records.forEach(record => {
+      const recordOnDate = dailyRecords.find(dailyRecord => dailyRecord.date === this.formatDate(record.timestamp));
+      if (recordOnDate) {
+        dailyRecords[dailyRecords.indexOf(recordOnDate)].records.push(record);
+      }
+    });
+    dailyRecords.forEach(dailyRecord => {
+      dailyRecord.records = dailyRecord.records.sort((a, b) => +a.timestamp - +b.timestamp);
+    });
+    console.log('DAAAAAAA', dailyRecords);
+    return dailyRecords;
+  }
+
+  loadDailyRecords(): Observable<DailyRecord[]> {
+    return this.storageService.recordMetaList$
+      .pipe(
+        switchMap(recordMetaList => this.storageService.getRecords(recordMetaList)),
+        map(records => this.createDailyRecords(records)),
+        tap(dailyRecords => this.dailyRecords.next(dailyRecords)),
+      );
+      /*
     let dailyRecords = this.newDailyRecords();
     return this.storageService.recordMetaList$
       .pipe(
         mergeMap(recordMetaList => {
+          console.log('Record service: loadDailyRecords => recordMetaList', recordMetaList);
           return forkJoin(
             recordMetaList.map(recordMeta => this.storageService.getRecord(recordMeta))
           );
         }),
         tap(records => dailyRecords = this.initDailyRecordDates(dailyRecords, records)),
         mergeMap(records => {
+          console.log('Record service: loadDailyRecords => records', records);
+          console.log('Record service: loadDailyRecords => dailyRecords', dailyRecords);
           return forkJoin(
             records.map(record => {
               dailyRecords.some(dailyRecord => {
@@ -127,12 +156,14 @@ export class RecordService {
           );
         }),
         tap(() => {
+          console.log('Record service: loadDailyRecords => pushed dailyRecords', dailyRecords);
           dailyRecords.forEach(dailyRecord => {
             dailyRecord.records = dailyRecord.records.sort((a, b) => +a.timestamp - +b.timestamp);
           });
           this.dailyRecords.next(dailyRecords);
         }),
       );
+      */
   }
 
   private dateDelta(dateString: string, delta: number) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 import { Record } from '../interfaces/record';
-import { from, defer, forkJoin, of, BehaviorSubject } from 'rxjs';
+import { from, defer, forkJoin, of, BehaviorSubject, Observable } from 'rxjs';
 import { map, switchMap, take, tap, catchError } from 'rxjs/operators';
 import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
@@ -35,6 +35,7 @@ export class StorageService {
         map(repoRaw => {
           const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
           this.recordMetaList.next(recordMetaList);
+          console.log('Storage service recordMetaList$: ', this.recordMetaList.getValue());
           return this.recordMetaList.value;
         })
       );
@@ -67,7 +68,7 @@ export class StorageService {
           hash: this.getFileHash(fileName),
         };
         // Check if a record with the same filename (timestamp) exists
-        const oldRecordMeta = recordMetaList.find(r => r.path === fileName);
+        const oldRecordMeta = this.recordMetaList.getValue().find(r => r.path === fileName);
         // Update or create recordMeta
         if (oldRecordMeta) {
           recordMetaList[recordMetaList.indexOf(oldRecordMeta)] = recordMeta;
@@ -77,18 +78,28 @@ export class StorageService {
         return recordMetaList;
       }),
       switchMap((recordMetaList: RecordMeta[]) => {
+        console.log('Storage service: updated recordMetaList', recordMetaList);
         // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
-        this.recordMetaList.next(recordMetaList);
-        return from(Storage.set({
-          key: this.RECORD_META_REPOSITORY,
-          value: JSON.stringify(recordMetaList),
-        }));
+        return forkJoin([
+          from(Storage.set({
+            key: this.RECORD_META_REPOSITORY,
+            value: JSON.stringify(recordMetaList),
+          })),
+          of(recordMetaList),
+        ]);
       }),
+      tap(([_, recordMetaList]) => this.recordMetaList.next(recordMetaList))
     );
   }
 
-  getRecord(recordMeta: RecordMeta) {
+  getRecord(recordMeta: RecordMeta): Observable<Record> {
     return this.getRecordJSON(recordMeta.path, recordMeta.directory);
+  }
+
+  getRecords(recordMetaList: RecordMeta[]): Observable<Record[]> {
+    return forkJoin(
+      recordMetaList.map(recordMeta => this.getRecord(recordMeta)),
+    );
   }
 
   getRecordMetaByTimestamp(timestamp: number) {

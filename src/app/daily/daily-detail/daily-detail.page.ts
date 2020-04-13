@@ -25,23 +25,18 @@ export class DailyDetailPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dailyDetail$ = this.activatedRoute.paramMap
+    this.dailyDetail$ = this.recordService.dailyRecords$
       .pipe(
-        map(params => params.get('day')),
-        switchMap(day => {
-          return this.recordService.dailyRecords$
-            .pipe(map(dailyRecords => dailyRecords[+day - 1]));
+        tap(() => console.log('Triggered!')),
+        mergeMap(dailyRecords => {
+          return forkJoin([
+            of(dailyRecords),
+            this.activatedRoute.paramMap.pipe(take(1), map(params => params.get('day'))),
+          ]);
         }),
+        map(([dailyRecords, day]) => dailyRecords[+day - 1]),
         map(dailyRecord => {
-          const dailyDetail: DailyDetail = {
-            date: this.getDate(dailyRecord.date),
-            month: this.getMonth(dailyRecord.date),
-            day: dailyRecord.dayCount.toString(),
-            bt: dailyRecord.getHighestBt(),
-            presentedSymptoms: this.getSymptoms(dailyRecord),
-            mapDots: [],
-            recordRows: [],
-          };
+          const dailyDetail = this.createDailyDetail(dailyRecord);
           dailyRecord.records.forEach(record => {
             if (record.locationStamp) {
               dailyDetail.mapDots.push({
@@ -56,14 +51,29 @@ export class DailyDetailPage implements OnInit {
               symptoms: record.symptoms,
               photos: record.photos,
             });
+            console.log('Daily Detail Page: pushed recordRows ', dailyDetail.recordRows);
           });
           return dailyDetail;
         }),
+        tap(d => console.log('Daily Detail!!!', d)),
       );
   }
 
   onSegmentChanged(data) {
     this.selectedSegment = data;
+  }
+
+  private createDailyDetail(dailyRecord: DailyRecord): DailyDetail {
+    const dailyDetail: DailyDetail = {
+      date: this.getDate(dailyRecord.date),
+      month: this.getMonth(dailyRecord.date),
+      day: dailyRecord.dayCount.toString(),
+      bt: dailyRecord.getHighestBt(),
+      presentedSymptoms: this.getSymptoms(dailyRecord),
+      mapDots: [],
+      recordRows: [],
+    };
+    return dailyDetail;
   }
 
   private getBt(record: Record) {
