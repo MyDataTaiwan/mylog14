@@ -44,6 +44,7 @@ export class DataStoreService {
   private loadDailyRecords(): Observable<DailyRecords> {
     return this.localStorage.getRecordMetaList()
       .pipe(
+        tap(e => console.log('DEBUG', e)),
         switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
         map(records => new DailyRecords(records)),
       );

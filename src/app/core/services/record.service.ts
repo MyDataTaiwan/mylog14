@@ -39,7 +39,7 @@ export class RecordService {
   // FIXME: This doesn't have to be an Observable, just fix it later
   newRecord() {
     const newRecord: Record = {
-      timestamp: (new Date()).getTime().toString(),
+      timestamp: (new Date()).getTime(),
       symptoms: new Symptoms(),
       photos: [],
     };

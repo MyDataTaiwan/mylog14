@@ -9,30 +9,35 @@ import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs
 import { StorageService } from './storage.service';
 import { Photo } from '../interfaces/photo';
 import { RecordService } from './record.service';
+import { Record } from '../interfaces/record';
+import { Symptoms } from '../classes/symptoms';
+import { LocalStorageService } from './local-storage.service';
+import { DataStoreService } from './data-store.service';
+import { RecordMeta } from '../classes/record-meta';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnapshotService {
+  fakePos: GeolocationPosition = {
+    coords: {
+      latitude: 0, longitude: 0, accuracy: 0,
+    },
+    timestamp: 0,
+  };
   constructor(
+    private dataStore: DataStoreService,
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
-    private recordService: RecordService,
-    private storageService: StorageService,
+    private localStorage: LocalStorageService,
   ) { }
 
   getLocationStamp(): Observable<LocationStamp> {
     return this.geolocationService.getPosition()
       .pipe(
         catchError(err => {
-          console.log('Geolocation timeout. Set all value to 0.');
-          const fakePos: GeolocationPosition = {
-            coords: {
-              latitude: 0, longitude: 0, accuracy: 0,
-            },
-            timestamp: 0,
-          };
-          return of(fakePos);
+          console.log('Geolocation timeout. Set all value to 0.', err);
+          return of(this.fakePos);
         }),
         map(pos => pos.coords),
         map(coords => {
@@ -45,8 +50,8 @@ export class SnapshotService {
       );
   }
 
-  getTimestamp(): string {
-    return Date.now().toString();
+  getTimestamp(): number {
+    return Date.now();
   }
 
   createSnapshot(): Observable<Snapshot> {
@@ -88,17 +93,38 @@ export class SnapshotService {
   snapCapture() {
     return forkJoin([
       this.createPhotoWithSnapshot(),
-      this.recordService.newRecord(),
+      this.dataStore.recordMetaList$.pipe(take(1)),
     ])
       .pipe(
-        take(1),
-        mergeMap(([photo, record]) => {
-          if (!record.timestamp) {
-            record.timestamp = photo.timestamp;
-          }
-          record.photos.push(photo);
-          return this.storageService.saveRecord(record);
+        mergeMap(([photo, recordMetaList]) => {
+          const record: Record = {
+            timestamp: photo.timestamp,
+            symptoms: new Symptoms(),
+            photos: [photo],
+          };
+          return this.localStorage.saveRecord(record, recordMetaList);
         }),
+      );
+  }
+
+  snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
+    return forkJoin([
+      this.createSnapshot(),
+      this.dataStore.recordMetaList$.pipe(take(1)),
+    ])
+      .pipe(
+        mergeMap(([snapshot, recordMetaList]) => {
+          const record: Record = {
+            bodyTemperature,
+            bodyTemperatureUnit,
+            symptoms,
+            timestamp: snapshot.timestamp,
+            locationStamp: snapshot.locationStamp,
+            photos: [],
+          };
+          return this.localStorage.saveRecord(record, recordMetaList);
+        }),
+        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
       );
   }
 

@@ -8,6 +8,7 @@ import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { GeolocationService } from './core/services/geolocation.service';
 import { RecordService } from './core/services/record.service';
+import { DataStoreService } from './core/services/data-store.service';
 
 const { SplashScreen, StatusBar } = Plugins;
 
@@ -21,6 +22,7 @@ export class AppComponent {
   selectedLanguage: string;
 
   constructor(
+    private dataStore: DataStoreService,
     private platform: Platform,
     private translateConfigService: TranslateConfigService
   ) {
@@ -35,6 +37,7 @@ export class AppComponent {
         console.log('Status Bar is not implemented in web');
       }
     }
+    this.dataStore.updateDailyRecords().subscribe();
     SplashScreen.hide();
   }
   languageChanged() {

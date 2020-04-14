@@ -1,6 +1,6 @@
 import { LocationStamp } from './location-stamp';
 
 export interface Snapshot {
-    timestamp: string;
+    timestamp: number;
     locationStamp: LocationStamp;
 }

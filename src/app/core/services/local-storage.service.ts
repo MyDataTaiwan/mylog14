@@ -43,10 +43,7 @@ export class LocalStorageService {
   }
 
   getRecordMetaList(): Observable<RecordMeta[]> {
-    return this.getData(this.RECORD_META_DIRECTORY).pipe(
-      map(raw => raw.value),
-      defaultIfEmpty([]),
-    );
+    return this.getData(this.RECORD_META_DIRECTORY);
   }
 
   saveRecordMetaList(recordMetaList: RecordMeta[]): Observable<RecordMeta[]> {
@@ -54,7 +51,11 @@ export class LocalStorageService {
   }
 
   private getData(dir = FilesystemDirectory.Data): Observable<any> {
-    return defer(() => from(Storage.get({ key: dir })));
+    return defer(() => from(Storage.get({ key: dir }))).pipe(
+      map(raw => raw.value),
+      defaultIfEmpty('[]'),
+      map(str => JSON.parse(str)),
+    );
   }
 
   private setData<T>(data: T, dir = FilesystemDirectory.Data): Observable<T> {
