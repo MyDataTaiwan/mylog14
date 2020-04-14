@@ -18,10 +18,12 @@ export class RecordService {
     .pipe(
       switchMap(dailyRecords => this.getDailyRecordToday(dailyRecords)),
     );
+  
 
   constructor(
     private storageService: StorageService,
   ) {
+    /*
     forkJoin([
       this.storageService.loadRecordMetaList(),
       this.createDummyUserData(),
@@ -31,6 +33,7 @@ export class RecordService {
         console.log('Record service constructor: start subscribing loadDailyRecords');
         this.loadDailyRecords().subscribe();
       });
+      */
   }
 
   // FIXME: This doesn't have to be an Observable, just fix it later
@@ -129,41 +132,6 @@ export class RecordService {
         map(records => this.createDailyRecords(records)),
         tap(dailyRecords => this.dailyRecords.next(dailyRecords)),
       );
-      /*
-    let dailyRecords = this.newDailyRecords();
-    return this.storageService.recordMetaList$
-      .pipe(
-        mergeMap(recordMetaList => {
-          console.log('Record service: loadDailyRecords => recordMetaList', recordMetaList);
-          return forkJoin(
-            recordMetaList.map(recordMeta => this.storageService.getRecord(recordMeta))
-          );
-        }),
-        tap(records => dailyRecords = this.initDailyRecordDates(dailyRecords, records)),
-        mergeMap(records => {
-          console.log('Record service: loadDailyRecords => records', records);
-          console.log('Record service: loadDailyRecords => dailyRecords', dailyRecords);
-          return forkJoin(
-            records.map(record => {
-              dailyRecords.some(dailyRecord => {
-                if (this.formatDate(record.timestamp) === dailyRecord.date) {
-                  dailyRecord.records.push(record);
-                  return true;
-                }
-              });
-              return of(record);
-            })
-          );
-        }),
-        tap(() => {
-          console.log('Record service: loadDailyRecords => pushed dailyRecords', dailyRecords);
-          dailyRecords.forEach(dailyRecord => {
-            dailyRecord.records = dailyRecord.records.sort((a, b) => +a.timestamp - +b.timestamp);
-          });
-          this.dailyRecords.next(dailyRecords);
-        }),
-      );
-      */
   }
 
   private dateDelta(dateString: string, delta: number) {

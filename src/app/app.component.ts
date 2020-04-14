@@ -22,9 +22,6 @@ export class AppComponent {
 
   constructor(
     private platform: Platform,
-    private geolocationService: GeolocationService,
-    private storageService: StorageService,
-    private recordService: RecordService,
     private translateConfigService: TranslateConfigService
   ) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
@@ -38,13 +35,9 @@ export class AppComponent {
         console.log('Status Bar is not implemented in web');
       }
     }
-    forkJoin([
-      this.geolocationService.getPosition(),
-    ]).pipe(
-      tap(() => SplashScreen.hide())
-    ).subscribe();
+    SplashScreen.hide();
   }
-  languageChanged(){
+  languageChanged() {
     this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 }
