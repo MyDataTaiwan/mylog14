@@ -11,6 +11,7 @@ export class DailyDetailUpperComponent implements OnInit, OnChanges {
   tempLocation = '&q=25.035221,121.557612';
   baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
   url = this.baseUrl + this.tempLocation;
+  isShowMap = false;
   n2s=['不想減一','January','February','March','April','May','June','July','August','September','ctober','November','December']
   card = {
     day: 1,
@@ -37,6 +38,7 @@ export class DailyDetailUpperComponent implements OnInit, OnChanges {
       return;
     }
     this.url = this.baseUrl + `${latitude},${longitude}`;
+    this.isShowMap=true;
   }
 
 }
