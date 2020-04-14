@@ -153,7 +153,7 @@ export class DailyOverviewComponent implements OnInit {
           );
         }),
         tap((cardItems: CardItem[]) => {
-          console.log('CCC', cardItems);
+          console.log('Card Items', cardItems);
           this.todate(cardItems.length);
         })
       );

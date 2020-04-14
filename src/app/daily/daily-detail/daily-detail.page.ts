@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, mergeMap, tap, take } from 'rxjs/operators';
 import { RecordService } from 'src/app/core/services/record.service';
 import { MainHeaderComponent } from 'src/app/core/components/main-header/main-header.component';
-import { Observable, forkJoin, of } from 'rxjs';
+import { Observable, forkJoin, of, iif, defer } from 'rxjs';
 import { Record } from 'src/app/core/interfaces/record';
 import { formatDate } from '@angular/common';
 import { Symptoms } from 'src/app/core/classes/symptoms';
@@ -18,6 +18,15 @@ import { Photo } from 'src/app/core/interfaces/photo';
 export class DailyDetailPage implements OnInit {
   day: string;
   dailyDetail$ = new Observable<DailyDetail>();
+  defaultDailyDetail: DailyDetail = {
+    date: '',
+    month: '',
+    day: '',
+    bt: '',
+    presentedSymptoms: [],
+    mapDots: [],
+    recordRows: [],
+  };
   selectedSegment = true;
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -27,40 +36,33 @@ export class DailyDetailPage implements OnInit {
   ngOnInit() {
     this.dailyDetail$ = this.recordService.dailyRecords$
       .pipe(
-        tap(() => console.log('Triggered!')),
+        tap(() => console.log('DailyDetail update triggered')),
         mergeMap(dailyRecords => {
           return forkJoin([
             of(dailyRecords),
             this.activatedRoute.paramMap.pipe(take(1), map(params => params.get('day'))),
           ]);
         }),
-        map(([dailyRecords, day]) => dailyRecords[+day - 1]),
-        map(dailyRecord => {
-          const dailyDetail = this.createDailyDetail(dailyRecord);
-          dailyRecord.records.forEach(record => {
-            if (record.locationStamp) {
-              dailyDetail.mapDots.push({
-                latitude: record.locationStamp.latitude,
-                longitude: record.locationStamp.longitude,
-              });
-            }
-            dailyDetail.recordRows.push({
-              time: this.getTime(record.timestamp),
-              bt: this.getBt(record),
-              expand: false,
-              symptoms: record.symptoms,
-              photos: record.photos,
-            });
-            console.log('Daily Detail Page: pushed recordRows ', dailyDetail.recordRows);
-          });
-          return dailyDetail;
+        mergeMap(([dailyRecords, day]) => {
+          const dailyRecord = dailyRecords[+day - 1];
+          return iif(() =>
+            typeof dailyRecord !== 'undefined',
+            defer(() => of(this.createDailyDetail(dailyRecord))),
+            defer(() => of(this.createEmptyDailyDetail(day))),
+          );
         }),
-        tap(d => console.log('Daily Detail!!!', d)),
+        tap(d => console.log('Daily Detail', d)),
       );
   }
 
   onSegmentChanged(data) {
     this.selectedSegment = data;
+  }
+
+  private createEmptyDailyDetail(day: string): DailyDetail {
+    const dailyDetail = this.defaultDailyDetail;
+    dailyDetail.day = day;
+    return dailyDetail;
   }
 
   private createDailyDetail(dailyRecord: DailyRecord): DailyDetail {
@@ -73,6 +75,22 @@ export class DailyDetailPage implements OnInit {
       mapDots: [],
       recordRows: [],
     };
+    dailyRecord.records.forEach(record => {
+      if (record.locationStamp) {
+        dailyDetail.mapDots.push({
+          latitude: record.locationStamp.latitude,
+          longitude: record.locationStamp.longitude,
+        });
+      }
+      dailyDetail.recordRows.push({
+        time: this.getTime(record.timestamp),
+        bt: this.getBt(record),
+        expand: false,
+        symptoms: record.symptoms,
+        photos: record.photos,
+      });
+      console.log('Daily Detail Page: pushed recordRows ', dailyDetail.recordRows);
+    });
     return dailyDetail;
   }
 

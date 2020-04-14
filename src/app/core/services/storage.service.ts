@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Plugins, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
 import { Record } from '../interfaces/record';
-import { from, defer, forkJoin, of, BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap, take, tap, catchError } from 'rxjs/operators';
+import { from, defer, forkJoin, of, BehaviorSubject, Observable, iif } from 'rxjs';
+import { map, switchMap, take, tap, catchError, mergeMap } from 'rxjs/operators';
 import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
 
@@ -15,48 +15,46 @@ export class StorageService {
   RECORD_META_REPOSITORY = 'records';
   RECORD_META_DIRECTORY = FilesystemDirectory.Data;
   private recordMetaList = new BehaviorSubject<RecordMeta[]>([]);
-  recordMetaList$ = this.recordMetaList.asObservable().pipe(
-    tap(() => console.log('Record Meta List updated'))
-  );
+  recordMetaList$ = this.recordMetaList.asObservable();
   USER_DATA_REPOSITORY = 'userData';
   USER_DATA_DIRECTORY = FilesystemDirectory.Data;
   private userData = new BehaviorSubject<UserData>({});
   userData$ = this.userData.asObservable();
   constructor() {
-    this.loadUserData();
-    this.loadRecordMetaList();
+    this.loadUserData().subscribe();
+    this.loadRecordMetaList().subscribe();
   }
 
-
-  loadRecordMetaList() {
-    return from(Storage.get({ key: this.RECORD_META_REPOSITORY }))
+  loadRecordMetaList(): Observable<RecordMeta[]> {
+    return defer(() => from(Storage.get({ key: this.RECORD_META_REPOSITORY }))
       .pipe(
         take(1),
-        map(repoRaw => {
-          const recordMetaList: RecordMeta[] = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
+        mergeMap(repoRaw => iif(() => repoRaw.value !== undefined, of(JSON.parse(repoRaw.value)), of({}))),
+        map((recordMetaList: RecordMeta[]) => {
           this.recordMetaList.next(recordMetaList);
-          console.log('Storage service recordMetaList$: ', this.recordMetaList.getValue());
-          return this.recordMetaList.value;
+          return this.recordMetaList.getValue();
         })
-      );
+      )
+    );
   }
 
-  loadUserData() {
-    return from(Storage.get({ key: this.USER_DATA_REPOSITORY }))
+  loadUserData(): Observable<UserData> {
+    return defer(() => from(Storage.get({ key: this.USER_DATA_REPOSITORY }))
       .pipe(
         take(1),
-        map(repoRaw => {
-          const userData: UserData = (repoRaw.value) ? JSON.parse(repoRaw.value) : [];
+        mergeMap(repoRaw => iif(() => repoRaw.value !== undefined, of(JSON.parse(repoRaw.value)), of({}))),
+        map((userData: UserData) => {
           this.userData.next(userData);
-          return this.userData.value;
+          return this.userData.getValue();
         })
-      );
+      )
+    );
   }
 
   saveRecord(record: Record) {
     return forkJoin([
       // Save record JSON and get record repository in parallel
-      this.saveRecordJSON(record).pipe(take(1)),
+      this.saveRecordJSON(record),
       from(Storage.get({ key: this.RECORD_META_REPOSITORY })).pipe(take(1)),
     ]).pipe(
       map(([fileName, repoRaw]) => {
@@ -79,7 +77,6 @@ export class StorageService {
       }),
       switchMap((recordMetaList: RecordMeta[]) => {
         console.log('Storage service: updated recordMetaList', recordMetaList);
-        // FIXME: It's not guaranteed that the storage and cache will sync if Storage.set fails
         return forkJoin([
           from(Storage.set({
             key: this.RECORD_META_REPOSITORY,
@@ -103,16 +100,16 @@ export class StorageService {
   }
 
   getRecordMetaByTimestamp(timestamp: number) {
-    return this.recordMetaList.value
+    return this.recordMetaList.getValue()
       .find(recordMeta => recordMeta.timestamp === timestamp);
   }
 
   getRecordMetaList() {
-    return this.recordMetaList.value;
+    return this.recordMetaList.getValue();
   }
 
   getUserData() {
-    return this.userData.value;
+    return this.userData.getValue();
   }
 
   saveUserData(userData: UserData) {
