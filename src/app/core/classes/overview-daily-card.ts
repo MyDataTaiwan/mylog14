@@ -42,8 +42,8 @@ export class OverviewDailyCard implements DailyCard {
                     .filter(symptom => symptom.present === true);
             })
             .reduce((flat, next) => flat.concat(next), []) // Flatten
-            .filter((v, i, a) => a.indexOf(v) === i) // Unique filter
-            .map(symptoms => symptoms.name);
+            .map(symptoms => symptoms.name)
+            .filter((v, i, a) => a.indexOf(v) === i); // Unique filter
     }
 
 }
