@@ -21,7 +21,7 @@ export class AddRecordPage implements OnInit {
   isShow3 = true;
   btCIntegerList = this.genIntArr(35, 40).map(x => x.toString());
   btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
-  btUnitList = ['°C', '°F'];
+  btUnitList = ['°C'];
   defaultBt = '-';
   defaultBtUnit = '°C';
   bt: string;
