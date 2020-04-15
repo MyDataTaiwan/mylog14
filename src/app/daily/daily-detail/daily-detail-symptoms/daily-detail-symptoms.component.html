@@ -1,24 +1,24 @@
-<ion-list style="width:100%;height:300px;overflow:scroll;"a>
-  <div *ngFor="let recordRow of dailyDetail.recordRows">
+<ion-list style="width:100%;height:100%;overflow:scroll;padding-bottom: 90px;">
+  <div *ngFor="let recordView of (recordViews$ | async)">
     <ion-item detail="false">
-      <ion-label>{{ recordRow.time }}</ion-label>
+      <ion-label>{{ recordView.time }}</ion-label>
       <ion-label class="ion-text-start">
-        {{ recordRow.bt }}
+        {{ recordView.bt }}
       </ion-label>
       <div>
         <!-- <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow"> -->
-        <ion-icon name="caret-forward-outline" *ngIf="!recordRow.expand" button (click)="recordRow.expand=!recordRow.expand;">
+        <ion-icon name="caret-forward-outline" *ngIf="!recordView.expand" button (click)="recordView.expand=!recordView.expand;">
         </ion-icon>
       </div>
       <div>
-        <ion-icon name="caret-down-outline" *ngIf="recordRow.expand" button (click)="recordRow.expand=!recordRow.expand;">
+        <ion-icon name="caret-down-outline" *ngIf="recordView.expand" button (click)="recordView.expand=!recordView.expand;">
           <!-- 加入選擇器 -->
 
         </ion-icon>
       </div>
     </ion-item>
-    <ion-list *ngIf="recordRow.expand">
-      <ion-item *ngFor="let symptom of recordRow.symptoms.list">
+    <ion-list *ngIf="recordView.expand">
+      <ion-item *ngFor="let symptom of recordView.symptoms.list">
         <!-- <img *ngIf="symptom.present" src="../../assets/ui/today_icon_a.svg" /> -->
         <ion-label *ngIf="symptom.present" style="color: #F9AD35;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
         <ion-label *ngIf="symptom.present" class="ion-text-center" style="color: #F9AD35;">{{symptom.note}}

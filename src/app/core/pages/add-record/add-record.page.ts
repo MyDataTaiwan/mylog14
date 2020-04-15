@@ -4,10 +4,8 @@ import { PickerOptions } from '@ionic/core';
 import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { Record } from '../../interfaces/record';
-import { StorageService } from '../../services/storage.service';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, from, defer, forkJoin, of } from 'rxjs';
+import { map, switchMap, tap, mergeMap } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
@@ -23,7 +21,7 @@ export class AddRecordPage implements OnInit {
   isShow3 = true;
   btCIntegerList = this.genIntArr(35, 40).map(x => x.toString());
   btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
-  btUnitList = ['°C', '°F'];
+  btUnitList = ['°C'];
   defaultBt = '-';
   defaultBtUnit = '°C';
   bt: string;
@@ -42,7 +40,6 @@ export class AddRecordPage implements OnInit {
     private loadingCtrl: LoadingController,
     private pickerCtrl: PickerController,
     private geolocationService: GeolocationService,
-    private storageService: StorageService,
     private snapshotService: SnapshotService,
     private translate: TranslateService,
   ) {
@@ -135,29 +132,19 @@ export class AddRecordPage implements OnInit {
     this.resetPage();
   }
 
-  async onSubmitClick() {
-    const loading = await this.presentLoading();
-    this.snapshotService.createSnapshot()
+  onSubmitClick() {
+    this.submitRecord().subscribe(); // This subscription will auto-complete after take(1)
+  }
+
+  submitRecord(): Observable<void> {
+    const loading$ = defer(() => from(this.presentLoading()));
+    const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
+    return loading$
       .pipe(
-        map(snap => {
-          const record: Record = {
-            bodyTemperature: +this.bt,
-            bodyTemperatureUnit: this.btUnit,
-            symptoms: this.symptoms,
-            timestamp: snap.timestamp,
-            locationStamp: snap.locationStamp,
-            photos: [],
-          };
-          return record;
-        }),
-        switchMap(record => {
-          return this.storageService.saveRecord(record);
-        }),
-        map(() => {
-          loading.dismiss();
-          this.presentAlert();
-        }),
-      ).subscribe();
+        mergeMap(loadingElement => forkJoin([snapRecord$, of(loadingElement)])),
+        switchMap(([_, loadingElement]) => loadingElement.dismiss()),
+        switchMap(() => this.presentAlert()),
+      );
   }
 
   resetPage() {

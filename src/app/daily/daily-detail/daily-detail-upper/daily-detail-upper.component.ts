@@ -1,42 +1,44 @@
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { DailyDetail } from '../daily-detail.page';
+import { Component, OnInit, Input } from '@angular/core';
+import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { Observable, forkJoin } from 'rxjs';
+import { OverviewDailyCard } from 'src/app/core/classes/overview-daily-card';
+import { map, tap } from 'rxjs/operators';
+import { LocationStamp } from 'src/app/core/interfaces/location-stamp';
 
 @Component({
   selector: 'app-daily-detail-upper',
   templateUrl: './daily-detail-upper.component.html',
   styleUrls: ['./daily-detail-upper.component.scss'],
 })
-export class DailyDetailUpperComponent implements OnInit, OnChanges {
-  @Input() dailyDetail: DailyDetail;
+export class DailyDetailUpperComponent implements OnInit {
+  @Input() dayCount: number;
   tempLocation = '&q=25.035221,121.557612';
   baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
   url = this.baseUrl + this.tempLocation;
-  n2s=['不想減一','January','February','March','April','May','June','July','August','September','ctober','November','December']
-  card = {
-    day: 1,
-    month: '3',
-    date: '30',
-    bt: 37.9,
-    // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
-    imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
-    imgHeight: 300,
-  };
-  constructor() { }
+  isShowMap = false;
+  card$: Observable<OverviewDailyCard>;
+
+  constructor(
+    public dataStore: DataStoreService,
+  ) { }
 
   ngOnInit() {
+    this.card$ = this.dataStore.overviewCards$
+      .pipe(
+        map(cards => cards[this.dayCount - 1]),
+        tap(card => this.updateMapUrl(card.locations)),
+      );
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const dailyDetail: DailyDetail = changes.dailyDetail.currentValue;
-    if (dailyDetail.mapDots.length < 1) {
+  updateMapUrl(locations: LocationStamp[]): void {
+    if (locations.length < 1) {
+      this.isShowMap = false;
       return;
     }
-    const latitude = dailyDetail.mapDots[0].latitude;
-    const longitude = dailyDetail.mapDots[0].longitude;
-    if (!latitude || !longitude) {
-      return;
-    }
-    this.url = this.baseUrl + `${latitude},${longitude}`;
+    const lat = locations[locations.length - 1].latitude;
+    const lon = locations[locations.length - 1].longitude;
+    this.url = this.baseUrl + `${lat},${lon}`;
+    this.isShowMap = true;
   }
 
 }

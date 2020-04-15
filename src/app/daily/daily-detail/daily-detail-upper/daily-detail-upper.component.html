@@ -1,30 +1,33 @@
+<ng-container *ngIf="card$ | async as card">
 <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
   <div style="display: flex;flex: 1;flex-direction: column;align-items: stretch;">
     <div style="display: flex;flex: 1;flex-direction: column;">
-      <ion-label style="font-size: 32px;" class="ion-text-center">{{ dailyDetail.date }}</ion-label>
-      <ion-label class="ion-text-center">{{ dailyDetail.month }}</ion-label>
+      <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
+      <ion-label class="ion-text-center">{{ card.month }}</ion-label>
     </div>
     <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-      <ion-label class="ion-text-center"> DAY{{ dailyDetail.day }}</ion-label>
+      <ion-label class="ion-text-center"> DAY{{ card.day }}</ion-label>
     </div>
   </div>
   <div style="flex: 3;">
     <div>
     <ion-label class="ion-text-center" style="font-size: 12px;">
       <img src="../../assets/ui/W_icon.svg" />
-      體溫: {{ dailyDetail.bt }}
+      {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }}
     </ion-label>
     </div>
     <div>
     <ion-label class="ion-text-center" style="font-size: 12px;">
       <img src="../../assets/ui/W_icon.svg" />
-      症狀: 
-      <span *ngFor="let symptom of dailyDetail.presentedSymptoms ; let isLast=last">
-        {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : '、'}}
-      </span>
+      {{ 'DAILY_RECORD.symptoms' | translate }}: 
+      <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last">
+        {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
+      </ng-container>
     </ion-label>
     </div>
-    <iframe width="250" height="100" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
+    <ion-img *ngIf="!isShowMap" src="/assets/imgA.png" alt="No picture"></ion-img>
+    <iframe  *ngIf="isShowMap" width="250" height="100" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
       scrolling="no" [src]="url | safeUrl"></iframe>
   </div>
 </div>
+</ng-container>

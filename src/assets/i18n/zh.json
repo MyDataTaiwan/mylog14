@@ -23,7 +23,8 @@
   "DAILY_RECORD": {
     "title": "每日記錄",
     "bodyTemperature": "體溫",
-    "condition": "症狀",
+    "symptoms": "症狀",
+    "splitter": "、",
     "coughing": "咳嗽",
     "headache": "頭痛",
     "runnyNose": "流鼻水",

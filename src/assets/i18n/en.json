@@ -23,7 +23,8 @@
   "DAILY_RECORD": {
     "title": "Daily Record",
     "bodyTemperature": "Body Temperature",
-    "condition": "Condition",
+    "symptoms": "Symptoms",
+    "splitter": ", ",
     "coughing": "Coughing",
     "headache": "Headache",
     "runnyNose": "Runny Nose",
