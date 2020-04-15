@@ -9,13 +9,19 @@ const { Geolocation } = Plugins;
   providedIn: 'root'
 })
 export class GeolocationService {
+  defaultGeolocationOptions: GeolocationOptions = {
+    enableHighAccuracy: true,
+    maximumAge: 120,
+    timeout: 5000,
+  };
   cachedPosition: GeolocationPosition;
   cachedPositionTime: number;
   cacheTimeout = 60000; // ms
   constructor() { }
 
   getPosition(useCache = true): Observable<GeolocationPosition> {
-    const position$ = (this.isCachedPositionValid() && useCache) ? of(this.cachedPosition) : from(Geolocation.getCurrentPosition());
+    const cache = (this.isCachedPositionValid() && useCache);
+    const position$ = (cache) ? of(this.cachedPosition) : from(Geolocation.getCurrentPosition(this.defaultGeolocationOptions));
     return position$
       .pipe(
         take(1),

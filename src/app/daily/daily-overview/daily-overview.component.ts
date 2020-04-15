@@ -1,10 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
-import { RecordService } from 'src/app/core/services/record.service';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, mergeMap, filter, tap } from 'rxjs/operators';
-import { DailyRecord } from 'src/app/core/classes/daily-record';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
   selector: 'app-daily-overview',
@@ -15,84 +14,7 @@ import { DailyRecord } from 'src/app/core/classes/daily-record';
 
 export class DailyOverviewComponent implements OnInit {
   items$ = new Observable<CardItem[]>();
-  items = [
-    {
-      day: 8,
-      month: '03',
-      date: '30',
-      bt: 37.9,
-      // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
-      imgHeight: 300,
-    },
-    {
-      day: 7,
-      month: '03',
-      date: '29',
-      bt: 37.3,
-      // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-      imgHeight: 400,
-    }, {
-      day: 6,
-      month: '03',
-      date: '30',
-      bt: 37.9,
-      // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
-      imgHeight: 300,
-    },
-    {
-      day: 5,
-      month: '03',
-      date: '29',
-      bt: 37.3,
-      // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-      imgHeight: 400,
-    }, {
-      day: 4,
-      month: '03',
-      date: '30',
-      bt: 37.9,
-      // Free-to-use mock image from https://pixabay.com/photos/cat-surprised-eyes-cat-s-eyes-2886062/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/24/20/33/cat-2886062_1280.jpg',
-      imgHeight: 300,
-    },
-    {
-      day: 3,
-      month: '03',
-      date: '29',
-      bt: 37.3,
-      // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-      imgHeight: 400,
-    }, {
-      day: 2,
-      month: '03',
-      date: '29',
-      bt: 37.3,
-      // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-      imgHeight: 400,
-    }, {
-      day: 1,
-      month: '03',
-      date: '29',
-      bt: 37.3,
-      // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-      imgHeight: 400,
-    }, {
-      day: 0,
-      month: '00',
-      date: '00',
-      bt: 37.3,
-      // Free-to-use mock image from https://pixabay.com/photos/sleeping-dog-street-dog-animal-2837631/
-      imgSrc: 'https://cdn.pixabay.com/photo/2017/10/10/15/38/sleeping-dog-2837631_1280.jpg',
-      imgHeight: 400,
-    },
-  ];
+
   WhatIsItToday = 0;
 
   // arry= [[616, 674], [125, 184], [195, 246], [254, 306]]
@@ -123,37 +45,12 @@ export class DailyOverviewComponent implements OnInit {
   };
 
   constructor(
-    public recordService: RecordService,
+    public dataStore: DataStoreService,
     private ngZone: NgZone
   ) {
-    this.items$ = this.recordService.dailyRecords$
-      .pipe(
-        mergeMap(dailyRecords => {
-          console.log('Page DailyRecords Updated', dailyRecords);
-          return forkJoin(
-            dailyRecords.map(dailyRecord => {
-              if (dailyRecord.records.length === 0) {
-                return this.emptyCardItem;
-              }
-              const cardItem: CardItem = {
-                hasData: true,
-                day: dailyRecord.dayCount.toString(),
-                month: dailyRecord.date.split('-')[1],
-                date: dailyRecord.date.split('-')[2],
-                bt: `${dailyRecord.getHighestBt()}`,
-                imgSrc: dailyRecord.getLatestPhotoPath(),
-                imgHeight: 400,
-              };
-
-              return cardItem;
-            })
-              .filter(cardItem => cardItem.hasData === true)
-              .map(cardItem => of(cardItem))
-              .reverse()
-          );
-        }),
+    this.items$ = this.dataStore.overviewCards$
+    .pipe(
         tap((cardItems: CardItem[]) => {
-          console.log('CCC', cardItems);
           this.todate(cardItems.length);
         })
       );

@@ -3,7 +3,7 @@ import { Photo } from './photo';
 import { LocationStamp } from './location-stamp';
 
 export interface Record {
-    timestamp: string;
+    timestamp: number;
     locationStamp?: LocationStamp;
     bodyTemperature?: number;
     bodyTemperatureUnit?: string;

@@ -48,8 +48,8 @@
           </ion-col> -->
              <ion-col size="8">
             <div>
-              <ion-img *ngIf="item.imgSrc==''" src="/assets/imgA.png" alt="No picture"></ion-img>
-              <ion-img *ngIf="item.imgSrc!=''" [src]="item.imgSrc" alt="No picture"></ion-img>
+              <ion-img *ngIf="item.imgSrc" src="/assets/imgA.png" alt="No picture"></ion-img>
+              <ion-img *ngIf="!item.imgSrc" [src]="item.imgSrc" alt="No picture"></ion-img>
             </div>
           </ion-col>
         </ion-row>

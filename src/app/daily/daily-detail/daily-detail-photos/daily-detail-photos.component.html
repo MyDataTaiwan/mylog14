@@ -1,6 +1,6 @@
 <ion-grid style="width:100%;height:300px;overflow:scroll;">
     <ion-row>
-      <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let photo of (photos$ | async).reverse()">
+      <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let photo of photos$ | async">
         <ion-thumbnail>
           <ion-img [src]="photo.webviewPath"></ion-img>
         </ion-thumbnail>

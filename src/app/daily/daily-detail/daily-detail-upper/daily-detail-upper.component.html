@@ -1,25 +1,26 @@
+<ng-container *ngIf="card$ | async as card">
 <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
   <div style="display: flex;flex: 1;flex-direction: column;align-items: stretch;">
     <div style="display: flex;flex: 1;flex-direction: column;">
-      <ion-label style="font-size: 32px;" class="ion-text-center">{{ dailyDetail.date }}</ion-label>
-      <ion-label class="ion-text-center">{{ dailyDetail.month }}</ion-label>
+      <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
+      <ion-label class="ion-text-center">{{ card.month }}</ion-label>
     </div>
     <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-      <ion-label class="ion-text-center"> DAY{{ dailyDetail.day }}</ion-label>
+      <ion-label class="ion-text-center"> DAY{{ card.day }}</ion-label>
     </div>
   </div>
   <div style="flex: 3;">
     <div>
     <ion-label class="ion-text-center" style="font-size: 12px;">
       <img src="../../assets/ui/W_icon.svg" />
-      體溫: {{ dailyDetail.bt }}
+      體溫: {{ card.bt }}
     </ion-label>
     </div>
     <div>
     <ion-label class="ion-text-center" style="font-size: 12px;">
       <img src="../../assets/ui/W_icon.svg" />
       症狀: 
-      <span *ngFor="let symptom of dailyDetail.presentedSymptoms ; let isLast=last">
+      <span *ngFor="let symptom of card.presentedSymptoms ; let isLast=last">
         {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : '、'}}
       </span>
     </ion-label>
@@ -29,3 +30,4 @@
       scrolling="no" [src]="url | safeUrl"></iframe>
   </div>
 </div>
+</ng-container>
