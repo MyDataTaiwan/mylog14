@@ -1,10 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
-import { RecordService } from 'src/app/core/services/record.service';
-import { Observable, forkJoin, of } from 'rxjs';
-import { map, mergeMap, filter, tap } from 'rxjs/operators';
-import { DailyRecord } from 'src/app/core/classes/daily-record';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -50,34 +48,9 @@ export class DailyOverviewComponent implements OnInit {
     public dataStore: DataStoreService,
     private ngZone: NgZone
   ) {
-    this.items$ = this.dataStore.dailyRecords$
-      .pipe(
-        mergeMap(dailyRecords => {
-          console.log('Page DailyRecords Updated', dailyRecords);
-          return forkJoin(
-            dailyRecords.list.map(dailyRecord => {
-              if (dailyRecord.records.length === 0) {
-                return this.emptyCardItem;
-              }
-              const cardItem: CardItem = {
-                hasData: true,
-                day: dailyRecord.dayCount.toString(),
-                month: dailyRecord.date.split('-')[1],
-                date: dailyRecord.date.split('-')[2],
-                bt: `${dailyRecord.getHighestBt()}`,
-                imgSrc: dailyRecord.getLatestPhotoPath(),
-                imgHeight: 400,
-              };
-
-              return cardItem;
-            })
-              .filter(cardItem => cardItem.hasData === true)
-              .map(cardItem => of(cardItem))
-              .reverse()
-          );
-        }),
+    this.items$ = this.dataStore.overviewCards$
+    .pipe(
         tap((cardItems: CardItem[]) => {
-          console.log('Card Items', cardItems);
           this.todate(cardItems.length);
         })
       );

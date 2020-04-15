@@ -24,7 +24,6 @@ export class DailyRecord {
             }
             return (b.bodyTemperature - a.bodyTemperature);
         });
-        console.log('Sorted Records', sortedRecords);
         if (sortedRecords.length < 1) {
             return 'N/A';
         } else if (!sortedRecords[0].bodyTemperature || !sortedRecords[0].bodyTemperatureUnit) {

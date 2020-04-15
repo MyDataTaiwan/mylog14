@@ -4,11 +4,9 @@ import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
-import { Observable, pipe, forkJoin, from, of, combineLatest, Subject } from 'rxjs';
+import { Observable, pipe, forkJoin, from, of, Subject } from 'rxjs';
 import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs/operators';
-import { StorageService } from './storage.service';
 import { Photo } from '../interfaces/photo';
-import { RecordService } from './record.service';
 import { Record } from '../interfaces/record';
 import { Symptoms } from '../classes/symptoms';
 import { LocalStorageService } from './local-storage.service';
@@ -104,6 +102,7 @@ export class SnapshotService {
           };
           return this.localStorage.saveRecord(record, recordMetaList);
         }),
+        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
       );
   }
 

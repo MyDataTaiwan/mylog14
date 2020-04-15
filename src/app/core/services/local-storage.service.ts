@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Plugins, FilesystemDirectory } from '@capacitor/core';
 import { Observable, defer, from, forkJoin, of } from 'rxjs';
 import { RecordMeta } from '../classes/record-meta';
-import { defaultIfEmpty, mergeMap, map, tap } from 'rxjs/operators';
+import { mergeMap, map, tap } from 'rxjs/operators';
 import { FileSystemService } from './file-system.service';
 import { Record } from '../interfaces/record';
 
@@ -53,7 +53,7 @@ export class LocalStorageService {
   private getData(dir = FilesystemDirectory.Data): Observable<any> {
     return defer(() => from(Storage.get({ key: dir }))).pipe(
       map(raw => raw.value),
-      defaultIfEmpty('[]'),
+      map(value => (value) ? value : '[]'),
       map(str => JSON.parse(str)),
     );
   }

@@ -5,8 +5,6 @@ import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, from, defer, forkJoin, of } from 'rxjs';
-import { Record } from '../../interfaces/record';
-import { StorageService } from '../../services/storage.service';
 import { map, switchMap, tap, mergeMap } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 

@@ -3,10 +3,8 @@ import { BehaviorSubject, of, Observable } from 'rxjs';
 import { RecordMeta } from '../classes/record-meta';
 import { LocalStorageService } from './local-storage.service';
 import { tap, map, switchMap } from 'rxjs/operators';
-import { DailyRecord } from '../classes/daily-record';
-import { Record } from '../interfaces/record';
-import { DatetimeService } from './datetime.service';
 import { DailyRecords } from '../classes/daily-records';
+import { OverviewDailyCard } from '../classes/overview-daily-card';
 
 @Injectable({
   providedIn: 'root'
@@ -15,21 +13,25 @@ export class DataStoreService {
   private recordMetaList = new BehaviorSubject<RecordMeta[]>([]);
   public recordMetaList$ = this.recordMetaList.asObservable();
 
-  private dailyRecords = new BehaviorSubject<DailyRecords>(new DailyRecords());
-  public dailyRecords$ = this.dailyRecords.asObservable();
+  public dailyRecords$ = this.recordMetaList$.pipe(
+    map(recordMetaList => (recordMetaList) ? recordMetaList : []),
+    switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
+    map(records => new DailyRecords(records)),
+  );
 
+  public overviewCards$ = this.dailyRecords$.pipe(
+    map(dailyRecords => {
+      return dailyRecords.list
+        .map(dailyRecord => new OverviewDailyCard(dailyRecord))
+        .filter(card => card.hasData === true)
+        .reverse();
+    })
+  );
 
   constructor(
     private localStorage: LocalStorageService,
-  ) { }
-
-  updateDailyRecords(dailyRecords?: DailyRecords): Observable<DailyRecords> {
-    const loadList$ = this.loadDailyRecords();
-    const saveList$ = of(dailyRecords);
-    const update$ = (dailyRecords) ? saveList$ : loadList$;
-    return update$.pipe(
-      (tap((dr: DailyRecords) => this.dailyRecords.next(dr))),
-    );
+  ) {
+    this.updateRecordMetaList().subscribe(); // Initial update (load from storage)
   }
 
   updateRecordMetaList(recordMetaList?: RecordMeta[]): Observable<RecordMeta[]> {
@@ -39,15 +41,6 @@ export class DataStoreService {
     return update$.pipe(
       (tap((list: RecordMeta[]) => this.recordMetaList.next(list))),
     );
-  }
-
-  private loadDailyRecords(): Observable<DailyRecords> {
-    return this.localStorage.getRecordMetaList()
-      .pipe(
-        tap(e => console.log('DEBUG', e)),
-        switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
-        map(records => new DailyRecords(records)),
-      );
   }
 
 }

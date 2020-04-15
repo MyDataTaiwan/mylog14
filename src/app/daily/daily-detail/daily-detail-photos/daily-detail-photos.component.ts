@@ -1,8 +1,8 @@
-import { Component, OnInit,AfterViewInit, Input, SimpleChanges, OnChanges } from '@angular/core';
-import { PhotoService } from 'src/app/core/services/photo.service';
-import { DailyDetail } from '../daily-detail.page';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Photo } from 'src/app/core/interfaces/photo';
+import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { map } from 'rxjs/operators';
 
 export interface Pic {
   src: string;
@@ -15,26 +15,22 @@ export interface Pic {
   templateUrl: './daily-detail-photos.component.html',
   styleUrls: ['./daily-detail-photos.component.scss'],
 })
-export class DailyDetailPhotosComponent implements OnInit, OnChanges {
-  @Input() dailyDetail: DailyDetail;
-  private photos = new BehaviorSubject<Photo[]>([]);
-  public photos$ = this.photos.asObservable();
+export class DailyDetailPhotosComponent implements OnInit {
+  @Input() dayCount: number;
+  photos$: Observable<Photo[]>;
 
-  constructor() { }
+  constructor(
+    private dataStore: DataStoreService,
+  ) { }
 
   ngOnInit() {
+    this.photos$ = this.dataStore.dailyRecords$
+      .pipe(
+        map(dailyRecords => dailyRecords.list[this.dayCount - 1].records),
+        map(records => records.map(record => record.photos)),
+        map(nestedPhotos => nestedPhotos.reduce((flat, next) => flat.concat(next), [])),
+        map(photos => photos.sort((a, b) => +b.timestamp - +a.timestamp)),
+      );
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    const dailyDetail: DailyDetail = changes.dailyDetail.currentValue;
-    const photos = [];
-    dailyDetail.recordRows.forEach(recordRow => {
-      recordRow.photos.forEach(photo => {
-        if (!photos.find(p => p.timestamp === photo.timestamp)) {
-          photos.push(photo);
-        }
-      });
-    });
-    this.photos.next(photos);
-  }
 }

@@ -3,11 +3,7 @@ import { Platform } from '@ionic/angular';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 
 import { TranslateConfigService } from './translate-config.service';
-import { StorageService } from './core/services/storage.service';
-import { forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { GeolocationService } from './core/services/geolocation.service';
-import { RecordService } from './core/services/record.service';
 import { DataStoreService } from './core/services/data-store.service';
 
 const { SplashScreen, StatusBar } = Plugins;
@@ -23,6 +19,7 @@ export class AppComponent {
 
   constructor(
     private dataStore: DataStoreService,
+    private geolocation: GeolocationService,
     private platform: Platform,
     private translateConfigService: TranslateConfigService
   ) {
@@ -37,7 +34,7 @@ export class AppComponent {
         console.log('Status Bar is not implemented in web');
       }
     }
-    this.dataStore.updateDailyRecords().subscribe();
+    this.geolocation.getPosition().subscribe(); // Update location cache
     SplashScreen.hide();
   }
   languageChanged() {
