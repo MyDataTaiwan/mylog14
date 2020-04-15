@@ -108,6 +108,8 @@ export class DailyOverviewComponent implements OnInit {
     // path: '/assets/lottie-animation.json',
     path: '/assets/MyLog14BBT.json',
   };
+
+  TEMPimg:'/assets/imgA.png'
   private animationItem: AnimationItem;
   private isAnimationCreated: boolean = false;
   emptyCardItem = {
