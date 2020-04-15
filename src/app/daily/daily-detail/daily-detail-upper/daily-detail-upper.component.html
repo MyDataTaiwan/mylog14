@@ -13,16 +13,16 @@
     <div>
     <ion-label class="ion-text-center" style="font-size: 12px;">
       <img src="../../assets/ui/W_icon.svg" />
-      體溫: {{ card.bt }}
+      {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }}
     </ion-label>
     </div>
     <div>
     <ion-label class="ion-text-center" style="font-size: 12px;">
       <img src="../../assets/ui/W_icon.svg" />
-      症狀: 
-      <span *ngFor="let symptom of card.presentedSymptoms ; let isLast=last">
-        {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : '、'}}
-      </span>
+      {{ 'DAILY_RECORD.symptoms' | translate }}: 
+      <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last">
+        {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
+      </ng-container>
     </ion-label>
     </div>
     <ion-img *ngIf="!isShowMap" src="/assets/imgA.png" alt="No picture"></ion-img>
