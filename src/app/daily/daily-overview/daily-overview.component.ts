@@ -2,7 +2,7 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -50,6 +50,7 @@ export class DailyOverviewComponent implements OnInit {
   ) {
     this.items$ = this.dataStore.overviewCards$
     .pipe(
+        map(cards => cards.reverse()),
         tap((cardItems: CardItem[]) => {
           this.todate(cardItems.length);
         })
