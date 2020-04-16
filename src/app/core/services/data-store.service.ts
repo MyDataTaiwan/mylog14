@@ -23,9 +23,8 @@ export class DataStoreService {
     map(dailyRecords => {
       return dailyRecords.list
         .map(dailyRecord => new OverviewDailyCard(dailyRecord))
-        .filter(card => card.hasData === true)
-        .reverse();
-    })
+        .filter(card => card.hasData === true);
+    }),
   );
 
   constructor(
