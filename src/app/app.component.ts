@@ -5,6 +5,7 @@ import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { TranslateConfigService } from './translate-config.service';
 import { GeolocationService } from './core/services/geolocation.service';
 import { DataStoreService } from './core/services/data-store.service';
+import { Router } from '@angular/router';
 
 const { SplashScreen, StatusBar } = Plugins;
 
@@ -21,6 +22,7 @@ export class AppComponent {
     private dataStore: DataStoreService,
     private geolocation: GeolocationService,
     private platform: Platform,
+    private router: Router,
     private translateConfigService: TranslateConfigService
   ) {
     this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
@@ -35,6 +37,7 @@ export class AppComponent {
       }
     }
     this.geolocation.getPosition().subscribe(); // Update location cache
+    this.router.navigate(['/tour']);
     SplashScreen.hide();
   }
   languageChanged() {
