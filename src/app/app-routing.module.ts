@@ -10,6 +10,10 @@ const routes: Routes = [
     path: 'add-record',
     loadChildren: () => import('./core/pages/add-record/add-record.module').then( m => m.AddRecordPageModule)
   },
+  {
+    path: 'record-finish',
+    loadChildren: () => import('./core/components/record-finish/record-finish.module').then( m => m.RecordFinishPageModule)
+  },
 ];
 @NgModule({
   imports: [
