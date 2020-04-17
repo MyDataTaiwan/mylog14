@@ -53,7 +53,9 @@ export class CategorizeImgPopoverPage implements OnInit {
     this.modalTitle = this.navParams.data.paramTitle;
     this.startBackgroundGeolocation();
   }
-
+  async close() {
+    await this.popoverCtrl.dismiss();
+  }
   async closePopover() {
     const onClosedData: string = "Wrapped Up!";
     await this.popoverCtrl.dismiss(onClosedData);

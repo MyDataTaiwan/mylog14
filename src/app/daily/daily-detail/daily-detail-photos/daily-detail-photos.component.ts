@@ -3,6 +3,12 @@ import { Observable } from 'rxjs';
 import { Photo } from 'src/app/core/interfaces/photo';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { map } from 'rxjs/operators';
+import { ModalController, PopoverController } from '@ionic/angular';
+// import { CategorizeImgPopoverPage } from './categorize-img-popover/categorize-img-popover.page';
+import { PhotoService } from 'src/app/core/services/photo.service';
+import { CategorizeImgPopoverPage } from '../../../category/category-pending/categorize-img-popover/categorize-img-popover.page';
+
+
 
 export interface Pic {
   src: string;
@@ -21,6 +27,7 @@ export class DailyDetailPhotosComponent implements OnInit {
 
   constructor(
     private dataStore: DataStoreService,
+    private popoverController: PopoverController,
   ) { }
 
   ngOnInit() {
@@ -31,6 +38,26 @@ export class DailyDetailPhotosComponent implements OnInit {
         map(nestedPhotos => nestedPhotos.reduce((flat, next) => flat.concat(next), [])),
         map(photos => photos.sort((a, b) => +b.timestamp - +a.timestamp)),
       );
+      console.log("photos");
   }
 
+  async openIMGModal(photo, ev?: any) {
+    const popover = await this.popoverController.create({
+      component: CategorizeImgPopoverPage,
+      event: ev,
+      translucent: true,
+      componentProps: {
+
+        "paramID": 123,
+        "paramTitle": "Test Title",
+        "timestamp": photo.timestamp,
+        "time": new Date(parseInt(photo.timestamp,10)),
+        "latitude": photo.locationStamp.latitude,
+        "longitude": photo.locationStamp.longitude,
+        "webviewPath": photo.webviewPath
+      }
+    });
+    console.log(photo.snapshot)
+    return await popover.present();
+  }
 }

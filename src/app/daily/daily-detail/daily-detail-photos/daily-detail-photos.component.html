@@ -1,8 +1,12 @@
 <ion-grid style="width:100%;height:300px;overflow:scroll;">
+  <ion-button (click)="openModal()">Open openIMGModal</ion-button>
+  {{ photos$ | async}}
     <ion-row>
       <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let photo of photos$ | async">
-        <ion-thumbnail>
+        <ion-thumbnail >
+          <div (click)="openIMGModal(photo)">
           <ion-img [src]="photo.webviewPath"></ion-img>
+        </div>
         </ion-thumbnail>
       </div>
     </ion-row>
