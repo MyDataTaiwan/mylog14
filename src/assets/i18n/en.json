@@ -1,4 +1,27 @@
 {
+  "TOUR": {
+    "getStarted": "Get Started",
+    "slide1": {
+      "title": "PROTECT YOUR OWN DATA",
+      "desc1": "You own your data.",
+      "desc2": "No one keeps or sells your data without your consent."
+    },
+    "slide2": {
+      "title": "RECORD DATA FOR EPIDEMIC PREVENTION",
+      "desc1": "Record your health condition and contact history",
+      "desc2": "減輕檢疫人員負擔"
+    },
+    "slide3": {
+      "title": "一眼明白你的狀況",
+      "desc1": "透過將資料視覺化",
+      "desc2": "讓您可以對繁雜的資料一目瞭然"
+    },
+    "slide4": {
+      "title": "一起陪伴臺灣防疫的夥伴",
+      "desc1": "透過待在家與紀錄資料來獲得水滴",
+      "desc2": "一起保護台灣"
+    }
+  },
   "DIARY": {
     "title": "My Data",
     "select": "漢語"
