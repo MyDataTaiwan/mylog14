@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PickerController, ModalController, AlertController, LoadingController } from '@ionic/angular';
+import { PickerController, ModalController,PopoverController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, from, defer, forkJoin, of } from 'rxjs';
 import { map, switchMap, tap, mergeMap } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
+import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 
 @Component({
   selector: 'app-add-record',
@@ -42,6 +43,8 @@ export class AddRecordPage implements OnInit {
     private geolocationService: GeolocationService,
     private snapshotService: SnapshotService,
     private translate: TranslateService,
+    public popoverController: PopoverController,
+
   ) {
     this.resetPage();
     this.recorded$ = this.translate.get('DAILY_RECORD.recorded');
@@ -55,7 +58,18 @@ export class AddRecordPage implements OnInit {
     this.geolocationService.getPosition().subscribe();
     this.presentBtPicker();
   }
-
+  async openModal( ev?: any) {
+    const popover = await this.popoverController.create({
+      component: RecordFinishPage,
+      event: ev,
+      translucent: true,
+      componentProps: {
+        text:"紀錄成功！"
+      }
+    });
+    console.log("openModal.snapshot")
+    return await popover.present();
+  }
   async presentBtPicker() {
     const options: PickerOptions = {
       buttons: [
