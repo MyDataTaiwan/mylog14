@@ -18,6 +18,10 @@ const routes: Routes = [
     path: 'img-popover',
     loadChildren: () => import('./core/pages/img-popover/img-popover.module').then( m => m.ImgPopoverPageModule)
   },
+  {
+    path: 'tour',
+    loadChildren: () => import('./core/pages/tour/tour.module').then(m => m.TourPageModule)
+  }
 ];
 @NgModule({
   imports: [
