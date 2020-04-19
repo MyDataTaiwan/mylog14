@@ -24,7 +24,7 @@ export class TourPage implements OnInit, OnDestroy {
   }
 
   onClick() {
-    this.dataStore.updateUserData({ newUser: false }).pipe(
+    this.dataStore.updateUserData({ newUser: false, eulaAccepted: false }).pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {
       this.router.navigate(['/']);
