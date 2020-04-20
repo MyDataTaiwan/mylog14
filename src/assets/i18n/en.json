@@ -33,6 +33,8 @@
     "clear": "Clear",
     "recorded": "Record Saved",
     "ok": "OK"
+  },
+  "RECORD_FINISH": {
+    "finish": "Record saved!"
   }
-
 }

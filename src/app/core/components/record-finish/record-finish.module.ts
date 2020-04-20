@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { RecordFinishPageRoutingModule } from './record-finish-routing.module';
 
 import { RecordFinishPage } from './record-finish.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RecordFinishPageRoutingModule
+    RecordFinishPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [RecordFinishPage]
 })
