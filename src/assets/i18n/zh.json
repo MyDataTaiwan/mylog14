@@ -33,5 +33,10 @@
     "clear": "清除",
     "recorded": "已紀錄",
     "ok": "確定"
+  },
+  "IMG_POPOVER": {
+    "confirmDelete": "確定要刪除這張照片嗎？",
+    "cancel": "取消",
+    "confirm": "確認"
   }
 }

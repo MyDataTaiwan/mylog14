@@ -3,6 +3,9 @@ import { Observable } from 'rxjs';
 import { Photo } from 'src/app/core/interfaces/photo';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { map } from 'rxjs/operators';
+import { PopoverController } from '@ionic/angular';
+import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
+
 
 export interface Pic {
   src: string;
@@ -21,6 +24,7 @@ export class DailyDetailPhotosComponent implements OnInit {
 
   constructor(
     private dataStore: DataStoreService,
+    private popoverController: PopoverController,
   ) { }
 
   ngOnInit() {
@@ -33,4 +37,17 @@ export class DailyDetailPhotosComponent implements OnInit {
       );
   }
 
+  async openImageModal(photo: Photo) {
+    const popover = await this.popoverController.create({
+      component: ImgPopoverPage,
+      translucent: true,
+      componentProps: {
+        timestamp: photo.timestamp,
+        latitude: photo.locationStamp.latitude,
+        longitude: photo.locationStamp.longitude,
+        webviewPath: photo.webviewPath
+      }
+    });
+    return await popover.present();
+  }
 }

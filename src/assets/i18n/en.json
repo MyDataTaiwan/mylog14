@@ -33,6 +33,10 @@
     "clear": "Clear",
     "recorded": "Record Saved",
     "ok": "OK"
+  },
+  "IMG_POPOVER": {
+    "confirmDelete": "Delete the photo?",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
-
 }
