@@ -1,7 +1,6 @@
 <ion-content>
   <ion-row>
-    <ion-col text-center>
-      確定要刪除這張照片嗎？ </ion-col>
+    <ion-col text-center>{{ 'IMG_POPOVER.confirmDelete' | translate }}</ion-col>
   </ion-row>
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
@@ -27,7 +26,7 @@
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
   <ion-row>
-    <ion-button (click)="cancel()">取消</ion-button>
-    <ion-button (click)="confirm()">確認</ion-button>
+    <ion-button (click)="cancel()">{{ 'IMG_POPOVER.cancel' | translate }}</ion-button>
+    <ion-button (click)="confirm()">{{ 'IMG_POPOVER.confirm' | translate }}</ion-button>
   </ion-row>
 </ion-content>

@@ -8,6 +8,7 @@ import { ImgPopoverPageRoutingModule } from './img-popover-routing.module';
 
 import { ImgPopoverPage } from './img-popover.page';
 import { CoreModule } from '../../core.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { CoreModule } from '../../core.module';
     IonicModule,
     ImgPopoverPageRoutingModule,
     CoreModule,
+    TranslateModule,
   ],
   declarations: [ImgPopoverPage],
   entryComponents: [ImgPopoverPage],
