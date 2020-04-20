@@ -3,10 +3,7 @@ import { Observable } from 'rxjs';
 import { Photo } from 'src/app/core/interfaces/photo';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { map } from 'rxjs/operators';
-import { ModalController, PopoverController } from '@ionic/angular';
-// import { CategorizeImgPopoverPage } from './categorize-img-popover/categorize-img-popover.page';
-import { PhotoService } from 'src/app/core/services/photo.service';
-import { RecordFinishPage } from '../../..//core/components/record-finish/record-finish.page';
+import { PopoverController } from '@ionic/angular';
 import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
 
 
