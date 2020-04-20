@@ -38,7 +38,6 @@ export class DailyDetailPhotosComponent implements OnInit {
         map(nestedPhotos => nestedPhotos.reduce((flat, next) => flat.concat(next), [])),
         map(photos => photos.sort((a, b) => +b.timestamp - +a.timestamp)),
       );
-      console.log("photos");
   }
 
   async openIMGModal(photo, ev?: any) {
@@ -47,14 +46,13 @@ export class DailyDetailPhotosComponent implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-
-        "paramID": 123,
-        "paramTitle": "Test Title",
-        "timestamp": photo.timestamp,
-        "time": new Date(parseInt(photo.timestamp,10)),
-        "latitude": photo.locationStamp.latitude,
-        "longitude": photo.locationStamp.longitude,
-        "webviewPath": photo.webviewPath
+        paramID: 123,
+        paramTitle: 'Test Title',
+        timestamp: photo.timestamp,
+        time: new Date(parseInt(photo.timestamp, 10)),
+        latitude: photo.locationStamp.latitude,
+        longitude: photo.locationStamp.longitude,
+        webviewPath: photo.webviewPath
       }
     });
     console.log(photo.snapshot)
