@@ -35,14 +35,6 @@ export class DailyDetailSymptomsComponent implements OnInit {
           .map(record => this.createRecordView(record))
           .filter(recordView => recordView.bt !== undefined)
         ),
-        map(recordViews => {
-          // WORKAROUND: push 2 extra items if there are 5+ records (resulting in failing to show the last 2 records)
-          if (recordViews.length >= 5) {
-            recordViews.push({ time: '', bt: '', timestamp: 0, photos: [] });
-            recordViews.push({ time: '', bt: '', timestamp: 0, photos: [] });
-          }
-          return recordViews;
-        })
       );
   }
 
