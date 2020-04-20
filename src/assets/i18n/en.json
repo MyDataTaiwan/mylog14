@@ -34,6 +34,9 @@
     "recorded": "Record Saved",
     "ok": "OK"
   },
+  "RECORD_FINISH": {
+    "finish": "Record saved!"
+  },
   "IMG_POPOVER": {
     "confirmDelete": "Delete the photo?",
     "cancel": "Cancel",

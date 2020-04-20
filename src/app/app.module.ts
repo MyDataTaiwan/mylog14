@@ -17,6 +17,7 @@ import { CoreModule } from './core/core.module';
 import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
 import { CategorizeFinishPageModule } from './category/category-pending/categorize-finish/categorize-finish.module';
 import { CategorizeImgPopoverPageModule } from './category/category-pending/categorize-img-popover/categorize-img-popover.module';
+import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 
 export function LanguageLoader(http: HttpClient) {
@@ -41,6 +42,7 @@ export function playerFactory() {
     AppRoutingModule,
     HttpClientModule,
     CategorizeFinishPageModule,
+    RecordFinishPageModule,
     CategorizeImgPopoverPageModule,
     TranslateModule.forRoot({
     loader: {
