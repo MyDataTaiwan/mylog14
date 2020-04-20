@@ -5,6 +5,7 @@ import { LocalStorageService } from './local-storage.service';
 import { tap, map, switchMap } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
+import { UserData } from '../interfaces/user-data';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,9 @@ export class DataStoreService {
     }),
   );
 
+  private userData = new BehaviorSubject<UserData>({ newUser: true });
+  public userData$ = this.userData.asObservable();
+
   constructor(
     private localStorage: LocalStorageService,
   ) {
@@ -38,7 +42,16 @@ export class DataStoreService {
     const saveList$ = this.localStorage.saveRecordMetaList(recordMetaList);
     const update$ = (recordMetaList) ? saveList$ : loadList$;
     return update$.pipe(
-      (tap((list: RecordMeta[]) => this.recordMetaList.next(list))),
+      tap((list: RecordMeta[]) => this.recordMetaList.next(list)),
+    );
+  }
+
+  updateUserData(userData?: UserData): Observable<UserData> {
+    const load$ = this.localStorage.getUserData();
+    const save$ = this.localStorage.saveUserData(userData);
+    const update$ = (userData) ? save$ : load$;
+    return update$.pipe(
+      tap((data: UserData) => this.userData.next(data)),
     );
   }
 
