@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PickerController, ModalController,PopoverController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, from, defer, forkJoin, of } from 'rxjs';
-import { map, switchMap, tap, mergeMap } from 'rxjs/operators';
+import { Observable, from, defer, forkJoin, Subject } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 
@@ -14,7 +14,7 @@ import { RecordFinishPage } from '../../components/record-finish/record-finish.p
   templateUrl: './add-record.page.html',
   styleUrls: ['./add-record.page.scss'],
 })
-export class AddRecordPage implements OnInit {
+export class AddRecordPage implements OnInit, OnDestroy {
   isShow = true;
   isSelect = true;
   isShow1 = true;
@@ -34,9 +34,9 @@ export class AddRecordPage implements OnInit {
   };
   recorded$: Observable<string>;
   ok$: Observable<string>;
+  destroy$ = new Subject();
 
   constructor(
-    private alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private pickerCtrl: PickerController,
@@ -58,18 +58,20 @@ export class AddRecordPage implements OnInit {
     this.geolocationService.getPosition().subscribe();
     this.presentBtPicker();
   }
-  async openModal( ev?: any) {
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  async openModal() {
     const popover = await this.popoverController.create({
       component: RecordFinishPage,
-      event: ev,
       translucent: true,
-      componentProps: {
-        text:"紀錄成功！"
-      }
     });
-    console.log("openModal.snapshot")
-    return await popover.present();
+    return popover.present();
   }
+
   async presentBtPicker() {
     const options: PickerOptions = {
       buttons: [
@@ -104,23 +106,6 @@ export class AddRecordPage implements OnInit {
     await picker.present();
   }
 
-  async presentAlert() {
-    const alert = await this.alertCtrl.create({
-      header: this.text.recorded,
-      cssClass: 'recordSaved',
-      buttons: [
-        {
-          text: this.text.ok,
-          handler: () => {
-            this.modalCtrl.dismiss();
-          }
-        }
-      ]
-    });
-
-    await alert.present();
-  }
-
   async presentLoading() {
     const loading = await this.loadingCtrl.create({
       message: '正在紀錄資料...',
@@ -147,17 +132,18 @@ export class AddRecordPage implements OnInit {
   }
 
   onSubmitClick() {
-    this.submitRecord().subscribe(); // This subscription will auto-complete after take(1)
+    this.submitRecord().subscribe();
   }
 
-  submitRecord(): Observable<void> {
+  submitRecord(): Observable<boolean> {
     const loading$ = defer(() => from(this.presentLoading()));
     const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
-    return loading$
+    return forkJoin([loading$, snapRecord$])
       .pipe(
-        mergeMap(loadingElement => forkJoin([snapRecord$, of(loadingElement)])),
-        switchMap(([_, loadingElement]) => loadingElement.dismiss()),
-        switchMap(() => this.presentAlert()),
+        switchMap(([loadingElement, _]) => loadingElement.dismiss()),
+        switchMap(() => this.openModal()),
+        switchMap(() => this.modalCtrl.dismiss()),
+        takeUntil(this.destroy$),
       );
   }
 
