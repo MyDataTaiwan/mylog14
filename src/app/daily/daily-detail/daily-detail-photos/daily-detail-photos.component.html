@@ -2,8 +2,10 @@
   <ion-button (click)="openModal()">Open openIMGModal</ion-button>
     <ion-row>
       <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let photo of photos$ | async">
-        <ion-thumbnail>
+        <ion-thumbnail >
+          <div (click)="openImageModal(photo)">
           <ion-img [src]="photo.webviewPath"></ion-img>
+        </div>
         </ion-thumbnail>
       </div>
     </ion-row>

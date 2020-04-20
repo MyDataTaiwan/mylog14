@@ -36,5 +36,10 @@
   },
   "RECORD_FINISH": {
     "finish": "新增成功！"
+  },
+  "IMG_POPOVER": {
+    "confirmDelete": "確定要刪除這張照片嗎？",
+    "cancel": "取消",
+    "confirm": "確認"
   }
 }

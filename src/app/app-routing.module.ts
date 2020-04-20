@@ -14,6 +14,10 @@ const routes: Routes = [
     path: 'record-finish',
     loadChildren: () => import('./core/components/record-finish/record-finish.module').then( m => m.RecordFinishPageModule)
   },
+  {
+    path: 'img-popover',
+    loadChildren: () => import('./core/pages/img-popover/img-popover.module').then( m => m.ImgPopoverPageModule)
+  },
 ];
 @NgModule({
   imports: [

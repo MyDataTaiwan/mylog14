@@ -1,0 +1,32 @@
+<ion-content>
+  <ion-row>
+    <ion-col text-center>{{ 'IMG_POPOVER.confirmDelete' | translate }}</ion-col>
+  </ion-row>
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
+  <ion-row style="height: 40vw;">
+    <ion-col>
+
+      <div style="display: flex;flex-direction: column;height: 40vw;">
+        <img [src]="webviewPath | safeUrl" style="height: 39vw;" />
+      </div>
+
+    </ion-col>
+    <ion-col>
+      <div style="display: flex; flex-direction:column;">
+        <ion-label class=".ion-text-center">{{ timestamp | date: 'yyyy-MM-dd HH:mm:ss' }}</ion-label>
+        <ion-label class=".ion-text-center">{{ address$ | async }}</ion-label>
+        <ion-label class=".ion-text-center">{{ latitude }}</ion-label>
+        <ion-label class=".ion-text-center">{{ longitude }}</ion-label>
+      </div>
+
+    </ion-col>
+
+  </ion-row>
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
+  <ion-row>
+    <ion-button (click)="cancel()">{{ 'IMG_POPOVER.cancel' | translate }}</ion-button>
+    <ion-button (click)="confirm()">{{ 'IMG_POPOVER.confirm' | translate }}</ion-button>
+  </ion-row>
+</ion-content>
