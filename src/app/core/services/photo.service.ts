@@ -194,13 +194,16 @@ export class PhotoService {
   })
 
   deletePhoto(record: Record, photo: Photo) {
+    const tmpArr = photo.filepath.split('/');
+    const filename = tmpArr[tmpArr.length - 1];
     return defer(() => from(Filesystem.deleteFile({
-      path: photo.filepath,
+      path: filename,
       directory: FilesystemDirectory.Data,
     })))
       .pipe(
         catchError(err => {
           console.log(err);
+          console.log(photo);
           return of();
         }),
         switchMap(() => this.dataStore.recordMetaList$.pipe(take(1))),
