@@ -26,6 +26,9 @@
       "desc2": "一起保護台灣"
     }
   },
+  "EULA": {
+    "agree": "我已同意使用者條款"
+  },
   "DIARY": {
     "title": "我的資料",
     "select": "English"

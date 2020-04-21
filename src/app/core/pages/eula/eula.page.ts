@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserData } from '../../interfaces/user-data';
 import { ModalController } from '@ionic/angular';
+import { TranslateConfigService } from 'src/app/translate-config.service';
 
 @Component({
   selector: 'app-eula',
@@ -11,6 +12,7 @@ export class EulaPage implements OnInit {
   @Input() userData: UserData;
   constructor(
     private modalCtrl: ModalController,
+    public translateConfig: TranslateConfigService,
   ) { }
 
   ngOnInit() {

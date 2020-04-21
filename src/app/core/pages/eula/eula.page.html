@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-    <div class="scrollable">
+    <div *ngIf="translateConfig.getDefaultLanguage() === 'zh'" class="scrollable">
         <h5 class="ion-text-center header">My Log 14 使用者條款摘要</h5>
         <p class="sub-header">「自己的資料自己管 (own and control your data)」</p>
         <p>
@@ -31,7 +31,7 @@
             若您點擊「同意」，即表示您已閱讀、瞭解並同意遵守下列條款:
         </p>
         <h6 class="ion-text-center header">一、一般使用者條款</h6>
-        <ul>
+        <ul class="zh">
             <li>(一) 使用者提供或儲存的內容
                 <ol>
                     <li>當您首次使用或連結本服務時，並不會要求您註冊，本團隊僅就您所使用之行動裝置上隨機給予一組匿名的軟體 ID，惟該軟體 ID 並無法識別出您與使
@@ -113,7 +113,7 @@
         </ul>
 
         <h6 class="ion-text-center header">二、拒絕或停止使用</h6>
-        <ul>
+        <ul class="zh">
             <li>(一) 您同意您不會轉讓本服務之會員帳號予他人或供他人使用，且您於本服務會員帳號或帳號中內容之任何權利，於您死亡時即立刻終止，本服務將無繼續維持或保存您的帳號及帳號中內容之義務。</li>
             <li>(二) 您瞭解並同意本服務得依其自行考量，因任何理由，包含但不限於一定期間內未使用本服務、依法院或政府機關命令、您自行請求、本服務無法繼續或本服
                 務內容實質變更、無法預期的技術或安全因素或問題、您所為詐欺或違法行為、未依約支付費用(若有)，或其他本團隊認為您已經違反本條款明文規定及目
@@ -131,7 +131,7 @@
 
         <h6 class="ion-text-center header">三、免責聲明</h6>
         <p>您瞭解並同意以下規定:</p>
-        <ul>
+        <ul class="zh">
             <li>(一) 您於使用本服務提供之服務或任何資訊前，應自行判斷、評估並自負風險，因本服務並非專業醫療判斷，因此當您有任何不適或懷疑有任何病狀時，請盡速尋求專業醫療協助，本服務不負任何醫療判斷及擔保責任;</li>
             <li>(二) 本團隊擁有隨時更改、提升、中斷 APP 各項功能或服務之權力，不需先行通知任何使用者及單位。或許將造成您使用上的不便、資料喪失、錯誤、遭人篡改
                 或其他經濟上損失等情形。您應於使用本服務時自行採取防護措施。本團隊對
@@ -147,7 +147,7 @@
             您的個人資料。在未經您許可的情形下，我們不會將您的個人資料提供予第三方做
             商業目的之用。本團體會遵守下列約定:
         </p>
-        <ul>
+        <ul class="zh">
             <li>
                 (一) 蒐集、處理或利用時之義務
                 <ol>
@@ -155,7 +155,8 @@
                         本團體僅得於使用者以下指示之範圍內，蒐集、處理或利用個人資料
                         <ol>
                             <li class="parenthesis">蒐集目的:本團隊為提供使用者因連結或使用本服務時所需之相關業務，蒐集、處理及利用您的個人資料。</li>
-                            <li class="parenthesis">蒐集個人資料之類別:本團隊可能會於您連結或使用本服務時及使用者個人資料頁面取得，包括但不限於所在地點、體溫、病症、照片、居家或社會活動、使用檔案及時間軌跡等個人資料，詳如
+                            <li class="parenthesis">
+                                蒐集個人資料之類別:本團隊可能會於您連結或使用本服務時及使用者個人資料頁面取得，包括但不限於所在地點、體溫、病症、照片、居家或社會活動、使用檔案及時間軌跡等個人資料，詳如
                                 APP 操作介面。</li>
                             <li class="parenthesis">期間、地區、對象與方式:本團隊將在維護公民數據隱私及符合個人資料保護法的前提下，協助使用者紀錄並管理自己的生活，以分擔政府管
                                 理資料的風險，也希望能夠透過公民主動參與，降低防疫追蹤的人力成
@@ -200,19 +201,251 @@
         <h6 class="ion-text-center header">五、準據法與管轄法院</h6>
         <p>本條款之解釋與適用，以及與本條款有關之爭議，將依照中華民國法律規定，並以臺灣臺北地方法院為第一審管轄法院。</p>
         <h6 class="ion-text-center header">六、其他</h6>
-        <ul>
+        <ul class="zh">
             <li>
                 (一) 本團隊保留未來修改本條款的權利，修改時將公告於 APP，當您按下同意鍵繼續使用 APP 時，即視為您已同意本條款最新內容。
             </li>
             <li>(二) 本條款所定之任何條款之全部或一部份無效時，不影響其他條款之效力。</li>
             <li>(三) 本服務的任何聲明、條款如有未盡完善之處，將以最大誠意，依誠實信用、平等互惠原則，共商解決之道。</li>
-            <p>若您的權益因連結或使用本服務受到不法侵害時，請將所遭受侵害之情形及您的聯絡方式，並附具真實陳述及相關證明，以電子郵件方式聯絡本團隊: <a href="mailto: taiwan@mydata.org">[taiwan@mydata.org]</a>。</p>
+            <p>若您的權益因連結或使用本服務受到不法侵害時，請將所遭受侵害之情形及您的聯絡方式，並附具真實陳述及相關證明，以電子郵件方式聯絡本團隊: <a
+                    href="mailto: taiwan@mydata.org">[taiwan@mydata.org]</a>。</p>
         </ul>
+    </div>
+    <div *ngIf="translateConfig.getDefaultLanguage() === 'en'" class="scrollable">
+        <h5 class="ion-text-center header">Terms & Conditions</h5>
+        <p>
+            By downloading or using the app, these terms will automatically apply to you – you should make sure
+            therefore that you
+            read them carefully before using the app. You’re not allowed to copy, or modify the app, any part of the
+            app, or our
+            trademarks in any way. You’re not allowed to attempt to extract the source code of the app, and you also
+            shouldn’t try
+            to translate the app into other languages, or make derivative versions. The app itself, and all the trade
+            marks,
+            copyright, database rights and other intellectual property rights related to it, still belong to MyData
+            Taiwan.
+        </p>
+        <p>
+            MyData Taiwan is committed to ensuring that the app is as useful and efficient as possible. For that reason,
+            we reserve
+            the right to make changes to the app or to charge for its services, at any time and for any reason. We will
+            never charge
+            you for the app or its services without making it very clear to you exactly what you’re paying for.
+        </p>
+        <p>
+            The MyLog14 app won’t store and process any personal data,all the data will store locally in your device.
+            It’s your
+            responsibility to keep your phone and access to the app secure.
+        </p>
+        <p>
+            The app does use third party services that declare their own Terms and Conditions. Link to Terms and
+            Conditions of third
+            party service providers used by the app.
+        </p>
+        <ul>
+            <li><a href="https://policies.google.com/terms">Google Play Services</a></li>
+        </ul>
+        <p>
+            You should be aware that there are certain things that MyData Taiwan will not take responsibility for.
+            Certain functions
+            of the app will require the app to have an active internet connection. The connection can be Wi-Fi, or
+            provided by your
+            mobile network provider, but MyData Taiwan cannot take responsibility for the app not working at full
+            functionality if
+            you don’t have access to Wi-Fi, and you don’t have any of your data allowance left.
+        </p>
+        <p>
+            If you’re using the app outside of an area with Wi-Fi, you should remember that your terms of the agreement
+            with your
+            mobile network provider will still apply. As a result, you may be charged by your mobile provider for the
+            cost of data
+            for the duration of the connection while accessing the app, or other third party charges. In using the app,
+            you’re
+            accepting responsibility for any such charges, including roaming data charges if you use the app outside of
+            your home
+            territory (i.e. region or country) without turning off data roaming. If you are not the bill payer for the
+            device on
+            which you’re using the app, please be aware that we assume that you have received permission from the bill
+            payer for
+            using the app.
+        </p>
+        <p>
+            Along the same lines, MyData Taiwan cannot always take responsibility for the way you use the app i.e. You
+            need to make
+            sure that your device stays charged – if it runs out of battery and you can’t turn it on to avail the
+            Service, MyData
+            Taiwan cannot accept responsibility.
+        </p>
+        <p>
+            With respect to MyData Taiwan’s responsibility for your use of the app, when you’re using the app, it’s
+            important to
+            bear in mind that although we endeavour to ensure that it is updated and correct at all times, we do rely on
+            third
+            parties to provide information to us so that we can make it available to you. MyData Taiwan accepts no
+            liability for any
+            loss, direct or indirect, you experience as a result of relying wholly on this functionality of the app.
+        </p>
+        <p>
+            At some point, we may wish to update the app. The app is currently available on Android & iOS – the
+            requirements for
+            both systems(and for any additional systems we decide to extend the availability of the app to) may change,
+            and you’ll
+            need to download the updates if you want to keep using the app. MyData Taiwan does not promise that it will
+            always
+            update the app so that it is relevant to you and/or works with the Android & iOS version that you have
+            installed on your
+            device. However, you promise to always accept updates to the application when offered to you, We may also
+            wish to stop
+            providing the app, and may terminate use of it at any time without giving notice of termination to you.
+            Unless we tell
+            you otherwise, upon any termination, (a) the rights and licenses granted to you in these terms will end; (b)
+            you must
+            stop using the app, and (if needed) delete it from your device.
+        </p>
+        <h6>Changes to This Terms and Conditions</h6>
+
+        we may update our Terms and Conditions from time to time. Thus, you are advised to review this page periodically
+        for any
+        changes. we will notify you of any changes by posting the new Terms and Conditions on this page.
+
+        These terms and conditions are effective as of 2020-04-16
+
+        <h6>Contact Us</h6>
+
+        If you have any questions or suggestions about our Terms and Conditions, do not hesitate to contact us at
+        <a href="mailto: taiwan@mydata.org">taiwan@mydata.org</a>.
+
+        <h5 class="ion-text-center header">Privacy Policy</h5>
+
+        <p>
+            MyData Taiwan built the MyLog14 app as a Free app. This SERVICE is provided by MyData Taiwan at no cost and
+            is intended
+            for use as is.
+        </p>
+
+        <p>
+            This page is used to inform visitors regarding our policies with the collection, use, and disclosure of
+            Personal
+            Information if anyone decided to use our Service.
+        </p>
+        <p>
+            We respect your personal data, therefore, we will not collect or use any your personally identifiable. You
+            have fully
+            control and responsibility for all the data stored in your device. We will only get the information with
+            your consent.
+            The data you share with us will be deleted after 72 hours or deleted per user request.
+        </p>
+        <p>
+            The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is
+            accessible at
+            MyLog14 unless otherwise defined in this Privacy Policy.
+        </p>
+        <h6>Information Collection and Use</h6>
+        <p>
+            You own your data. In order to protect your privacy, while using our Service, we won’t require you to
+            provide us with
+            any certain personally identifiable information.
+        </p>
+        <p>
+            However, the app does use third party services that may collect information used to identify you.
+        </p>
+        <p>
+            Link to privacy policy of third party service providers used by the app
+        </p>
+        <ul>
+            <li><a href="https://policies.google.com/terms">Google Play Services</a></li>
+        </ul>
+        <h6>Log Data</h6>
+        <p>
+            we want to inform you that whenever you use our Service, in a case of an error in the app we collect data
+            and
+            information (through third party products) on your phone called Log Data. This Log Data may include
+            information such as
+            your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of
+            the app when
+            utilizing our Service, the time and date of your use of the Service, and other statistics.
+        </p>
+        <h6>Cookies</h6>
+        <p>
+            Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These
+            are sent to
+            your browser from the websites that you visit and are stored on your device's internal memory.
+        </p>
+        <p>
+            This Service does not use these “cookies” explicitly. However, the app may use third party code and
+            libraries that use
+            “cookies” to collect information and improve their services. You have the option to either accept or refuse
+            these
+            cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may
+            not be able to
+            use some portions of this Service.
+        </p>
+        <h6>Service Providers</h6>
+        <p>
+            We may employ third-party companies and individuals due to the following reasons:
+        </p>
+        <ul>
+            <li>To facilitate our Service;</li>
+            <li>To provide the Service on our behalf;</li>
+            <li>To perform Service-related services; or</li>
+            <li>To assist us in analyzing how our Service is used.</li>
+        </ul>
+        <p>
+            We want to inform users of this Service that these third parties have access to your Personal Information.
+            The reason is
+            to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the
+            information
+            for any other purpose.
+        </p>
+        <h6>Security</h6>
+        <p>
+            We value your trust in using our app to log your life activities, thus we are striving to use commercially
+            acceptable
+            means of protecting it. But remember that no method of transmission over the internet, or method of
+            electronic storage
+            is 100% secure and reliable, and we cannot guarantee its absolute security.
+        </p>
+
+        <h6>Links to Other Sites</h6>
+        <p>
+            This Service may contain links to other sites. If you click on a third-party link, you will be directed to
+            that site.
+            Note that these external sites are not operated by us. Therefore, we strongly advise you to review the
+            Privacy Policy of
+            these websites. we have no control over and assume no responsibility for the content, privacy policies, or
+            practices of
+            any third-party sites or services.
+        </p>
+        <h6>Children’s Privacy</h6>
+        <p>
+            These Services do not address anyone under the age of 13. we do not knowingly collect personally
+            identifiable
+            information from children under 13. In the case we discover that a child under 13 has provided us with
+            personal
+            information, we immediately delete this from our servers. If you are a parent or guardian and you are aware
+            that your
+            child has provided us with personal information, please contact us so that we will be able to do necessary
+            actions.
+        </p>
+        <h6>Changes to This Privacy Policy</h6>
+        <p>
+            we may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically
+            for any
+            changes. we will notify you of any changes by posting the new Privacy Policy on this page.
+        </p>
+        <p>
+            This policy is effective as of 2020-04-16
+        </p>
+        <h6>Contact Us</h6>
+        <p>
+            If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at
+            <a href="mailto: taiwan@mydata.org">taiwan@mydata.org</a>.
+        </p>
     </div>
     <div style="padding-top: 2.5%;">
         <ion-button (click)="onClick()" expand="block" shape="round">
-            我已同意使用者條款
+            {{ 'EULA.agree' | translate }}
         </ion-button>
     </div>
-    
+
 </ion-content>

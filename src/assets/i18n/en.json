@@ -26,6 +26,9 @@
       "desc2": "Protect Taiwan all together"
     }
   },
+  "EULA": {
+    "agree": "AGREE"
+  },
   "DIARY": {
     "title": "My Data",
     "select": "漢語"
