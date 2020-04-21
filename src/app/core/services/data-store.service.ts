@@ -28,7 +28,7 @@ export class DataStoreService {
     }),
   );
 
-  private userData = new BehaviorSubject<UserData>({ newUser: true });
+  private userData = new BehaviorSubject<UserData>({ newUser: true, eulaAccepted: false });
   public userData$ = this.userData.asObservable();
 
   constructor(

@@ -21,7 +21,11 @@ const routes: Routes = [
   {
     path: 'tour',
     loadChildren: () => import('./core/pages/tour/tour.module').then(m => m.TourPageModule)
-  }
+  },
+  {
+    path: 'eula',
+    loadChildren: () => import('./core/pages/eula/eula.module').then( m => m.EulaPageModule)
+  },
 ];
 @NgModule({
   imports: [
