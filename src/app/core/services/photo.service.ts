@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
-import { Subject, Observable, from, BehaviorSubject } from 'rxjs';
+import { Subject, Observable, from, BehaviorSubject, defer, forkJoin, of } from 'rxjs';
 import { Snapshot } from '../interfaces/snapshot';
-import { map } from 'rxjs/operators';
+import { map, tap, switchMap, take, catchError } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
+import { DataStoreService } from './data-store.service';
+import { Record } from '../interfaces/record';
+import { LocalStorageService } from './local-storage.service';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -19,6 +22,8 @@ export class PhotoService {
   private platform: Platform;
   private PHOTO_STORAGE = 'photos';
   constructor(
+    private dataStore: DataStoreService,
+    private localStorage: LocalStorageService,
     platform: Platform,
   ) {
     this.platform = platform;
@@ -187,4 +192,24 @@ export class PhotoService {
     };
     reader.readAsDataURL(blob);
   })
+
+  deletePhoto(record: Record, photo: Photo) {
+    return defer(() => from(Filesystem.deleteFile({
+      path: photo.filepath,
+      directory: FilesystemDirectory.Data,
+    })))
+      .pipe(
+        catchError(err => {
+          console.log(err);
+          return of();
+        }),
+        switchMap(() => this.dataStore.recordMetaList$.pipe(take(1))),
+        tap(() => {
+          const idx = record.photos.findIndex(p => p.filepath === photo.filepath);
+          record.photos.splice(idx);
+        }),
+        switchMap(recordMetaList => this.localStorage.saveRecord(record, recordMetaList)),
+        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+      );
+  }
 }
