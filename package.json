@@ -31,6 +31,7 @@
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^4.0.0",
     "@numbersprotocol/niota": "^0.1.1",
+    "angularx-qrcode": "^2.1.0",
     "bufferutil": "^4.0.1",
     "chart.js": "^2.9.3",
     "core-js": "^2.5.4",

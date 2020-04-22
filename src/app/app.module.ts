@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import { QRCodeModule } from 'angularx-qrcode';
 
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
@@ -41,6 +42,7 @@ export function playerFactory() {
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    QRCodeModule,
     CategorizeFinishPageModule,
     RecordFinishPageModule,
     CategorizeImgPopoverPageModule,

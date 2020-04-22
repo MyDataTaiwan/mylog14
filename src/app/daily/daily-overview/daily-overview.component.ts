@@ -32,6 +32,7 @@ export class DailyOverviewComponent implements OnInit {
   };
 
   TEMPimg:'/assets/imgA.png'
+  qr: string;
   private animationItem: AnimationItem;
   private isAnimationCreated: boolean = false;
   emptyCardItem = {
@@ -48,6 +49,7 @@ export class DailyOverviewComponent implements OnInit {
     public dataStore: DataStoreService,
     private ngZone: NgZone
   ) {
+    this.qr = 'https://www.mydata.org.tw/mylog14privacypolicy-en';
     this.items$ = this.dataStore.overviewCards$
     .pipe(
         map(cards => cards.reverse()),
