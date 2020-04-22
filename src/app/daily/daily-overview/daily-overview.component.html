@@ -2,7 +2,8 @@
   <div class="TA-AE" style="height: 60vw;width: 100%; display:flex;
   align-items:center;
   justify-content:center;
-  border:1px solid #000;">
+  /* border:1px solid #000; */
+  ">
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
     <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"
     (configReady)="today()"
@@ -39,7 +40,7 @@
               <ion-card-title class="ion-text-center">DAY {{ item.day }}</ion-card-title>
               <ion-card-title class="ion-text-center">{{ item.month }}/{{ item.date }}</ion-card-title>
             </ion-card-header>
-            <ion-card-content class="ion-text-center">BT: {{ item.bt }}</ion-card-content>
+            <ion-card-content style="font-size: small;" class="ion-text-center">BT: {{ item.bt }}</ion-card-content>
           </ion-col>
           <!-- <ion-col size="8">
             <div>

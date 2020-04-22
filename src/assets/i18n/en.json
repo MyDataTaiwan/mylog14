@@ -1,4 +1,34 @@
 {
+  "TOUR": {
+    "getStarted": "Get Started",
+    "slide1": {
+      "title1": "Protect Your Own Data",
+      "title2": "",
+      "desc1": "Own your data and share with consent",
+      "desc2": ""
+    },
+    "slide2": {
+      "title1": "Log Your Life Activities",
+      "title2": "",
+      "desc1": "Log COVID-19 related symptoms",
+      "desc2": "Relieve the pressure of overwhelmed health services"
+    },
+    "slide3": {
+      "title1": "Through Data Visualization",
+      "title2": "",
+      "desc1": "Understand daily data easily",
+      "desc2": ""
+    },
+    "slide4": {
+      "title1": "Get Involved in the Fight",
+      "title2": "to Contain the Disease",
+      "desc1": "Stay at home and log",
+      "desc2": "Protect Taiwan all together"
+    }
+  },
+  "EULA": {
+    "agree": "AGREE"
+  },
   "DIARY": {
     "title": "My Data",
     "select": "漢語"
@@ -33,6 +63,13 @@
     "clear": "Clear",
     "recorded": "Record Saved",
     "ok": "OK"
+  },
+  "RECORD_FINISH": {
+    "finish": "Record saved!"
+  },
+  "IMG_POPOVER": {
+    "confirmDelete": "Delete the photo?",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
-
 }

@@ -12,13 +12,12 @@
 $ npm i -g @ionic/cli
 ```
 
-3. Run
+3. Clone & install dependencies
 
 ```
 $ git clone https://github.com/MyDataTaiwan/mylog14.git
 $ cd mylog14
 $ npm i
-$ ionic build
 ```
 
 ### Run in browser
@@ -34,7 +33,6 @@ $ ionic serve
 2. Run
 
 ```
-$ ionic capacitor add ios
 $ ionic capacitor run ios
 ```
 
@@ -49,7 +47,6 @@ Then run the App in XCode.
 1. Run
 
 ```
-$ ionic capacitor add android
 $ ionic capacitor run android
 ```
 

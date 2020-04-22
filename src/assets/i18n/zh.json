@@ -1,4 +1,34 @@
 {
+  "TOUR": {
+    "getStarted": "開始使用",
+    "slide1": {
+      "title1": "自己的資料自己顧",
+      "title2": "",
+      "desc1": "你的資料只屬於你",
+      "desc2": "只在你同意的情況下分享資訊"
+    },
+    "slide2": {
+      "title1": "加入抗疫行列",
+      "title2": "",
+      "desc1": "紀錄健康狀況",
+      "desc2": "減輕疫調人員負擔"
+    },
+    "slide3": {
+      "title1": "資料視覺化",
+      "title2": "",
+      "desc1": "繁雜資料一目瞭然",
+      "desc2": ""
+    },
+    "slide4": {
+      "title1": "一起陪伴臺灣防疫的夥伴",
+      "title2": "",
+      "desc1": "透過待在家與紀錄資料",
+      "desc2": "一起保護台灣"
+    }
+  },
+  "EULA": {
+    "agree": "我已同意使用者條款"
+  },
   "DIARY": {
     "title": "我的資料",
     "select": "English"
@@ -33,5 +63,13 @@
     "clear": "清除",
     "recorded": "已紀錄",
     "ok": "確定"
+  },
+  "RECORD_FINISH": {
+    "finish": "新增成功！"
+  },
+  "IMG_POPOVER": {
+    "confirmDelete": "確定要刪除這張照片嗎？",
+    "cancel": "取消",
+    "confirm": "確認"
   }
 }

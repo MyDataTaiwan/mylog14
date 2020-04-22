@@ -47,7 +47,7 @@
 }
 .popover-content {
   --min-width: 80%;
-  --min-height:  40% !important;
+  // --min-height:  40% ;
 
 }
 .popover_class {
@@ -56,4 +56,17 @@
 
   width: 30px !important;
   height:  80vw !important;
+}
+.success_class {
+  // --min-hight: 300px !important;
+  --min-width: 100%;
+
+  width: 100% !important;
+  height:  30vw !important;
+}
+
+.eula-modal {
+  --height: 80%;
+  --width: 80%;
+  --border-radius: 25px;
 }
