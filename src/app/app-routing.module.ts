@@ -26,6 +26,10 @@ const routes: Routes = [
     path: 'eula',
     loadChildren: () => import('./core/pages/eula/eula.module').then( m => m.EulaPageModule)
   },
+  {
+    path: 'share',
+    loadChildren: () => import('./core/pages/share/share.module').then( m => m.SharePageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -1,0 +1,22 @@
+<ion-content>
+  <ion-row>
+    <ion-col class="ion-text-center">{{ 'SHARE.copyLink' | translate }}</ion-col>
+  </ion-row>
+  <ion-row class="ion-justify-content-center">
+      <div class="paperclip">
+        <div>
+          <img src="../../../assets/ui/link.svg">
+        </div>
+      </div>
+      <div class="link">
+          <input type="text" readonly [value]="linkUrl">
+      </div>
+  </ion-row>
+  <ion-row>
+    <ion-col size="6"></ion-col>
+    <ion-col size="6">
+      <ion-button fill="clear" (click)="cancel()">{{ 'IMG_POPOVER.cancel' | translate }}</ion-button>
+      <ion-button fill="clear" (click)="confirm()">{{ 'IMG_POPOVER.confirm' | translate }}</ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>
