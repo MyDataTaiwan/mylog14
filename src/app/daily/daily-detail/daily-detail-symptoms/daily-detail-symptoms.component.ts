@@ -46,7 +46,6 @@ export class DailyDetailSymptomsComponent implements OnInit {
       recordView.bt = `${record.bodyTemperature}${record.bodyTemperatureUnit}`;
     }
     recordView.symptoms.list=recordView.symptoms.list.filter((symptom)=>symptom.present==true);
-    console.log("recordView",recordView)
     return recordView;
   }
 

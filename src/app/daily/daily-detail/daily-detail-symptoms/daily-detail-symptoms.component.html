@@ -30,8 +30,8 @@
       </ion-item>
 
       <ion-item *ngIf="recordView.symptoms.list.length==0">
-        <ion-label  style="color: #D6D6D6;">今日</ion-label>
-        <ion-label  class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <ion-label  style="color: #D6D6D6;">{{ 'SYMPTOM.noSymptom' | translate }}</ion-label>
+        <ion-label  class="ion-text-center" style="color: #D6D6D6;">{{ 'SYMPTOM.noNote' | translate }}</ion-label>
       </ion-item>
     </ion-list>
   </div>
