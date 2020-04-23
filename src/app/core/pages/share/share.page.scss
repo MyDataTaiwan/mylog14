@@ -30,8 +30,26 @@
     padding: 1px;
         input {
             margin: auto;
-            //background-color: #eef0f0;
-            //border: none;
+            background-color: #eef0f0;
+            border: none;
+            font-size: 4vw;
+            overflow-x: hidden;
+        }
+}
+
+.share-target {
+    height: 40px;
+    width: 240px;
+    background-color: #eef0f0;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #838383;
+    display: flex;
+    padding: 0px;
+        input {
+            margin: auto auto auto 5px;
+            background-color: #eef0f0;
+            border: none;
             font-size: 4vw;
         }
 }
