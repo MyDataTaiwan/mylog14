@@ -55,13 +55,17 @@ export class DailyOverviewComponent implements OnInit {
           this.todate(cardItems.length);
         })
       );
-
-
   }
 
   ngOnInit() {
   }
 
+  goToLink(url: string){
+    const date = this.WhatIsItToday;
+if(date>14){
+  window.open(url, "_blank");
+}
+}
   AC($event) {
     this.animationCreated($event);
     this.today();

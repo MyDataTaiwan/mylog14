@@ -5,12 +5,19 @@
   /* border:1px solid #000; */
   ">
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
-    <ng-lottie [options]="options" (animationCreated)="animationCreated($event)"
-    (configReady)="today()"
-
-    ></ng-lottie>
-
+    <ng-lottie  (click)="goToLink('https://www.w3schools.com/html/')" [options]="options" (animationCreated)="animationCreated($event)"
+    (configReady)="today()">
+  </ng-lottie>
   </div>
+<script>
+  $("td > a").on("click", function(event){
+    if ($(this).is("[disabled]")) {
+        event.preventDefault();
+    }
+});
+$("td > a").attr("disabled", "disabled");
+
+</script>
     <!-- DEBUG_UI: The bottom of the last card will be cut by the virtual scroll container-->
    <!-- <div>
     <button (click)="stop()">Stop</button>
