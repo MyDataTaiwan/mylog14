@@ -11,6 +11,7 @@ import { LocationStamp } from 'src/app/core/interfaces/location-stamp';
   styleUrls: ['./daily-detail-upper.component.scss'],
 })
 export class DailyDetailUpperComponent implements OnInit {
+  selectedSymptoms=false;
   @Input() dayCount: number;
   tempLocation = '&q=25.035221,121.557612';
   baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';

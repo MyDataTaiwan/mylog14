@@ -1,33 +1,52 @@
 <ng-container *ngIf="card$ | async as card">
-<div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
-  <div style="display: flex;flex: 1;flex-direction: column;align-items: stretch;">
-    <div style="display: flex;flex: 1;flex-direction: column;">
-      <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
-      <ion-label class="ion-text-center">{{ card.month }}</ion-label>
+  <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
+    <div style="display: flex;flex: 1;flex-direction: column; justify-self:center; ">
+      <!-- <div style="display: flex;flex: 1;flex-direction: column;">
+        <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
+        <ion-label class="ion-text-center">{{ card.month }}</ion-label>
+        <ion-label class="ion-text-center"> DAY{{ card.day }}</ion-label>
+      </div> -->
+      <div style="display: flex;flex: 1;flex-direction: column-reverse;">
+    
+        <ion-label class="ion-text-center" style="color: #52C7F4;"> DAY{{ card.day }}</ion-label>
+        <ion-label class="ion-text-center" style="color: #000;" >{{ card.month }}</ion-label>
+        <ion-label style="font-size: 32px;color: #000;" class="ion-text-center">{{ card.date }}</ion-label>
+
+      </div>
     </div>
-    <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-      <ion-label class="ion-text-center"> DAY{{ card.day }}</ion-label>
+    <div style="flex: 3;">
+      <ion-img *ngIf="!isShowMap" src="/assets/imgA.png" alt="No picture"></ion-img>
+      <iframe *ngIf="isShowMap" width="250" height="100" frameborder="0" style="border:0;" allowfullscreen=""
+        aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
+      <div>
+        <ion-label class="ion-text-center" style="font-size: 12px;">
+          <img src="../../assets/ui/W_icon.svg" />
+          {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }}
+        </ion-label>
+      </div>
+
+      <div>
+        <ion-label class="ion-text-center" style="font-size: 12px; width: 50vw;">
+          <img src="../../assets/ui/W_icon.svg" />
+          {{ 'DAILY_RECORD.symptoms' | translate }}:
+          <ng-container *ngFor="let symptom of card.presentedSymptoms.slice(0,2) ; let isLast = last">
+            {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
+          </ng-container>
+
+        </ion-label>
+        <img *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true" src="../../../../assets/ui/symptoms_on.svg">
+        <img *ngIf="selectedSymptoms" (click)="selectedSymptoms=false" src="../../../../assets/ui/symptoms_off.svg" />
+      </div>
+
+      <div  *ngIf="selectedSymptoms" style="font-size: 12px; width: 45vw; position: absolute;margin: 1vw;margin-left: 3vw;padding: 2vw; background-color: white;border-radius: 10px;-webkit-box-shadow: 0 0 5px 5px #ebebeb;
+      -moz-box-shadow: 0 0 5px 5px #ebebeb;
+      box-shadow: 0 0 5px 5px #ebebeb;">
+      <ion-label class="ion-text-center" style="font-size: 12px;">
+        <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last" >
+          {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
+        </ng-container>
+      </ion-label>
+    </div>
     </div>
   </div>
-  <div style="flex: 3;">
-    <div>
-    <ion-label class="ion-text-center" style="font-size: 12px;">
-      <img src="../../assets/ui/W_icon.svg" />
-      {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }}
-    </ion-label>
-    </div>
-    <div>
-    <ion-label class="ion-text-center" style="font-size: 12px;">
-      <img src="../../assets/ui/W_icon.svg" />
-      {{ 'DAILY_RECORD.symptoms' | translate }}: 
-      <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last">
-        {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
-      </ng-container>
-    </ion-label>
-    </div>
-    <ion-img *ngIf="!isShowMap" src="/assets/imgA.png" alt="No picture"></ion-img>
-    <iframe  *ngIf="isShowMap" width="250" height="100" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false"
-      scrolling="no" [src]="url | safeUrl"></iframe>
-  </div>
-</div>
 </ng-container>
