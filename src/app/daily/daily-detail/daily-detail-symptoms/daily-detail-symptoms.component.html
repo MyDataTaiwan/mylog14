@@ -1,4 +1,4 @@
-<ion-list style="width:100%;height:45%;overflow:scroll;padding-bottom: 90px;">
+<ion-list style="width:100%;height:50%;overflow:scroll;padding-bottom: 90px;">
   <div *ngFor="let recordView of (recordViews$ | async)">
     <ion-item detail="false">
       <ion-label>{{ recordView.time }}</ion-label>
@@ -18,14 +18,20 @@
       </div>
     </ion-item>
     <ion-list *ngIf="recordView.expand">
+
       <ion-item *ngFor="let symptom of recordView.symptoms.list">
         <!-- <img *ngIf="symptom.present" src="../../assets/ui/today_icon_a.svg" /> -->
         <ion-label *ngIf="symptom.present" style="color: #F9AD35;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
         <ion-label *ngIf="symptom.present" class="ion-text-center" style="color: #F9AD35;">{{symptom.note}}
         </ion-label>
         <!-- <img *ngIf="!symptom.present" src="../../assets/ui/today_icon_a_d.svg" /> -->
-        <ion-label *ngIf="!symptom.present" style="color: #D6D6D6;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
-        <ion-label *ngIf="!symptom.present" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label>
+        <!-- <ion-label *ngIf="!symptom.present" style="color: #D6D6D6;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
+        <ion-label *ngIf="!symptom.present" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label> -->
+      </ion-item>
+
+      <ion-item *ngIf="recordView.symptoms.list.length==0">
+        <ion-label  style="color: #D6D6D6;">{{ 'SYMPTOM.noSymptom' | translate }}</ion-label>
+        <ion-label  class="ion-text-center" style="color: #D6D6D6;">{{ 'SYMPTOM.noNote' | translate }}</ion-label>
       </ion-item>
     </ion-list>
   </div>

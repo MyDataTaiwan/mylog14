@@ -48,7 +48,9 @@
     "muscleOrJointSoreness": "肌肉或關節痠痛",
     "soreThroat": "喉嚨癢/腫痛",
     "sputum": "有痰",
-    "fever": "發燒"
+    "fever": "發燒",
+    "noSymptom":"今日",
+    "noNote":"沒有症狀"
   },
   "DAILY_RECORD": {
     "title": "每日記錄",

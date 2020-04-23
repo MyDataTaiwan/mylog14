@@ -48,7 +48,9 @@
     "muscleOrJointSoreness": "Muscle or Joint Soreness",
     "soreThroat": "Sore Throat",
     "sputum": "Sputum",
-    "fever": "Fever"
+    "fever": "Fever",
+    "noSymptom":"To day",
+    "noNote":"noSymptom"
   },
   "DAILY_RECORD": {
     "title": "Daily Record",
