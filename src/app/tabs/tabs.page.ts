@@ -16,12 +16,33 @@ import { UserData } from '../core/interfaces/user-data';
 export class TabsPage implements AfterViewInit {
   showDebugButton = false;
   eulaLoader$: Observable<UserData>;
+  tabA = true;
+  tabB = false;
+  tabC = false;
+  tabD = false;
+
   constructor(
     private dataStore: DataStoreService,
     private modalController: ModalController,
     private snapshotService: SnapshotService,
-  ) {}
+  ) { }
 
+  onClickTabButton(tab) {
+    this.tabA = false;
+    this.tabB = false;
+    this.tabC = false;
+    this.tabD = false;
+    if(tab=='A'){this.tabA = true;} 
+    if(tab=='B'){this.tabB = true;} 
+    if(tab=='C'){this.tabC = true;} 
+    if(tab=='D'){this.tabD = true;}     
+  }
+  onClickTabButtonT() {
+    this.tabA = true;
+    this.tabB = true;
+    this.tabC = true;
+    this.tabD = true;
+  }
   ngAfterViewInit() {
     this.eulaLoader$ = this.dataStore.userData$
       .pipe(
