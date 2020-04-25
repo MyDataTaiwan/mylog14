@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Plugins, FilesystemDirectory, FilesystemEncoding, FileWriteResult } from '@capacitor/core';
 import { defer, from, Observable, of } from 'rxjs';
-import { take, map, filter, defaultIfEmpty } from 'rxjs/operators';
+import { take, map, filter, defaultIfEmpty, switchMap, tap } from 'rxjs/operators';
+import { crypto, util } from 'openpgp';
 
 const { Filesystem } = Plugins;
 
@@ -13,7 +14,16 @@ export class FileSystemService {
   constructor() { }
 
   getFileHash(fileName: string, dir = FilesystemDirectory.Data): Observable<any> {
-    return of('Hash unimplemented');
+    return from(Filesystem.readFile({
+      path: fileName,
+      directory: FilesystemDirectory.Data,
+    }))
+      .pipe(
+        take(1),
+          map(result => (util.encode_utf8(result.data))),
+          switchMap(ab => crypto.hash.sha256(ab)),
+          map((intArr: Uint8Array) => util.Uint8Array_to_hex(intArr)),
+      );
   }
 
   getJsonData(fileName: string, dir = FilesystemDirectory.Data): Observable<any> {
@@ -40,6 +50,16 @@ export class FileSystemService {
         directory: dir,
       })));
     return writeFile$.pipe(map(() => fileName));
+  }
+
+  private strToArrayBuffer(str: string): ArrayBuffer {
+    console.log('str2ab string', str);
+    const buf = new ArrayBuffer(str.length); // 1 bytes for each char
+    const bufView = new Uint8Array(buf);
+    for (let i = 0; i < str.length; i++) {
+      bufView[i] = str.charCodeAt(i);
+    }
+    return buf;
   }
 
 }
