@@ -24,7 +24,7 @@ export class DailyOverviewComponent implements OnInit {
 
   // arry: [number, number][] = [[35, 36], [125, 184], [195, 246], [254, 306], [313, 365], [372, 420], [436, 490], [494, 548], [555, 611], [613, 670], [677, 734], [740, 792], [797, 850], [860, 902], [952, 922], [999, 1200]];
   arry: [number, number][] = [[35, 36], [125, 184], [125, 246], [125, 306], [125, 365], [125, 420], [125, 490], [125, 548], [125, 611], [125, 670], [125, 734], [125, 792], [125, 850], [125, 902], [125, 922], [999, 1200]];
-  STFarry: [number, number][] = [ [183, 184], [245, 246], [305, 306], [364, 365], [419, 420], [489, 490], [547, 548], [610, 611], [669, 670], [733, 734], [791, 792], [849, 850], [901, 902], [921, 922], [999, 1200],[35, 36]];
+  STFarry: [number, number][] = [ [35, 36], [245, 246], [305, 306], [364, 365], [419, 420], [489, 490], [547, 548], [610, 611], [669, 670], [733, 734], [791, 792], [849, 850], [901, 902], [921, 922], [999, 1200],[35, 36]];
 
   options: AnimationOptions = {
     // path: '/assets/lottie-animation.json',
@@ -61,6 +61,7 @@ export class DailyOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   AC($event) {
@@ -75,22 +76,22 @@ export class DailyOverviewComponent implements OnInit {
     console.log("is animation");
   }
 
-  // async today() {
-  //   // const data = this.items.length;
-  //   // const data = 4;
-  //   const data = this.WhatIsItToday;
+  async today() {
+    // const data = this.items.length;
+    // const data = 4;
+    const data = this.WhatIsItToday;
 
-  //   this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
-  //   await new Promise((resolve) => {
-  //     const timer = setInterval(() => {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
+    await new Promise((resolve) => {
+      const timer = setInterval(() => {
 
-  //       clearInterval(timer);
-  //       resolve();
+        clearInterval(timer);
+        resolve();
 
-  //     }, (data) * 1000);
-  //   });
-  //   this.Stopday(data);
-  // }
+      }, (data) * 1000);
+    });
+    this.Stopday(data);
+  }
   async todate(date) {
     // const data = this.items.length;
     // const data = 4;
@@ -102,7 +103,10 @@ export class DailyOverviewComponent implements OnInit {
         clearInterval(timer);
         resolve();
 
-      }, (date+1) * 1000);
+      }, (
+        // date==0?0:date+1
+        date
+        ) * 1000);
     });
     this.Stopday(date);
   }
