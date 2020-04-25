@@ -52,16 +52,6 @@ export class FileSystemService {
     return writeFile$.pipe(map(() => fileName));
   }
 
-  private strToArrayBuffer(str: string): ArrayBuffer {
-    console.log('str2ab string', str);
-    const buf = new ArrayBuffer(str.length); // 1 bytes for each char
-    const bufView = new Uint8Array(buf);
-    for (let i = 0; i < str.length; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
-  }
-
 }
 
 interface Data {
