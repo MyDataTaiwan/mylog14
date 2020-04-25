@@ -1,75 +1,75 @@
 {
   "TOUR": {
-    "getStarted": "Get Started",
+    "getStarted": "始めましょう",
     "slide1": {
-      "title1": "Protect Your Own Data",
+      "title1": "個人データは自分で管理しましょう",
       "title2": "",
-      "desc1": "Own your data and share with consent",
-      "desc2": ""
+      "desc1": "あなたはあなたのデータを所有しています",
+      "desc2": "個人データは同意を得てのみ共有されます"
     },
     "slide2": {
-      "title1": "Log Your Life Activities",
+      "title1": "個人の行動を記録する",
       "title2": "",
-      "desc1": "Log COVID-19 related symptoms",
-      "desc2": "Relieve the pressure of overwhelmed health services"
+      "desc1": "コロナ症状を記録する",
+      "desc2": "医療従事者の負担軽減"
     },
     "slide3": {
-      "title1": "Through Data Visualization",
+      "title1": "データの可視化",
       "title2": "",
-      "desc1": "Understand daily data easily",
+      "desc1": "毎日記録したデータを簡単に理解する",
       "desc2": ""
     },
     "slide4": {
-      "title1": "Get Involved in the Fight",
-      "title2": "to Contain the Disease",
-      "desc1": "Stay at home and log",
-      "desc2": "Protect Taiwan all together"
+      "title1": "感染拡大の防止に貢献する",
+      "title2": "",
+      "desc1": "家にいて記録しましょう",
+      "desc2": "一緒に国を守りましょう"
     }
   },
   "EULA": {
-    "agree": "AGREE"
+    "agree": "同意する"
   },
   "DIARY": {
     "title": "My Data",
     "select": "漢語"
   },
   "SYMPTOM": {
-    "coughing": "Cough",
-    "runnyNose": "Runny Nose",
-    "nasalCongestion": "Nasal Congestion",
-    "sneezing": "Sneezing",
-    "shortnessOfBreath": "Shortness of Breath",
-    "malaiseOrTiredness": "Malaise/Tiredness",
-    "lossOfTasteOrSmell": "Loss of Taste or Smell",
-    "diarrhea": "Diarrhea",
-    "abdominalPain": "Abdominal Pain",
-    "vomiting": "Vomiting",
-    "chills": "Chills",
-    "muscleOrJointSoreness": "Muscle or Joint Soreness",
-    "soreThroat": "Sore Throat",
-    "sputum": "Sputum",
-    "fever": "Fever"
+    "coughing": "咳",
+    "runnyNose": "鼻水",
+    "nasalCongestion": "鼻詰まり",
+    "sneezing": "くしゃみ",
+    "shortnessOfBreath": "呼吸困難",
+    "malaiseOrTiredness": "体のだるさ（倦怠感）",
+    "lossOfTasteOrSmell": "嗅覚・味覚障害",
+    "diarrhea": "下痢",
+    "abdominalPain": "腹痛",
+    "vomiting": "嘔吐",
+    "chills": "寒気",
+    "muscleOrJointSoreness": "筋肉痛もしくは関節痛",
+    "soreThroat": "喉の痛み",
+    "sputum": "痰",
+    "fever": "発熱"
   },
   "DAILY_RECORD": {
-    "title": "Daily Record",
-    "bodyTemperature": "Body Temperature",
-    "symptoms": "Symptoms",
+    "title": "毎日の記録",
+    "bodyTemperature": "体温",
+    "symptoms": "症状",
     "splitter": ", ",
-    "coughing": "Coughing",
-    "headache": "Headache",
-    "runnyNose": "Runny Nose",
-    "soreThroat": "Sore Throat",
-    "submit": "Submit",
-    "clear": "Clear",
-    "recorded": "Record Saved",
-    "ok": "OK"
+    "coughing": "咳",
+    "headache": "頭痛",
+    "runnyNose": "鼻水",
+    "soreThroat": "喉の痛み",
+    "submit": "送信",
+    "clear": "解除",
+    "recorded": "記録が保存されました",
+    "ok": "確定"
   },
   "RECORD_FINISH": {
-    "finish": "Record saved!"
+    "finish": "記録が保存されました！"
   },
   "IMG_POPOVER": {
-    "confirmDelete": "Delete the photo?",
-    "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirmDelete": "写真を削除しますか？",
+    "cancel": "キャンセル",
+    "confirm": "削除"
   }
 }
