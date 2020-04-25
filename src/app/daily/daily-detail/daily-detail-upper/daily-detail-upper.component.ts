@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { Observable, forkJoin } from 'rxjs';
 import { OverviewDailyCard } from 'src/app/core/classes/overview-daily-card';
@@ -11,7 +11,7 @@ import { LocationStamp } from 'src/app/core/interfaces/location-stamp';
   styleUrls: ['./daily-detail-upper.component.scss'],
 })
 export class DailyDetailUpperComponent implements OnInit {
-  selectedSymptoms=false;
+  selectedSymptoms = false;
   @Input() dayCount: number;
   tempLocation = '&q=25.035221,121.557612';
   baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
@@ -29,6 +29,12 @@ export class DailyDetailUpperComponent implements OnInit {
         map(cards => cards[this.dayCount - 1]),
         tap(card => this.updateMapUrl(card.locations)),
       );
+  }
+
+  onClickOutside() {
+    if (this.selectedSymptoms) {
+      this.selectedSymptoms = !this.selectedSymptoms;
+    }
   }
 
   updateMapUrl(locations: LocationStamp[]): void {

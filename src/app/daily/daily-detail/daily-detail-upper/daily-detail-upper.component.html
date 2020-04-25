@@ -34,11 +34,11 @@
           </ng-container>
 
         </ion-label>
-        <img *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true" src="../../../../assets/ui/symptoms_on.svg">
-        <img *ngIf="selectedSymptoms" (click)="selectedSymptoms=false" src="../../../../assets/ui/symptoms_off.svg" />
+        <img class="symptoms-popup" *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true" src="../../../../assets/ui/symptoms_on.svg">
+        <img class="symptoms-popup" *ngIf="selectedSymptoms" (click)="selectedSymptoms=false" src="../../../../assets/ui/symptoms_off.svg" />
       </div>
 
-      <div  *ngIf="selectedSymptoms" style="font-size: 12px; width: 45vw; position: absolute;z-index: 100; margin: 1vw;margin-left: 3vw;padding: 2vw; background-color: white;border-radius: 10px;-webkit-box-shadow: 0 0 5px 5px #ebebeb;
+      <div class="symptoms-popup" appClickOutsideSameClass (clickOutside)="onClickOutside()" *ngIf="selectedSymptoms" style="font-size: 12px; width: 45vw; position: absolute;z-index: 100; margin: 1vw;margin-left: 3vw;padding: 2vw; background-color: white;border-radius: 10px;-webkit-box-shadow: 0 0 5px 5px #ebebeb;
       -moz-box-shadow: 0 0 5px 5px #ebebeb;
       box-shadow: 0 0 5px 5px #ebebeb;">
       <ion-label class="ion-text-center" style="font-size: 12px;">
