@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10" viewBox="0 0 10 10">
+  <defs>
+    <clipPath id="clip-symptoms_off">
+      <rect width="10" height="10"/>
+    </clipPath>
+  </defs>
+  <g id="symptoms_off" clip-path="url(#clip-symptoms_off)">
+    <path id="Path_1522" data-name="Path 1522" d="M12583.178-3309l3.84-3.763,3.879,3.763" transform="translate(12592.074 -3305.763) rotate(-180)" fill="none" stroke="#52c7f4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+  </g>
+</svg>
