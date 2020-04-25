@@ -62,6 +62,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
+  },
+  {
+    path: 'tab-taiwan-details',
+    loadChildren: () => import('./tab-taiwan-details/tab-taiwan-details.module').then( m => m.TabTaiwanDetailsPageModule)
   }
 ];
 
