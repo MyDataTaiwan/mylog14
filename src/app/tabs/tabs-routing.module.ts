@@ -52,6 +52,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'tab-coupon',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./tab-coupon/tab-coupon.module').then( m => m.TabCouponPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/tabs/tab-data',
         pathMatch: 'full'
@@ -62,10 +71,6 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
-  },
-  {
-    path: 'tab-coupon',
-    loadChildren: () => import('./tab-coupon/tab-coupon.module').then( m => m.TabCouponPageModule)
   }
 ];
 
