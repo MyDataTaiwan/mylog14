@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FlashCardComponent } from './core/components/flash-card/flash-card.component';
 
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -34,6 +35,7 @@ export function playerFactory() {
 @NgModule({
   declarations: [
     AppComponent,
+    FlashCardComponent,
   ],
   entryComponents: [],
   imports: [

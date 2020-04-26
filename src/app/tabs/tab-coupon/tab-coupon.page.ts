@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController, AlertController } from '@ionic/angular';
+import { TabCouponVendorsPage } from '../tab-coupon-vendors/tab-coupon-vendors.page';
 
 @Component({
   selector: 'app-tab-coupon',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabCouponPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private modalController: ModalController,
+  ) { }
 
   ngOnInit() {
   }
 
+  async presentVendorDetailsPage() {
+    const modal = await this.modalController.create({
+      backdropDismiss: false,
+      component: TabCouponVendorsPage,
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    return Promise.resolve(data);
+  }
+
+  async onClickVendorsDetails() {
+    await this.presentVendorDetailsPage();
+  }
 }

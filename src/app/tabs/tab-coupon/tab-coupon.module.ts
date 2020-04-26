@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TabCouponPageRoutingModule } from './tab-coupon-routing.module';
 
 import { TabCouponPage } from './tab-coupon.page';
+import { MainHeaderModule } from 'src/app/core/components/main-header/main-header.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TabCouponPageRoutingModule
+    TabCouponPageRoutingModule,
+    MainHeaderModule,
   ],
   declarations: [TabCouponPage]
 })

@@ -1,9 +1,31 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tab-coupon</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-main-header headerTitle="MyLog14"></app-main-header>
 
 <ion-content>
-hello, coupon!
+    <ion-row align-items-center justify-content-start>
+      <ion-col>
+        <ion-label> </ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+        <div ng-click="flip()" class="flip-container">
+        <div class="flipper">
+        <ion-card-content>
+        <h1>Coupons</h1>
+         <div class="flash-card-front">Bobba Tea Animation Placeholder <img src="../../assets/ui/Taiwan_AE.svg" /></div>
+         <div class="flash-card-back">QR Code Placeholder <img src="../../assets/ui/Taiwan_AE.svg" /></div>
+        </ion-card-content>
+        </div>
+      </div>
+      </ion-card>
+          <ion-card>
+            <ion-item class="ion-activated">
+              <ion-icon name="checkbox-outline" slot="start"></ion-icon>
+              <ion-label>Select Coupon</ion-label><ion-button  (click)="onClickVendorsDetails()">Vendors</ion-button>
+            </ion-item>
+          </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-label> </ion-label>
+      </ion-col>
+    </ion-row>
 </ion-content>
