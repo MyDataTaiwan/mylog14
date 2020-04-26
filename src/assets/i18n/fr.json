@@ -1,75 +1,75 @@
 {
   "TOUR": {
-    "getStarted": "Get Started",
+    "getStarted": "Démarrage",
     "slide1": {
-      "title1": "Protect Your Own Data",
+      "title1": "Protéger vos données personnelles",
       "title2": "",
-      "desc1": "Own your data and share with consent",
-      "desc2": ""
+      "desc1": "Gérer vos données personnelles",
+      "desc2": "et partager avec consentement"
     },
     "slide2": {
-      "title1": "Log Your Life Activities",
+      "title1": "Suivre vos activités courantes",
       "title2": "",
-      "desc1": "Log COVID-19 related symptoms",
-      "desc2": "Relieve the pressure of overwhelmed health services"
+      "desc1": "Suivre vos symtômes liés au COVID-19",
+      "desc2": "Réduire la pression des services de santé"
     },
     "slide3": {
-      "title1": "Through Data Visualization",
+      "title1": "Visualiser les données",
       "title2": "",
-      "desc1": "Understand daily data easily",
+      "desc1": "Comprendre aisément les données journalières",
       "desc2": ""
     },
     "slide4": {
-      "title1": "Get Involved in the Fight",
-      "title2": "to Contain the Disease",
-      "desc1": "Stay at home and log",
-      "desc2": "Protect the world all together"
+      "title1": "Participer à la lutte pour la maîtrise de la pandémie",
+      "title2": "",
+      "desc1": "Restez à la maison",
+      "desc2": "Protéger le monde de manière solidaire"
     }
   },
   "EULA": {
-    "agree": "AGREE"
+    "agree": "Accord"
   },
   "DIARY": {
     "title": "My Data",
     "select": "漢語"
   },
   "SYMPTOM": {
-    "coughing": "Cough",
-    "runnyNose": "Runny Nose",
-    "nasalCongestion": "Nasal Congestion",
-    "sneezing": "Sneezing",
-    "shortnessOfBreath": "Shortness of Breath",
-    "malaiseOrTiredness": "Malaise/Tiredness",
-    "lossOfTasteOrSmell": "Loss of Taste or Smell",
-    "diarrhea": "Diarrhea",
-    "abdominalPain": "Abdominal Pain",
-    "vomiting": "Vomiting",
-    "chills": "Chills",
-    "muscleOrJointSoreness": "Muscle or Joint Soreness",
-    "soreThroat": "Sore Throat",
-    "sputum": "Sputum",
-    "fever": "Fever"
+    "coughing": "Toux",
+    "runnyNose": "Ecoulement nasal",
+    "nasalCongestion": "Congestion nasale",
+    "sneezing": "Eternuement",
+    "shortnessOfBreath": "Essouflement / Dyspnée",
+    "malaiseOrTiredness": "Malaise / Fatigue",
+    "lossOfTasteOrSmell": "Perte de goût et/ou odorat",
+    "diarrhea": "Diarrhée",
+    "abdominalPain": "Douleurs abdominales",
+    "vomiting": "Vomissement",
+    "chills": "Frissons / Refroidissement",
+    "muscleOrJointSoreness": "Douleurs musculaires ou articulaires",
+    "soreThroat": "Maux de gorge",
+    "sputum": "Crachats / Expectorations",
+    "fever": "Fièvre"
   },
   "DAILY_RECORD": {
-    "title": "Daily Record",
-    "bodyTemperature": "Body Temperature",
-    "symptoms": "Symptoms",
+    "title": "Suivi journalier",
+    "bodyTemperature": "Température corporelle",
+    "symptoms": "Symptômes",
     "splitter": ", ",
-    "coughing": "Coughing",
-    "headache": "Headache",
-    "runnyNose": "Runny Nose",
-    "soreThroat": "Sore Throat",
-    "submit": "Submit",
-    "clear": "Clear",
-    "recorded": "Record Saved",
-    "ok": "OK"
+    "coughing": "Tousser",
+    "headache": "Maux de tête",
+    "runnyNose": "Ecoulement nasal",
+    "soreThroat": "Maux de gorge",
+    "submit": "Soumettre",
+    "clear": "Effacer",
+    "recorded": "Enregistré",
+    "ok": "Accepter"
   },
   "RECORD_FINISH": {
-    "finish": "Record saved!"
+    "finish": "Enregistré!"
   },
   "IMG_POPOVER": {
-    "confirmDelete": "Delete the photo?",
-    "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirmDelete": "Effacer la photo?",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
   }
 }
