@@ -62,6 +62,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
+  },
+  {
+    path: 'tab-coupon',
+    loadChildren: () => import('./tab-coupon/tab-coupon.module').then( m => m.TabCouponPageModule)
   }
 ];
 
