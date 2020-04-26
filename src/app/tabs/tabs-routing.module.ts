@@ -61,6 +61,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'tab-coupon-vendors',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('./tab-coupon-vendors/tab-coupon-vendors.module').then( m => m.TabCouponVendorsPageModule)
+          }
+        ]
+      }
+      {
         path: '',
         redirectTo: '/tabs/tab-data',
         pathMatch: 'full'
