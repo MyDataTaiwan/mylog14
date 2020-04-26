@@ -68,7 +68,7 @@ const routes: Routes = [
             loadChildren: () => import('./tab-coupon-vendors/tab-coupon-vendors.module').then( m => m.TabCouponVendorsPageModule)
           }
         ]
-      }
+      },
       {
         path: '',
         redirectTo: '/tabs/tab-data',
