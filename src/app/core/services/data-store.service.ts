@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of, Observable } from 'rxjs';
+import { BehaviorSubject, of, Observable, concat, forkJoin } from 'rxjs';
 import { RecordMeta } from '../classes/record-meta';
 import { LocalStorageService } from './local-storage.service';
-import { tap, map, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, take } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
 import { UserData } from '../interfaces/user-data';
@@ -18,6 +18,13 @@ export class DataStoreService {
     map(recordMetaList => (recordMetaList) ? recordMetaList : []),
     switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
     map(records => new DailyRecords(records)),
+    switchMap(dailyRecords => {
+      const userData = this.userData.getValue();
+      userData.startDate = dailyRecords.startDate;
+      userData.endDate = dailyRecords.endDate;
+      return forkJoin([this.updateUserData(userData), of(dailyRecords)]);
+    }),
+    map(([_, dailyRecords]) => dailyRecords),
   );
 
   public overviewCards$ = this.dailyRecords$.pipe(

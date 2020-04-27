@@ -1,8 +1,8 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
-import { Observable } from 'rxjs';
-import { tap, map } from 'rxjs/operators';
+import { Observable, interval, Subject, timer, defer, concat } from 'rxjs';
+import { tap, map, take, takeUntil, switchMap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -12,7 +12,8 @@ import { DataStoreService } from 'src/app/core/services/data-store.service';
 })
 
 
-export class DailyOverviewComponent implements OnInit {
+export class DailyOverviewComponent implements OnInit, OnDestroy {
+  destroy$ = new Subject();
   items$ = new Observable<CardItem[]>();
 
   WhatIsItToday = 0;
@@ -31,7 +32,7 @@ export class DailyOverviewComponent implements OnInit {
     path: '/assets/MyLog14BBT.json',
   };
 
-  TEMPimg:'/assets/imgA.png'
+  TEMPimg: '/assets/imgA.png'
   private animationItem: AnimationItem;
   private isAnimationCreated: boolean = false;
   emptyCardItem = {
@@ -49,110 +50,54 @@ export class DailyOverviewComponent implements OnInit {
     private ngZone: NgZone
   ) {
     this.items$ = this.dataStore.overviewCards$
-    .pipe(
+      .pipe(
         map(cards => cards.reverse()),
-        tap((cardItems: CardItem[]) => {
-          this.todate(cardItems.length);
-        })
       );
-
-
   }
 
   ngOnInit() {
   }
 
-  AC($event) {
-    this.animationCreated($event);
-    this.today();
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  animationCreated(animationItem: AnimationItem) {
+  onAnimationCreated(animationItem: AnimationItem) {
     this.animationItem = animationItem;
-    console.log("is animation");
-    console.log(animationItem);
-    console.log("is animation");
   }
 
-  async today() {
-    // const data = this.items.length;
-    // const data = 4;
-    const data = this.WhatIsItToday;
-
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[data], true))
-    await new Promise((resolve) => {
-      const timer = setInterval(() => {
-
-        clearInterval(timer);
-        resolve();
-
-      }, (data) * 1000);
-    });
-    this.Stopday(data);
-  }
-  async todate(date) {
-    // const data = this.items.length;
-    // const data = 4;
-
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[date], true))
-    await new Promise((resolve) => {
-      const timer = setInterval(() => {
-
-        clearInterval(timer);
-        resolve();
-
-      }, (date) * 1000);
-    });
-    this.Stopday(date);
+  onDataReady() {
+    this.dataStore.userData$
+      .pipe(
+        take(1),
+        map(userData => userData.startDate),
+        map(startDate => this.dateDiff((new Date(startDate)).getTime(), Date.now())),
+        switchMap(dateDiff => this.startCountdown(dateDiff)),
+        takeUntil(this.destroy$),
+      ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
   }
 
-
-  Stopday(data) {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[data], true))
+  private startCountdown(day: number) {
+    this.animationPlay(day);
+    return timer(day * 1000)
+      .pipe(
+        tap(() => this.animationStopOnDay(day)),
+      );
   }
 
-  // async day(data) {
-  //   await new Promise((resolve) => {
-  //     const timer = setInterval(() => {
-  //       if (this.isAnimationCreated) {
-  //         clearInterval(timer);
-  //         resolve();
-  //       }
-  //     }, 1);
-  //   });
-  //   console.log(this.isAnimationCreated);
-  //   console.log("to day animation" + "dfdfd");
-
-  //   this.ngZone.runOutsideAngular(() =>
-  //     this.animationItem.playSegments(this.arry[this.items.length], true));
-  // }
-
-
-  stop(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.stop());
+  private animationPlay(day: number) {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[day], true));
   }
 
-  play(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.play());
-  }
-  day1(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[1], true));
-  }
-  day2(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[2], true));
-  }
-  day3(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[3], true));
-  }
-  day15(): void {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[15], true));
+  private animationStopOnDay(day: number) {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[day], true))
   }
 
-
-
-  pause() {
-    this.ngZone.runOutsideAngular(() => this.animationItem.pause());
+  private dateDiff(current: number, end: number): number {
+    return Math.ceil((end - current) / (1000 * 3600 * 24));
   }
+
 }
 
 export interface CardItem {
