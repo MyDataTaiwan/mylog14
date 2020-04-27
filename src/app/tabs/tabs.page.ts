@@ -1,55 +1,49 @@
-import { Component, AfterViewInit } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
+import { ModalController, AlertController, IonTabs, PopoverController } from '@ionic/angular';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { SnapshotService } from '../core/services/snapshot.service';
-import { take, debounce, filter, switchMap } from 'rxjs/operators';
-import { interval, Observable } from 'rxjs';
+import { take, debounce, filter, switchMap, takeUntil } from 'rxjs/operators';
+import { interval, Observable, defer, Subject } from 'rxjs';
 import { EulaPage } from '../core/pages/eula/eula.page';
 import { DataStoreService } from '../core/services/data-store.service';
 import { UserData } from '../core/interfaces/user-data';
+import { Event } from '@angular/router';
+import { SharePage } from '../core/pages/share/share.page';
 
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage implements AfterViewInit {
+export class TabsPage implements AfterViewInit, OnDestroy {
+  destroy$ = new Subject();
+  selectedTab: string;
   showDebugButton = false;
   eulaLoader$: Observable<UserData>;
-  tabA = true;
-  tabB = false;
-  tabC = false;
-  tabD = false;
 
   constructor(
     private dataStore: DataStoreService,
     private modalController: ModalController,
+    private popoverCtrl: PopoverController,
     private snapshotService: SnapshotService,
   ) { }
 
-  onClickTabButton(tab) {
-    this.tabA = false;
-    this.tabB = false;
-    this.tabC = false;
-    this.tabD = false;
-    if(tab=='A'){this.tabA = true;} 
-    if(tab=='B'){this.tabB = true;} 
-    if(tab=='C'){this.tabC = true;} 
-    if(tab=='D'){this.tabD = true;}     
-  }
-  onClickTabButtonT() {
-    this.tabA = true;
-    this.tabB = true;
-    this.tabC = true;
-    this.tabD = true;
-  }
   ngAfterViewInit() {
     this.eulaLoader$ = this.dataStore.userData$
       .pipe(
         filter(userData => userData.eulaAccepted === false),
         switchMap(userData => this.presentEulaModal(userData)),
         switchMap(userData => this.dataStore.updateUserData(userData)),
-      )
+      );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  ionTabsDidChange(event: TabsEvent) {
+    this.selectedTab = event.tab;
   }
 
   async presentAddRecordModal() {
@@ -87,4 +81,23 @@ export class TabsPage implements AfterViewInit {
     await this.presentAddRecordModal();
   }
 
+  onClickShareButton() {
+    this.createSharePopover()
+      .pipe(
+        switchMap(popover => popover.present()),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => { }, e => console.log(e));
+  }
+
+  private createSharePopover(): Observable<HTMLIonPopoverElement> {
+    return defer(() => this.popoverCtrl.create({
+      component: SharePage,
+    }));
+  }
+
+}
+
+export interface TabsEvent {
+  tab: string;
 }

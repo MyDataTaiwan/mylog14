@@ -7,6 +7,8 @@ import { AddRecordPageModule } from './pages/add-record/add-record.module';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { EulaPageModule } from './pages/eula/eula.module';
 import { ClickOutsideSameClassDirective } from './directives/click-outside-same-class.directive';
+import { SharePageModule } from './pages/share/share.module';
+import { ShareFinishPageModule } from './pages/share-finish/share-finish.module';
 
 
 
@@ -22,6 +24,8 @@ import { ClickOutsideSameClassDirective } from './directives/click-outside-same-
     MainHeaderModule,
     AddRecordPageModule,
     EulaPageModule,
+    SharePageModule,
+    ShareFinishPageModule,
   ],
   exports: [
     SafeUrlPipe,

@@ -73,5 +73,14 @@
     "confirmDelete": "確定要刪除這張照片嗎？",
     "cancel": "取消",
     "confirm": "確認"
+  },
+  "SHARE": {
+    "copyLink": "複製下列網址以分享資料",
+    "shareToWhom": "紀錄要分享給誰吧",
+    "cancel": "取消",
+    "confirm": "確定",
+    "skip": "略過",
+    "placeholder": "e.g. 小貓貓",
+    "success": "分享成功！"
   }
 }

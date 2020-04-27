@@ -2,17 +2,17 @@
 <div style="height: 30;margin-bottom: 20vw;">
 
   <!-- (click)="onClickTabButton(tabA)" -->
-  <ion-tabs style="background-color: aliceblue;">
-    <ion-tab-bar slot="bottom"   >
-      <ion-tab-button  tab="tab-data" (click)="onClickTabButton('A')" >
-        <img *ngIf="tabA==false" src="../../assets/ui/nav_icon_A.svg" />
-        <img *ngIf="tabA==true" src="../../assets/ui/nav_icon_1.svg" />
+  <ion-tabs (ionTabsDidChange)="ionTabsDidChange($event)" style="background-color: aliceblue;">
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button  tab="tab-data">
+        <img *ngIf="selectedTab !== 'tab-data'" src="../../assets/ui/nav_icon_A.svg" />
+        <img *ngIf="selectedTab === 'tab-data'" src="../../assets/ui/nav_icon_1.svg" />
       </ion-tab-button>
-      <ion-tab-button tab="tab-taiwan" (click)="onClickTabButton('B')" >
-        <img *ngIf="tabB==false" src="../../assets/ui/nav_icon_B.svg" />
-        <img *ngIf="tabB==true" src="../../assets/ui/nav_icon_2.svg" />
+      <ion-tab-button tab="tab-taiwan">
+        <img *ngIf="selectedTab !== 'tab-taiwan'" src="../../assets/ui/nav_icon_B.svg" />
+        <img *ngIf="selectedTab === 'tab-taiwan'" src="../../assets/ui/nav_icon_2.svg" />
       </ion-tab-button>
-      <ion-tab-button tab="tab-data"  disabled="true">
+      <ion-tab-button (click)="onClickShareButton()">
         <img src="../../assets/ui/nav_icon_C.svg" />
       </ion-tab-button>
       <ion-tab-button tab="tab-data"  disabled="true" >
