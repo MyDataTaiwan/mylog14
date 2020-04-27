@@ -1,8 +1,8 @@
 import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions, } from 'ngx-lottie';
-import { Observable, interval, Subject, timer, defer, concat } from 'rxjs';
-import { tap, map, take, takeUntil, switchMap } from 'rxjs/operators';
+import { Observable, Subject, timer } from 'rxjs';
+import { tap, map, takeUntil, switchMap, filter } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -15,6 +15,7 @@ import { DataStoreService } from 'src/app/core/services/data-store.service';
 export class DailyOverviewComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   items$ = new Observable<CardItem[]>();
+  cachedDateDiff = -10;
 
   WhatIsItToday = 0;
 
@@ -68,28 +69,30 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     this.animationItem = animationItem;
   }
 
-  onDataReady() {
+  onConfigReady() {
     this.dataStore.userData$
       .pipe(
-        take(1),
         map(userData => userData.startDate),
         map(startDate => this.dateDiff((new Date(startDate)).getTime(), Date.now())),
-        tap(dateDiff => this.WhatIsItToday = dateDiff),
+        map(dateDiff => isNaN(dateDiff) ? -1 : dateDiff),
+        filter(dateDiff => this.cachedDateDiff !== dateDiff), // Don't trigger animation if dateDiff is not changed
+        tap(dateDiff => this.cachedDateDiff = dateDiff),
         switchMap(dateDiff => this.startCountdown(dateDiff)),
         takeUntil(this.destroy$),
       ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
   }
 
   private startCountdown(day: number) {
-    this.animationPlay(day);
-    return timer(day * 1000)
+    const idx = day + 1; // The animation array has +1 offset
+    this.animationPlay(idx);
+    return timer(idx * 1000)
       .pipe(
-        tap(() => this.animationStopOnDay(day)),
+        tap(() => this.animationStopOnDay(idx)),
       );
   }
 
-  private animationPlay(day: number) {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[day], true));
+  private animationPlay(idx: number) {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[idx], true));
   }
 
   goToLink(url: string) {
@@ -99,8 +102,8 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private animationStopOnDay(day: number) {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[day], true));
+  private animationStopOnDay(idx: number) {
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[idx], true));
   }
 
   private dateDiff(current: number, end: number): number {
