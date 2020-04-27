@@ -100,11 +100,11 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
 
   private animationStopOnDay(day: number) {
-    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[day], true))
+    this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[day], true));
   }
 
   private dateDiff(current: number, end: number): number {
-    return Math.ceil((end - current) / (1000 * 3600 * 24));
+    return Math.floor((end - current) / (1000 * 3600 * 24));
   }
 
 }
