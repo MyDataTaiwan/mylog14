@@ -5,7 +5,12 @@
   /* border:1px solid #000; */
   ">
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
-    <ng-lottie (click)="goToLink('https://www.mydata.org.tw/')" [options]="options" (animationCreated)="onAnimationCreated($event)" (dataReady)="onDataReady()"></ng-lottie>
+    <ng-lottie
+    (click)="goToLink('https://www.mydata.org.tw/')"
+    [options]="options"
+    (animationCreated)="onAnimationCreated($event)"
+    (dataReady)="onDataReady()"
+    ></ng-lottie>
   </div>
 </div>
   <!-- {{items.length}} -->
