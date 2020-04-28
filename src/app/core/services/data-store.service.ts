@@ -20,28 +20,11 @@ export class DataStoreService {
     map(records => new DailyRecords(records)),
     tap(res=>console.log("tAp:dailyRecords",res))
   );
-  // public dailydrips$ = this.recordMetaList$.pipe(
-  //   map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-  //   switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
-  //   map(records => new DailyRecords(records)),
-  //   tap(res=>console.log("tAp:dailydripsA",res)),
-  //   switchMap(records =>records.list ),
-  //   tap(res=>console.log("tAp:dailydripsB",res)),
-  //   mergeMap(
-  //     val => myPromise(val),
-  //     (valueFromSource, valueFromPromise) => {
-  //       return `Source: ${valueFromSource}, Promise: ${valueFromPromise}`;
-  //     }
-  //   )
-  // );
   public dailydrips$ = this.recordMetaList$.pipe(
     map(recordMetaList => (recordMetaList) ? recordMetaList : []),
     switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
     map(records => records.length),
   );
-      // return records.list.map((index => { index.records.length}))
-
-
   public overviewCards$ = this.dailyRecords$.pipe(
     map(dailyRecords => {
       return dailyRecords.list
