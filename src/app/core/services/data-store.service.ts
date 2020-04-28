@@ -27,6 +27,12 @@ export class DataStoreService {
     map(([_, dailyRecords]) => dailyRecords),
   );
 
+  public dailydrips$ = this.recordMetaList$.pipe(
+    map(recordMetaList => (recordMetaList) ? recordMetaList : []),
+    switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
+    map(records => records.length),
+  );
+
   public overviewCards$ = this.dailyRecords$.pipe(
     map(dailyRecords => {
       return dailyRecords.list
