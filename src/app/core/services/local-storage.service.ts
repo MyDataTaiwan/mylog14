@@ -32,6 +32,12 @@ export class LocalStorageService {
     );
   }
 
+  getRawRecords(recordMetaList: RecordMeta[]): Observable<string[]> {
+    return forkJoin(
+      recordMetaList.map(recordMeta => this.fileSystem.getJsonData(recordMeta.path, recordMeta.directory, false)),
+    );
+  }
+
   saveRecord(record: Record, recordMetaList: RecordMeta[]): Observable<RecordMeta[]> {
     const fileSave$ = this.fileSystem.saveJsonData(record);
     return fileSave$
