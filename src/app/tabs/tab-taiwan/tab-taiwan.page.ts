@@ -71,7 +71,7 @@ export class TabTaiwanPage implements OnInit {
 
     this.drip = this.drip + 1
     console.log(days);
-    if (days <= 0) {
+    if (days <= 1) {
       this.isDisabled = true;
     } else {
       this.isDisabled = false;
