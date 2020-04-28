@@ -1,6 +1,7 @@
-import { Component, OnInit ,NgZone} from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
+import { DataStoreService } from '../../core/services/data-store.service';
 
 @Component({
   selector: 'app-tab-taiwan',
@@ -8,7 +9,7 @@ import { AnimationOptions } from 'ngx-lottie';
   styleUrls: ['./tab-taiwan.page.scss'],
 })
 export class TabTaiwanPage implements OnInit {
-	options: AnimationOptions = {
+  options: AnimationOptions = {
     // path: '/assets/lottie-animation.json',
     path: '/assets/lottie/rain.json',
 
@@ -18,11 +19,15 @@ export class TabTaiwanPage implements OnInit {
     path: '/assets/lottie/island.json',
 
   };
-  
+  drip = 1;
+  isDisabled = false;
 
   private animationItem: AnimationItem;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(
+    private ngZone: NgZone,
+    public dataStore: DataStoreService,
+  ) { }
 
   ngOnInit() {
   }
@@ -35,9 +40,42 @@ export class TabTaiwanPage implements OnInit {
     this.ngZone.runOutsideAngular(() => this.animationItem.stop());
   }
 
-  play(): void {
+  // play(): void {
+  //   this.ngZone.runOutsideAngular(() => this.animationItem.play());
+  // }
+  play(days): void {
+    
+    // this.dataStore.dailydrips$.subscribe((v) => console.log('subscribe dailydrips: ', v.records.length));
+    this.dataStore.dailydrips$.subscribe((v) => console.log('subscribe dailydrips: ', v));
+
+    this.dataStore.dailyRecords$.subscribe((v) => console.log('got new heroes list: ', v));
+    this.dataStore.dailyRecords$.subscribe((v) => console.log('got new heroes list records: ', v.list[3].records));
+    this.dataStore.dailyRecords$.subscribe((v) => v.list.map((index => { console.log(index.records.length) })));
+    // b.reduce((total,currentObj) =>total.a.length+ currentObj.a.length)
+    this.dataStore.dailyRecords$.subscribe((v) => v.list.reduce((total: any, currentObj: any) => {
+      console.log(total.records.length + currentObj.records.length)
+      this.drip = total.records.length + currentObj.records.length
+      console.log("drip",this.drip)
+      return {
+        records: total.records.length + currentObj.records.length
+      }
+    }, {
+      records: 0
+    })
+    );
+
+
+
+
+
+    this.drip = this.drip + 1
+    console.log(days);
+    if (days <= 0) {
+      this.isDisabled = true;
+    } else {
+      this.isDisabled = false;
+    }
     this.ngZone.runOutsideAngular(() => this.animationItem.play());
   }
 
-  
 }
