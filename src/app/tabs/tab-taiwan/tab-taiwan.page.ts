@@ -1,15 +1,18 @@
-import { Component, OnInit, NgZone, } from '@angular/core';
+import { Component, OnInit, NgZone, OnDestroy, } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 import { DataStoreService } from '../../core/services/data-store.service';
 import { Platform } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab-taiwan',
   templateUrl: './tab-taiwan.page.html',
   styleUrls: ['./tab-taiwan.page.scss'],
 })
-export class TabTaiwanPage implements OnInit {
+export class TabTaiwanPage implements OnInit, OnDestroy {
+  destroy$ = new Subject();
   options: AnimationOptions = {
     // path: '/assets/lottie-animation.json',
     path: '/assets/lottie/rain.json',
@@ -21,8 +24,8 @@ export class TabTaiwanPage implements OnInit {
 
   };
   drip = 0;
-  drips=0;
-  
+  drips = 0;
+
   isDisabled = false;
 
   private animationItem: AnimationItem;
@@ -34,7 +37,14 @@ export class TabTaiwanPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.dataStore.dailydrips$.subscribe((v) => this.drips=v);
+    this.dataStore.dailydrips$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((v) => this.drips = v);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   animationCreated(animationItem: AnimationItem): void {
