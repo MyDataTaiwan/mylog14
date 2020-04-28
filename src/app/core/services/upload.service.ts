@@ -7,6 +7,7 @@ import { defer, from, forkJoin, of, BehaviorSubject } from 'rxjs';
 import { DataStoreService } from './data-store.service';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
+import { runTransaction } from '@numbersprotocol/niota';
 
 @Injectable({
   providedIn: 'root'
@@ -30,14 +31,16 @@ export class UploadService {
           return forkJoin([
             of(recordMetaList.map(recordMeta => recordMeta.path)),
             this.localStorage.getRawRecords(recordMetaList),
+            of(recordMetaList),
           ]);
         }),
-        map(([filenames, rawRecords]) => {
+        map(([filenames, rawRecords, recordMetaList]) => {
           const cachedFiles: CachedFile[] = [];
           filenames.map((filename, idx) => cachedFiles.push({
             filename,
             type: 'json',
             content: rawRecords[idx],
+            hash: recordMetaList[idx].hash,
           }));
           return cachedFiles;
         })
@@ -45,25 +48,40 @@ export class UploadService {
   }
 
   private createVerificationJson(cachedFiles: CachedFile[]) {
-    const verification = {};
-    cachedFiles.forEach(cachedFile => {
-      verification[cachedFile.filename] = '';
-    });
-    const verificationJson: CachedFile = {
-      filename: 'verification.json',
-      type: 'json',
-      content: JSON.stringify(verification),
-    };
-    return verificationJson;
+    return forkJoin(cachedFiles.map(cachedFile => this.registerOnLedger(cachedFile.hash)))
+      .pipe(
+        map(ledgerHashes => {
+          console.log('ledger Hashes', ledgerHashes);
+          const verification = {};
+          cachedFiles.forEach((cachedFile, idx) => {
+            verification[cachedFile.filename] = ledgerHashes[idx];
+          });
+          return verification;
+        }),
+        map(verification => {
+          const verificationJson: CachedFile = {
+            filename: 'verification.json',
+            type: 'json',
+            content: JSON.stringify(verification),
+          };
+          return verificationJson;
+        })
+      );
   }
 
   private createZip(cachedFiles: CachedFile[]) {
-    const zip = new JSZip();
-    cachedFiles.push(this.createVerificationJson(cachedFiles));
-    cachedFiles.forEach(cachedFile => {
-      zip.file(cachedFile.filename, cachedFile.content);
-    });
-    return defer(() => zip.generateAsync({ type: 'blob' }));
+    return this.createVerificationJson(cachedFiles)
+      .pipe(
+        map(verificationJson => {
+          const zip = new JSZip();
+          cachedFiles.push(verificationJson);
+          cachedFiles.forEach(cachedFile => {
+            zip.file(cachedFile.filename, cachedFile.content);
+          });
+          return zip;
+        }),
+        switchMap(zip => zip.generateAsync({ type: 'blob' })),
+      );
   }
 
   private postArchive(blob: Blob) {
@@ -71,10 +89,17 @@ export class UploadService {
     const url = 'https://mylog14.numbersprotocol.io/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'test.zip');
-    return this.http.post(url, formData)
+    return this.http.post(tmpUrl, formData)
       .pipe(
         tap((res: string) => this.generatedUrl.next(res)),
       );
+  }
+
+  private registerOnLedger(hash: string): Promise<string> {
+    const address = 'HEQLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWOR99D';
+    const seed = 'PUEOTSEITFEVEWCWBTSIZM9NKRGJEIMXTULBACGFRQK9IMGICLBKW9TTEVSDQMGWKBXPVCBMMCXWMNPDX';
+    const rawMsg = {hash};
+    return runTransaction(address, seed, rawMsg);
   }
 
   uploadZip() {
