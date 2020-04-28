@@ -20,7 +20,7 @@ export class TabTaiwanPage implements OnInit {
     path: '/assets/lottie/island.json',
 
   };
-  drip = 1;
+  drip = 0;
   drips=0;
   
   isDisabled = false;
