@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { FileSystemService } from './file-system.service';
 import { LocalStorageService } from './local-storage.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import * as JSZip from 'jszip';
-import { defer, from, forkJoin, of } from 'rxjs';
+import { defer, from, forkJoin, of, BehaviorSubject } from 'rxjs';
 import { DataStoreService } from './data-store.service';
-import { map, switchMap, take } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
+  private generatedUrl = new BehaviorSubject<string>('');
+  public generatedUrl$ = this.generatedUrl.asObservable();
 
   constructor(
     private dataStore: DataStoreService,
@@ -65,11 +67,14 @@ export class UploadService {
   }
 
   private postArchive(blob: Blob) {
-    // const tmpUrl = 'http://127.0.0.1:8000/api/v1/archives/';
+    const tmpUrl = 'http://127.0.0.1:8000/api/v1/archives/';
     const url = 'https://mylog14.numbersprotocol.io/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'test.zip');
-    return this.http.post(url, formData);
+    return this.http.post(url, formData)
+      .pipe(
+        tap((res: string) => this.generatedUrl.next(res)),
+      );
   }
 
   uploadZip() {
