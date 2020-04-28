@@ -1,13 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PickerController, ModalController,PopoverController, AlertController, LoadingController } from '@ionic/angular';
+import { PickerController, ModalController, PopoverController, AlertController, LoadingController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, from, defer, forkJoin, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, from, defer, forkJoin, Subject, concat, pipe, timer, zip, of } from 'rxjs';
+import { switchMap, takeUntil, tap, delay, concatMap } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-record',
@@ -39,6 +40,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
   constructor(
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
+    private location: Location,
     private pickerCtrl: PickerController,
     private geolocationService: GeolocationService,
     private snapshotService: SnapshotService,
@@ -64,12 +66,30 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  async openModal() {
-    const popover = await this.popoverController.create({
+  showRecordFinish() {
+    return defer(() => this.popoverController.create({
       component: RecordFinishPage,
       translucent: true,
-    });
-    return popover.present();
+    }))
+      .pipe(
+        switchMap(popover => forkJoin([
+          this.displayPopoverForDuration(popover, 0.5),
+          this.onPopoverDismissNavigateBack(popover),
+        ])),
+      );
+  }
+
+  private displayPopoverForDuration(popover: HTMLIonPopoverElement, seconds: number) {
+    return from(popover.present())
+      .pipe(
+        delay(seconds * 1000),
+        switchMap(() => popover.dismiss()),
+      );
+  }
+
+  private onPopoverDismissNavigateBack(popover: HTMLIonPopoverElement) {
+    return from(popover.onDidDismiss())
+      .pipe(tap(() => this.location.back()));
   }
 
   async presentBtPicker() {
@@ -132,17 +152,16 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   onSubmitClick() {
-    this.submitRecord().subscribe();
+    this.submitRecord().subscribe(() => {});
   }
 
-  submitRecord(): Observable<boolean> {
+  submitRecord(): Observable<any> {
     const loading$ = defer(() => from(this.presentLoading()));
     const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
     return forkJoin([loading$, snapRecord$])
       .pipe(
         switchMap(([loadingElement, _]) => loadingElement.dismiss()),
-        switchMap(() => this.openModal()),
-        switchMap(() => this.modalCtrl.dismiss()),
+        switchMap(() => this.showRecordFinish()),
         takeUntil(this.destroy$),
       );
   }
