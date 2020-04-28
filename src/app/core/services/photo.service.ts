@@ -62,7 +62,7 @@ export class PhotoService {
           // Don't save the base64 representation of the photo data,
           // since it's already saved on the Filesystem
           const photoCopy = { ...p };
-          delete photoCopy.base64;
+          delete photoCopy.byteString;
         }))
     });
     // const photoBase64 = await this.readAsBase64(capturedPhoto);
@@ -91,7 +91,7 @@ export class PhotoService {
         });
 
         // Web platform only: Save the photo into the base64 field
-        photo.base64 = `data:image/jpeg;base64,${readFile.data}`;
+        photo.byteString = `data:image/jpeg;base64,${readFile.data}`;
       }
     }
 
@@ -105,7 +105,7 @@ export class PhotoService {
     const base64Data = await this.readAsBase64(cameraPhoto);
 
     // Write the file to the data directory
-    const fileName = formatDate(new Date(), 'yyyy-MM-ddThh-mm-ss', 'en-us') + '.jpeg';
+    const fileName = `${Math.floor(Date.now() / 1000)}.jpg`;
     await Filesystem.writeFile({
       path: fileName,
       data: base64Data,
@@ -142,6 +142,8 @@ export class PhotoService {
 
   // Retrieve the photo metadata based on the platform the app is running on
   private async getPhotoFile(cameraPhoto: CameraPhoto, fileName: string): Promise<Photo> {
+    let base64String = await this.readAsBase64(cameraPhoto);
+    base64String = base64String.split(',')[1]; // Remove "data:image/jpeg;base64," data schema
     if (this.platform.is('hybrid')) {
       // Get the new, complete filepath of the photo saved on filesystem
       const fileUri = await Filesystem.getUri({
@@ -154,13 +156,15 @@ export class PhotoService {
       return {
         filepath: fileUri.uri,
         webviewPath: Capacitor.convertFileSrc(fileUri.uri),
+        byteString: base64String,
       };
     } else {
       // Use webPath to display the new image instead of base64 since it's 
       // already loaded into memory
       return {
         filepath: fileName,
-        webviewPath: cameraPhoto.webPath
+        webviewPath: cameraPhoto.webPath,
+        byteString: base64String,
       };
     }
   }
