@@ -1,27 +1,62 @@
 <ion-content *ngIf="stage === 0">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col class="ion-text-center">{{ 'SHARE.confirmShare' | translate }}</ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+    </ion-row>
+    <ion-row>
+      <ion-col size="6"></ion-col>
+      <ion-col size="6">
+        <ion-button fill="clear" color="dark" (click)="cancel()">{{ 'SHARE.cancel' | translate }}</ion-button>
+        <ion-button fill="clear" color="dark" (click)="confirm()">{{ 'SHARE.confirm' | translate }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content *ngIf="stage === 1">
+  <ng-container *ngIf="uploadService.generatedUrl$ | async as generatedUrl; else loading">
   <ion-row>
     <ion-col class="ion-text-center">{{ 'SHARE.copyLink' | translate }}</ion-col>
   </ion-row>
   <ion-row class="ion-justify-content-center">
-      <div class="paperclip" (click)="onClickCopy()">
-        <div>
-          <img src="../../../assets/ui/link.svg">
-        </div>
+    <div class="paperclip" (click)="onClickCopy()">
+      <div>
+        <img src="../../../assets/ui/link.svg">
       </div>
-      <div class="link">
-          <input type="text" readonly [value]="uploadService.generatedUrl$ | async">
-      </div>
+    </div>
+    <div class="link">
+      <input type="text" readonly [value]="generatedUrl">
+    </div>
   </ion-row>
   <ion-row>
     <ion-col size="6"></ion-col>
     <ion-col size="6">
       <ion-button fill="clear" color="dark" (click)="cancel()">{{ 'SHARE.cancel' | translate }}</ion-button>
-      <ion-button fill="clear" color="dark" (click)="confirm()">{{ 'SHARE.confirm' | translate }}</ion-button>
+      <ion-button fill="clear" color="dark" (click)="confirm()" [attr.disabled]="generatedUrl === ''">{{ 'SHARE.confirm' | translate }}</ion-button>
     </ion-col>
   </ion-row>
+  </ng-container>
+  <ng-template #loading>
+    <ion-row>
+      <ion-col class="ion-text-center">{{ 'SHARE.uploading' | translate }}</ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-spinner></ion-spinner>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6"></ion-col>
+      <ion-col size="6">
+        <ion-button fill="clear" color="dark" (click)="cancel()">{{ 'SHARE.cancel' | translate }}</ion-button>
+        <ion-button fill="clear" color="dark" (click)="confirm()" disabled>
+          {{ 'SHARE.confirm' | translate }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ng-template>
 </ion-content>
 
-<ion-content *ngIf="stage === 1">
+<ion-content *ngIf="stage === 2">
   <ion-row>
     <ion-col class="ion-text-center">{{ 'SHARE.shareToWhom' | translate }}</ion-col>
   </ion-row>
@@ -39,7 +74,7 @@
   </ion-row>
 </ion-content>
 
-<ion-content style="justify-items: center;margin-top: 50vh;" *ngIf="stage === 2">
+<ion-content style="justify-items: center;margin-top: 50vh;" *ngIf="stage === 3">
   <ion-grid style="width:100%;height:100%;overflow:scroll;align-items: center;justify-items: center;">
     <div style="display: flex;flex-direction: column;align-items: center;">
       <img style="width:100px;height:100px;" src="../assets/ui/success.svg" />

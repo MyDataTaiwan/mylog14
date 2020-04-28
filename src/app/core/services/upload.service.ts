@@ -110,4 +110,8 @@ export class UploadService {
       );
   }
 
+  clearUrl() {
+    this.generatedUrl.next('');
+  }
+
 }

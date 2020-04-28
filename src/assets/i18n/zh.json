@@ -75,6 +75,8 @@
     "confirm": "確認"
   },
   "SHARE": {
+    "confirmShare": "你想要上傳資料並產生分享連結嗎？",
+    "uploading": "正在上傳資料並產生分享連結...",
     "copyLink": "複製下列網址以分享資料",
     "shareToWhom": "紀錄要分享給誰吧",
     "cancel": "取消",
