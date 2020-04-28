@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import { ToastController, PopoverController } from '@ionic/angular';
 import { defer, concat, Subject, from } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, take } from 'rxjs/operators';
 import { ShareFinishPage } from '../share-finish/share-finish.page';
+import { UploadService } from '../../services/upload.service';
 
 const { Clipboard } = Plugins;
 
@@ -15,10 +16,11 @@ const { Clipboard } = Plugins;
 export class SharePage implements OnInit, OnDestroy {
   destroy$ = new Subject();
   stage = 0;
-  linkUrl = 'https://mylog14.numbersprotocol.io/dashboard/42ffc50c-ec72-416b-9bb6-94d8b9086766/';
+
   constructor(
     private popoverCtrl: PopoverController,
     private toastCtrl: ToastController,
+    public uploadService: UploadService,
   ) { }
 
   ngOnInit() {
@@ -30,13 +32,11 @@ export class SharePage implements OnInit, OnDestroy {
   }
 
   onClickCopy() {
-    concat(
-      Clipboard.write({
-        string: this.linkUrl
-      }),
-      this.presentToastCopied(),
-    )
+    this.uploadService.generatedUrl$
       .pipe(
+        take(1),
+        switchMap(url => Clipboard.write({string: url})),
+        switchMap(() => this.presentToastCopied()),
         takeUntil(this.destroy$),
       )
       .subscribe();

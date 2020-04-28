@@ -49,7 +49,7 @@ export class SnapshotService {
   }
 
   getTimestamp(): number {
-    return Date.now();
+    return Math.floor(Date.now() / 1000);
   }
 
   createSnapshot(): Observable<Snapshot> {

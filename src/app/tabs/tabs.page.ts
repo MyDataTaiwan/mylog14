@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, ViewChild, OnDestroy } from '@angular/core';
-import { ModalController, AlertController, IonTabs, PopoverController } from '@ionic/angular';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { SnapshotService } from '../core/services/snapshot.service';
 import { take, debounce, filter, switchMap, takeUntil } from 'rxjs/operators';
@@ -7,8 +7,8 @@ import { interval, Observable, defer, Subject } from 'rxjs';
 import { EulaPage } from '../core/pages/eula/eula.page';
 import { DataStoreService } from '../core/services/data-store.service';
 import { UserData } from '../core/interfaces/user-data';
-import { Event } from '@angular/router';
 import { SharePage } from '../core/pages/share/share.page';
+import { UploadService } from '../core/services/upload.service';
 
 @Component({
   selector: 'app-tabs',
@@ -26,6 +26,7 @@ export class TabsPage implements AfterViewInit, OnDestroy {
     private modalController: ModalController,
     private popoverCtrl: PopoverController,
     private snapshotService: SnapshotService,
+    private uploadService: UploadService,
   ) { }
 
   ngAfterViewInit() {
@@ -88,6 +89,8 @@ export class TabsPage implements AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => { }, e => console.log(e));
+    this.uploadService.uploadZip()
+      .subscribe(res => console.log(res), err => console.log(err));
   }
 
   private createSharePopover(): Observable<HTMLIonPopoverElement> {

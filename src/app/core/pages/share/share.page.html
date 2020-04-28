@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="link">
-          <input type="text" readonly [value]="linkUrl">
+          <input type="text" readonly [value]="uploadService.generatedUrl$ | async">
       </div>
   </ion-row>
   <ion-row>

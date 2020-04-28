@@ -26,7 +26,7 @@ export class FileSystemService {
       );
   }
 
-  getJsonData(fileName: string, dir = FilesystemDirectory.Data): Observable<any> {
+  getJsonData(fileName: string, dir = FilesystemDirectory.Data, parse = true): Observable<any> {
     const readFile$ = defer(() => from(Filesystem.readFile({
       encoding: this.defaultEncoding,
       path: fileName,
@@ -37,7 +37,7 @@ export class FileSystemService {
         map(readResult => readResult.data),
         filter(data => data != null),
         defaultIfEmpty('{}'),
-        map(data => JSON.parse(data)),
+        map(data => parse ? JSON.parse(data) : data),
       );
   }
 
