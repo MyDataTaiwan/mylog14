@@ -1,0 +1,75 @@
+{
+  "TOUR": {
+    "getStarted": "Démarrage",
+    "slide1": {
+      "title1": "Protéger vos données personnelles",
+      "title2": "",
+      "desc1": "Gérer vos données personnelles",
+      "desc2": "et partager avec consentement"
+    },
+    "slide2": {
+      "title1": "Suivre vos activités courantes",
+      "title2": "",
+      "desc1": "Suivre vos symtômes liés au COVID-19",
+      "desc2": "Réduire la pression des services de santé"
+    },
+    "slide3": {
+      "title1": "Visualiser les données",
+      "title2": "",
+      "desc1": "Comprendre aisément les données journalières",
+      "desc2": ""
+    },
+    "slide4": {
+      "title1": "Participer à la lutte pour la maîtrise de la pandémie",
+      "title2": "",
+      "desc1": "Restez à la maison",
+      "desc2": "Protéger le monde de manière solidaire"
+    }
+  },
+  "EULA": {
+    "agree": "Accord"
+  },
+  "DIARY": {
+    "title": "My Data",
+    "select": "漢語"
+  },
+  "SYMPTOM": {
+    "coughing": "Toux",
+    "runnyNose": "Ecoulement nasal",
+    "nasalCongestion": "Congestion nasale",
+    "sneezing": "Eternuement",
+    "shortnessOfBreath": "Essouflement / Dyspnée",
+    "malaiseOrTiredness": "Malaise / Fatigue",
+    "lossOfTasteOrSmell": "Perte de goût et/ou odorat",
+    "diarrhea": "Diarrhée",
+    "abdominalPain": "Douleurs abdominales",
+    "vomiting": "Vomissement",
+    "chills": "Frissons / Refroidissement",
+    "muscleOrJointSoreness": "Douleurs musculaires ou articulaires",
+    "soreThroat": "Maux de gorge",
+    "sputum": "Crachats / Expectorations",
+    "fever": "Fièvre"
+  },
+  "DAILY_RECORD": {
+    "title": "Suivi journalier",
+    "bodyTemperature": "Température corporelle",
+    "symptoms": "Symptômes",
+    "splitter": ", ",
+    "coughing": "Tousser",
+    "headache": "Maux de tête",
+    "runnyNose": "Ecoulement nasal",
+    "soreThroat": "Maux de gorge",
+    "submit": "Soumettre",
+    "clear": "Effacer",
+    "recorded": "Enregistré",
+    "ok": "Accepter"
+  },
+  "RECORD_FINISH": {
+    "finish": "Enregistré!"
+  },
+  "IMG_POPOVER": {
+    "confirmDelete": "Effacer la photo?",
+    "cancel": "Annuler",
+    "confirm": "Confirmer"
+  }
+}
