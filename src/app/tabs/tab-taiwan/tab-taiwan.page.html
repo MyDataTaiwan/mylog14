@@ -41,15 +41,15 @@
 
 
               <ion-button [disabled]="isDisabled" 
-              *ngIf="dataStore.dailyRecords$ | async as days; else loading" (click)="play(days.list.length-drip)" 
+              *ngIf="dataStore.dailydrips$ | async as days; else loading" (click)="play(days-drip)" 
               style="flex: 1; background-color:rgba(255, 255, 255, 0);" col-3>
                 <!-- <ion-badge style="position:absolute;left: 12.5vw;bottom: 15.5vw;" color="warning">11</ion-badge> -->
-                <ion-badge   style="position:absolute;left: 15vw;bottom: 15vw;"color="warning"  >{{days.list.length-drip}}:{{drip}}</ion-badge>
+                <ion-badge   style="position:absolute;left: 12.5vw;bottom: 15vw;"color="warning" *ngIf="dataStore.dailydrips$| async" >{{drips-drip}}:{{drip}}</ion-badge>
                 <!-- <ion-badge *ngFor="let item of   days.list"  style="position:absolute;left: 10vw;bottom: 15vw;"color="warning"  >{{item}}</ion-badge> -->
-
                 <img src="../../assets/ui/rain_icon .svg" />
               </ion-button>
-              <ion-badge style="position:absolute;left: 43vw;bottom: 7vh;" color="warning">11</ion-badge>
+                <ion-badge style="position:absolute;left: 43vw;bottom: 7vh;" color="warning" *ngIf=" platform.is('ipad')  ">{{drips-drip}}:{{drip}}</ion-badge>
+          
               <div style="flex: 1;"></div>
             </div>
           </div>
