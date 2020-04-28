@@ -75,7 +75,7 @@
     "confirm": "Confirm"
   },
   "SHARE": {
-    "confirmShare": "Do you want to upload your data to create a shareable link?",
+    "confirmShare": "Would you like to create a shareable link? (Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours)",
     "uploading": "Uploading data to create a shareable link...",
     "copyLink": "Copy the following link to share your data",
     "shareToWhom": "Who would you like to share your data with?",
