@@ -1,10 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="10" height="10" viewBox="0 0 10 10">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="39" height="14" viewBox="0 0 39 14">
   <defs>
     <clipPath id="clip-symptoms_off">
-      <rect width="10" height="10"/>
+      <rect width="39" height="14"/>
     </clipPath>
   </defs>
   <g id="symptoms_off" clip-path="url(#clip-symptoms_off)">
-    <path id="Path_1522" data-name="Path 1522" d="M12583.178-3309l3.84-3.763,3.879,3.763" transform="translate(12592.074 -3305.763) rotate(-180)" fill="none" stroke="#52c7f4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+    <path id="Path_1526" data-name="Path 1526" d="M35.885,3H7.111C4.85,3,3,3.6,3,4.333v9.333C3,14.4,4.85,15,7.111,15H35.885C38.145,15,40,14.4,40,13.667V4.333C40,3.6,38.145,3,35.885,3Z" transform="translate(-2 -2)" fill="#fff" opacity="0.162"/>
+    <path id="Path_1523" data-name="Path 1523" d="M13.667,3H4.333A1.337,1.337,0,0,0,3,4.333v9.333A1.337,1.337,0,0,0,4.333,15h9.333A1.337,1.337,0,0,0,15,13.667V4.333A1.337,1.337,0,0,0,13.667,3Zm-4.8,9.429L4.333,7.913l.933-.933,3.6,3.583,3.571-3.583.933.933Z" transform="translate(-2 -2)" fill="#f9ad35"/>
   </g>
 </svg>
