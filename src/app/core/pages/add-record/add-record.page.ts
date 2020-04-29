@@ -72,7 +72,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.symptomsView = this.symptomsView
       .map(symptomView => {
         if (symptomView.name === toggledSymptom.name) {
-          symptomView.expand = !symptomView.expand;
+          symptomView.expand = symptomView.present;
           return symptomView;
         } else {
           symptomView.expand = false;
