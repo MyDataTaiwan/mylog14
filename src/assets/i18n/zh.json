@@ -84,6 +84,7 @@
     "confirm": "確定",
     "skip": "略過",
     "placeholder": "e.g. 小貓貓",
-    "success": "分享成功！"
+    "success": "分享成功！",
+    "error": "上傳失敗。請稍後再試"
   }
 }

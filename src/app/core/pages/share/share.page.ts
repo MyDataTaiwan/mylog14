@@ -52,7 +52,11 @@ export class SharePage implements OnInit, OnDestroy {
     if (this.stage === 1) {
       this.uploadService.uploadZip()
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {}, err => console.log(err));
+        .subscribe(() => {}, err => {
+          console.log(err);
+          this.stage = 4;
+          this.uploadService.clearUrl();
+        });
     }
     if (this.stage === 3) {
       this.uploadService.clearUrl();

@@ -84,6 +84,7 @@
     "confirm": "Confirm",
     "skip": "Skip",
     "placeholder": "e.g. John Doe",
-    "success": "Data shared"
+    "success": "Data shared",
+    "error": "Upload error. Please try again later."
   }
 }

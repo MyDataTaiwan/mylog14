@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as JSZip from 'jszip';
 import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable, throwError } from 'rxjs';
 import { DataStoreService } from './data-store.service';
-import { map, switchMap, take, tap, delay, catchError } from 'rxjs/operators';
+import { map, switchMap, take, tap, delay, catchError, timeout } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 import { runTransaction } from '@numbersprotocol/niota';
 
@@ -92,7 +92,7 @@ export class UploadService {
     const url = 'https://mylog14.numbersprotocol.io/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'test.zip');
-    return this.http.post(tmpUrl, formData)
+    return this.http.post(url, formData)
       .pipe(
         tap((res: string) => this.generatedUrl.next(res)),
         catchError(err => this.httpErrorHandler(err)),
@@ -109,6 +109,7 @@ export class UploadService {
     const rawMsg = { hash };
     return from(runTransaction(address, seed, rawMsg))
       .pipe(
+        timeout(10000),
         tap(resultHash => console.log(`Hash ${resultHash} registered on ledger`, resultHash)),
         catchError(err => {
           console.log(err);
