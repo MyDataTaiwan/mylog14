@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FileSystemService } from './file-system.service';
 import { LocalStorageService } from './local-storage.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as JSZip from 'jszip';
-import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable } from 'rxjs';
+import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable, throwError } from 'rxjs';
 import { DataStoreService } from './data-store.service';
-import { map, switchMap, take, tap, delay } from 'rxjs/operators';
+import { map, switchMap, take, tap, delay, catchError } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 import { runTransaction } from '@numbersprotocol/niota';
 
@@ -50,7 +50,7 @@ export class UploadService {
   private createVerificationJson(cachedFiles: CachedFile[]) {
     return forkJoin(cachedFiles.map((cachedFile, idx) => {
       return this.registerOnLedger(cachedFile.hash)
-        .pipe(delay(idx * 100));
+        .pipe(delay(idx * 50));
     }))
       .pipe(
         map(ledgerHashes => {
@@ -95,14 +95,26 @@ export class UploadService {
     return this.http.post(tmpUrl, formData)
       .pipe(
         tap((res: string) => this.generatedUrl.next(res)),
+        catchError(err => this.httpErrorHandler(err)),
       );
+  }
+
+  private httpErrorHandler(err: HttpErrorResponse) {
+    return throwError(err.message || 'server error');
   }
 
   private registerOnLedger(hash: string): Observable<any> {
     const address = 'HEQLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWOR99D';
     const seed = 'PUEOTSEITFEVEWCWBTSIZM9NKRGJEIMXTULBACGFRQK9IMGICLBKW9TTEVSDQMGWKBXPVCBMMCXWMNPDX';
-    const rawMsg = {hash};
-    return from(runTransaction(address, seed, rawMsg));
+    const rawMsg = { hash };
+    return from(runTransaction(address, seed, rawMsg))
+      .pipe(
+        tap(resultHash => console.log(`Hash ${resultHash} registered on ledger`, resultHash)),
+        catchError(err => {
+          console.log(err);
+          return of('');
+        })
+      );
   }
 
   uploadZip() {

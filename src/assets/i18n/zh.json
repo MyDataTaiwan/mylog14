@@ -75,7 +75,8 @@
     "confirm": "確認"
   },
   "SHARE": {
-    "confirmShare": "你想要建立分享連結嗎？（資料會上傳並暫存於雲端，72 小時後自動刪除）",
+    "confirmShare": "你想要建立分享連結嗎？",
+    "confirmShareDesc": "（資料會上傳並暫存於雲端，72 小時後自動刪除）",
     "uploading": "正在上傳資料並產生分享連結...",
     "copyLink": "複製下列網址以分享資料",
     "shareToWhom": "紀錄要分享給誰吧",

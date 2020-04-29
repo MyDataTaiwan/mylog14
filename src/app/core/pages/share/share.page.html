@@ -3,14 +3,14 @@
     <ion-row>
       <ion-col class="ion-text-center">{{ 'SHARE.confirmShare' | translate }}</ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col class="ion-text-center desc">{{ 'SHARE.confirmShareDesc' | translate }}</ion-col>
+    </ion-row>
     <ion-row class="ion-justify-content-center">
     </ion-row>
-    <ion-row>
-      <ion-col size="6"></ion-col>
-      <ion-col size="6">
+    <ion-row class="ion-justify-content-end">
         <ion-button fill="clear" color="dark" (click)="cancel()">{{ 'SHARE.cancel' | translate }}</ion-button>
         <ion-button fill="clear" color="dark" (click)="confirm()">{{ 'SHARE.confirm' | translate }}</ion-button>
-      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
@@ -30,12 +30,9 @@
       <input type="text" readonly [value]="generatedUrl">
     </div>
   </ion-row>
-  <ion-row>
-    <ion-col size="6"></ion-col>
-    <ion-col size="6">
+  <ion-row class="ion-justify-content-end">
       <ion-button fill="clear" color="dark" (click)="cancel()">{{ 'SHARE.cancel' | translate }}</ion-button>
       <ion-button fill="clear" color="dark" (click)="confirm()" [attr.disabled]="generatedUrl === ''">{{ 'SHARE.confirm' | translate }}</ion-button>
-    </ion-col>
   </ion-row>
   </ng-container>
   <ng-template #loading>
@@ -45,13 +42,10 @@
     <ion-row class="ion-justify-content-center">
       <ion-spinner></ion-spinner>
     </ion-row>
-    <ion-row>
-      <ion-col size="6"></ion-col>
-      <ion-col size="6">
+    <ion-row class="ion-justify-content-end">
         <ion-button fill="clear" color="dark" (click)="cancel()">{{ 'SHARE.cancel' | translate }}</ion-button>
         <ion-button fill="clear" color="dark" (click)="confirm()" disabled>
           {{ 'SHARE.confirm' | translate }}</ion-button>
-      </ion-col>
     </ion-row>
   </ng-template>
 </ion-content>
@@ -65,12 +59,9 @@
       <input type="text" [placeholder]="'SHARE.placeholder' | translate">
     </div>
   </ion-row>
-  <ion-row>
-    <ion-col size="6"></ion-col>
-    <ion-col size="6">
+  <ion-row class="ion-justify-content-end">
       <ion-button fill="clear" color="dark" (click)="confirm()">{{ 'SHARE.skip' | translate }}</ion-button>
       <ion-button fill="clear" color="dark" (click)="confirm()">{{ 'SHARE.confirm' | translate }}</ion-button>
-    </ion-col>
   </ion-row>
 </ion-content>
 
