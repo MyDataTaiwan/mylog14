@@ -43,7 +43,7 @@
     "ngx-lottie": "^5.4.0",
     "openpgp": "^4.10.4",
     "rxjs": "~6.5.1",
-    "tslib": "^1.9.0",
+    "tslib": "^1.11.1",
     "utf-8-validate": "^5.0.2",
     "zone.js": "~0.9.1"
   },

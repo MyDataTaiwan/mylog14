@@ -41,7 +41,7 @@
 
 
               <ion-button [disabled]="isDisabled" 
-              *ngIf="dataStore.dailydrips$ | async as days; else loading" (click)="play(days-drip)" 
+              *ngIf="dataStore.dailydrips$ | async as days" (click)="play(days-drip)" 
               style="flex: 1; background-color:rgba(255, 255, 255, 0);" col-3>
                 <!-- <ion-badge style="position:absolute;left: 12.5vw;bottom: 15.5vw;" color="warning">11</ion-badge> -->
                 <ion-badge   style="position:absolute;left: 12.5vw;bottom: 15vw;"color="warning" *ngIf="dataStore.dailydrips$| async" >{{drips-drip}}</ion-badge>
