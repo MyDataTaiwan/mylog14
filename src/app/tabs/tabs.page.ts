@@ -89,8 +89,6 @@ export class TabsPage implements AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => { }, e => console.log(e));
-    this.uploadService.uploadZip()
-      .subscribe(res => console.log(res), err => console.log(err));
   }
 
   private createSharePopover(): Observable<HTMLIonPopoverElement> {
