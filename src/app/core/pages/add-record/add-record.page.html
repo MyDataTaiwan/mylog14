@@ -21,12 +21,12 @@
     </ion-item>
 
 
-    <ion-list *ngFor="let symptom of symptoms.list">
+    <ion-list *ngFor="let symptom of symptomsView">
       <ion-item>
         <ion-label class="ion-padding-start">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
         <ion-toggle [(ngModel)]="symptom.present" (ionChange)="onToggleChanged(symptom)"></ion-toggle>
       </ion-item>
-      <ion-item *ngIf="symptom.present">
+      <ion-item *ngIf="symptom.expand">
         <ion-label position="stacked">Notes</ion-label>
         <ion-textarea  type="text"  [(ngModel)]="symptom.note"></ion-textarea>
       </ion-item>

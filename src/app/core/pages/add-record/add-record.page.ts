@@ -36,6 +36,8 @@ export class AddRecordPage implements OnInit, OnDestroy {
   recorded$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
+  symptoms = new Symptoms();
+  symptomsView: SymptomView[] = this.symptoms.list;
 
   constructor(
     private modalCtrl: ModalController,
@@ -67,14 +69,16 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   onToggleChanged(toggledSymptom: Symptom) {
-    this.symptoms.list
-      .map(symptom => {
-        if (symptom.name === toggledSymptom.name) {
-          return symptom;
+    this.symptomsView = this.symptomsView
+      .map(symptomView => {
+        if (symptomView.name === toggledSymptom.name) {
+          symptomView.expand = !symptomView.expand;
+          return symptomView;
         } else {
-          symptom
+          symptomView.expand = false;
+          return symptomView;
         }
-      })
+      });
   }
 
   showRecordFinish() {
@@ -171,6 +175,9 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   submitRecord(): Observable<any> {
+    // FIXME: It's a dirty hack to add/remove expand value for symptoms view
+    this.symptoms.list = this.symptomsView;
+    this.symptoms.list.forEach((symptom: SymptomView) => delete symptom.expand);
     const loading$ = this.presentLoading();
     const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
     return forkJoin([loading$, snapRecord$])
@@ -185,6 +192,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.bt = this.defaultBt;
     this.btUnit = this.defaultBtUnit;
     this.symptoms.setDefault();
+    this.symptomsView = this.symptoms.list;
+    this.symptomsView = this.symptomsView.map(symptomView => {
+      symptomView.expand = false;
+      return symptomView;
+    });
   }
 
   // Create an integer array [start..end]
@@ -192,4 +204,8 @@ export class AddRecordPage implements OnInit, OnDestroy {
     return Array.from({ length: end - start + 1 }, (_, k) => start + k);
   }
 
+}
+
+export interface SymptomView extends Symptom {
+  expand?: boolean;
 }
