@@ -4,4 +4,5 @@ export interface CachedFile {
     content: string;
     encoding?: string;
     hash?: string;
+    transactionHash?: string;
 }

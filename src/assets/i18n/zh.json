@@ -64,7 +64,8 @@
     "submit": "送出",
     "clear": "清除",
     "recorded": "已紀錄",
-    "ok": "確定"
+    "ok": "確定",
+    "saving": "新增資料與驗證資訊中..."
   },
   "RECORD_FINISH": {
     "finish": "新增成功！"

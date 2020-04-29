@@ -62,7 +62,8 @@
     "submit": "送信",
     "clear": "解除",
     "recorded": "記録が保存されました",
-    "ok": "確定"
+    "ok": "確定",
+    "saving": "Adding new data and verifiable information..."
   },
   "RECORD_FINISH": {
     "finish": "記録が保存されました！"
