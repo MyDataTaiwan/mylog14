@@ -56,8 +56,8 @@ export class DailyRecords {
         return this.toDateString(epochTime);
     }
 
-    private toDateString(time: string | number | Date) {
-        return formatDate(time, 'yyyy-MM-dd', 'en-us');
+    private toDateString(time: number) {
+        return formatDate(time, 'yyyy-MM-dd', 'en-us'); // Convert from epoch time to JS timestamp
     }
 
     private getRecordDayOne(records: Record[]): string {
@@ -65,6 +65,6 @@ export class DailyRecords {
             return null;
         }
         const ascendingRecords = records.sort((a, b) => +a.timestamp - +b.timestamp);
-        return this.toDateString(ascendingRecords[0].timestamp * 1000);
+        return this.toDateString(ascendingRecords[0].timestamp);
     }
 }

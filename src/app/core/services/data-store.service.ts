@@ -25,6 +25,7 @@ export class DataStoreService {
       return forkJoin([this.updateUserData(userData), of(dailyRecords)]);
     }),
     map(([_, dailyRecords]) => dailyRecords),
+    tap(d => console.log('Daily records', d)),
   );
 
   public dailydrips$ = this.recordMetaList$.pipe(
