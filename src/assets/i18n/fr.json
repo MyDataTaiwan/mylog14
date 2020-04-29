@@ -62,7 +62,8 @@
     "submit": "Soumettre",
     "clear": "Effacer",
     "recorded": "Enregistré",
-    "ok": "Accepter"
+    "ok": "Accepter",
+    "saving": "Adding new data and verifiable information..."
   },
   "RECORD_FINISH": {
     "finish": "Enregistré!"

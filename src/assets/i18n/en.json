@@ -64,7 +64,8 @@
     "submit": "Submit",
     "clear": "Clear",
     "recorded": "Record Saved",
-    "ok": "OK"
+    "ok": "OK",
+    "saving": "Adding new data and verifiable information..."
   },
   "RECORD_FINISH": {
     "finish": "Record saved!"

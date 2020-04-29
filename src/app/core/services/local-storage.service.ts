@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Plugins, FilesystemDirectory } from '@capacitor/core';
 import { Observable, defer, from, forkJoin, of } from 'rxjs';
 import { RecordMeta } from '../classes/record-meta';
-import { mergeMap, map, tap } from 'rxjs/operators';
+import { mergeMap, map, tap, switchMap } from 'rxjs/operators';
 import { FileSystemService } from './file-system.service';
 import { Record } from '../interfaces/record';
 import { UserData } from '../interfaces/user-data';
+import { LedgerService } from './ledger.service';
 
 const { Storage } = Plugins;
 
@@ -20,6 +21,7 @@ export class LocalStorageService {
 
   constructor(
     private fileSystem: FileSystemService,
+    private ledger: LedgerService,
   ) { }
 
   getRecord(recordMeta: RecordMeta): Observable<Record> {
@@ -44,6 +46,11 @@ export class LocalStorageService {
       .pipe(
         mergeMap(filename => forkJoin([of(filename), this.fileSystem.getFileHash(filename)])),
         map(([filename, hash]) => new RecordMeta(record.timestamp, filename, this.RECORD_DIRECTORY, hash)),
+        switchMap(recordMeta => forkJoin([of(recordMeta), this.ledger.createTransactionHash(recordMeta.hash)])),
+        map(([recordMeta, transHash]) => {
+          recordMeta.transactionHash = transHash;
+          return recordMeta;
+        }),
         map(recordMeta => {
           recordMetaList.push(recordMeta);
           return recordMetaList;

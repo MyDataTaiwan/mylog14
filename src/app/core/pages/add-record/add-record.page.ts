@@ -126,13 +126,17 @@ export class AddRecordPage implements OnInit, OnDestroy {
     await picker.present();
   }
 
-  async presentLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: '正在紀錄資料...',
-      duration: 10000
-    });
-    loading.present();
-    return Promise.resolve(loading);
+  presentLoading() {
+    return this.translate.get('DAILY_RECORD.saving')
+      .pipe(
+        switchMap(msg => {
+          return defer(() => this.loadingCtrl.create({
+            message: msg,
+            duration: 10000,
+          }));
+        }),
+        switchMap(loading => forkJoin([of(loading), loading.present()])),
+      );
   }
 
   getColumnOptions(column: string[]) {
@@ -156,11 +160,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   submitRecord(): Observable<any> {
-    const loading$ = defer(() => from(this.presentLoading()));
+    const loading$ = this.presentLoading();
     const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
     return forkJoin([loading$, snapRecord$])
       .pipe(
-        switchMap(([loadingElement, _]) => loadingElement.dismiss()),
+        switchMap(([[loadingElement, _1], _]) => loadingElement.dismiss()),
         switchMap(() => this.showRecordFinish()),
         takeUntil(this.destroy$),
       );
