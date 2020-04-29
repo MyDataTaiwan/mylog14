@@ -9,6 +9,7 @@ import { switchMap, takeUntil, tap, delay, concatMap } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 import { Location } from '@angular/common';
+import { Symptom } from '../../classes/symptom';
 
 @Component({
   selector: 'app-add-record',
@@ -28,7 +29,6 @@ export class AddRecordPage implements OnInit, OnDestroy {
   defaultBtUnit = '°C';
   bt: string;
   btUnit: string;
-  symptoms: Symptoms = new Symptoms();
   text = {
     recorded: '',
     ok: '',
@@ -64,6 +64,17 @@ export class AddRecordPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  onToggleChanged(toggledSymptom: Symptom) {
+    this.symptoms.list
+      .map(symptom => {
+        if (symptom.name === toggledSymptom.name) {
+          return symptom;
+        } else {
+          symptom
+        }
+      })
   }
 
   showRecordFinish() {
