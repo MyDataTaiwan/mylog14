@@ -3,9 +3,9 @@ import { FileSystemService } from './file-system.service';
 import { LocalStorageService } from './local-storage.service';
 import { HttpClient } from '@angular/common/http';
 import * as JSZip from 'jszip';
-import { defer, from, forkJoin, of, BehaviorSubject } from 'rxjs';
+import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable } from 'rxjs';
 import { DataStoreService } from './data-store.service';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap, delay } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 import { runTransaction } from '@numbersprotocol/niota';
 
@@ -48,7 +48,10 @@ export class UploadService {
   }
 
   private createVerificationJson(cachedFiles: CachedFile[]) {
-    return forkJoin(cachedFiles.map(cachedFile => this.registerOnLedger(cachedFile.hash)))
+    return forkJoin(cachedFiles.map((cachedFile, idx) => {
+      return this.registerOnLedger(cachedFile.hash)
+        .pipe(delay(idx * 100));
+    }))
       .pipe(
         map(ledgerHashes => {
           console.log('ledger Hashes', ledgerHashes);
@@ -95,11 +98,11 @@ export class UploadService {
       );
   }
 
-  private registerOnLedger(hash: string): Promise<string> {
+  private registerOnLedger(hash: string): Observable<any> {
     const address = 'HEQLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWORLDHELLOWOR99D';
     const seed = 'PUEOTSEITFEVEWCWBTSIZM9NKRGJEIMXTULBACGFRQK9IMGICLBKW9TTEVSDQMGWKBXPVCBMMCXWMNPDX';
     const rawMsg = {hash};
-    return runTransaction(address, seed, rawMsg);
+    return from(runTransaction(address, seed, rawMsg));
   }
 
   uploadZip() {
