@@ -83,7 +83,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
 
   private startCountdown(day: number) {
-    const idx = day + 1; // The animation array has +1 offset
+    const idx = (day > 14) ? 15 : day + 1; // The animation array has +1 offset
     this.animationPlay(idx);
     return timer(idx * 1000)
       .pipe(

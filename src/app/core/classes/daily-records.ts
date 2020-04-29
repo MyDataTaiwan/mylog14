@@ -65,6 +65,6 @@ export class DailyRecords {
             return null;
         }
         const ascendingRecords = records.sort((a, b) => +a.timestamp - +b.timestamp);
-        return this.toDateString(ascendingRecords[0].timestamp);
+        return this.toDateString(ascendingRecords[0].timestamp * 1000);
     }
 }
