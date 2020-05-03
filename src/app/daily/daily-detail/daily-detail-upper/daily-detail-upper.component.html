@@ -20,14 +20,15 @@
         aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
       <div>
         <ion-label class="ion-text-center" style="font-size: 12px;">
-          <img src="../../assets/ui/W_icon.svg" />
-          {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }}
+          {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }} °C
         </ion-label>
+        <img *ngIf="card.bt.slice(0,card.bt.indexOf('°C')) >=37.5" src="../../assets/ui/Wr_icon.svg" />
+        <img *ngIf="card.bt.slice(0,card.bt.indexOf('°C')) =='N/'" src="../../assets/ui/Er_icon.svg" /> 
       </div>
-
+      <!-- {{ card.bt.slice(0,card.bt.indexOf('°C'))}} -->
       <div style="align-items:center;" >
         <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;" >
-          <img src="../../assets/ui/W_icon.svg" />
+          <!-- <img src="../../assets/ui/Wr_icon.svg" /> -->
           {{ 'DAILY_RECORD.symptoms' | translate }}:
           <ng-container
           (click)="selectedSymptoms=!selectedSymptoms"
