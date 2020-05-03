@@ -24,23 +24,32 @@
       routerDirection="forward">
       <ion-grid fixed>
         <ion-row>
-          <ion-col size="4">
+          <ion-col size="5">
             <ion-card-header>
               <ion-card-title class="ion-text-center">DAY {{ item.day }}</ion-card-title>
               <ion-card-title class="ion-text-center">{{ item.month }}/{{ item.date }}</ion-card-title>
             </ion-card-header>
-            <ion-card-content style="font-size: small;" class="ion-text-center">BT: {{ item.bt }}</ion-card-content>
+            <ion-card-content style="font-size: small;" class="ion-text-center">
+
+                <!-- <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">{{ "DAILY_RECORD.bodyTemperature" | translate }}</ion-label> -->
+                <ion-label  style="color: rgb(85, 84, 84);font-size:10pt !important ;">Body Temperature</ion-label>
+                <ion-label  style="color: rgb(85, 84, 84);font-size:12 pt !important ;">體溫:</ion-label>
+                <!-- {{'DAILY_RECORD.bodyTemperature'| translate  == '體溫' ?"A":"B"}} -->
+              {{ item.bt }}</ion-card-content>
+              
+
           </ion-col>
           <!-- <ion-col size="8">
             <div>
               <ion-img [src]="item.imgSrc" alt="No picture"></ion-img>
             </div>
           </ion-col> -->
-             <ion-col size="8">
-            <div>
+             <ion-col size="7">
+              <ion-thumbnail >
               <ion-img *ngIf="!item.imgSrc" src="/assets/imgA.png" alt="No picture"></ion-img>
               <ion-img *ngIf="item.imgSrc" [src]="item.imgSrc" alt="No picture"></ion-img>
-            </div>
+              </ion-thumbnail>
+         
           </ion-col>
         </ion-row>
       </ion-grid>
