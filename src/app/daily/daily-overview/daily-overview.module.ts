@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { DailyOverviewComponent } from './daily-overview.component';
 import { RouterModule } from '@angular/router';
 import { LottieModule } from 'ngx-lottie';
+import { TranslateModule } from '@ngx-translate/core';
+
 export function playerFactory() {
   return import('lottie-web');
 }
@@ -16,6 +18,7 @@ export function playerFactory() {
     FormsModule,
     IonicModule,
     RouterModule,
+    TranslateModule,
     LottieModule.forRoot({ player: playerFactory }),
   ],
   declarations: [DailyOverviewComponent],
