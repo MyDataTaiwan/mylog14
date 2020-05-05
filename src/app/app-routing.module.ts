@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'share-finish',
     loadChildren: () => import('./core/pages/share-finish/share-finish.module').then( m => m.ShareFinishPageModule)
   },
+  {
+    path: 'img-viewer',
+    loadChildren: () => import('./core/pages/img-viewer/img-viewer.module').then( m => m.ImgViewerPageModule)
+  },
 ];
 @NgModule({
   imports: [

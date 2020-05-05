@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>img-viewer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row>
+    <ion-col text-center>img-viewer</ion-col>
+  </ion-row>
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
+  <div style="display: flex;flex-direction: column;height: 40vw;">
+    <img [src]="photo.webviewPath " style="height: 39vw;" />
+  </div>
+  <div style="display: flex; flex-direction:column;">
+    <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'yyyy-MM-dd' }}
+    </ion-label>
+    <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'HH:mm:ss' }}
+    </ion-label>
+    <ion-label style="font-size: large;" class=".ion-text-center">{{ address$ | async   }}</ion-label>
+    <!-- <ion-label class=".ion-text-center">{{ photo.locationStamp.latitude }}</ion-label>
+    <ion-label class=".ion-text-center">{{ photo.locationStamp.longitude }}</ion-label> -->
+  </div>
+  <ion-row>
+    <ion-button (click)="cancel()">cancel</ion-button>
+    <ion-button (click)="confirm()">confirm</ion-button>
+  </ion-row>
+</ion-content>
