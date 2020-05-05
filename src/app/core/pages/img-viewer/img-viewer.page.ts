@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { Observable, of, concat, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { tap, map, catchError, takeUntil } from 'rxjs/operators';
 import { Record } from '../../interfaces/record';
 import { Photo } from '../../interfaces/photo';
 import { PhotoService } from '../../services/photo.service';
+import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
 
 @Component({
   selector: 'app-img-viewer',
@@ -15,58 +16,56 @@ import { PhotoService } from '../../services/photo.service';
 export class ImgViewerPage implements OnInit, OnDestroy {
   @Input() record: Record;
   @Input() photo: Photo;
+
   address$: Observable<string>;
   destroy$ = new Subject();
-  geocodeBaseUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
-  geocodePostfix = '&language=zh-TW&key=AIzaSyC8Yg8Ig6VEZIWz8cWH3yfYOjAGzqIpDMI'; // FIXME: Shouldn't expose the key
 
-  OSMgeocodeBaseUrl = 'https://nominatim.openstreetmap.org/?addressdetails=1&q=';
-  OSMgeocodePostfix = '&format=json&limit=1'; // FIXME: Shouldn't expose the key
   constructor(
     private httpClient: HttpClient,
-    private popoverCtrl: PopoverController,
+    private popoverController: PopoverController,
+    private modalCtrl: ModalController,
     private photoService: PhotoService,
   ) { }
 
   ngOnInit() {
-    // const url = this.geocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.geocodePostfix;
-    const url = this.OSMgeocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.OSMgeocodePostfix;
-    this.address$ = this.httpClient.get(url)
-      .pipe(
-        // map((res: GeocodingResponse) => res.results[0]),
-        // tap(() => console.log("res")),
-        // tap((res) => console.log("res2", res)),
-        // tap((res: GeocodingResponse) => console.log("res4", res[0])),
-        // tap(() => console.log("res3", this.address$)),
-        // map((res: GeocodingResponse) => res.results[0].formatted_address),
-        map((res: GeocodingResponse) => res[0].address.state+","+res[0].address.suburb),
-        // map((res: GeocodingResponse) => res[0].display_name),
-        tap(() => console.log("res", this.address$)),
-        catchError(() => of('無法取得地址資訊')),
-      );
+
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  async openImageModal( photo: Photo) {
+    const modal = await this.popoverController.create({
+      component: ImgPopoverPage,
+      translucent: true,
+      componentProps: {  photo }
+    });
+    return await modal.present();
+  }
 
+  // cancel() {
+  //   return this.popoverController.dismiss();
+  // }
+
+  // confirm() {
+  //   console.log(this.record);
+  //   concat(
+  //     this.photoService.deletePhoto(this.record, this.photo),
+  //     this.popoverController.dismiss(),
+  //   )
+  //     .pipe(
+  //       takeUntil(this.destroy$),
+  //     )
+  //     .subscribe();
+  // }
   cancel() {
-    return this.popoverCtrl.dismiss();
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalCtrl.dismiss({
+      'dismissed': true
+    });
   }
-
-  confirm() {
-    console.log(this.record);
-    concat(
-      this.photoService.deletePhoto(this.record, this.photo),
-      this.popoverCtrl.dismiss(),
-    )
-      .pipe(
-        takeUntil(this.destroy$),
-      )
-      .subscribe();
-  }
-
 }
 
 interface GeocodingResponse {
