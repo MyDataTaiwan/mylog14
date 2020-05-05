@@ -6,16 +6,10 @@ import { map, switchMap, takeUntil, tap, take } from 'rxjs/operators';
 import { PopoverController,ModalController } from '@ionic/angular';
 import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
 import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
-
 import { Record } from 'src/app/core/interfaces/record';
-
-
-
 export interface Pic {
   src: string;
 }
-
-
 
 @Component({
   selector: 'app-daily-detail-photos',
@@ -68,9 +62,12 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
     })));
   }
 
-  async presentModal(photo: Photo) {
+  async presentModal( photo: Photo) {
     const modal = await this.modalController.create({
-      component: ImgViewerPage
+      component: ImgViewerPage,
+      componentProps: {
+        photo,
+      }
     });
     return await modal.present();
   }
