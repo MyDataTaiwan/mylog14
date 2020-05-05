@@ -115,6 +115,12 @@ export class AddRecordPage implements OnInit, OnDestroy {
           role: 'cancel'
         },
         {
+          text: '新增體溫',
+          handler: (value: any) => {
+            return;
+          }
+        },
+        {
           text: 'Ok',
           handler: (value: any) => {
             this.bt = `${value.integer.value}${value.decimal.value}`;
@@ -135,7 +141,8 @@ export class AddRecordPage implements OnInit, OnDestroy {
           name: 'unit',
           options: this.getColumnOptions(this.btUnitList)
         }
-      ]
+      ],
+      mode:'ios'
     };
     const picker = await this.pickerCtrl.create(options);
     await picker.present();
