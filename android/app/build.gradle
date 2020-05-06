@@ -8,8 +8,8 @@ android {
         applicationId "tw.mydata.mylog14"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "0.6.1-alpha"
+        versionCode 3
+        versionName "0.6.1-beta1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
