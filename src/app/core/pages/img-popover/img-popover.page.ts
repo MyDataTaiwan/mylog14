@@ -18,7 +18,7 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
   @Input() photo: Photo;
   address$: Observable<string>;
   destroy$ = new Subject();
-  localError:string;
+  locationError:string;
   geocodeBaseUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
   geocodePostfix = '&language=zh-TW&key=AIzaSyC8Yg8Ig6VEZIWz8cWH3yfYOjAGzqIpDMI'; // FIXME: Shouldn't expose the key
 
@@ -35,7 +35,12 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-
+    this.translateService.get('IMG_POPOVER.locationError').subscribe(
+      value => {
+        // value is our translated string
+        this.locationError= value;
+      }
+    )
     // const url = this.geocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.geocodePostfix;
     const url = this.OSMgeocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.OSMgeocodePostfix;
     this.address$ = this.httpClient.get(url)
@@ -49,8 +54,8 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
         map((res: GeocodingResponse) => res[0].address.state + "," + res[0].address.suburb),
         // map((res: GeocodingResponse) => res[0].display_name),
         tap(() => console.log("res", this.address$)),
-        // catchError(() => of(this.localError)),
-        catchError(() => of('無法取得地址資訊')),
+        catchError(() => of(this.locationError)),
+        // catchError(() => of('無法取得地址資訊')),
       );
   }
 
