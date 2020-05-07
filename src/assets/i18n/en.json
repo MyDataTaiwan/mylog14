@@ -75,7 +75,8 @@
   "IMG_POPOVER": {
     "confirmDelete": "Delete the photo?",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "locationError": "Can't get location"
   },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",

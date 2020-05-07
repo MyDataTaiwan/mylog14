@@ -76,7 +76,8 @@
   "IMG_POPOVER": {
     "confirmDelete": "確定要刪除這張照片嗎？",
     "cancel": "取消",
-    "confirm": "確認"
+    "confirm": "確認",
+    "locationError": "無法取得地址資訊"
   },
   "SHARE": {
     "confirmShare": "你想要建立分享連結嗎？",
