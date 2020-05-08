@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { GeolocationPosition } from '@capacitor/core';
 import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
-import { Observable, pipe, forkJoin, from, of, Subject } from 'rxjs';
+import { Observable, pipe,defer, forkJoin, from, of, Subject } from 'rxjs';
 import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
@@ -12,6 +13,7 @@ import { Symptoms } from '../classes/symptoms';
 import { LocalStorageService } from './local-storage.service';
 import { DataStoreService } from './data-store.service';
 import { RecordMeta } from '../classes/record-meta';
+import { RecordFinishPage } from '../components/record-finish/record-finish.page';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,8 @@ export class SnapshotService {
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
     private localStorage: LocalStorageService,
+    private popoverCtrl: PopoverController,
+
   ) { }
 
   getLocationStamp(): Observable<LocationStamp> {
@@ -100,10 +104,21 @@ export class SnapshotService {
             symptoms: new Symptoms(),
             photos: [photo],
           };
+          console.log("進入拍照3")
+          this.showCaptureFinish();
           return this.localStorage.saveRecord(record, recordMetaList);
         }),
         switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
       );
+  }
+
+
+  async showCaptureFinish() {
+    console.log("進入拍照4B")
+    const modal = await this.popoverCtrl.create({
+      component: RecordFinishPage,
+    });
+    return await modal.present();
   }
 
   snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
