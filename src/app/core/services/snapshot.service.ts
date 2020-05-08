@@ -104,7 +104,6 @@ export class SnapshotService {
             symptoms: new Symptoms(),
             photos: [photo],
           };
-          console.log("進入拍照3")
           this.showCaptureFinish();
           return this.localStorage.saveRecord(record, recordMetaList);
         }),
@@ -114,7 +113,6 @@ export class SnapshotService {
 
 
   async showCaptureFinish() {
-    console.log("進入拍照4B")
     const modal = await this.popoverCtrl.create({
       component: RecordFinishPage,
     });
