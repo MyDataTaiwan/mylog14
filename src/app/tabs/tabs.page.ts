@@ -38,24 +38,30 @@ export class TabsPage implements AfterViewInit, OnDestroy {
         switchMap(userData => this.presentEulaModal(userData)),
         switchMap(userData => this.dataStore.updateUserData(userData)),
       );
-      this.presentGuideModal();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+
+
   }
 
   ionTabsDidChange(event: TabsEvent) {
     this.selectedTab = event.tab;
   }
-  async presentGuideModal(userData: UserData) {
+  async presentGuideModal() {
     const modal = await this.modalController.create({
+      // translucent: true,
       backdropDismiss: false,
       component: GuidePage,
-      componentProps: { userData },
-      cssClass: 'eula-modal',
+      // componentProps: { userData },
+      cssClass: 'Guide-modal',
     });
+    // await modal.present();
+    // return await modal.present();
+    // const { data } = await modal.onWillDismiss();
+    // return Promise.resolve(data);
     await modal.present();
     const { data } = await modal.onWillDismiss();
     return Promise.resolve(data);
