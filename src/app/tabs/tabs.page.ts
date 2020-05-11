@@ -5,6 +5,8 @@ import { SnapshotService } from '../core/services/snapshot.service';
 import { take, debounce, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { interval, Observable, defer, Subject } from 'rxjs';
 import { EulaPage } from '../core/pages/eula/eula.page';
+import { GuidePage } from '../core/pages/guide/guide.page';
+
 import { DataStoreService } from '../core/services/data-store.service';
 import { UserData } from '../core/interfaces/user-data';
 import { SharePage } from '../core/pages/share/share.page';
@@ -36,6 +38,7 @@ export class TabsPage implements AfterViewInit, OnDestroy {
         switchMap(userData => this.presentEulaModal(userData)),
         switchMap(userData => this.dataStore.updateUserData(userData)),
       );
+      this.presentGuideModal();
   }
 
   ngOnDestroy() {
@@ -45,6 +48,17 @@ export class TabsPage implements AfterViewInit, OnDestroy {
 
   ionTabsDidChange(event: TabsEvent) {
     this.selectedTab = event.tab;
+  }
+  async presentGuideModal(userData: UserData) {
+    const modal = await this.modalController.create({
+      backdropDismiss: false,
+      component: GuidePage,
+      componentProps: { userData },
+      cssClass: 'eula-modal',
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    return Promise.resolve(data);
   }
 
   async presentAddRecordModal() {

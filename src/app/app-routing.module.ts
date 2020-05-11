@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'share-finish',
     loadChildren: () => import('./core/pages/share-finish/share-finish.module').then( m => m.ShareFinishPageModule)
   },
+  {
+    path: 'guide',
+    loadChildren: () => import('./core/pages/guide/guide.module').then( m => m.GuidePageModule)
+  },
 ];
 @NgModule({
   imports: [
