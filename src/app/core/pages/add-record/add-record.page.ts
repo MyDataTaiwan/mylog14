@@ -109,6 +109,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   async presentBtPicker() {
     const options: PickerOptions = {
+      id: "add_bt",
       buttons: [
         {
           text: 'Cancel',
@@ -118,7 +119,9 @@ export class AddRecordPage implements OnInit, OnDestroy {
           text: '新增體溫',
           handler: (value: any) => {
             return;
-          }
+          },
+          // cssClass: 'pickerClassDisable'
+          cssClass: 'test',
         },
         {
           text: 'Ok',
