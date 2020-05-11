@@ -65,7 +65,10 @@
     "clear": "清除",
     "recorded": "已紀錄",
     "ok": "確定",
-    "saving": "新增資料與驗證資訊中..."
+    "saving": "新增資料與驗證資訊中...",
+    "pickerTitle": "新增體溫",
+    "cancel":"取消"
+
   },
   "RECORD_FINISH": {
     "finish": "新增成功！"
