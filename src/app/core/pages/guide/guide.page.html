@@ -1,9 +1,31 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>guide</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
+<!-- <ion-content>
+  <img src="../../assets/mask/Mask_view.svg" />
 
+</ion-content> -->
 <ion-content>
-
+  <ion-slides scrollbar="false" pager="true" [options]="slideOpts">
+    <ion-slide (click)="move(2)">
+      
+        <ion-img (click)="move(2)"src="../../assets/mask/Mask_view.svg" ></ion-img>
+            
+    </ion-slide>
+    <ion-slide >
+      <ion-img src="../../assets/mask/Mask_add.svg" ></ion-img>
+    </ion-slide>
+    <ion-slide >
+      <ion-img src="../../assets/mask/Mask_share.svg" ></ion-img>
+    </ion-slide>
+    <ion-slide>
+        <ion-img src="../../assets/mask/Mask_view.svg" ></ion-img>
+      
+      <!-- <ion-button class="start-button" (click)="onClick()" expand="block" shape="round">
+        {{ 'TOUR.getStarted' | translate }}
+      </ion-button> -->
+    </ion-slide>
+  </ion-slides>
 </ion-content>
