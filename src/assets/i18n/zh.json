@@ -31,7 +31,9 @@
   },
   "DIARY": {
     "title": "我的資料",
-    "select": "English"
+    "select": "English",
+    "guide1": "點擊下方",
+    "guide2": "以新增資料"      
   },
   "SYMPTOM": {
     "coughing": "咳嗽",
