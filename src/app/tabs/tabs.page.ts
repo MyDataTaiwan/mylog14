@@ -22,7 +22,7 @@ export class TabsPage implements AfterViewInit, OnDestroy {
   selectedTab: string;
   showDebugButton = false;
   eulaLoader$: Observable<UserData>;
-
+  GuideLoader$ : Observable<UserData>;
   constructor(
     private dataStore: DataStoreService,
     private modalController: ModalController,
@@ -32,10 +32,17 @@ export class TabsPage implements AfterViewInit, OnDestroy {
   ) { }
 
   ngAfterViewInit() {
+    // this.GuideLoader$ = this.dataStore.userData$
+    // .pipe(
+    //   filter(userData => userData.guideAccepted === false),
+    //   switchMap(userData => this.presentGuideModal(userData)),
+    //   switchMap(userData => this.dataStore.updateUserData(userData)),
+    // );
     this.eulaLoader$ = this.dataStore.userData$
       .pipe(
         filter(userData => userData.eulaAccepted === false),
         switchMap(userData => this.presentEulaModal(userData)),
+        // switchMap(userData => this.presentGuideModal(userData)),
         switchMap(userData => this.dataStore.updateUserData(userData)),
       );
   }

@@ -44,7 +44,7 @@ moveToNext(slides){
   slides.slideNext()
 }
   onClick() {
-    this.dataStore.updateUserData({ newUser: false,    eulaAccepted: false,
+    this.dataStore.updateUserData({ newUser: false,eulaAccepted: false,
       guideAccepted: false }).pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {
