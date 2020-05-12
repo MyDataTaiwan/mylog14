@@ -8,24 +8,25 @@
 
 </ion-content> -->
 <ion-content>
-  <ion-slides scrollbar="false" pager="true" [options]="slideOpts">
-    <ion-slide (click)="move(2)">
+  <ion-slides scrollbar="false" pager="true" [options]="slideOpts" #theSlides>
+    <ion-slide >
       
-        <ion-img (click)="move(2)"src="../../assets/mask/Mask_view.svg" ></ion-img>
+        <img  style="width: 100vw;height: 100vh;" (click)="moveToNext(theSlides)"src="../../assets/mask/Mask_view.svg" />
             
     </ion-slide>
     <ion-slide >
-      <ion-img src="../../assets/mask/Mask_add.svg" ></ion-img>
+      <img  style="width: 100vw;height: 100vh;" (click)="moveToNext(theSlides)" src="../../assets/mask/Mask_add.svg" />
     </ion-slide>
     <ion-slide >
-      <ion-img src="../../assets/mask/Mask_share.svg" ></ion-img>
+      <img   style="width: 100vw;height: 100vh;" (click)="moveToNext(theSlides)" src="../../assets/mask/Mask_share.svg" />
     </ion-slide>
-    <ion-slide>
-        <ion-img src="../../assets/mask/Mask_view.svg" ></ion-img>
-      
-      <!-- <ion-button class="start-button" (click)="onClick()" expand="block" shape="round">
-        {{ 'TOUR.getStarted' | translate }}
-      </ion-button> -->
+    <ion-slide style="width: 100vw;height: 100vh;" >
+      <div style="padding-top: 50vh; flex-direction: column;justify-content: center;align-items: center;">
+        <ion-button (click)="cancel()" expand="block" shape="round">
+          {{ 'TOUR.getStarted' | translate }}
+        </ion-button>
+      </div>
+    
     </ion-slide>
   </ion-slides>
 </ion-content>

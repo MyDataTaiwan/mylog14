@@ -50,18 +50,14 @@ export class TabsPage implements AfterViewInit, OnDestroy {
   ionTabsDidChange(event: TabsEvent) {
     this.selectedTab = event.tab;
   }
-  async presentGuideModal() {
+  async presentGuideModal(userData: UserData) {
     const modal = await this.modalController.create({
       // translucent: true,
       backdropDismiss: false,
       component: GuidePage,
-      // componentProps: { userData },
+      componentProps: { userData },
       cssClass: 'Guide-modal',
     });
-    // await modal.present();
-    // return await modal.present();
-    // const { data } = await modal.onWillDismiss();
-    // return Promise.resolve(data);
     await modal.present();
     const { data } = await modal.onWillDismiss();
     return Promise.resolve(data);
