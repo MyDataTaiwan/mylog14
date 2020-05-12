@@ -5,14 +5,10 @@
   /* border:1px solid #000; */
   ">
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
-    <ng-lottie
-    (click)="goToLink('https://www.mydata.org.tw/')"
-    [options]="options"
-    (animationCreated)="onAnimationCreated($event)"
-    (configReady)="onConfigReady()"
-    ></ng-lottie>
+      <ng-lottie (click)="goToLink('https://www.mydata.org.tw/')" [options]="options"
+        (animationCreated)="onAnimationCreated($event)" (configReady)="onConfigReady()"></ng-lottie>
+    </div>
   </div>
-</div>
   <!-- {{items.length}} -->
   <div style="border-bottom: 2pt;"></div>
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
@@ -36,7 +32,7 @@
               <ion-img [src]="item.imgSrc" alt="No picture"></ion-img>
             </div>
           </ion-col> -->
-             <ion-col size="8">
+          <ion-col size="8">
             <div>
               <ion-img *ngIf="!item.imgSrc" src="/assets/imgA.png" alt="No picture"></ion-img>
               <ion-img *ngIf="item.imgSrc" [src]="item.imgSrc" alt="No picture"></ion-img>
@@ -46,4 +42,16 @@
       </ion-grid>
     </ion-card>
   </ion-virtual-scroll>
+  <ion-row class="ion-justify-content-center" style="padding: 10%;">
+    <ion-label>
+      點擊下方     
+    </ion-label>
+    <ion-img src="/assets/ui/add_icon.svg" style="height: 10%;" alt="No picture"></ion-img>
+    <ion-label>
+      以新增資料      
+    </ion-label>
+  </ion-row>
+
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
 </ion-content>
