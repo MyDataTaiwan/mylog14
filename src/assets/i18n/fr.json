@@ -63,10 +63,9 @@
     "clear": "Effacer",
     "recorded": "Enregistré",
     "ok": "Accepter",
-    "saving": "Adding new data and verifiable information..."
-  },
-  "RECORD_FINISH": {
-    "finish": "Enregistré!"
+    "saving": "Adding new data and verifiable information...",
+    "pickerTitle": "Add Body Temperature",
+    "cancel":"Cancel"
   },
   "IMG_POPOVER": {
     "confirmDelete": "Effacer la photo?",

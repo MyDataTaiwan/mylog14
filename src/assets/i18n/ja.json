@@ -63,7 +63,9 @@
     "clear": "解除",
     "recorded": "記録が保存されました。",
     "ok": "確定",
-    "saving": "新たなデータまたは検証可能な情報を追加しています..."
+    "saving": "新たなデータまたは検証可能な情報を追加しています...",
+    "pickerTitle": "Add Body Temperature",
+    "cancel":"Cancel"
   },
   "RECORD_FINISH": {
     "finish": "記録が保存されました！"
