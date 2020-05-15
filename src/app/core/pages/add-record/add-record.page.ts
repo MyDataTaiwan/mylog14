@@ -32,8 +32,12 @@ export class AddRecordPage implements OnInit, OnDestroy {
   text = {
     recorded: '',
     ok: '',
+    pickerTitle: '',
+    cancel: '',
   };
   recorded$: Observable<string>;
+  cancel$: Observable<string>;
+  pickerTitle$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
   symptoms = new Symptoms();
@@ -55,6 +59,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.recorded$.subscribe((t: string) => this.text.recorded = t);
     this.ok$ = this.translate.get('DAILY_RECORD.ok');
     this.ok$.subscribe((t: string) => this.text.ok = t);
+    this.pickerTitle$ = this.translate.get('DAILY_RECORD.pickerTitle');
+    this.pickerTitle$.subscribe((t: string) => this.text.pickerTitle = t);
+    this.cancel$ = this.translate.get('DAILY_RECORD.cancel');
+    this.cancel$.subscribe((t: string) => this.text.cancel = t);
+
   }
 
   ngOnInit() {
@@ -109,13 +118,23 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   async presentBtPicker() {
     const options: PickerOptions = {
+      id: "add_bt",
       buttons: [
         {
-          text: 'Cancel',
+          text: this.text.cancel,
           role: 'cancel'
         },
         {
-          text: 'Ok',
+          // text: 'Add Body Temperature',
+          text: this.text.pickerTitle,
+          handler: (value: any) => {
+            return;
+          },
+          // cssClass: 'pickerClassDisable'
+          cssClass: 'test',
+        },
+        {
+          text:  this.text.ok,
           handler: (value: any) => {
             this.bt = `${value.integer.value}${value.decimal.value}`;
             this.btUnit = value.unit.value;
@@ -135,7 +154,8 @@ export class AddRecordPage implements OnInit, OnDestroy {
           name: 'unit',
           options: this.getColumnOptions(this.btUnitList)
         }
-      ]
+      ],
+      mode:'ios'
     };
     const picker = await this.pickerCtrl.create(options);
     await picker.present();

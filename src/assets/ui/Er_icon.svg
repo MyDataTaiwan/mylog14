@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12">
+  <defs>
+    <clipPath id="clip-Er_icon">
+      <rect width="12" height="12"/>
+    </clipPath>
+  </defs>
+  <g id="Er_icon" clip-path="url(#clip-Er_icon)">
+    <g id="Group_789" data-name="Group 789" transform="translate(-122 -211)">
+      <rect id="Rectangle_464" data-name="Rectangle 464" width="10" height="10" rx="3" transform="translate(123 212)" fill="#ff6969"/>
+      <text id="_" data-name="!" transform="translate(128 221)" fill="#fdfdfd" font-size="10" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-1.39" y="0">!</tspan></text>
+    </g>
+  </g>
+</svg>

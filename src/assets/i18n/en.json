@@ -67,7 +67,9 @@
     "clear": "Clear",
     "recorded": "Record Saved",
     "ok": "OK",
-    "saving": "Adding new data and verifiable information..."
+    "saving": "Adding new data and verifiable information...",
+    "pickerTitle": "Add Body Temperature",
+    "cancel":"Cancel"
   },
   "RECORD_FINISH": {
     "finish": "Record saved!"
