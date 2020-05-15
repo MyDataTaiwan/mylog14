@@ -143,7 +143,8 @@ export class PhotoService {
   // Retrieve the photo metadata based on the platform the app is running on
   private async getPhotoFile(cameraPhoto: CameraPhoto, fileName: string): Promise<Photo> {
     let base64String = await this.readAsBase64(cameraPhoto);
-    base64String = base64String.split(',')[1]; // Remove "data:image/jpeg;base64," data schema
+    // Remove "data:image/jpeg;base64," data schema if is web
+    base64String = (this.platform.is('hybrid')) ? base64String : base64String.split(',')[1];
     if (this.platform.is('hybrid')) {
       // Get the new, complete filepath of the photo saved on filesystem
       const fileUri = await Filesystem.getUri({
