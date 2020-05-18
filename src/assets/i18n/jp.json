@@ -71,7 +71,9 @@
   "IMG_POPOVER": {
     "confirmDelete": "写真を削除しますか？",
     "cancel": "キャンセル",
-    "confirm": "削除"
+    "confirm": "削除",
+    "locationError": "Can't get location",
+    "deleting": "Deleting photos..."
   },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",
