@@ -75,3 +75,12 @@
     text-align: center;
     font-weight: bold;
 }
+
+.picker-button.test{
+  background: forestgreen!important;
+  cursor: not-allowed;
+  background-color: rgb(229, 229, 229) !important;
+  pointer-events:none;
+
+}
+
