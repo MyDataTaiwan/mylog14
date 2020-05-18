@@ -3,10 +3,11 @@ import { Observable, defer, from, Subject, forkJoin, of } from 'rxjs';
 import { Photo } from 'src/app/core/interfaces/photo';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { map, switchMap, takeUntil, tap, take, filter } from 'rxjs/operators';
-import { PopoverController,ModalController } from '@ionic/angular';
+import { PopoverController,ModalController, LoadingController } from '@ionic/angular';
 import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
 import { Record } from 'src/app/core/interfaces/record';
 import { PhotoService } from 'src/app/core/services/photo.service';
+import { TranslateService } from '@ngx-translate/core';
 export interface Pic {
   src: string;
 }
@@ -27,8 +28,10 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataStore: DataStoreService,
+    private loadingCtrl: LoadingController,
     public modalController: ModalController,
     private photoService: PhotoService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -65,7 +68,11 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
       .pipe(
         map(res => res.data.delete),
         filter(willDelete => willDelete === true),
-        switchMap(() => this.photoService.deletePhoto(record, photo)),
+        switchMap(() => forkJoin([
+          this.presentLoading(),
+          this.photoService.deletePhoto(record, photo),
+        ])),
+        switchMap(([[loadingElement, _], __]) => loadingElement.dismiss()),
       );
   }
 
@@ -84,6 +91,19 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
         map(records => {
           return records.find(record => record.photos.some(p => p.filepath === photo.filepath));
         }),
+      );
+  }
+
+  private presentLoading() {
+    return this.translate.get('IMG_POPOVER.deleting')
+      .pipe(
+        switchMap(msg => {
+          return defer(() => this.loadingCtrl.create({
+            message: msg,
+            duration: 10000,
+          }));
+        }),
+        switchMap(loading => forkJoin([of(loading), loading.present()])),
       );
   }
 }

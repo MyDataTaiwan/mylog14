@@ -76,7 +76,8 @@
     "confirmDelete": "Delete the photo?",
     "cancel": "Cancel",
     "confirm": "Confirm",
-    "locationError": "Can't get location"
+    "locationError": "Can't get location",
+    "deleting": "Deleting the photo & updating verifiable information..."
   },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",

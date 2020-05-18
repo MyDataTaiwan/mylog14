@@ -77,7 +77,8 @@
     "confirmDelete": "確定要刪除這張照片嗎？",
     "cancel": "取消",
     "confirm": "確認",
-    "locationError": "無法取得地址資訊"
+    "locationError": "無法取得地址資訊",
+    "deleting": "正在刪除照片與更新驗證資訊..."
   },
   "SHARE": {
     "confirmShare": "你想要建立分享連結嗎？",
