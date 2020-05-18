@@ -1,13 +1,18 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Observable, defer, from, Subject } from 'rxjs';
+import { Observable, defer, from, Subject, forkJoin, of } from 'rxjs';
 import { Photo } from 'src/app/core/interfaces/photo';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
-import { map, switchMap, takeUntil, tap, take } from 'rxjs/operators';
+import { map, switchMap, takeUntil, tap, take, filter } from 'rxjs/operators';
 import { PopoverController,ModalController } from '@ionic/angular';
 import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
 import { Record } from 'src/app/core/interfaces/record';
+import { PhotoService } from 'src/app/core/services/photo.service';
 export interface Pic {
   src: string;
+}
+
+export interface ModalAction {
+  delete: boolean;
 }
 
 @Component({
@@ -22,7 +27,8 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataStore: DataStoreService,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private photoService: PhotoService,
   ) { }
 
   ngOnInit() {
@@ -41,15 +47,26 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-   openImageModal(photo: Photo) {
+   showImageViewer(photo: Photo) {
     this.getRecordByPhoto(photo)
       .pipe(
-        switchMap(record => this.createModal(record, photo)),
-        tap(record => console.log('Image model record', record)),
-        switchMap(popover => popover.present()),
+        switchMap(record => forkJoin([of(record), this.createModal(record, photo)])),
+        switchMap(([record, modal]) => forkJoin([
+          modal.present(),
+          this.deletePhotoOnDismissHandler(modal, record, photo)
+        ])),
         takeUntil(this.destroy$),
       )
         .subscribe(() => {}, e => console.log(e));
+  }
+
+  deletePhotoOnDismissHandler(modal: HTMLIonModalElement, record: Record, photo: Photo) {
+    return from(modal.onWillDismiss())
+      .pipe(
+        map(res => res.data.delete),
+        filter(willDelete => willDelete === true),
+        switchMap(() => this.photoService.deletePhoto(record, photo)),
+      );
   }
 
   createModal(record: Record, photo: Photo): Observable<HTMLIonModalElement> {
