@@ -4,7 +4,6 @@ import { Photo } from 'src/app/core/interfaces/photo';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { map, switchMap, takeUntil, tap, take } from 'rxjs/operators';
 import { PopoverController,ModalController } from '@ionic/angular';
-import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
 import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
 import { Record } from 'src/app/core/interfaces/record';
 export interface Pic {
@@ -23,7 +22,6 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
 
   constructor(
     private dataStore: DataStoreService,
-    private popoverController: PopoverController,
     public modalController: ModalController
   ) { }
 
@@ -46,30 +44,19 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
    openImageModal(photo: Photo) {
     this.getRecordByPhoto(photo)
       .pipe(
-        switchMap(record => this.createPopover(record, photo)),
+        switchMap(record => this.createModal(record, photo)),
+        tap(record => console.log('Image model record', record)),
         switchMap(popover => popover.present()),
         takeUntil(this.destroy$),
       )
         .subscribe(() => {}, e => console.log(e));
   }
 
-  createPopover(record: Record, photo: Photo): Observable<HTMLIonPopoverElement> {
-    return defer(() => from(this.popoverController.create({
-      component: ImgPopoverPage,
-      // component: ImgViewerPage,
-      translucent: true,
+  createModal(record: Record, photo: Photo): Observable<HTMLIonModalElement> {
+    return defer(() => from(this.modalController.create({
+      component: ImgViewerPage,
       componentProps: { record, photo }
     })));
-  }
-
-  async presentModal( photo: Photo) {
-    const modal = await this.modalController.create({
-      component: ImgViewerPage,
-      componentProps: {
-        photo,
-      }
-    });
-    return await modal.present();
   }
 
   getRecordByPhoto(photo: Photo): Observable<Record> {
