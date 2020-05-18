@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { PopoverController, ModalController } from '@ionic/angular';
-import { Observable, of, concat, Subject } from 'rxjs';
+import { Observable, of, concat, Subject, defer, forkJoin, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { tap, map, catchError, takeUntil } from 'rxjs/operators';
+import { tap, map, catchError, takeUntil, switchMap } from 'rxjs/operators';
 import { Record } from '../../interfaces/record';
 import { Photo } from '../../interfaces/photo';
 import { PhotoService } from '../../services/photo.service';
@@ -35,18 +35,46 @@ export class ImgViewerPage implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  async openImageModal( photo: Photo) {
+  async openImageModal(photo: Photo) {
     const modal = await this.popoverController.create({
       component: ImgPopoverPage,
       translucent: true,
-      componentProps: {  photo }
+      componentProps: { photo }
     });
     return await modal.present();
   }
 
-  // cancel() {
-  //   return this.popoverController.dismiss();
-  // }
+  createImageDeletePopover(record: Record, photo: Photo): Observable<HTMLIonPopoverElement> {
+    return defer(() => this.popoverController.create({
+      component: ImgPopoverPage,
+      componentProps: { record, photo }
+    }));
+  }
+
+  showImageDeletePopover(photo: Photo, record: Record) {
+    this.createImageDeletePopover(record, photo)
+      .pipe(
+        switchMap(popover => forkJoin([
+          popover.present(),
+          this.propagateDeleteOnDismiss(popover),
+        ])),
+        takeUntil(this.destroy$),
+      )
+      .subscribe(() => { }, e => console.log(e));
+  }
+
+  // Propagate the popover 'delete' dismiss data to modal dismiss
+  propagateDeleteOnDismiss(popover: HTMLIonPopoverElement) {
+    return from(popover.onWillDismiss())
+      .pipe(
+        map(res => res.data.delete),
+        switchMap(willDelete => this.modalCtrl.dismiss({delete: willDelete})),
+      );
+  }
+
+  delete() {
+    this.showImageDeletePopover(this.photo, this.record);
+  }
 
   // confirm() {
   //   console.log(this.record);
@@ -60,10 +88,8 @@ export class ImgViewerPage implements OnInit, OnDestroy {
   //     .subscribe();
   // }
   cancel() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.modalCtrl.dismiss({
-      'dismissed': true
+      delete: false
     });
   }
 }

@@ -59,34 +59,21 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
       );
   }
 
- 
-
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
   cancel() {
-    // return this.popoverCtrl.dismiss();
-    return this.popoverCtrl.dismiss().then(() => {
-      this.modalCtrl.dismiss({
-        'dismissed': true
-      });
-    })
+    return this.popoverCtrl.dismiss({
+      delete: false
+    });
   }
 
   confirm() {
-    console.log(this.record);
-    concat(
-      this.photoService.deletePhoto(this.record, this.photo),
-      this.popoverCtrl.dismiss().then(() => {
-        this.modalCtrl.dismiss({
-          'dismissed': true
-        });
-      })
-    ).pipe(
-        takeUntil(this.destroy$),
-      ).subscribe();
+    return this.popoverCtrl.dismiss({
+      delete: true
+    });
   }
 
 }
