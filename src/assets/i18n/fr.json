@@ -32,8 +32,8 @@
   "DIARY": {
     "title": "My Data",
     "select": "漢語",
-    "guide1": "Click",
-    "guide2": " to log new data"
+    "guide1": "Cliquer sur la touche ci-dessous",
+    "guide2": "pour ajouter une nouvelle donnée"
   },
   "SYMPTOM": {
     "coughing": "Toux",
