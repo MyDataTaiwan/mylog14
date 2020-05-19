@@ -1,19 +1,26 @@
 ion-content{
         --background: transparent;
-        --height: 110%;
-        --width: 110vw;
+        --height: 100%;
+        --width: 100vw;
         // clip-path: circle(18.2% at 50% 92%);
 //   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 40% 100%, 40% 91%, 18% 91%, 18% 100%, 0% 100%);
 
     }
 ion-img{
-        --height: 110%;
-        --width: 110%;
+        --height: 100%;
+        --width: 100%;
          
 }
 ion-slides {
-        height: 100%;
+        height: 110%;
     }
+.svg{
+      width: 100%;
+      height: 150%;
+        background-size: cover;
+        bottom: 0;
+}
+
     .text-container {
         width: 100%;
         position: fixed;
