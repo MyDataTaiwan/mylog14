@@ -1,18 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title slot="secondary">
+  <ion-toolbar mode="ios" (click)="onClickTitle()">
+    <ng-container *ngIf="click$ | async"></ng-container>
+    <ion-title text-center slot="secondary">
       {{ headerTitle }}
     </ion-title>
-   
-    <!-- <ion-buttons slot="start">
-      <ion-back-button text="123" icon="arrow-back-outline" color="danger">
-      </ion-back-button>
-    </ion-buttons> -->
-    <!-- <ion-buttons  >
-      <ion-back-button text="123" icon="arrow-back-outline" color="danger">
-      </ion-back-button>
-    </ion-buttons> -->
     <div slot="end" style="width: 15%;"></div>
-    
   </ion-toolbar>
 </ion-header>

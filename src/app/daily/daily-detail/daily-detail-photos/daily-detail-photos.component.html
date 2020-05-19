@@ -1,11 +1,14 @@
 <ion-grid style="width:100%;height:300px;overflow:scroll;">
-    <ion-row>
-      <div style="display: flex;flex-direction: row;flex-wrap: wrap;" *ngFor="let photo of photos$ | async">
-        <ion-thumbnail >
-          <div (click)="openImageModal(photo)">
+  <ion-row>
+    <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
+      <ion-thumbnail *ngFor="let photo of photos$ | async">
+        <!-- <div (click)="openImageModal(photo)">
+          <ion-img [src]="photo.webviewPath"></ion-img>
+        </div> -->
+        <div  (click)="showImageViewer(photo)">
           <ion-img [src]="photo.webviewPath"></ion-img>
         </div>
-        </ion-thumbnail>
-      </div>
-    </ion-row>
+      </ion-thumbnail>
+    </div>
+  </ion-row>
 </ion-grid>

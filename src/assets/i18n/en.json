@@ -52,7 +52,9 @@
   },
   "DIARY": {
     "title": "My Data",
-    "select": "漢語"
+    "select": "漢語",
+    "guide1": "Click",
+    "guide2": " to log new data"
   },
   "SYMPTOM": {
     "coughing": "Cough",
@@ -86,7 +88,9 @@
     "clear": "Clear",
     "recorded": "Record Saved",
     "ok": "OK",
-    "saving": "Adding new data and verifiable information..."
+    "saving": "Adding new data and verifiable information...",
+    "pickerTitle": "Add Body Temperature",
+    "cancel":"Cancel"
   },
   "RECORD_FINISH": {
     "finish": "Record saved!"
@@ -94,7 +98,9 @@
   "IMG_POPOVER": {
     "confirmDelete": "Delete the photo?",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "locationError": "Can't get location",
+    "deleting": "Deleting the photo & updating verifiable information..."
   },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",

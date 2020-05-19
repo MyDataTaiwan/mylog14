@@ -5,45 +5,52 @@
   /* border:1px solid #000; */
   ">
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
-    <ng-lottie
-    (click)="goToLink('https://www.mydata.org.tw/')"
-    [options]="options"
-    (animationCreated)="onAnimationCreated($event)"
-    (configReady)="onConfigReady()"
-    ></ng-lottie>
+      <ng-lottie (click)="goToLink('https://www.mydata.org.tw/')" [options]="options"
+        (animationCreated)="onAnimationCreated($event)" (configReady)="onConfigReady()"></ng-lottie>
+    </div>
   </div>
-</div>
   <!-- {{items.length}} -->
   <div style="border-bottom: 2pt;"></div>
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
-
   <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
   <ion-virtual-scroll [items]="items$ | async" approxItemHeight="220px" height="100%">
-    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.day]"
-      routerDirection="forward">
+    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.day]" routerDirection="forward">
       <ion-grid fixed>
         <ion-row>
-          <ion-col size="4">
+          <ion-col size="5">
             <ion-card-header>
               <ion-card-title class="ion-text-center">DAY {{ item.day }}</ion-card-title>
               <ion-card-title class="ion-text-center">{{ item.month }}/{{ item.date }}</ion-card-title>
             </ion-card-header>
-            <ion-card-content style="font-size: small;" class="ion-text-center">BT: {{ item.bt }}</ion-card-content>
+            <ion-card-content style="font-size: small;" class="ion-text-center">
+              <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">{{ "DAILY_RECORD.bodyTemperature" | translate }}</ion-label>
+              <!-- <ion-label style="color: rgb(85, 84, 84);font-size:10pt !important ;">Body Temperature</ion-label>
+              <ion-label style="color: rgb(85, 84, 84);font-size:12 pt !important ;">體溫:</ion-label> -->
+              <!-- {{'DAILY_RECORD.bodyTemperature'| translate  == '體溫' ?"A":"B"}} -->
+              {{ item.bt }}
+            </ion-card-content>
           </ion-col>
-          <!-- <ion-col size="8">
-            <div>
-              <ion-img [src]="item.imgSrc" alt="No picture"></ion-img>
-            </div>
-          </ion-col> -->
-             <ion-col size="8">
-            <div>
+          <ion-col size="7">
+            <ion-thumbnail>
               <ion-img *ngIf="!item.imgSrc" src="/assets/imgA.png" alt="No picture"></ion-img>
               <ion-img *ngIf="item.imgSrc" [src]="item.imgSrc" alt="No picture"></ion-img>
-            </div>
+            </ion-thumbnail>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
   </ion-virtual-scroll>
+  <ion-row class="ion-justify-content-center" style="padding: 10%;">
+    <ion-label>
+      {{ "DIARY.guide1" | translate }}
+    </ion-label>
+    <ion-img src="/assets/ui/add_icon.svg" style="height: 10%;" alt="No picture"></ion-img>
+    <ion-label>
+      {{ "DIARY.guide2" | translate }}
+    </ion-label>
+  </ion-row>
+
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
 </ion-content>

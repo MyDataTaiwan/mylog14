@@ -20,6 +20,7 @@ import { CategorizeImgPopoverPageModule } from './category/category-pending/cate
 import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 import { GuidePageModule } from './core/pages/guide/guide.module';
+import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -56,6 +57,7 @@ export function playerFactory() {
     AddRecordPageModule,
     ImgPopoverPageModule,
     GuidePageModule,
+    ImgViewerPageModule,
     LottieModule.forRoot({ player: playerFactory })
 ],
   providers: [

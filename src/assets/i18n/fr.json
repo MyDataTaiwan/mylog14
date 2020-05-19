@@ -52,7 +52,9 @@
   },
   "DIARY": {
     "title": "My Data",
-    "select": "漢語"
+    "select": "漢語",
+    "guide1": "Cliquer sur la touche ci-dessous",
+    "guide2": "pour ajouter une nouvelle donnée"
   },
   "SYMPTOM": {
     "coughing": "Toux",
@@ -92,7 +94,9 @@
   "IMG_POPOVER": {
     "confirmDelete": "Effacer la photo?",
     "cancel": "Annuler",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "locationError": "Can't get location",
+    "deleting": "Deleting photos..."
   },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",

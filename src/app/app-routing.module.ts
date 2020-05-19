@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'guide',
     loadChildren: () => import('./core/pages/guide/guide.module').then( m => m.GuidePageModule)
   },
+  {
+    path: 'img-viewer',
+    loadChildren: () => import('./core/pages/img-viewer/img-viewer.module').then( m => m.ImgViewerPageModule)
+  },
 ];
 @NgModule({
   imports: [
