@@ -17,7 +17,7 @@ ion-slides {
     .text-container {
         width: 100%;
         position: fixed;
-        bottom: 10vh;
+        bottom: 25vh;
     }
 
     .title {
@@ -32,10 +32,10 @@ ion-slides {
 
     .desc {
         margin: 0;
-        color: #838383;
+        color: #FFF;
         font: {
             family: 'Trebuchet MS, PingFangTC-Medium, PingFang TC';
             size: 12px;
-            weight: 500;
+            weight: 300;
         }
     }
