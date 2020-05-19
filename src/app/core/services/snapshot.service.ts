@@ -6,7 +6,7 @@ import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
 import { Observable, pipe,defer, forkJoin, from, of, Subject } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs/operators';
+import { catchError, map, switchMap, mergeMap, takeUntil, tap, take, delay } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
 import { Symptoms } from '../classes/symptoms';
@@ -104,19 +104,31 @@ export class SnapshotService {
             symptoms: new Symptoms(),
             photos: [photo],
           };
-          this.showCaptureFinish();
-          return this.localStorage.saveRecord(record, recordMetaList);
+          return forkJoin([
+            this.localStorage.saveRecord(record, recordMetaList),
+            this.showCaptureFinish(),
+          ]);
         }),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(([recordMetaList, _]) => this.dataStore.updateRecordMetaList(recordMetaList)),
       );
   }
 
 
-  async showCaptureFinish() {
-    const modal = await this.popoverCtrl.create({
+  showCaptureFinish() {
+    return defer(() => this.popoverCtrl.create({
       component: RecordFinishPage,
-    });
-    return await modal.present();
+    }))
+      .pipe(
+        switchMap(popover => this.displayPopoverForDuration(popover, 0.5)),
+      );
+  }
+
+  private displayPopoverForDuration(popover: HTMLIonPopoverElement, seconds: number) {
+    return from(popover.present())
+      .pipe(
+        delay(seconds * 1000),
+        switchMap(() => popover.dismiss()),
+      );
   }
 
   snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
