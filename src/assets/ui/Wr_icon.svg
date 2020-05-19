@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="12" height="12" viewBox="0 0 12 12">
+  <defs>
+    <clipPath id="clip-Wr_icon">
+      <rect width="12" height="12"/>
+    </clipPath>
+  </defs>
+  <g id="Wr_icon" clip-path="url(#clip-Wr_icon)">
+    <path id="Polygon_14" data-name="Polygon 14" d="M5.272,2.962a2,2,0,0,1,3.455,0l3.518,6.031A2,2,0,0,1,10.518,12H3.482A2,2,0,0,1,1.755,8.992Z" transform="translate(-1 -1)" fill="#ffce00"/>
+    <g id="Group_789" data-name="Group 789" transform="translate(-122 -211)">
+      <text id="_" data-name="!" transform="translate(128 221)" fill="#fdfdfd" font-size="10" font-family="HelveticaNeue-Bold, Helvetica Neue" font-weight="700"><tspan x="-1.39" y="0">!</tspan></text>
+    </g>
+  </g>
+</svg>

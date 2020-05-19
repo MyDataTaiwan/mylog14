@@ -1,10 +1,9 @@
 <ion-header>
-  <ion-toolbar (click)="onClickTitle()">
-    <<ng-container *ngIf="click$ | async"></ng-container>
-    <ion-title slot="secondary">
+  <ion-toolbar mode="ios" (click)="onClickTitle()">
+    <ng-container *ngIf="click$ | async"></ng-container>
+    <ion-title text-center slot="secondary">
       {{ headerTitle }}
     </ion-title>
     <div slot="end" style="width: 15%;"></div>
-    
   </ion-toolbar>
 </ion-header>
