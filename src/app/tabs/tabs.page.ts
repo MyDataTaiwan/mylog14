@@ -5,6 +5,8 @@ import { SnapshotService } from '../core/services/snapshot.service';
 import { take, debounce, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { interval, Observable, defer, Subject } from 'rxjs';
 import { EulaPage } from '../core/pages/eula/eula.page';
+import { GuidePage } from '../core/pages/guide/guide.page';
+
 import { DataStoreService } from '../core/services/data-store.service';
 import { UserData } from '../core/interfaces/user-data';
 import { SharePage } from '../core/pages/share/share.page';
@@ -20,7 +22,7 @@ export class TabsPage implements AfterViewInit, OnDestroy {
   selectedTab: string;
   showDebugButton = false;
   eulaLoader$: Observable<UserData>;
-
+  GuideLoader$ : Observable<UserData>;
   constructor(
     private dataStore: DataStoreService,
     private modalController: ModalController,
@@ -30,10 +32,17 @@ export class TabsPage implements AfterViewInit, OnDestroy {
   ) { }
 
   ngAfterViewInit() {
+    // this.GuideLoader$ = this.dataStore.userData$
+    // .pipe(
+    //   filter(userData => userData.guideAccepted === false),
+    //   switchMap(userData => this.presentGuideModal(userData)),
+    //   switchMap(userData => this.dataStore.updateUserData(userData)),
+    // );
     this.eulaLoader$ = this.dataStore.userData$
       .pipe(
         filter(userData => userData.eulaAccepted === false),
         switchMap(userData => this.presentEulaModal(userData)),
+        // switchMap(userData => this.presentGuideModal(userData)),
         switchMap(userData => this.dataStore.updateUserData(userData)),
       );
   }
@@ -41,10 +50,24 @@ export class TabsPage implements AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+
+
   }
 
   ionTabsDidChange(event: TabsEvent) {
     this.selectedTab = event.tab;
+  }
+  async presentGuideModal(userData: UserData) {
+    const modal = await this.modalController.create({
+      // translucent: true,
+      backdropDismiss: false,
+      component: GuidePage,
+      componentProps: { userData },
+      cssClass: 'Guide-modal',
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    return Promise.resolve(data);
   }
 
   async presentAddRecordModal() {

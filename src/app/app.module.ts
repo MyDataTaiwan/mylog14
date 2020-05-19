@@ -19,6 +19,7 @@ import { CategorizeFinishPageModule } from './category/category-pending/categori
 import { CategorizeImgPopoverPageModule } from './category/category-pending/categorize-img-popover/categorize-img-popover.module';
 import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
+import { GuidePageModule } from './core/pages/guide/guide.module';
 import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
 
 export function LanguageLoader(http: HttpClient) {
@@ -55,6 +56,7 @@ export function playerFactory() {
     CoreModule,
     AddRecordPageModule,
     ImgPopoverPageModule,
+    GuidePageModule,
     ImgViewerPageModule,
     LottieModule.forRoot({ player: playerFactory })
 ],
