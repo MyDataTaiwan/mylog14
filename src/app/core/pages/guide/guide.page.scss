@@ -11,3 +11,31 @@ ion-img{
         --width: 110%;
          
 }
+ion-slides {
+        height: 100%;
+    }
+    .text-container {
+        width: 100%;
+        position: fixed;
+        bottom: 10vh;
+    }
+
+    .title {
+        margin-bottom: 5px;
+        color: #FFF;
+        font: {
+            family: 'Trebuchet MS, PingFangTC-Medium, PingFang TC';
+            size: 24px;
+            weight: bold;
+        }
+    }
+
+    .desc {
+        margin: 0;
+        color: #838383;
+        font: {
+            family: 'Trebuchet MS, PingFangTC-Medium, PingFang TC';
+            size: 12px;
+            weight: 500;
+        }
+    }

@@ -10,9 +10,13 @@
 <ion-content>
   <ion-slides scrollbar="false" pager="true" [options]="slideOpts" #theSlides>
     <ion-slide >
-      
         <img  style="width: 100vw;height: 100vh;" (click)="moveToNext(theSlides)"src="../../assets/mask/Mask_view.svg" />
-            
+        <div class="text-container">
+          <h1 class="title">{{ 'TOUR.slide3.title1' | translate }}</h1>
+          <h1 class="title">{{ 'TOUR.slide3.title2' | translate }}</h1>
+          <p class="desc">{{ 'TOUR.slide3.desc1' | translate }}</p>
+          <p class="desc">{{ 'TOUR.slide3.desc2' | translate }}</p>
+        </div>
     </ion-slide>
     <ion-slide >
       <img  style="width: 100vw;height: 100vh;" (click)="moveToNext(theSlides)" src="../../assets/mask/Mask_add.svg" />
