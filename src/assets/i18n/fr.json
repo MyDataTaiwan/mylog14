@@ -26,6 +26,27 @@
       "desc2": "Protéger le monde de manière solidaire"
     }
   },
+  "GUIDE": {
+    "getStarted": "Démarrage",
+    "slide1": {
+      "title1": "Revoir les enregistrements",
+      "title2": "",
+      "desc1": "Prendre soin de sa santé est une façon de s'aimer",
+      "desc2": ""
+    },
+    "slide2": {
+      "title1": "Ajouter une nouvelle donnée",
+      "title2": "",
+      "desc1": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!",
+      "desc2": ""
+    },
+    "slide3": {
+      "title1": "Partager des données",
+      "title2": "",
+      "desc1": "",
+      "desc2": ""
+    }
+  },
   "EULA": {
     "agree": "Accord"
   },
