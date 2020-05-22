@@ -26,7 +26,7 @@ export class DailyDetailUpperComponent implements OnInit {
   ngOnInit() {
     this.card$ = this.dataStore.overviewCards$
       .pipe(
-        map(cards => cards[this.dayCount - 1]),
+        map(cards => cards.find(card => +card.day === this.dayCount)),
         tap(card => this.updateMapUrl(card.locations)),
       );
   }
