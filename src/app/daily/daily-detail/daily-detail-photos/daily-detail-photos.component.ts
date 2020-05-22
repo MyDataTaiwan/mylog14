@@ -37,11 +37,11 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.photos$ = this.dataStore.dailyRecords$
       .pipe(
-        map(dailyRecords => dailyRecords.list[this.dayCount - 1].records),
+        map(dailyRecords => dailyRecords.list.find(dailyRecord => dailyRecord.dayCount === this.dayCount)),
+        map(dailyRecord => dailyRecord.records),
         map(records => records.map(record => record.photos)),
         map(nestedPhotos => nestedPhotos.reduce((flat, next) => flat.concat(next), [])),
         map(photos => photos.sort((a, b) => +b.timestamp - +a.timestamp)),
-        tap(photos=>console.log(photos))
       );
   }
 
@@ -87,7 +87,8 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
     return this.dataStore.dailyRecords$
       .pipe(
         take(1),
-        map(dailyRecords => dailyRecords.list[this.dayCount - 1].records),
+        map(dailyRecords => dailyRecords.list.find(dailyRecord => dailyRecord.dayCount === this.dayCount)),
+        map(dailyRecord => dailyRecord.records),
         map(records => {
           return records.find(record => record.photos.some(p => p.filepath === photo.filepath));
         }),

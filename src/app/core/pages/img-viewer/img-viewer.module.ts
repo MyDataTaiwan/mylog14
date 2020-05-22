@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ImgViewerPageRoutingModule } from './img-viewer-routing.module';
 
 import { ImgViewerPage } from './img-viewer.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ImgViewerPageRoutingModule
+    ImgViewerPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [ImgViewerPage]
 })

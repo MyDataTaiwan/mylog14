@@ -95,6 +95,7 @@
     "confirmDelete": "Effacer la photo?",
     "cancel": "Annuler",
     "confirm": "Confirmer",
+    "delete": "Delete",
     "locationError": "Can't get location",
     "deleting": "Deleting photos..."
   },

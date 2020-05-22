@@ -76,17 +76,6 @@ export class ImgViewerPage implements OnInit, OnDestroy {
     this.showImageDeletePopover(this.photo, this.record);
   }
 
-  // confirm() {
-  //   console.log(this.record);
-  //   concat(
-  //     this.photoService.deletePhoto(this.record, this.photo),
-  //     this.popoverController.dismiss(),
-  //   )
-  //     .pipe(
-  //       takeUntil(this.destroy$),
-  //     )
-  //     .subscribe();
-  // }
   cancel() {
     this.modalCtrl.dismiss({
       delete: false
