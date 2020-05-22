@@ -95,6 +95,7 @@
     "confirmDelete": "写真を削除しますか?",
     "cancel": "キャンセル",
     "confirm": "削除",
+    "delete": "削除",
     "locationError": "Can't get location",
     "deleting": "Deleting photos..."
   },

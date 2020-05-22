@@ -99,6 +99,7 @@
     "confirmDelete": "Delete the photo?",
     "cancel": "Cancel",
     "confirm": "Confirm",
+    "delete": "Delete",
     "locationError": "Can't get location",
     "deleting": "Deleting the photo & updating verifiable information..."
   },

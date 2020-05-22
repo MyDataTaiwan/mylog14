@@ -100,6 +100,7 @@
     "confirmDelete": "確定要刪除這張照片嗎？",
     "cancel": "取消",
     "confirm": "確認",
+    "delete": "刪除",
     "locationError": "無法取得地址資訊",
     "deleting": "正在刪除照片與更新驗證資訊..."
   },
