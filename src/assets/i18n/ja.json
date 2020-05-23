@@ -48,7 +48,9 @@
     "muscleOrJointSoreness": "筋肉痛もしくは関節痛",
     "soreThroat": "喉の痛み",
     "sputum": "喀痰",
-    "fever": "発熱"
+    "fever": "発熱",
+    "noSymptom":"今日",
+    "noNote":"noSymptom"
   },
   "DAILY_RECORD": {
     "title": "毎日の記録",
@@ -63,7 +65,9 @@
     "clear": "解除",
     "recorded": "記録が保存されました。",
     "ok": "確定",
-    "saving": "新たなデータまたは検証可能な情報を追加しています..."
+    "saving": "新たなデータまたは検証可能な情報を追加しています...",
+    "pickerTitle": "体温を記録",
+    "cancel":"キャンセル"
   },
   "RECORD_FINISH": {
     "finish": "記録が保存されました！"
