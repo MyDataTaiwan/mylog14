@@ -1,48 +1,48 @@
 {
   "images" : [
     {
+      "filename" : "Default@3x~iphone~comany.png",
       "idiom" : "universal",
-      "filename" : "LaunchImage.png",
       "scale" : "1x"
     },
     {
+      "filename" : "Default-736h.png",
       "idiom" : "universal",
-      "filename" : "LaunchImage-750@2x~iphone6-portrait_750x1334.png",
       "scale" : "2x"
     },
     {
+      "filename" : "Default-667h.png",
       "idiom" : "universal",
-      "filename" : "LaunchImage-Portrait@2x~ipad_1536x2048.png",
       "scale" : "3x"
     },
     {
+      "filename" : "Default~iphone.png",
       "idiom" : "iphone",
-      "filename" : "LaunchImage-1.png",
       "scale" : "1x"
     },
     {
+      "filename" : "Default-568h@2x~iphone.png",
       "idiom" : "iphone",
-      "filename" : "LaunchImage~iphone-320x480-1.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "filename" : "LaunchImage~iphone_640x960.png",
+      "idiom" : "iphone",
       "scale" : "3x"
     },
     {
+      "filename" : "Default-Landscape~ipad.png",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape~ipad_1024x748.png",
       "scale" : "1x"
     },
     {
+      "filename" : "Default-Landscape@2x~ipad.png",
       "idiom" : "ipad",
-      "filename" : "LaunchImage-Landscape@2x~ipad_2048x1496.png",
       "scale" : "2x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }
