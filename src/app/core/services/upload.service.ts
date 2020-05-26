@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import * as JSZip from 'jszip';
 import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable, throwError } from 'rxjs';
 import { DataStoreService } from './data-store.service';
-import { map, switchMap, take, tap, delay, catchError, timeout } from 'rxjs/operators';
+import { map, switchMap, take, tap, delay, catchError, timeout, filter } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 
 @Injectable({
@@ -24,6 +24,11 @@ export class UploadService {
     return this.dataStore.recordMetaList$
       .pipe(
         take(1),
+        map(recordMetaList => {
+          const now = Date.now();
+          const earliestTimeForUpload = now - 1000 * 86400 * 14; // Only upload  data in 14 Days
+          return recordMetaList.filter(recordMeta => recordMeta.timestamp > earliestTimeForUpload);
+        }),
         switchMap(recordMetaList => {
           return forkJoin([
             of(recordMetaList.map(recordMeta => recordMeta.path)),
