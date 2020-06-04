@@ -30,7 +30,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   options: AnimationOptions = {
     // path: '/assets/lottie-animation.json',
-    path: '/assets/MyLog14BBT.json',
+    path: '/assets/MyLogBBTfix.json',
   };
 
   TEMPimg: '/assets/imgA.png'
