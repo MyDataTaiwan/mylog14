@@ -19,11 +19,11 @@
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
   <div style="display: flex;flex-direction: column;height: 40vw;">
-    <ion-img [src]="photo.webviewPath" style="width: 100%;"></ion-img>
+    <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString" style="width: 100%;"></ion-img>
   </div>
   <!-- <ion-label>Label</ion-label>
   <ion-label>{{ firstName   }}</ion-label>
   <ion-label>{{ lastName   }}</ion-label>
   <ion-label>{{ photo.locationStamp.latitude   }}</ion-label>
-  <ion-label>{{ photo.webviewPath  }}</ion-label> -->
+  <ion-label>{{ 'data:image/jpeg;base64,' + photo.byteString  }}</ion-label> -->
 </ion-content>

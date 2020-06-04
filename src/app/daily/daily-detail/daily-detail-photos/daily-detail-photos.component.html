@@ -3,10 +3,10 @@
     <div style="display: flex;flex-direction: row;flex-wrap: wrap;">
       <ion-thumbnail *ngFor="let photo of photos$ | async">
         <!-- <div (click)="openImageModal(photo)">
-          <ion-img [src]="photo.webviewPath"></ion-img>
+          <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString"></ion-img>
         </div> -->
         <div  (click)="showImageViewer(photo)">
-          <ion-img [src]="photo.webviewPath"></ion-img>
+          <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString"></ion-img>
         </div>
       </ion-thumbnail>
     </div>

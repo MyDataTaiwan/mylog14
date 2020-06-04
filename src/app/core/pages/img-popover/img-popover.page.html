@@ -8,7 +8,7 @@
     <ion-col>
 
       <div style="display: flex;flex-direction: column;height: 40vw;">
-        <img [src]="photo.webviewPath | safeUrl" style="height: 39vw;" />
+        <img [src]="'data:image/jpeg;base64,' + photo.byteString" style="height: 39vw;" />
       </div>
 
     </ion-col>
