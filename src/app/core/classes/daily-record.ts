@@ -50,4 +50,21 @@ export class DailyRecord {
         }
     }
 
+    getLatestPhotoByteString(): string {
+        function flatten<T>(arr: T[][]): Array<T> {
+            return arr.reduce((flat, next) => flat.concat(next), []);
+        }
+
+        const nestedPhotos = this.records.map(record => record.photos);
+        const photos = flatten(nestedPhotos);
+        const sortedPhotos = photos
+            .filter(photo => photo !== undefined)
+            .sort((a, b) => +b.timestamp - +a.timestamp);
+        if (sortedPhotos[0]) {
+            return sortedPhotos[0].byteString;
+        } else {
+            return '';
+        }
+    }
+
 }

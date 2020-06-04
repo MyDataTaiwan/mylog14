@@ -33,8 +33,8 @@
           </ion-col>
           <ion-col size="7">
             <ion-thumbnail>
-              <ion-img *ngIf="!item.imgSrc" src="/assets/imgA.png" alt="No picture"></ion-img>
-              <ion-img *ngIf="item.imgSrc" [src]="item.imgSrc" alt="No picture"></ion-img>
+              <ion-img *ngIf="!item.imgByteString" src="/assets/imgA.png" alt="No picture"></ion-img>
+              <ion-img *ngIf="item.imgByteString" [src]="'data:image/jpeg;base64,' + item.imgByteString" alt="No picture"></ion-img>
             </ion-thumbnail>
           </ion-col>
         </ion-row>

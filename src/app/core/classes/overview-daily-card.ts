@@ -12,6 +12,7 @@ export class OverviewDailyCard implements DailyCard {
     bt: string;
     imgSrc: string;
     imgHeight: number;
+    imgByteString?: string;
     presentedSymptoms?: string[];
     locations?: LocationStamp[];
 
@@ -33,6 +34,7 @@ export class OverviewDailyCard implements DailyCard {
         }
         this.bt = `${dailyRecord.getHighestBt()}`;
         this.imgSrc = dailyRecord.getLatestPhotoPath();
+        this.imgByteString = dailyRecord.getLatestPhotoByteString();
         this.locations = dailyRecord.records
             .map(record => record.locationStamp)
             .filter(locationStamp => locationStamp !== undefined);
