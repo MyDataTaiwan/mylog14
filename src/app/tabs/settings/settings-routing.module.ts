@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: SettingsPage
+  },
+  {
+    path: 'name-popover',
+    loadChildren: () => import('./name-popover/name-popover.module').then( m => m.NamePopoverPageModule)
   }
 ];
 
