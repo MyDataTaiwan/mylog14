@@ -4,36 +4,36 @@
   <!-- (click)="onClickTabButton(tabA)" -->
   <ion-tabs (ionTabsDidChange)="ionTabsDidChange($event)" style="background-color: aliceblue;">
     <ion-tab-bar slot="bottom">
-      <ion-tab-button  tab="tab-data">
+      <ion-tab-button tab="tab-data">
         <img *ngIf="selectedTab !== 'tab-data'" src="../../assets/ui/nav_icon_A.svg" />
         <img *ngIf="selectedTab === 'tab-data'" src="../../assets/ui/nav_icon_1.svg" />
       </ion-tab-button>
-      
+
       <ion-tab-button (click)="onClickShareButton()">
         <img src="../../assets/ui/nav_icon_C.svg" />
       </ion-tab-button>
-      <ion-tab-button tab="tab-data"  disabled="true" >
-        <img src="../../assets/ui/nav_icon_D.svg" />
+      <ion-tab-button tab="settings">
+        <img *ngIf="selectedTab !== 'settings'" src="../../assets/ui/nav_icon_D.svg" />
+        <img *ngIf="selectedTab === 'settings'" src="../../assets/ui/nav_icon_4.svg" />
       </ion-tab-button>
-      <ion-tab-button tab="tab-data" disabled="true" >
+      <ion-tab-button tab="tab-data" disabled="true">
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button color="secondary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list  style="margin-bottom: 30vw;" side="start">
-      <ion-fab-button  style="margin-bottom: 30vw;" color="light" (click)="onClickCameraButton()">
+    <ion-fab-list style="margin-bottom: 30vw;" side="start">
+      <ion-fab-button style="margin-bottom: 30vw;" color="light" (click)="onClickCameraButton()">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
-    <ion-fab-list  side="top">
+    <ion-fab-list side="top">
       <ion-fab-button color="light" [routerLink]="['/add-record']">
         <ion-icon name="pencil-outline"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </div>
-
