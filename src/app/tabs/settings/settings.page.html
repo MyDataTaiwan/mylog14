@@ -8,27 +8,27 @@
         <ion-text>
           <h3>{{ 'SETTINGS.name' | translate }}</h3>
         </ion-text>
-        <p>[first name value] [last name value]</p>
+        <p>{{ name$ | async }}</p>
       </ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item button (click)="onClickEmailItem()">
       <ion-icon name="mail-outline" slot="start"></ion-icon>
       <ion-label class="ion-text-wrap">
         <ion-text>
-          <h3>{{ 'SETTINGS.email' | translate}}</h3>
+          <h3>{{ 'SETTINGS.email' | translate }}</h3>
         </ion-text>
-        <p>[email value]</p>
+        <p>{{ email$ | async }}</p>
       </ion-label>
     </ion-item>
 
-    <ion-item>
+    <ion-item button (click)="onClickDateOfBirthItem()">
       <ion-icon name="calendar-outline" slot="start"></ion-icon>
       <ion-label class="ion-text-wrap">
         <ion-text>
           <h3>{{ 'SETTINGS.dateOfBirth' | translate }}</h3>
         </ion-text>
-        <p>[date of birth value]</p>
+        <p>{{ dateOfBirth$ | async }}</p>
       </ion-label>
     </ion-item>
   </ion-list>

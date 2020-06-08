@@ -20,8 +20,9 @@
       </ion-item>
     </ion-list>
 
-    <ion-button type="submit" fill="clear" class="ion-float-right">{{ 'SETTINGS.confirm' | translate }}</ion-button>
-    <ion-button (click)="onCancel()" [disabled]="!nameForm.valid" fill="clear" class="ion-float-right">
+    <ion-button type="submit" [disabled]="!nameForm.valid" fill="clear" class="ion-float-right">
+      {{ 'SETTINGS.confirm' | translate }}</ion-button>
+    <ion-button (click)="onCancel()" fill="clear" class="ion-float-right">
       {{ 'SETTINGS.cancel' | translate }}
     </ion-button>
   </form>

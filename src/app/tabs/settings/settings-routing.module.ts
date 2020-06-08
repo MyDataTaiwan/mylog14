@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'name-popover',
     loadChildren: () => import('./name-popover/name-popover.module').then( m => m.NamePopoverPageModule)
+  },
+  {
+    path: 'email-popover',
+    loadChildren: () => import('./email-popover/email-popover.module').then( m => m.EmailPopoverPageModule)
   }
 ];
 

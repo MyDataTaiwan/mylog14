@@ -1,19 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { PopoverController } from '@ionic/angular';
 import { first, map } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
-  selector: 'app-name-popover',
-  templateUrl: './name-popover.page.html',
-  styleUrls: ['./name-popover.page.scss'],
+  selector: 'app-email-popover',
+  templateUrl: './email-popover.page.html',
+  styleUrls: ['./email-popover.page.scss'],
 })
-export class NamePopoverPage implements OnInit {
+export class EmailPopoverPage implements OnInit {
 
-  nameForm = this.formBuilder.group({
-    firstName: [''],
-    lastName: ['']
+  emailForm = this.formBuilder.group({
+    email: ['', Validators.email]
   });
 
   constructor(
@@ -23,15 +22,15 @@ export class NamePopoverPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initName();
+    this.initEmail();
   }
 
-  private initName() {
+  private initEmail() {
     this.dataStoreService.userData$.pipe(
-      first()
-    ).subscribe(userData => {
-      this.nameForm.controls.firstName.setValue(userData.firstName);
-      this.nameForm.controls.lastName.setValue(userData.lastName);
+      first(),
+      map(userData => userData.email)
+    ).subscribe(email => {
+      this.emailForm.controls.email.setValue(email);
     });
   }
 
@@ -39,8 +38,7 @@ export class NamePopoverPage implements OnInit {
     this.dataStoreService.userData$.pipe(
       first(),
       map(userData => {
-        userData.firstName = this.nameForm.controls.firstName.value;
-        userData.lastName = this.nameForm.controls.lastName.value;
+        userData.email = this.emailForm.controls.email.value;
         return userData;
       })
     ).subscribe(userData => this.dataStoreService.updateUserData(userData).subscribe());
