@@ -1,5 +1,35 @@
-<app-main-header headerTitle="Settings"></app-main-header>
+<app-main-header [headerTitle]="'SETTINGS.settings' | translate"></app-main-header>
 
 <ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text>
+          <h3>{{ 'SETTINGS.name' | translate }}</h3>
+        </ion-text>
+        <p>[first name value] [last name value]</p>
+      </ion-label>
+    </ion-item>
 
+    <ion-item>
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text>
+          <h3>{{ 'SETTINGS.email' | translate}}</h3>
+        </ion-text>
+        <p>[email value]</p>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+      <ion-label class="ion-text-wrap">
+        <ion-text>
+          <h3>{{ 'SETTINGS.dateOfBirth' | translate }}</h3>
+        </ion-text>
+        <p>[date of birth value]</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
