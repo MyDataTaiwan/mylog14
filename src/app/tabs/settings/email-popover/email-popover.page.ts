@@ -41,7 +41,7 @@ export class EmailPopoverPage implements OnInit {
         userData.email = this.emailForm.controls.email.value;
         return userData;
       })
-    ).subscribe(userData => this.dataStoreService.updateUserData(userData).subscribe());
+    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
     this.popoverController.dismiss();
   }
 

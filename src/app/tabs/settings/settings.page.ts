@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, Observable, Subject } from 'rxjs';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from "./name-popover/name-popover.page";
@@ -17,6 +17,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   name$: Observable<string>;
   email$: Observable<string>;
   dateOfBirth$: Observable<string>;
+  @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   private destroy$ = new Subject();
   private notSet: string;
 
@@ -51,8 +52,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.dateOfBirth$ = this.dataStoreService.userData$.pipe(
       takeUntil(this.destroy$),
       map(userData => {
-        if (!userData.dateOfBirth) return this.notSet;
-        return userData.dateOfBirth.toDateString();
+        if (!userData.dateOfBirth) return '';
+        return userData.dateOfBirth;
       })
     );
   }
@@ -65,7 +66,14 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.showPopover(EmailPopoverPage);
   }
 
-  onClickDateOfBirthItem() {
+  onChangeDateOfBirthPicker() {
+    this.dataStoreService.userData$.pipe(
+      first(),
+      map(userData => {
+        userData.dateOfBirth = this.dateOfBirthPicker.value;
+        return userData;
+      })
+    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
   }
 
   private showPopover(component) {

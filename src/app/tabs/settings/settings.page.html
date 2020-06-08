@@ -4,32 +4,23 @@
   <ion-list>
     <ion-item button (click)="onClickNameItem()">
       <ion-icon name="person-outline" slot="start"></ion-icon>
-      <ion-label class="ion-text-wrap">
-        <ion-text>
-          <h3>{{ 'SETTINGS.name' | translate }}</h3>
-        </ion-text>
-        <p>{{ name$ | async }}</p>
-      </ion-label>
+      <ion-label>{{ 'SETTINGS.name' | translate }}</ion-label>
+      <ion-text>{{ name$ | async }}</ion-text>
     </ion-item>
 
     <ion-item button (click)="onClickEmailItem()">
       <ion-icon name="mail-outline" slot="start"></ion-icon>
-      <ion-label class="ion-text-wrap">
-        <ion-text>
-          <h3>{{ 'SETTINGS.email' | translate }}</h3>
-        </ion-text>
-        <p>{{ email$ | async }}</p>
-      </ion-label>
+      <ion-label>{{ 'SETTINGS.email' | translate }}</ion-label>
+      <ion-text>{{ email$ | async }}</ion-text>
     </ion-item>
 
-    <ion-item button (click)="onClickDateOfBirthItem()">
-      <ion-icon name="calendar-outline" slot="start"></ion-icon>
-      <ion-label class="ion-text-wrap">
-        <ion-text>
-          <h3>{{ 'SETTINGS.dateOfBirth' | translate }}</h3>
-        </ion-text>
-        <p>{{ dateOfBirth$ | async }}</p>
-      </ion-label>
+    <ion-item button (click)="dateOfBirthPicker.open()">
+      <ion-icon name="calendar-outline" slot="start">
+      </ion-icon>
+      <ion-label>{{ 'SETTINGS.dateOfBirth' | translate }}</ion-label>
+      <ion-text *ngIf="!(dateOfBirth$ | async)">{{ 'SETTINGS.notSet' | translate }}</ion-text>
+      <ion-datetime #dateOfBirthPicker [value]="dateOfBirth$ | async" (ionChange)="onChangeDateOfBirthPicker()"
+        [hidden]="!(dateOfBirth$ | async)"></ion-datetime>
     </ion-item>
   </ion-list>
 </ion-content>

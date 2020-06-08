@@ -2,7 +2,7 @@ export interface UserData {
     firstName: string;
     lastName: string;
     email?: string;
-    dateOfBirth?: Date;
+    dateOfBirth?: string; // ISO 8601
     newUser: boolean;
     eulaAccepted: boolean;
     uuid?: string;

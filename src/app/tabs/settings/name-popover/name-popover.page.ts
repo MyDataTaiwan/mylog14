@@ -43,7 +43,7 @@ export class NamePopoverPage implements OnInit {
         userData.lastName = this.nameForm.controls.lastName.value;
         return userData;
       })
-    ).subscribe(userData => this.dataStoreService.updateUserData(userData).subscribe());
+    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
     this.popoverController.dismiss();
   }
 
