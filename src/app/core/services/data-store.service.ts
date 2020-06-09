@@ -46,7 +46,8 @@ export class DataStoreService {
     firstName: '',
     lastName: '',
     newUser: true,
-    eulaAccepted: false
+    eulaAccepted: false,
+    guideAccepted: false
   });
   public userData$ = this.userData.asObservable();
 

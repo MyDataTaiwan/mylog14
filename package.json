@@ -1,6 +1,6 @@
 {
-  "name": "mylog14",
-  "version": "0.0.1",
+  "name": "mylog",
+  "version": "0.8.4",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
   "scripts": {
@@ -9,7 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "resources": "cordova-res ios && cordova-res android && node scripts/resources.js"
   },
   "postinstall": "jetifier",
   "private": true,
@@ -61,6 +62,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "cordova-res": "^0.14.0",
     "jasmine-core": "^3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",

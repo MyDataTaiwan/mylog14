@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
-import { Subject, Observable, from, BehaviorSubject, defer, forkJoin, of } from 'rxjs';
+import { Subject, Observable, from, BehaviorSubject, defer, forkJoin, of, concat } from 'rxjs';
 import { Snapshot } from '../interfaces/snapshot';
 import { map, tap, switchMap, take, catchError } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
@@ -143,7 +143,8 @@ export class PhotoService {
   // Retrieve the photo metadata based on the platform the app is running on
   private async getPhotoFile(cameraPhoto: CameraPhoto, fileName: string): Promise<Photo> {
     let base64String = await this.readAsBase64(cameraPhoto);
-    base64String = base64String.split(',')[1]; // Remove "data:image/jpeg;base64," data schema
+    // Remove "data:image/jpeg;base64," data schema if is web
+    base64String = (this.platform.is('hybrid')) ? base64String : base64String.split(',')[1];
     if (this.platform.is('hybrid')) {
       // Get the new, complete filepath of the photo saved on filesystem
       const fileUri = await Filesystem.getUri({
@@ -198,25 +199,28 @@ export class PhotoService {
   })
 
   deletePhoto(record: Record, photo: Photo) {
+    const idx = record.photos.findIndex(p => p.filepath === photo.filepath);
+    record.photos.splice(idx);
+
     const tmpArr = photo.filepath.split('/');
     const filename = tmpArr[tmpArr.length - 1];
-    return defer(() => from(Filesystem.deleteFile({
+    const deleteFile$ = defer(() => Filesystem.deleteFile({
       path: filename,
       directory: FilesystemDirectory.Data,
-    })))
+    }))
       .pipe(
         catchError(err => {
           console.log(err);
-          console.log(photo);
           return of();
-        }),
-        switchMap(() => this.dataStore.recordMetaList$.pipe(take(1))),
-        tap(() => {
-          const idx = record.photos.findIndex(p => p.filepath === photo.filepath);
-          record.photos.splice(idx);
-        }),
+        })
+      );
+
+    return this.dataStore.recordMetaList$
+      .pipe(
+        take(1),
         switchMap(recordMetaList => this.localStorage.saveRecord(record, recordMetaList)),
         switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(_ => deleteFile$),
       );
   }
 }

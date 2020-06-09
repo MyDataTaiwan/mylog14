@@ -28,7 +28,8 @@ export class TourPage implements OnInit, OnDestroy {
       firstName: '',
       lastName: '',
       newUser: false,
-      eulaAccepted: false
+      eulaAccepted: false,
+      guideAccepted: false
     }).pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {

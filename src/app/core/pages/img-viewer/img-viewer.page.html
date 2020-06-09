@@ -1,0 +1,29 @@
+<ion-header>
+  <!-- <ion-toolbar>
+    <ion-title>img-viewer</ion-title>
+  </ion-toolbar> -->
+  <ion-row>
+    <ion-button (click)="cancel()">{{ 'IMG_POPOVER.cancel' | translate }}</ion-button>
+    <ion-col text-center>
+     <div style="display: flex;flex-direction: column;align-items: center;">
+      <ion-label >{{ photo.timestamp | date: 'yyyy/MM/dd' }}      </ion-label>
+      <ion-label >{{ photo.timestamp | date: 'HH:mm:ss' }}      </ion-label>
+</div>
+    </ion-col>
+    <ion-button (click)="delete()">{{ 'IMG_POPOVER.delete' | translate }}</ion-button>
+  </ion-row>
+</ion-header>
+
+<ion-content>
+
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
+  <div style="display: flex;flex-direction: column;height: 40vw;">
+    <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString" style="width: 100%;"></ion-img>
+  </div>
+  <!-- <ion-label>Label</ion-label>
+  <ion-label>{{ firstName   }}</ion-label>
+  <ion-label>{{ lastName   }}</ion-label>
+  <ion-label>{{ photo.locationStamp.latitude   }}</ion-label>
+  <ion-label>{{ 'data:image/jpeg;base64,' + photo.byteString  }}</ion-label> -->
+</ion-content>

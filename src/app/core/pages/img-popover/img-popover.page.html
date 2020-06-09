@@ -8,16 +8,18 @@
     <ion-col>
 
       <div style="display: flex;flex-direction: column;height: 40vw;">
-        <img [src]="photo.webviewPath | safeUrl" style="height: 39vw;" />
+        <img [src]="'data:image/jpeg;base64,' + photo.byteString | safeUrl" style="height: 39vw;" />
       </div>
 
     </ion-col>
     <ion-col>
       <div style="display: flex; flex-direction:column;">
-        <ion-label class=".ion-text-center">{{ photo.timestamp | date: 'yyyy-MM-dd HH:mm:ss' }}</ion-label>
-        <ion-label class=".ion-text-center">{{ address$ | async }}</ion-label>
-        <ion-label class=".ion-text-center">{{ photo.locationStamp.latitude }}</ion-label>
-        <ion-label class=".ion-text-center">{{ photo.locationStamp.longitude }}</ion-label>
+        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'yyyy-MM-dd' }}</ion-label>
+        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'HH:mm:ss' }}</ion-label>
+        <ion-label  style="font-size: large;"class=".ion-text-center">{{ address$ | async   }}</ion-label>
+
+        <!-- <ion-label class=".ion-text-center">{{ photo.locationStamp.latitude }}</ion-label>
+        <ion-label class=".ion-text-center">{{ photo.locationStamp.longitude }}</ion-label> -->
       </div>
 
     </ion-col>

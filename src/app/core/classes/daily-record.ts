@@ -6,8 +6,8 @@ export class DailyRecord {
     dayCount: number = null;
     latestPhoto: string;
     records: Record[] = [];
-    constructor(dayCount: number) {
-        this.dayCount = dayCount;
+    constructor(date: string) {
+        this.date = date;
     }
 
     getRecordCount() {
@@ -45,6 +45,23 @@ export class DailyRecord {
             .sort((a, b) => +b.timestamp - +a.timestamp);
         if (sortedPhotos[0]) {
             return sortedPhotos[0].webviewPath;
+        } else {
+            return '';
+        }
+    }
+
+    getLatestPhotoByteString(): string {
+        function flatten<T>(arr: T[][]): Array<T> {
+            return arr.reduce((flat, next) => flat.concat(next), []);
+        }
+
+        const nestedPhotos = this.records.map(record => record.photos);
+        const photos = flatten(nestedPhotos);
+        const sortedPhotos = photos
+            .filter(photo => photo !== undefined)
+            .sort((a, b) => +b.timestamp - +a.timestamp);
+        if (sortedPhotos[0]) {
+            return sortedPhotos[0].byteString;
         } else {
             return '';
         }

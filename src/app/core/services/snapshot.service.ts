@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 import { GeolocationPosition } from '@capacitor/core';
 import { GeolocationService } from './geolocation.service';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Snapshot } from '../interfaces/snapshot';
 import { PhotoService } from './photo.service';
-import { Observable, pipe, forkJoin, from, of, Subject } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs/operators';
+import { Observable, pipe,defer, forkJoin, from, of, Subject } from 'rxjs';
+import { catchError, map, switchMap, mergeMap, takeUntil, tap, take, delay } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
 import { Symptoms } from '../classes/symptoms';
 import { LocalStorageService } from './local-storage.service';
 import { DataStoreService } from './data-store.service';
 import { RecordMeta } from '../classes/record-meta';
+import { RecordFinishPage } from '../components/record-finish/record-finish.page';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +30,8 @@ export class SnapshotService {
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
     private localStorage: LocalStorageService,
+    private popoverCtrl: PopoverController,
+
   ) { }
 
   getLocationStamp(): Observable<LocationStamp> {
@@ -100,9 +104,30 @@ export class SnapshotService {
             symptoms: new Symptoms(),
             photos: [photo],
           };
-          return this.localStorage.saveRecord(record, recordMetaList);
+          return forkJoin([
+            this.localStorage.saveRecord(record, recordMetaList),
+            this.showCaptureFinish(),
+          ]);
         }),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(([recordMetaList, _]) => this.dataStore.updateRecordMetaList(recordMetaList)),
+      );
+  }
+
+
+  showCaptureFinish() {
+    return defer(() => this.popoverCtrl.create({
+      component: RecordFinishPage,
+    }))
+      .pipe(
+        switchMap(popover => this.displayPopoverForDuration(popover, 0.5)),
+      );
+  }
+
+  private displayPopoverForDuration(popover: HTMLIonPopoverElement, seconds: number) {
+    return from(popover.present())
+      .pipe(
+        delay(seconds * 1000),
+        switchMap(() => popover.dismiss()),
       );
   }
 

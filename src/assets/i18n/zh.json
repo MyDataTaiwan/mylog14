@@ -26,12 +26,35 @@
       "desc2": ""
     }
   },
+  "GUIDE": {
+    "getStarted": "開始使用",
+    "slide1": {
+      "title1": "檢視紀錄資料",
+      "title2": "",
+      "desc1": "關心每天的健康狀態也是愛自己的一種方式呦！",
+      "desc2": ""
+    },
+    "slide2": {
+      "title1": "新增資料",
+      "title2": "",
+      "desc1": "時常記錄自己的健康狀態，就是給醫事人員最大的打氣！",
+      "desc2": ""
+    },
+    "slide3": {
+      "title1": "分享資料",
+      "title2": "",
+      "desc1": "",
+      "desc2": ""
+    }
+  },
   "EULA": {
     "agree": "我已同意使用者條款"
   },
   "DIARY": {
     "title": "我的資料",
-    "select": "English"
+    "select": "English",
+    "guide1": "點擊下方",
+    "guide2": "以新增資料"      
   },
   "SYMPTOM": {
     "coughing": "咳嗽",
@@ -75,7 +98,10 @@
   "IMG_POPOVER": {
     "confirmDelete": "確定要刪除這張照片嗎？",
     "cancel": "取消",
-    "confirm": "確認"
+    "confirm": "確認",
+    "delete": "刪除",
+    "locationError": "無法取得地址資訊",
+    "deleting": "正在刪除照片與更新驗證資訊..."
   },
   "SHARE": {
     "confirmShare": "你想要建立分享連結嗎？",

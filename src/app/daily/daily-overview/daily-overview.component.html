@@ -33,12 +33,24 @@
           </ion-col>
           <ion-col size="7">
             <ion-thumbnail>
-              <ion-img *ngIf="!item.imgSrc" src="/assets/imgA.png" alt="No picture"></ion-img>
-              <ion-img *ngIf="item.imgSrc" [src]="item.imgSrc" alt="No picture"></ion-img>
+              <ion-img *ngIf="!item.imgByteString" src="/assets/imgA.png" alt="No picture"></ion-img>
+              <ion-img *ngIf="item.imgByteString" [src]="'data:image/jpeg;base64,' + item.imgByteString" alt="No picture"></ion-img>
             </ion-thumbnail>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card>
   </ion-virtual-scroll>
+  <ion-row class="ion-justify-content-center" style="padding: 10%;">
+    <ion-label>
+      {{ "DIARY.guide1" | translate }}
+    </ion-label>
+    <ion-img src="/assets/ui/add_icon.svg" style="height: 10%;" alt="No picture"></ion-img>
+    <ion-label>
+      {{ "DIARY.guide2" | translate }}
+    </ion-label>
+  </ion-row>
+
+  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
+  </div>
 </ion-content>

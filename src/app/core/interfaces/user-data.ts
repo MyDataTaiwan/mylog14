@@ -5,6 +5,7 @@ export interface UserData {
     dateOfBirth?: string; // ISO 8601
     newUser: boolean;
     eulaAccepted: boolean;
+    guideAccepted: boolean;
     uuid?: string;
     language?: string;
     timezone?: string;
