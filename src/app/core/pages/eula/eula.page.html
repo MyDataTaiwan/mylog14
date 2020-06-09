@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-    <div *ngIf="translateConfig.getDefaultLanguage() === 'zh'" class="scrollable">
+    <div *ngIf="translateConfig.getAndUseDefaultLanguage() === 'zh'" class="scrollable">
         <h5 class="ion-text-center header">My Log 14 使用者條款摘要</h5>
         <p class="sub-header">「自己的資料自己管 (own and control your data)」</p>
         <p>
@@ -211,7 +211,7 @@
                     href="mailto: taiwan@mydata.org">[taiwan@mydata.org]</a>。</p>
         </ul>
     </div>
-    <div *ngIf="translateConfig.getDefaultLanguage() === 'en'" class="scrollable">
+    <div *ngIf="translateConfig.getAndUseDefaultLanguage() === 'en'" class="scrollable">
         <h5 class="ion-text-center header">Terms & Conditions</h5>
         <p>
             By downloading or using the app, these terms will automatically apply to you – you should make sure
@@ -449,4 +449,3 @@
     </div>
 
 </ion-content>
-

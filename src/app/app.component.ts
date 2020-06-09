@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { Platform } from '@ionic/angular';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
-
-import { TranslateConfigService } from './translate-config.service';
-import { GeolocationService } from './core/services/geolocation.service';
-import { DataStoreService } from './core/services/data-store.service';
 import { Router } from '@angular/router';
-import { filter, tap } from 'rxjs/operators';
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
+import { tap } from 'rxjs/operators';
+import { DataStoreService } from './core/services/data-store.service';
+import { GeolocationService } from './core/services/geolocation.service';
+import { TranslateConfigService } from './translate-config.service';
+
 
 const { SplashScreen, StatusBar } = Plugins;
 
@@ -17,8 +17,6 @@ const { SplashScreen, StatusBar } = Plugins;
 })
 export class AppComponent {
 
-  selectedLanguage: string;
-
   constructor(
     private dataStore: DataStoreService,
     private geolocation: GeolocationService,
@@ -26,7 +24,7 @@ export class AppComponent {
     private router: Router,
     private translateConfigService: TranslateConfigService
   ) {
-    this.selectedLanguage = this.translateConfigService.getDefaultLanguage();
+    this.translateConfigService.initialize();
     this.initializeApp();
   }
   async initializeApp() {
@@ -47,8 +45,5 @@ export class AppComponent {
         })
       ).subscribe(() => { }, err => console.log(err));
     SplashScreen.hide();
-  }
-  languageChanged() {
-    this.translateConfigService.setLanguage(this.selectedLanguage);
   }
 }

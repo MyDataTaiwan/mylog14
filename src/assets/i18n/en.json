@@ -102,6 +102,11 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "editEmail": "Edit Email",
-    "about": "About"
+    "about": "About",
+    "language": "Language",
+    "en": "English",
+    "fr": "French",
+    "ja": "Japanese",
+    "zh": "Traditional Chinese"
   }
 }

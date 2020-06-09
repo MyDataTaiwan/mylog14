@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { defer, Observable, Subject } from 'rxjs';
 import { first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { TranslateConfigService } from 'src/app/translate-config.service';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from "./name-popover/name-popover.page";
 
@@ -21,12 +22,15 @@ export class SettingsPage implements OnInit, OnDestroy {
   email$: Observable<string>;
   dateOfBirth$: Observable<string>;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
+  languages = this.translateConfigService.langs;
+  currentLanguage$: Observable<string>;
   private destroy$ = new Subject();
   private notSet: string;
 
   constructor(
     private translateService: TranslateService,
     private popoverController: PopoverController,
+    private translateConfigService: TranslateConfigService,
     private dataStoreService: DataStoreService
   ) { }
 
@@ -34,6 +38,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.translateService.get('SETTINGS.notSet').pipe(
       takeUntil(this.destroy$)
     ).subscribe(str => this.notSet = str);
+
     this.initSummary();
   }
 
@@ -59,6 +64,13 @@ export class SettingsPage implements OnInit, OnDestroy {
         return userData.dateOfBirth;
       })
     );
+    this.currentLanguage$ = this.dataStoreService.userData$.pipe(
+      takeUntil(this.destroy$),
+      map(userData => {
+        if (!userData.language) return this.translateService.defaultLang;
+        return userData.language;
+      })
+    );
   }
 
   onClickNameItem() {
@@ -77,6 +89,11 @@ export class SettingsPage implements OnInit, OnDestroy {
         return userData;
       })
     ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
+  }
+
+  onChangeLanguage(event: CustomEvent) {
+    const newLang = event.detail.value;
+    this.translateConfigService.setLanguage(newLang);
   }
 
   onClickAboutItem() {

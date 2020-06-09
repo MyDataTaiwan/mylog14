@@ -1,10 +1,10 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { TestBed, async } from '@angular/core/testing';
-
+import { async, TestBed } from '@angular/core/testing';
 import { Platform } from '@ionic/angular';
-
 import { AppComponent } from './app.component';
 import { TranslateConfigService } from './translate-config.service';
+
+
 
 describe('AppComponent', () => {
 
@@ -13,7 +13,7 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     platformIsSpy = Promise.resolve();
     platformSpy = jasmine.createSpyObj('Platform', { is: platformIsSpy });
-    translateConfigSpy = jasmine.createSpyObj('TranslateConfigService', ['getDefaultLanguage']);
+    translateConfigSpy = jasmine.createSpyObj('TranslateConfigService', ['getAndUseDefaultLanguage']);
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -35,7 +35,7 @@ describe('AppComponent', () => {
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.is).toHaveBeenCalled();
-    expect(translateConfigSpy.getDefaultLanguage).toHaveBeenCalled();
+    expect(translateConfigSpy.getAndUseDefaultLanguage).toHaveBeenCalled();
   });
 
   // TODO: add more tests!
