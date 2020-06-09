@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { first, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { first, map, switchMap } from 'rxjs/operators';
+import { UserData } from './core/interfaces/user-data';
 import { DataStoreService } from './core/services/data-store.service';
 
 @Injectable({
@@ -30,14 +32,15 @@ export class TranslateConfigService {
     return language;
   }
 
-  setLanguage(lang: string) {
-    this.dataStoreService.userData$.pipe(
+  setLanguage(lang: string): Observable<UserData> {
+    this.translateService.use(lang);
+    return this.dataStoreService.userData$.pipe(
       first(),
       map(userData => {
         userData.language = lang;
         return userData;
-      })
-    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
-    this.translateService.use(lang);
+      }),
+      switchMap(userData => this.dataStoreService.updateUserData(userData))
+    );
   }
 }

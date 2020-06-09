@@ -94,16 +94,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   onChangeLanguage(event: CustomEvent) {
     const newLang = event.detail.value;
-    this.translateConfigService.setLanguage(newLang);
-    this.dataStoreService.userData$
-      .pipe(
-        first(),
-        map(userData => {
-          userData.language = newLang;
-          return userData;
-        }),
-        switchMap(userData => this.dataStoreService.updateUserData(userData)),
-      );
+    this.translateConfigService.setLanguage(newLang).subscribe();
   }
 
   onClickAboutItem() {
