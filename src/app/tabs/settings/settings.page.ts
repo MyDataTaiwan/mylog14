@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Plugins } from "@capacitor/core";
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, Observable, Subject } from 'rxjs';
@@ -6,6 +7,8 @@ import { first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from "./name-popover/name-popover.page";
+
+const { Browser } = Plugins;
 
 @Component({
   selector: 'app-settings',
@@ -74,6 +77,10 @@ export class SettingsPage implements OnInit, OnDestroy {
         return userData;
       })
     ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
+  }
+
+  onClickAboutItem() {
+    Browser.open({ url: 'https://mydata.org.tw/' });
   }
 
   private showPopover(component) {

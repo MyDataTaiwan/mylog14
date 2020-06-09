@@ -101,6 +101,7 @@
     "editUserName": "Edit User Name",
     "firstName": "First Name",
     "lastName": "Last Name",
-    "editEmail": "Edit Email"
+    "editEmail": "Edit Email",
+    "about": "About"
   }
 }
