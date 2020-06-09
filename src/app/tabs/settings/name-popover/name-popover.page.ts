@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from "@angular/forms";
 import { PopoverController } from '@ionic/angular';
-import { first, map } from 'rxjs/operators';
+import { first, map, tap, switchMap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -15,6 +15,12 @@ export class NamePopoverPage implements OnInit {
     firstName: [''],
     lastName: ['']
   });
+  name$ = this.dataStoreService.userData$
+    .pipe(
+      tap(userData => {
+        this.nameForm.patchValue({firstName: userData.firstName, lastName: userData.lastName});
+      }),
+    );
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,16 +29,6 @@ export class NamePopoverPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initName();
-  }
-
-  private initName() {
-    this.dataStoreService.userData$.pipe(
-      first()
-    ).subscribe(userData => {
-      this.nameForm.controls.firstName.setValue(userData.firstName);
-      this.nameForm.controls.lastName.setValue(userData.lastName);
-    });
   }
 
   onSubmit() {
@@ -42,9 +38,10 @@ export class NamePopoverPage implements OnInit {
         userData.firstName = this.nameForm.controls.firstName.value;
         userData.lastName = this.nameForm.controls.lastName.value;
         return userData;
-      })
-    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
-    this.popoverController.dismiss();
+      }),
+      switchMap(userData => this.dataStoreService.updateUserData(userData)),
+      switchMap(_ => this.popoverController.dismiss()),
+    ).subscribe();
   }
 
   onCancel() {

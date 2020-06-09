@@ -1,4 +1,5 @@
 <ion-content>
+  <ng-container *ngIf="name$ | async"></ng-container>
   <form [formGroup]="nameForm" (ngSubmit)="onSubmit()">
     <ion-list>
       <ion-item lines="none">

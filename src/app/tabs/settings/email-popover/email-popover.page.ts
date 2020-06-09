@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
 import { PopoverController } from '@ionic/angular';
-import { first, map } from 'rxjs/operators';
+import { first, map, tap, switchMap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -14,6 +14,11 @@ export class EmailPopoverPage implements OnInit {
   emailForm = this.formBuilder.group({
     email: ['', Validators.email]
   });
+  email$ = this.dataStoreService.userData$
+    .pipe(
+      map(userData => userData.email),
+      tap(email => this.emailForm.patchValue({email})),
+    );
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,16 +27,6 @@ export class EmailPopoverPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.initEmail();
-  }
-
-  private initEmail() {
-    this.dataStoreService.userData$.pipe(
-      first(),
-      map(userData => userData.email)
-    ).subscribe(email => {
-      this.emailForm.controls.email.setValue(email);
-    });
   }
 
   onSubmit() {
@@ -40,9 +35,10 @@ export class EmailPopoverPage implements OnInit {
       map(userData => {
         userData.email = this.emailForm.controls.email.value;
         return userData;
-      })
-    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
-    this.popoverController.dismiss();
+      }),
+      switchMap(userData => this.dataStoreService.updateUserData(userData)),
+      switchMap(_ => this.popoverController.dismiss()),
+    ).subscribe();
   }
 
   onCancel() {
