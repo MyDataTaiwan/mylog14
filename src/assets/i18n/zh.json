@@ -49,8 +49,8 @@
     "soreThroat": "喉嚨癢/腫痛",
     "sputum": "有痰",
     "fever": "發燒",
-    "noSymptom":"今日",
-    "noNote":"沒有症狀"
+    "noSymptom": "今日",
+    "noNote": "沒有症狀"
   },
   "DAILY_RECORD": {
     "title": "每日記錄",
@@ -67,8 +67,7 @@
     "ok": "確定",
     "saving": "新增資料與驗證資訊中...",
     "pickerTitle": "新增體溫",
-    "cancel":"取消"
-
+    "cancel": "取消"
   },
   "RECORD_FINISH": {
     "finish": "新增成功！"
@@ -90,6 +89,20 @@
     "placeholder": "e.g. 小貓貓",
     "success": "分享成功！",
     "error": "上傳失敗。請稍後再試"
+  },
+  "SETTINGS": {
+    "settings": "設定",
+    "notSet": "尚未設定",
+    "cancel": "取消",
+    "confirm": "確定",
+    "name": "姓名",
+    "email": "電子信箱",
+    "dateOfBirth": "出生日期",
+    "editUserName": "修改姓名",
+    "firstName": "名",
+    "lastName": "姓",
+    "editEmail": "修改電子信箱",
+    "about": "關於我們",
+    "language": "語言"
   }
 }
-

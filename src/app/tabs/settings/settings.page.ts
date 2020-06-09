@@ -35,11 +35,15 @@ export class SettingsPage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.translateService.get('SETTINGS.notSet').pipe(
-      takeUntil(this.destroy$)
-    ).subscribe(str => this.notSet = str);
-
+    this.initNotSetTranslation();
     this.initSummary();
+  }
+
+  private initNotSetTranslation() {
+    this.notSet = this.translateService.instant('SETTINGS.notSet');
+    this.translateService.onLangChange.subscribe((_: any) => {
+      this.notSet = this.translateService.instant('SETTINGS.notSet');
+    });
   }
 
   private initSummary() {

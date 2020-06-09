@@ -35,7 +35,6 @@ export class TranslateConfigService {
       first(),
       map(userData => {
         userData.language = lang;
-        console.log(userData);
         return userData;
       })
     ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
