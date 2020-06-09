@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Plugins } from "@capacitor/core";
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { defer, Observable, Subject } from 'rxjs';
+import { defer, Subject } from 'rxjs';
 import { first, map, switchMap, takeUntil } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/translate-config.service';
@@ -18,14 +18,43 @@ const { Browser } = Plugins;
 })
 export class SettingsPage implements OnInit, OnDestroy {
 
-  name$: Observable<string>;
-  email$: Observable<string>;
-  dateOfBirth$: Observable<string>;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
-  currentLanguage$: Observable<string>;
   private destroy$ = new Subject();
-  private notSet: string;
+  private notSet: string = this.translateService.instant('SETTINGS.notSet');
+
+  name$ = this.dataStoreService.userData$.pipe(
+    map(userData => {
+      if (!userData.firstName && !userData.lastName) {
+        return this.notSet;
+      }
+      return `${userData.firstName} ${userData.lastName}`;
+    })
+  );
+  email$ = this.dataStoreService.userData$.pipe(
+    map(userData => {
+      if (!userData.email) {
+        return this.notSet;
+      }
+      return userData.email;
+    })
+  );
+  dateOfBirth$ = this.dataStoreService.userData$.pipe(
+    map(userData => {
+      if (!userData.dateOfBirth) {
+        return '';
+      }
+      return userData.dateOfBirth;
+    })
+  );
+  currentLanguage$ = this.dataStoreService.userData$.pipe(
+    map(userData => {
+      if (!userData.language) {
+        return this.translateService.defaultLang;
+      }
+      return userData.language;
+    })
+  );
 
   constructor(
     private translateService: TranslateService,
@@ -36,45 +65,12 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initNotSetTranslation();
-    this.initSummary();
   }
 
   private initNotSetTranslation() {
-    this.notSet = this.translateService.instant('SETTINGS.notSet');
     this.translateService.onLangChange.subscribe((_: any) => {
       this.notSet = this.translateService.instant('SETTINGS.notSet');
     });
-  }
-
-  private initSummary() {
-    this.name$ = this.dataStoreService.userData$.pipe(
-      takeUntil(this.destroy$),
-      map(userData => {
-        if (!userData.firstName && !userData.lastName) return this.notSet;
-        return `${userData.firstName} ${userData.lastName}`;
-      })
-    );
-    this.email$ = this.dataStoreService.userData$.pipe(
-      takeUntil(this.destroy$),
-      map(userData => {
-        if (!userData.email) return this.notSet;
-        return userData.email;
-      })
-    );
-    this.dateOfBirth$ = this.dataStoreService.userData$.pipe(
-      takeUntil(this.destroy$),
-      map(userData => {
-        if (!userData.dateOfBirth) return '';
-        return userData.dateOfBirth;
-      })
-    );
-    this.currentLanguage$ = this.dataStoreService.userData$.pipe(
-      takeUntil(this.destroy$),
-      map(userData => {
-        if (!userData.language) return this.translateService.defaultLang;
-        return userData.language;
-      })
-    );
   }
 
   onClickNameItem() {
@@ -91,13 +87,23 @@ export class SettingsPage implements OnInit, OnDestroy {
       map(userData => {
         userData.dateOfBirth = this.dateOfBirthPicker.value;
         return userData;
-      })
-    ).subscribe(userData => this.dataStoreService.updateUserData(userData).pipe(first()).subscribe());
+      }),
+      switchMap(userData => this.dataStoreService.updateUserData(userData)),
+    ).subscribe();
   }
 
   onChangeLanguage(event: CustomEvent) {
     const newLang = event.detail.value;
     this.translateConfigService.setLanguage(newLang);
+    this.dataStoreService.userData$
+      .pipe(
+        first(),
+        map(userData => {
+          userData.language = newLang;
+          return userData;
+        }),
+        switchMap(userData => this.dataStoreService.updateUserData(userData)),
+      );
   }
 
   onClickAboutItem() {
@@ -106,7 +112,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private showPopover(component) {
     defer(() => this.popoverController.create({
-      component: component,
+      component,
       animated: false
     })).pipe(
       switchMap(popover => popover.present()),
