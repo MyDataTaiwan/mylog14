@@ -129,6 +129,10 @@
     "lastName": "姓",
     "editEmail": "修改電子信箱",
     "about": "關於我們",
-    "language": "語言"
+    "language": "語言",
+    "en": "English",
+    "fr": "French",
+    "ja": "日本語",
+    "zh": "繁體中文"
   }
 }

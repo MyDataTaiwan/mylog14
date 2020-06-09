@@ -115,5 +115,24 @@
     "placeholder": "例）名無しの権兵衛",
     "success": "データが共有されました。",
     "error": "ごめんなさい。アップロードに失敗しました。申し訳ないですが、少し間をおいてもう一度試してみてもらえますか?"
+  },
+  "SETTINGS": {
+    "settings": "Settings",
+    "notSet": "Not Set",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "name": "Name",
+    "email": "Email",
+    "dateOfBirth": "Date of Birth",
+    "editUserName": "Edit User Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "editEmail": "Edit Email",
+    "about": "About",
+    "language": "Language",
+    "en": "English",
+    "fr": "French",
+    "ja": "日本語",
+    "zh": "繁體中文"
   }
 }
