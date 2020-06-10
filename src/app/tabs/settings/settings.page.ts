@@ -3,11 +3,12 @@ import { Plugins } from "@capacitor/core";
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, Subject } from 'rxjs';
-import { first, map, switchMap, takeUntil } from 'rxjs/operators';
+import { buffer, debounceTime, filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/translate-config.service';
+import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
-import { NamePopoverPage } from "./name-popover/name-popover.page";
+import { NamePopoverPage } from './name-popover/name-popover.page';
 
 const { Browser } = Plugins;
 
@@ -22,6 +23,18 @@ export class SettingsPage implements OnInit, OnDestroy {
   languages = this.translateConfigService.langs;
   private destroy$ = new Subject();
   private notSet: string = this.translateService.instant('SETTINGS.notSet');
+
+  public appVersion = version;
+  public showDeveloperOptions = false;
+  private versionClick = new Subject<boolean>();
+  versionClick$ = this.versionClick.pipe(
+    buffer(this.versionClick
+      .pipe(debounceTime(500))
+    ),
+    map(stream => stream.length),
+    filter(length => length >= 5), // Only when 5 click events emits, interval of each < 500
+    tap(() => this.showDeveloperOptions = true),
+  );
 
   name$ = this.dataStoreService.userData$.pipe(
     map(userData => {
@@ -99,6 +112,23 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   onClickAboutItem() {
     Browser.open({ url: 'https://mydata.org.tw/' });
+  }
+
+  onClickVersion() {
+    this.versionClick.next(true);
+  }
+
+  uploadHostSelected(event: CustomEvent) {
+    this.dataStoreService.userData$
+      .pipe(
+        first(),
+        map(userData => {
+          userData.uploadHost = event.detail.value;
+          return userData;
+        }),
+        switchMap(userData => this.dataStoreService.updateUserData(userData)),
+        takeUntil(this.destroy$),
+      ).subscribe(() => { }, err => console.log(err));
   }
 
   private showPopover(component) {

@@ -74,13 +74,21 @@ export class UploadService {
   }
 
   private postArchive(blob: Blob) {
-    const tmpUrl = 'http://127.0.0.1:8000/api/v1/archives/';
-    const url = 'https://mylog14.numbersprotocol.io/api/v1/archives/';
+    const hostUrl = {
+      LOCAL: 'http://127.0.0.1:8000',
+      DEV: 'https://logboard-dev.numbersprotocol.io',
+      PROD: 'https://mylog14.numbersprotocol.io',
+    } ;
+    const endpoint = '/api/v1/archives/';
     const formData = new FormData();
-    formData.append('file', blob, 'beta1.zip');
-    return this.http.post(url, formData)
+    formData.append('file', blob, 'mylog.zip');
+    return this.dataStore.userData$
       .pipe(
-        tap((res: string) => this.generatedUrl.next(res)),
+        map(userData => (userData.uploadHost) ? userData.uploadHost : 'PROD'),
+        map(hostType => hostUrl[hostType] + endpoint),
+        switchMap(url => forkJoin([this.http.post(url, formData), of(url.replace(endpoint, ''))])),
+        map(([res, host]: [string, string]) => res.replace(hostUrl.PROD, host)),
+        tap(logboardUrl => this.generatedUrl.next(logboardUrl)),
         catchError(err => this.httpErrorHandler(err)),
       );
   }
