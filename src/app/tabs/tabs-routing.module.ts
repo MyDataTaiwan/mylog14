@@ -47,9 +47,13 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
+            loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then(m => m.TabTaiwanPageModule)
           }
         ]
+      },
+      {
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
         path: '',
@@ -69,4 +73,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

@@ -1,14 +1,13 @@
-import { Component, OnInit, Input,OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
-import { UserData } from '../../interfaces/user-data';
-import { TranslateConfigService } from 'src/app/translate-config.service';
-
-// import { IonSlides} from '@ionic/angular';
-
-import { DataStoreService } from '../../services/data-store.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateConfigService } from 'src/app/translate-config.service';
+import { UserData } from '../../interfaces/user-data';
+// import { IonSlides} from '@ionic/angular';
+import { DataStoreService } from '../../services/data-store.service';
+
 @Component({
   selector: 'app-guide',
   templateUrl: './guide.page.html',
@@ -20,7 +19,7 @@ export class GuidePage implements OnInit {
     initialSlide: 0,
     slidesPerView: 1,
     speed: 400,
-    autoplay:true
+    autoplay: true
 
   };
   @Input() userData: UserData;
@@ -34,18 +33,23 @@ export class GuidePage implements OnInit {
   ) { }
   ngOnInit() {
   }
-//   move(slides){
-//     console.log(slides)
-//     slides.slideNext(2)
-//     // this.slides.slideNext(slides);
-// }
-moveToNext(slides){
-  console.log(slides);
-  slides.slideNext()
-}
+  //   move(slides){
+  //     console.log(slides)
+  //     slides.slideNext(2)
+  //     // this.slides.slideNext(slides);
+  // }
+  moveToNext(slides) {
+    console.log(slides);
+    slides.slideNext();
+  }
   onClick() {
-    this.dataStore.updateUserData({ newUser: false,eulaAccepted: false,
-      guideAccepted: false }).pipe(
+    this.dataStore.updateUserData({
+      firstName: '',
+      lastName: '',
+      newUser: false,
+      eulaAccepted: false,
+      guideAccepted: false
+    }).pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {
       this.router.navigate(['/']);

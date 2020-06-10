@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, of, Observable, concat, forkJoin } from 'rxjs';
-import { RecordMeta } from '../classes/record-meta';
-import { LocalStorageService } from './local-storage.service';
-import { tap, map, switchMap, take } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
+import { RecordMeta } from '../classes/record-meta';
 import { UserData } from '../interfaces/user-data';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +42,13 @@ export class DataStoreService {
     }),
   );
 
-  private userData = new BehaviorSubject<UserData>({ newUser: true, eulaAccepted: false ,guideAccepted:false});
+  private userData = new BehaviorSubject<UserData>({
+    firstName: '',
+    lastName: '',
+    newUser: true,
+    eulaAccepted: false,
+    guideAccepted: false
+  });
   public userData$ = this.userData.asObservable();
 
   constructor(

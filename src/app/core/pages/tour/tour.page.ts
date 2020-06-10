@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataStoreService } from '../../services/data-store.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DataStoreService } from '../../services/data-store.service';
 
 @Component({
   selector: 'app-tour',
@@ -24,7 +24,13 @@ export class TourPage implements OnInit, OnDestroy {
   }
 
   onClick() {
-    this.dataStore.updateUserData({ newUser: false, eulaAccepted: false ,guideAccepted:false}).pipe(
+    this.dataStore.updateUserData({
+      firstName: '',
+      lastName: '',
+      newUser: false,
+      eulaAccepted: false,
+      guideAccepted: false
+    }).pipe(
       takeUntil(this.destroy$),
     ).subscribe(() => {
       this.router.navigate(['/']);

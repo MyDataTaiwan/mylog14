@@ -1,0 +1,41 @@
+<app-main-header [headerTitle]="'SETTINGS.settings' | translate"></app-main-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item (click)="onClickNameItem()" button>
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'SETTINGS.name' | translate }}</ion-label>
+      <ion-text>{{ name$ | async }}</ion-text>
+    </ion-item>
+
+    <ion-item (click)="onClickEmailItem()" button>
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'SETTINGS.email' | translate }}</ion-label>
+      <ion-text>{{ email$ | async }}</ion-text>
+    </ion-item>
+
+    <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
+      <ion-icon name="calendar-outline" slot="start">
+      </ion-icon>
+      <ion-label>{{ 'SETTINGS.dateOfBirth' | translate }}</ion-label>
+      <ion-text *ngIf="!(dateOfBirth$ | async)">{{ 'SETTINGS.notSet' | translate }}</ion-text>
+      <ion-datetime #dateOfBirthPicker [value]="dateOfBirth$ | async" (ionChange)="onChangeDateOfBirthPicker()"
+        [hidden]="!(dateOfBirth$ | async)"></ion-datetime>
+    </ion-item>
+
+    <ion-item lines="inset">
+      <ion-icon name="language-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'SETTINGS.language' | translate }}</ion-label>
+      <ion-select [value]="currentLanguage$ | async" (ionChange)="onChangeLanguage($event)">
+        <ion-select-option *ngFor="let language of languages" [value]="language">
+          {{ 'SETTINGS.' + language | translate }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item (click)="onClickAboutItem()" button>
+      <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'SETTINGS.about' | translate }}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
