@@ -40,15 +40,15 @@
     </ion-item>
 
     <ion-item (click)="onClickVersion()" button>
-      <ion-icon name="hammer-outline" slot="start"></ion-icon>
+      <ion-icon name="code-outline" slot="start"></ion-icon>
       <ion-label>{{ 'SETTINGS.version' | translate }}</ion-label>
       <ion-text>{{ appVersion }}</ion-text>
     </ion-item>
 
-    <ion-item *ngIf="showDeveloperOptions === true">
-      <ion-label>開發人員選項</ion-label>
-    </ion-item>
-    
+    <ion-list-header *ngIf="showDeveloperOptions === true">
+      開發人員選項
+    </ion-list-header>
+
     <ion-item *ngIf="showDeveloperOptions === true" lines="inset">
       <ion-icon name="hammer-outline" slot="start"></ion-icon>
       <ion-label>上傳測試設定</ion-label>

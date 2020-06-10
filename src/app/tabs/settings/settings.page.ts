@@ -3,13 +3,12 @@ import { Plugins } from "@capacitor/core";
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, Subject } from 'rxjs';
-import { first, map, switchMap, takeUntil, debounceTime, tap, buffer, filter } from 'rxjs/operators';
+import { buffer, debounceTime, filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/translate-config.service';
+import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from './name-popover/name-popover.page';
-
-import { version } from '../../../../package.json';
 
 const { Browser } = Plugins;
 
@@ -28,15 +27,14 @@ export class SettingsPage implements OnInit, OnDestroy {
   public appVersion = version;
   public showDeveloperOptions = false;
   private versionClick = new Subject<boolean>();
-  versionClick$ = this.versionClick.asObservable()
-    .pipe(
-      buffer(this.versionClick
-        .pipe(debounceTime(500))
-      ),
-      map(stream => stream.length),
-      filter(length => length >= 5), // Only when 5 click events emits, interval of each < 500
-      tap(() => this.showDeveloperOptions = true),
-    );
+  versionClick$ = this.versionClick.pipe(
+    buffer(this.versionClick
+      .pipe(debounceTime(500))
+    ),
+    map(stream => stream.length),
+    filter(length => length >= 5), // Only when 5 click events emits, interval of each < 500
+    tap(() => this.showDeveloperOptions = true),
+  );
 
   name$ = this.dataStoreService.userData$.pipe(
     map(userData => {
@@ -130,7 +128,7 @@ export class SettingsPage implements OnInit, OnDestroy {
         }),
         switchMap(userData => this.dataStoreService.updateUserData(userData)),
         takeUntil(this.destroy$),
-      ).subscribe(() => {}, err => console.log(err));
+      ).subscribe(() => { }, err => console.log(err));
   }
 
   private showPopover(component) {
