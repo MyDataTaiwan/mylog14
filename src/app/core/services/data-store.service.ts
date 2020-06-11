@@ -7,6 +7,7 @@ import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
 import { LocalStorageService } from './local-storage.service';
 import { RecordService } from './record.service';
+import { UserDataService } from './user-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,7 @@ export class DataStoreService {
   constructor(
     private localStorage: LocalStorageService,
     private recordService: RecordService,
+    private userDataService: UserDataService,
   ) {
     this.updateRecordMetas().subscribe(); // Initial update (load from storage)
   }
@@ -69,8 +71,8 @@ export class DataStoreService {
   }
 
   updateUserData(userData?: UserData): Observable<UserData> {
-    const load$ = this.localStorage.getUserData();
-    const save$ = this.localStorage.saveUserData(userData);
+    const load$ = this.userDataService.getUserData();
+    const save$ = this.userDataService.saveUserData(userData);
     const update$ = (userData) ? save$ : load$;
     return update$.pipe(
       tap((data: UserData) => this.userData.next(data)),
