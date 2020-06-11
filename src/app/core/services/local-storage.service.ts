@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Plugins } from '@capacitor/core';
-import { Observable, defer, from } from 'rxjs';
+import { Observable, defer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 const { Storage } = Plugins;
@@ -9,22 +9,31 @@ const { Storage } = Plugins;
   providedIn: 'root'
 })
 export class LocalStorageService {
-  constructor(
-  ) { }
+  constructor() { }
 
+  /**
+   * @param  repo repository identifier for Capacitor Storage Plugin
+   * @param  defaultData default return value if data does not exist
+   * @returns Observable<T>
+   */
   getData<T>(repo: string, defaultData: T): Observable<T> {
-    return defer(() => from(Storage.get({ key: repo }))).pipe(
+    return defer(() => Storage.get({ key: repo })).pipe(
       map(raw => raw.value),
       map(value => (value) ? JSON.parse(value) : defaultData),
     );
   }
 
+  /**
+   * @param  data JSON-stringifiable data
+   * @param  repo repository identifier for Capacitor Storage Plugin
+   * @returns Observable<T>
+   */
   setData<T>(data: T, repo: string): Observable<T> {
     return defer(() =>
-      from(Storage.set({
+      Storage.set({
         key: repo,
         value: JSON.stringify(data),
-      }))
+      })
     ).pipe(
       map(() => data),
     );
