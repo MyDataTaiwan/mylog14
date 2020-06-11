@@ -6,6 +6,7 @@ import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable, throwEr
 import { DataStoreService } from './data-store.service';
 import { map, switchMap, take, tap, delay, catchError, timeout, filter } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
+import { RecordService } from './record.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class UploadService {
   constructor(
     private dataStore: DataStoreService,
     private http: HttpClient,
-    private localStorage: LocalStorageService,
+    private recordService: RecordService,
   ) { }
 
   private createCachedFiles() {
@@ -32,7 +33,7 @@ export class UploadService {
         switchMap(recordMetaList => {
           return forkJoin([
             of(recordMetaList.map(recordMeta => recordMeta.path)),
-            this.localStorage.getRawRecords(recordMetaList),
+            this.recordService.getRawRecords(recordMetaList),
             of(recordMetaList),
           ]);
         }),

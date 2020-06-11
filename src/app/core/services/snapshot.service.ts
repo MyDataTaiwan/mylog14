@@ -14,6 +14,7 @@ import { LocalStorageService } from './local-storage.service';
 import { DataStoreService } from './data-store.service';
 import { RecordMeta } from '../classes/record-meta';
 import { RecordFinishPage } from '../components/record-finish/record-finish.page';
+import { RecordService } from './record.service';
 
 @Injectable({
   providedIn: 'root'
@@ -31,7 +32,7 @@ export class SnapshotService {
     private photoService: PhotoService,
     private localStorage: LocalStorageService,
     private popoverCtrl: PopoverController,
-
+    private recordService: RecordService,
   ) { }
 
   getLocationStamp(): Observable<LocationStamp> {
@@ -105,11 +106,11 @@ export class SnapshotService {
             photos: [photo],
           };
           return forkJoin([
-            this.localStorage.saveRecord(record, recordMetaList),
+            this.recordService.saveRecord(record, recordMetaList),
             this.showCaptureFinish(),
           ]);
         }),
-        switchMap(([recordMetaList, _]) => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(([recordMetaList, _]) => this.dataStore.updateRecordMetas(recordMetaList)),
       );
   }
 
@@ -146,9 +147,9 @@ export class SnapshotService {
             locationStamp: snapshot.locationStamp,
             photos: [],
           };
-          return this.localStorage.saveRecord(record, recordMetaList);
+          return this.recordService.saveRecord(record, recordMetaList);
         }),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(recordMetaList => this.dataStore.updateRecordMetas(recordMetaList)),
       );
   }
 

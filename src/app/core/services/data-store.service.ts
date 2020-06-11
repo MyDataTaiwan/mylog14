@@ -3,9 +3,10 @@ import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
-import { RecordMeta } from '../classes/record-meta';
+import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
 import { LocalStorageService } from './local-storage.service';
+import { RecordService } from './record.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class DataStoreService {
 
   public dailyRecords$ = this.recordMetaList$.pipe(
     map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-    switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
+    switchMap(recordMetaList => this.recordService.getRecords(recordMetaList)),
     map(records => new DailyRecords(records)),
     switchMap(dailyRecords => {
       const userData = this.userData.getValue();
@@ -30,7 +31,7 @@ export class DataStoreService {
 
   public dailydrips$ = this.recordMetaList$.pipe(
     map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-    switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
+    switchMap(recordMetaList => this.recordService.getRecords(recordMetaList)),
     map(records => records.length),
   );
 
@@ -53,13 +54,14 @@ export class DataStoreService {
 
   constructor(
     private localStorage: LocalStorageService,
+    private recordService: RecordService,
   ) {
-    this.updateRecordMetaList().subscribe(); // Initial update (load from storage)
+    this.updateRecordMetas().subscribe(); // Initial update (load from storage)
   }
 
-  updateRecordMetaList(recordMetaList?: RecordMeta[]): Observable<RecordMeta[]> {
-    const loadList$ = this.localStorage.getRecordMetaList();
-    const saveList$ = this.localStorage.saveRecordMetaList(recordMetaList);
+  updateRecordMetas(recordMetaList?: RecordMeta[]): Observable<RecordMeta[]> {
+    const loadList$ = this.recordService.getRecordMetas();
+    const saveList$ = this.recordService.saveRecordMetas(recordMetaList);
     const update$ = (recordMetaList) ? saveList$ : loadList$;
     return update$.pipe(
       tap((list: RecordMeta[]) => this.recordMetaList.next(list)),
