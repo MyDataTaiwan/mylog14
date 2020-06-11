@@ -40,13 +40,10 @@
     </ion-item>
     <ion-item lines="inset">
       <ion-icon name="documents-outline" slot="start"></ion-icon>
-      <ion-label>更換資料包*會覆蓋舊資料*</ion-label>
-      <ion-select value="default" okText="確定" cancelText="取消" (ionChange)="symptomSelected($event)">
-        <ion-select-option value="default">預設</ion-select-option>
-        <ion-select-option value="custom">呼吸道疾病</ion-select-option>
-        <!-- <ng-container *ngFor="let symptom of SymptomNameList">
-          <ion-select-option value="{{symptom}}">{{symptom}}</ion-select-option>
-        </ng-container> -->
+      <ion-label>{{ 'SETTINGS.changeSchema' | translate }}</ion-label>
+      <ion-select [value]="defaultSchema$ | async" (ionChange)="symptomSelected($event)">
+        <ion-select-option value="default">{{ 'SETTINGS.defaultSchema' | translate }}</ion-select-option>
+        <ion-select-option value="custom">{{ 'SETTINGS.customSchema' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item (click)="onClickVersion()" button>

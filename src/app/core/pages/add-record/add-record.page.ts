@@ -5,11 +5,12 @@ import { Symptoms } from '../../classes/symptoms';
 import { SnapshotService } from '../../services/snapshot.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, from, defer, forkJoin, Subject, concat, pipe, timer, zip, of } from 'rxjs';
-import { switchMap, takeUntil, tap, delay, concatMap } from 'rxjs/operators';
+import { switchMap, takeUntil, tap, delay, concatMap, take, map } from 'rxjs/operators';
 import { GeolocationService } from '../../services/geolocation.service';
 import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 import { Location } from '@angular/common';
 import { Symptom } from '../../classes/symptom';
+import { DataStoreService } from '../../services/data-store.service';
 
 @Component({
   selector: 'app-add-record',
@@ -40,11 +41,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
   pickerTitle$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
-  symptoms = new Symptoms();
+  symptoms = new Symptoms(true);
   symptomsView: SymptomView[] = this.symptoms.list;
 
   constructor(
-    private modalCtrl: ModalController,
+    private dataStore: DataStoreService,
     private loadingCtrl: LoadingController,
     private location: Location,
     private pickerCtrl: PickerController,
@@ -211,12 +212,20 @@ export class AddRecordPage implements OnInit, OnDestroy {
   resetPage() {
     this.bt = this.defaultBt;
     this.btUnit = this.defaultBtUnit;
-    this.symptoms.setDefault();
-    this.symptomsView = this.symptoms.list;
-    this.symptomsView = this.symptomsView.map(symptomView => {
-      symptomView.expand = false;
-      return symptomView;
-    });
+    this.dataStore.userData$
+      .pipe(
+        take(1),
+        map(userData => userData.defaultSchema),
+        tap(defaultSchema => {
+          this.symptoms.setDefault(defaultSchema);
+          this.symptomsView = this.symptoms.list;
+          this.symptomsView = this.symptomsView.map(symptomView => {
+            symptomView.expand = false;
+            return symptomView;
+          });
+        }),
+        takeUntil(this.destroy$),
+      ).subscribe();
   }
 
   // Create an integer array [start..end]

@@ -1,25 +1,24 @@
 import { Symptom } from './symptom';
 
-// const SYMPTOM_LIST = [
-//     'coughing',
-//     'runnyNose',
-//     'nasalCongestion',
-//     'sneezing',
-//     'shortnessOfBreath',
-//     'malaiseOrTiredness',
-//     'lossOfTasteOrSmell',
-//     'diarrhea',
-//     'abdominalPain',
-//     'vomiting',
-//     'chills',
-//     'muscleOrJointSoreness',
-//     'soreThroat',
-//     'sputum',
-//     'fever'
-// ];
+const FULL_SYMPTOM_LIST = [
+    'coughing',
+    'runnyNose',
+    'nasalCongestion',
+    'sneezing',
+    'shortnessOfBreath',
+    'malaiseOrTiredness',
+    'lossOfTasteOrSmell',
+    'diarrhea',
+    'abdominalPain',
+    'vomiting',
+    'chills',
+    'muscleOrJointSoreness',
+    'soreThroat',
+    'sputum',
+    'fever'
+];
 
-const SYMPTOM_LIST = [
-  
+const DEFAULT_SYMPTOM_LIST = [
         'coughing',
         'runnyNose',
         'nasalCongestion',
@@ -28,16 +27,21 @@ const SYMPTOM_LIST = [
 
 export class Symptoms {
     list: Symptom[] = [];
-    constructor() {
-        SYMPTOM_LIST.forEach(symptomName => this.list.push(new Symptom(symptomName)));
-        // SYMPTOM_LIST.forEach(symptomName => this.list.push(new Symptom(symptomName)));
-
+    constructor(defaultSchema: boolean) {
+        FULL_SYMPTOM_LIST.forEach(symptomName => {
+            const ignore = (!DEFAULT_SYMPTOM_LIST.includes(symptomName) && defaultSchema);
+            this.list.push(new Symptom(symptomName, ignore));
+        });
     }
 
-    setDefault() {
+    setDefault(defaultSchema: boolean) {
         this.list = this.list.map(symptom => {
             symptom.present = false;
             symptom.note = '';
+            symptom.ignore = false;
+            if (!DEFAULT_SYMPTOM_LIST.includes(symptom.name)) {
+                symptom.ignore = defaultSchema;
+            }
             return symptom;
         });
     }

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
+ 
 export const SYMPTOM_LIST = [
   {
     name: 'custom',
@@ -34,6 +32,10 @@ export const SYMPTOM_LIST = [
     ]
   },
 ];
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ChangeSymptomService {
   /* 回傳所有症狀 */
   getSymptomLists() {

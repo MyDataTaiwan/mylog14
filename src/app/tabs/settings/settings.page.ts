@@ -69,7 +69,10 @@ export class SettingsPage implements OnInit, OnDestroy {
       return userData.language;
     })
   );
-  
+  defaultSchema$ = this.dataStoreService.userData$.pipe(
+    map(userData => (userData.defaultSchema) ? 'default' : 'custom'),
+  );
+
   constructor(
     private translateService: TranslateService,
     private popoverController: PopoverController,
@@ -125,7 +128,17 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   symptomSelected(event: CustomEvent) {
-    this.changeSymptomService.getSymptomItem( event.detail.value)
+    this.dataStoreService.userData$
+      .pipe(
+        first(),
+        map(userData => {
+          userData.defaultSchema = (event.detail.value === 'default') ? true : false;
+          return userData;
+        }),
+        switchMap(userData => this.dataStoreService.updateUserData(userData)),
+        switchMap(() => this.dataStoreService.updateRecordMetaList()),
+        takeUntil(this.destroy$),
+      ).subscribe();
   }
 
   uploadHostSelected(event: CustomEvent) {
