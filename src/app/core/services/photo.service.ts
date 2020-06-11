@@ -216,11 +216,11 @@ export class PhotoService {
         })
       );
 
-    return this.dataStore.recordMetaList$
+    return this.dataStore.recordMetas$
       .pipe(
         take(1),
-        switchMap(recordMetaList => this.recordService.saveRecord(record, recordMetaList)),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetas(recordMetaList)),
+        switchMap(recordMetas => this.recordService.saveRecord(record, recordMetas)),
+        switchMap(recordMetas => this.dataStore.updateRecordMetas(recordMetas)),
         switchMap(_ => deleteFile$),
       );
   }

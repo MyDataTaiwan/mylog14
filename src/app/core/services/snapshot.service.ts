@@ -96,21 +96,21 @@ export class SnapshotService {
   snapCapture() {
     return forkJoin([
       this.createPhotoWithSnapshot(),
-      this.dataStore.recordMetaList$.pipe(take(1)),
+      this.dataStore.recordMetas$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([photo, recordMetaList]) => {
+        mergeMap(([photo, recordMetas]) => {
           const record: Record = {
             timestamp: photo.timestamp,
             symptoms: new Symptoms(),
             photos: [photo],
           };
           return forkJoin([
-            this.recordService.saveRecord(record, recordMetaList),
+            this.recordService.saveRecord(record, recordMetas),
             this.showCaptureFinish(),
           ]);
         }),
-        switchMap(([recordMetaList, _]) => this.dataStore.updateRecordMetas(recordMetaList)),
+        switchMap(([recordMetas, _]) => this.dataStore.updateRecordMetas(recordMetas)),
       );
   }
 
@@ -135,10 +135,10 @@ export class SnapshotService {
   snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
     return forkJoin([
       this.createSnapshot(),
-      this.dataStore.recordMetaList$.pipe(take(1)),
+      this.dataStore.recordMetas$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([snapshot, recordMetaList]) => {
+        mergeMap(([snapshot, recordMetas]) => {
           const record: Record = {
             bodyTemperature,
             bodyTemperatureUnit,
@@ -147,9 +147,9 @@ export class SnapshotService {
             locationStamp: snapshot.locationStamp,
             photos: [],
           };
-          return this.recordService.saveRecord(record, recordMetaList);
+          return this.recordService.saveRecord(record, recordMetas);
         }),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetas(recordMetaList)),
+        switchMap(recordMetas => this.dataStore.updateRecordMetas(recordMetas)),
       );
   }
 

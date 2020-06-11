@@ -13,12 +13,12 @@ import { UserDataService } from './user-data.service';
   providedIn: 'root'
 })
 export class DataStoreService {
-  private recordMetaList = new BehaviorSubject<RecordMeta[]>([]);
-  public recordMetaList$ = this.recordMetaList.asObservable();
+  private recordMetas = new BehaviorSubject<RecordMeta[]>([]);
+  public recordMetas$ = this.recordMetas.asObservable();
 
-  public dailyRecords$ = this.recordMetaList$.pipe(
-    map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-    switchMap(recordMetaList => this.recordService.getRecords(recordMetaList)),
+  public dailyRecords$ = this.recordMetas$.pipe(
+    map(recordMetas => (recordMetas) ? recordMetas : []),
+    switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
     map(records => new DailyRecords(records)),
     switchMap(dailyRecords => {
       const userData = this.userData.getValue();
@@ -30,9 +30,9 @@ export class DataStoreService {
     tap(d => console.log('Daily records', d)),
   );
 
-  public dailydrips$ = this.recordMetaList$.pipe(
-    map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-    switchMap(recordMetaList => this.recordService.getRecords(recordMetaList)),
+  public dailydrips$ = this.recordMetas$.pipe(
+    map(recordMetas => (recordMetas) ? recordMetas : []),
+    switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
     map(records => records.length),
   );
 
@@ -61,12 +61,12 @@ export class DataStoreService {
     this.updateRecordMetas().subscribe(); // Initial update (load from storage)
   }
 
-  updateRecordMetas(recordMetaList?: RecordMeta[]): Observable<RecordMeta[]> {
+  updateRecordMetas(recordMetas?: RecordMeta[]): Observable<RecordMeta[]> {
     const loadList$ = this.recordService.getRecordMetas();
-    const saveList$ = this.recordService.saveRecordMetas(recordMetaList);
-    const update$ = (recordMetaList) ? saveList$ : loadList$;
+    const saveList$ = this.recordService.saveRecordMetas(recordMetas);
+    const update$ = (recordMetas) ? saveList$ : loadList$;
     return update$.pipe(
-      tap((list: RecordMeta[]) => this.recordMetaList.next(list)),
+      tap((list: RecordMeta[]) => this.recordMetas.next(list)),
     );
   }
 
