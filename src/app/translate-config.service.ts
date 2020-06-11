@@ -43,4 +43,8 @@ export class TranslateConfigService {
       switchMap(userData => this.dataStoreService.updateUserData(userData))
     );
   }
+
+  stream(): Observable<string> {
+    return this.translateService.stream(this.langs);
+  }
 }

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Plugins } from "@capacitor/core";
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { defer, Subject } from 'rxjs';
+import { combineLatest, defer, Subject } from 'rxjs';
 import { buffer, debounceTime, filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/translate-config.service';
@@ -36,16 +36,16 @@ export class SettingsPage implements OnInit, OnDestroy {
     tap(() => this.showDeveloperOptions = true),
   );
 
-  name$ = this.dataStoreService.userData$.pipe(
-    map(userData => {
+  name$ = combineLatest(this.dataStoreService.userData$, this.translateConfigService.stream()).pipe(
+    map(([userData, _]) => {
       if (!userData.firstName && !userData.lastName) {
         return this.notSet;
       }
       return `${userData.firstName} ${userData.lastName}`;
     })
   );
-  email$ = this.dataStoreService.userData$.pipe(
-    map(userData => {
+  email$ = combineLatest(this.dataStoreService.userData$, this.translateConfigService.stream()).pipe(
+    map(([userData, _]) => {
       if (!userData.email) {
         return this.notSet;
       }
