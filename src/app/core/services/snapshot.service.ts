@@ -12,7 +12,7 @@ import { Record } from '../interfaces/record';
 import { Symptoms } from '../classes/symptoms';
 import { LocalStorageService } from './local-storage.service';
 import { DataStoreService } from './data-store.service';
-import { RecordMeta } from '../classes/record-meta';
+import { RecordMeta } from '../interfaces/record-meta';
 import { RecordFinishPage } from '../components/record-finish/record-finish.page';
 import { RecordService } from './record.service';
 
