@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { RecordMeta } from '../interfaces/record-meta';
-import { Observable, forkJoin, of } from 'rxjs';
-import { Record } from '../interfaces/record';
 import { FileSystemService } from './file-system.service';
-import { map, switchMap } from 'rxjs/operators';
-import { LedgerService } from './ledger.service';
 import { FilesystemDirectory } from '@capacitor/core';
+import { Injectable } from '@angular/core';
+import { LedgerService } from './ledger.service';
 import { LocalStorageService } from './local-storage.service';
+import { Observable, forkJoin } from 'rxjs';
+import { Record } from '../interfaces/record';
+import { RecordMeta } from '../interfaces/record-meta';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +51,7 @@ export class RecordService {
           )
         ),
         map(([filename, fileHash, transactionHash]) => {
-          return this.createRecordMeta(0, record.timestamp, filename, fileHash, transactionHash);
+          return this.createRecordMeta(record.timestamp, filename, fileHash, transactionHash);
         }),
         map(recordMeta => {
           recordMetas.push(recordMeta);
@@ -60,23 +60,22 @@ export class RecordService {
       );
   }
 
-  createRecordMeta(schemaId: number, timestamp: number, filename: string, fileHash: string, transactionHash: string): RecordMeta {
-    return {
-      schemaId,
-      timestamp,
-      path: filename,
-      directory: this.RECORD_DIRECTORY,
-      hash: fileHash,
-      transactionHash,
-    };
-  }
-
   getRecordMetas(): Observable<RecordMeta[]> {
     return this.localStorage.getData(this.RECORD_META_REPOSITORY, []);
   }
 
   saveRecordMetas(recordMetas: RecordMeta[]): Observable<RecordMeta[]> {
     return this.localStorage.setData(recordMetas, this.RECORD_META_REPOSITORY);
+  }
+
+  private createRecordMeta(timestamp: number, filename: string, fileHash: string, transactionHash: string): RecordMeta {
+    return {
+      timestamp,
+      path: filename,
+      directory: this.RECORD_DIRECTORY,
+      hash: fileHash,
+      transactionHash,
+    };
   }
 
 }

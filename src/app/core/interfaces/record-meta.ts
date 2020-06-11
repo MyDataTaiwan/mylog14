@@ -5,7 +5,6 @@ export interface RecordMeta {
     path: string;
     directory: FilesystemDirectory;
     hash: string;
-    schemaId: number;
     userSignature?: string;
     providerSignature?: string;
     transactionHash?: string;
