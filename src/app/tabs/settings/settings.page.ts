@@ -9,7 +9,6 @@ import { TranslateConfigService } from 'src/app/translate-config.service';
 import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from './name-popover/name-popover.page';
-import { ChangeSymptomService } from '../../../app/core/services/change-symptom.service';
 
 const { Browser } = Plugins;
 
@@ -78,12 +77,10 @@ export class SettingsPage implements OnInit, OnDestroy {
     private popoverController: PopoverController,
     private translateConfigService: TranslateConfigService,
     private dataStoreService: DataStoreService,
-    private changeSymptomService: ChangeSymptomService
   ) { }
 
   ngOnInit() {
     this.initNotSetTranslation();
-    this.SymptomNames();
   }
 
   private initNotSetTranslation() {
@@ -122,9 +119,6 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   onClickVersion() {
     this.versionClick.next(true);
-  }
-  SymptomNames(){
-   this.SymptomNameList= this.changeSymptomService.getSymptomName
   }
 
   symptomSelected(event: CustomEvent) {
