@@ -9,6 +9,7 @@ import { TranslateConfigService } from 'src/app/translate-config.service';
 import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from './name-popover/name-popover.page';
+import { ChangeSymptomService } from '../../../app/core/services/change-symptom.service';
 
 const { Browser } = Plugins;
 
@@ -18,7 +19,7 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
-
+  SymptomNameList:any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
   private destroy$ = new Subject();
@@ -68,16 +69,18 @@ export class SettingsPage implements OnInit, OnDestroy {
       return userData.language;
     })
   );
-
+  
   constructor(
     private translateService: TranslateService,
     private popoverController: PopoverController,
     private translateConfigService: TranslateConfigService,
-    private dataStoreService: DataStoreService
+    private dataStoreService: DataStoreService,
+    private changeSymptomService: ChangeSymptomService
   ) { }
 
   ngOnInit() {
     this.initNotSetTranslation();
+    this.SymptomNames();
   }
 
   private initNotSetTranslation() {
@@ -116,6 +119,13 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   onClickVersion() {
     this.versionClick.next(true);
+  }
+  SymptomNames(){
+   this.SymptomNameList= this.changeSymptomService.getSymptomName
+  }
+
+  symptomSelected(event: CustomEvent) {
+    this.changeSymptomService.getSymptomItem( event.detail.value)
   }
 
   uploadHostSelected(event: CustomEvent) {
