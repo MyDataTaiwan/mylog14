@@ -130,6 +130,9 @@
     "en": "English",
     "fr": "French",
     "ja": "日本語",
-    "zh": "繁體中文"
+    "zh": "繁體中文",
+    "changeSchema": "Select Record Mode",
+    "defaultSchema": "Simple",
+    "customSchema": "Advanced"
   }
 }

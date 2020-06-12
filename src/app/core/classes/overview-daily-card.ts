@@ -41,7 +41,8 @@ export class OverviewDailyCard implements DailyCard {
         this.presentedSymptoms = dailyRecord.records
             .map(record => {
                 return record.symptoms.list
-                    .filter(symptom => symptom.present === true);
+                    .filter(symptom => symptom.present === true)
+                    .filter(symptom => symptom.ignore === false);
             })
             .reduce((flat, next) => flat.concat(next), []) // Flatten
             .map(symptoms => symptoms.name)

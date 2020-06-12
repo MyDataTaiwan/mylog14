@@ -134,6 +134,9 @@
     "en": "English",
     "fr": "French",
     "ja": "日本語",
-    "zh": "繁體中文"
+    "zh": "繁體中文",
+    "changeSchema": "選擇紀錄模式",
+    "defaultSchema": "簡易",
+    "customSchema": "進階"
   }
 }
