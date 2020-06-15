@@ -48,9 +48,6 @@
     "toLogNewData": "以新增資料",
     "addingDataAndVerifiableInformation": "新增資料與驗證資訊中..."
   },
-  "RECORD_FINISH": {
-    "finish": "新增成功！"
-  },
   "IMG_POPOVER": {
     "confirmDelete": "確定要刪除這張照片嗎？",
     "cancel": "取消",

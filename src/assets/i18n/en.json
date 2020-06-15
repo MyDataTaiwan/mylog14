@@ -49,9 +49,6 @@
     "toLogNewData": "to log new data.",
     "addingDataAndVerifiableInformation": "Adding new data and verifiable information..."
   },
-  "RECORD_FINISH": {
-    "finish": "Record saved!"
-  },
   "IMG_POPOVER": {
     "confirmDelete": "Delete the photo?",
     "cancel": "Cancel",

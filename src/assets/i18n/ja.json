@@ -41,9 +41,6 @@
     "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！",
     "addingDataAndVerifiableInformation": "新たなデータまたは検証可能な情報を追加しています..."
   },
-  "RECORD_FINISH": {
-    "finish": "記録が保存されました！"
-  },
   "IMG_POPOVER": {
     "confirmDelete": "写真を削除しますか?",
     "cancel": "キャンセル",
