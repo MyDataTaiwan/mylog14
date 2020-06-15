@@ -7,19 +7,7 @@
     "reviewRecords": "Revoir les enregistrements",
     "addNewData": "Ajouter une nouvelle donnée",
     "shareData": "Partager des données",
-    "agree": "Accord"
-  },
-  "description": {
-    "protectYourData": "Gérer vos données personnelles et partager avec consentement",
-    "throughDataVisualization": "Comprendre aisément les données journalières",
-    "throughRecordDataAndAnonymousSharing": "Restez à la maison",
-    "getInvolvedInResearch": "Protéger le monde de manière solidaire",
-    "careHealthIsLoveYourself": "Prendre soin de sa santé est une façon de s'aimer",
-    "recordHealthSupportsMedical": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!",
-    "clickTheButtonBelow": "Cliquer sur la touche ci-dessous",
-    "toLogNewData": "pour ajouter une nouvelle donnée"
-  },
-  "SYMPTOM": {
+    "agree": "Accord",
     "coughing": "Toux",
     "runnyNose": "Ecoulement nasal",
     "nasalCongestion": "Congestion nasale",
@@ -35,6 +23,16 @@
     "soreThroat": "Maux de gorge",
     "sputum": "Crachats / Expectorations",
     "fever": "Fièvre"
+  },
+  "description": {
+    "protectYourData": "Gérer vos données personnelles et partager avec consentement",
+    "throughDataVisualization": "Comprendre aisément les données journalières",
+    "throughRecordDataAndAnonymousSharing": "Restez à la maison",
+    "getInvolvedInResearch": "Protéger le monde de manière solidaire",
+    "careHealthIsLoveYourself": "Prendre soin de sa santé est une façon de s'aimer",
+    "recordHealthSupportsMedical": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!",
+    "clickTheButtonBelow": "Cliquer sur la touche ci-dessous",
+    "toLogNewData": "pour ajouter une nouvelle donnée"
   },
   "DAILY_RECORD": {
     "title": "Suivi journalier",

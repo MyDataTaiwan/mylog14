@@ -7,16 +7,7 @@
     "reviewRecords": "ログデータを表示する",
     "addNewData": "データを追加",
     "shareData": "データを共有する",
-    "agree": "同意する"
-  },
-  "description": {
-    "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
-    "throughDataVisualization": "毎日記録したデータが一覧できる。",
-    "throughRecordDataAndAnonymousSharing": "匿名化されたデータの共有により",
-    "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
-    "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！"
-  },
-  "SYMPTOM": {
+    "agree": "同意する",
     "coughing": "咳",
     "runnyNose": "鼻水",
     "nasalCongestion": "鼻詰まり",
@@ -31,9 +22,14 @@
     "muscleOrJointSoreness": "筋肉痛もしくは関節痛",
     "soreThroat": "喉の痛み",
     "sputum": "喀痰",
-    "fever": "発熱",
-    "noSymptom": "今日",
-    "noNote": "noSymptom"
+    "fever": "発熱"
+  },
+  "description": {
+    "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
+    "throughDataVisualization": "毎日記録したデータが一覧できる。",
+    "throughRecordDataAndAnonymousSharing": "匿名化されたデータの共有により",
+    "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
+    "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！"
   },
   "DAILY_RECORD": {
     "title": "毎日の記録",

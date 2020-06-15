@@ -8,19 +8,7 @@
     "addNewData": "新增資料",
     "shareData": "分享資料",
     "agree": "我已同意使用者條款",
-    "myData": "我的資料"
-  },
-  "description": {
-    "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
-    "throughDataVisualization": "繁雜資料一目瞭然。",
-    "throughRecordDataAndAnonymousSharing": "透過紀錄資料與匿名捐贈",
-    "getInvolvedInResearch": "為健康研究盡一份心力",
-    "careHealthIsLoveYourself": "關心每天的健康狀態也是愛自己的一種方式呦！",
-    "recordHealthSupportsMedical": "時常記錄自己的健康狀態，就是給醫事人員最大的打氣！",
-    "clickTheButtonBelow": "點擊下方",
-    "toLogNewData": "以新增資料"
-  },
-  "SYMPTOM": {
+    "myData": "我的資料",
     "coughing": "咳嗽",
     "runnyNose": "流鼻水",
     "nasalCongestion": "鼻塞",
@@ -36,8 +24,18 @@
     "soreThroat": "喉嚨癢/腫痛",
     "sputum": "有痰",
     "fever": "發燒",
-    "noSymptom": "今日",
-    "noNote": "沒有症狀"
+    "noSymptom": "沒有症狀",
+    "noNote": "沒有紀錄"
+  },
+  "description": {
+    "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
+    "throughDataVisualization": "繁雜資料一目瞭然。",
+    "throughRecordDataAndAnonymousSharing": "透過紀錄資料與匿名捐贈",
+    "getInvolvedInResearch": "為健康研究盡一份心力",
+    "careHealthIsLoveYourself": "關心每天的健康狀態也是愛自己的一種方式呦！",
+    "recordHealthSupportsMedical": "時常記錄自己的健康狀態，就是給醫事人員最大的打氣！",
+    "clickTheButtonBelow": "點擊下方",
+    "toLogNewData": "以新增資料"
   },
   "DAILY_RECORD": {
     "title": "每日記錄",
