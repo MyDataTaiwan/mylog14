@@ -1,30 +1,15 @@
 {
-  "TOUR": {
+  "title": {
     "getStarted": "始めましょう",
-    "slide1": {
-      "title1": "個人データは自分で管理しましょう",
-      "title2": "",
-      "desc1": "あなたはあなたのデータを所有しています。",
-      "desc2": "個人データはあなたの同意を得られた場合のみ共有されます。"
-    },
-    "slide2": {
-      "title1": "個人の行動を記録する",
-      "title2": "",
-      "desc1": "コロナウイルス感染症の状態を記録します。",
-      "desc2": "医療従事者の負担軽減"
-    },
-    "slide3": {
-      "title1": "データの可視化",
-      "title2": "",
-      "desc1": "毎日記録したデータが一覧できる。",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "感染拡大の防止に貢献する",
-      "title2": "",
-      "desc1": "匿名化されたデータの共有により",
-      "desc2": "健康調査に関わることができます。一緒に世界を守りましょう。"
-    }
+    "protectYourOwnData": "個人データは自分で管理しましょう",
+    "logYourLifeActivities": "個人の行動を記録する",
+    "throughDataVisualization": "データの可視化"
+  },
+  "description": {
+    "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
+    "throughDataVisualization": "毎日記録したデータが一覧できる。",
+    "throughRecordDataAndAnonymousSharing": "匿名化されたデータの共有により",
+    "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。"
   },
   "GUIDE": {
     "slide1": {

@@ -1,30 +1,15 @@
 {
-  "TOUR": {
+  "title": {
     "getStarted": "開始使用",
-    "slide1": {
-      "title1": "自己的資料自己顧",
-      "title2": "",
-      "desc1": "你的資料只屬於你",
-      "desc2": "只在你同意的情況下分享資訊"
-    },
-    "slide2": {
-      "title1": "紀錄健康狀況與生活史",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    },
-    "slide3": {
-      "title1": "資料視覺化",
-      "title2": "",
-      "desc1": "繁雜資料一目瞭然",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "透過紀錄資料與匿名捐贈",
-      "title2": "為健康研究盡一份心力",
-      "desc1": "",
-      "desc2": ""
-    }
+    "protectYourOwnData": "自己的資料自己顧",
+    "logYourLifeActivities": "紀錄健康狀況與生活史",
+    "throughDataVisualization": "資料視覺化"
+  },
+  "description": {
+    "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
+    "throughDataVisualization": "繁雜資料一目瞭然。",
+    "throughRecordDataAndAnonymousSharing": "透過紀錄資料與匿名捐贈",
+    "getInvolvedInResearch": "為健康研究盡一份心力"
   },
   "GUIDE": {
     "slide1": {

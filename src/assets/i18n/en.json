@@ -1,31 +1,17 @@
 {
-  "TOUR": {
+  "title": {
     "getStarted": "Get Started",
-    "slide1": {
-      "title1": "Protect Your Own Data",
-      "title2": "",
-      "desc1": "Own your data and share with consent",
-      "desc2": ""
-    },
-    "slide2": {
-      "title1": "Log Your Life Activities",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    },
-    "slide3": {
-      "title1": "Through Data Visualization",
-      "title2": "",
-      "desc1": "Understand daily data easily",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "Through record data and anonymous sharing",
-      "title2": "Get involved in health-related  research",
-      "desc1": "",
-      "desc2": ""
-    }
+    "protectYourOwnData": "Protect Your Own Data",
+    "logYourLifeActivities": "Log Your Life Activities",
+    "throughDataVisualization": "Through Data Visualization"
   },
+  "description": {
+    "protectYourData": "Own your data and share with consent.",
+    "throughDataVisualization": "Understand daily data easily.",
+    "throughRecordDataAndAnonymousSharing": "Through record data and anonymous",
+    "getInvolvedInResearch": "Get involved in health-related research"
+  },
+  "empty": "",
   "GUIDE": {
     "slide1": {
       "title1": "Review records",

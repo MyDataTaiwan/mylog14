@@ -1,30 +1,15 @@
 {
-  "TOUR": {
+  "title": {
     "getStarted": "Démarrage",
-    "slide1": {
-      "title1": "Protéger vos données personnelles",
-      "title2": "",
-      "desc1": "Gérer vos données personnelles",
-      "desc2": "et partager avec consentement"
-    },
-    "slide2": {
-      "title1": "Suivre vos activités courantes",
-      "title2": "",
-      "desc1": "Suivre vos symtômes liés au COVID-19",
-      "desc2": "Réduire la pression des services de santé"
-    },
-    "slide3": {
-      "title1": "Visualiser les données",
-      "title2": "",
-      "desc1": "Comprendre aisément les données journalières",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "Participer à la lutte pour la maîtrise de la pandémie",
-      "title2": "",
-      "desc1": "Restez à la maison",
-      "desc2": "Protéger le monde de manière solidaire"
-    }
+    "protectYourOwnData": "Protéger vos données personnelles",
+    "logYourLifeActivities": "Suivre vos activités courantes",
+    "throughDataVisualization": "Visualiser les données"
+  },
+  "description": {
+    "protectYourData": "Gérer vos données personnelles et partager avec consentement",
+    "throughDataVisualization": "Comprendre aisément les données journalières",
+    "throughRecordDataAndAnonymousSharing": "Restez à la maison",
+    "getInvolvedInResearch": "Protéger le monde de manière solidaire"
   },
   "GUIDE": {
     "slide1": {
