@@ -3,20 +3,22 @@ import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
-import { RecordMeta } from '../classes/record-meta';
+import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
 import { LocalStorageService } from './local-storage.service';
+import { RecordService } from './record.service';
+import { UserDataService } from './user-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataStoreService {
-  private recordMetaList = new BehaviorSubject<RecordMeta[]>([]);
-  public recordMetaList$ = this.recordMetaList.asObservable();
+  private recordMetas = new BehaviorSubject<RecordMeta[]>([]);
+  public recordMetas$ = this.recordMetas.asObservable();
 
-  public dailyRecords$ = this.recordMetaList$.pipe(
-    map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-    switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
+  public dailyRecords$ = this.recordMetas$.pipe(
+    map(recordMetas => (recordMetas) ? recordMetas : []),
+    switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
     map(records => new DailyRecords(records)),
     switchMap(dailyRecords => {
       const userData = this.userData.getValue();
@@ -28,9 +30,9 @@ export class DataStoreService {
     tap(d => console.log('Daily records', d)),
   );
 
-  public dailydrips$ = this.recordMetaList$.pipe(
-    map(recordMetaList => (recordMetaList) ? recordMetaList : []),
-    switchMap(recordMetaList => this.localStorage.getRecords(recordMetaList)),
+  public dailydrips$ = this.recordMetas$.pipe(
+    map(recordMetas => (recordMetas) ? recordMetas : []),
+    switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
     map(records => records.length),
   );
 
@@ -53,22 +55,24 @@ export class DataStoreService {
 
   constructor(
     private localStorage: LocalStorageService,
+    private recordService: RecordService,
+    private userDataService: UserDataService,
   ) {
-    this.updateRecordMetaList().subscribe(); // Initial update (load from storage)
+    this.updateRecordMetas().subscribe(); // Initial update (load from storage)
   }
 
-  updateRecordMetaList(recordMetaList?: RecordMeta[]): Observable<RecordMeta[]> {
-    const loadList$ = this.localStorage.getRecordMetaList();
-    const saveList$ = this.localStorage.saveRecordMetaList(recordMetaList);
-    const update$ = (recordMetaList) ? saveList$ : loadList$;
+  updateRecordMetas(recordMetas?: RecordMeta[]): Observable<RecordMeta[]> {
+    const loadList$ = this.recordService.getRecordMetas();
+    const saveList$ = this.recordService.saveRecordMetas(recordMetas);
+    const update$ = (recordMetas) ? saveList$ : loadList$;
     return update$.pipe(
-      tap((list: RecordMeta[]) => this.recordMetaList.next(list)),
+      tap((list: RecordMeta[]) => this.recordMetas.next(list)),
     );
   }
 
   updateUserData(userData?: UserData): Observable<UserData> {
-    const load$ = this.localStorage.getUserData();
-    const save$ = this.localStorage.saveUserData(userData);
+    const load$ = this.userDataService.getUserData();
+    const save$ = this.userDataService.saveUserData(userData);
     const update$ = (userData) ? save$ : load$;
     return update$.pipe(
       map((data: UserData) => {

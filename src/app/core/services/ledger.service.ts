@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RecordMeta } from '../classes/record-meta';
+import { RecordMeta } from '../interfaces/record-meta';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, timeout, tap } from 'rxjs/operators';
 import { runTransaction } from '@numbersprotocol/niota';

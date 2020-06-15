@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
-import { formatDate } from '@angular/common';
 import { Platform } from '@ionic/angular';
 import { Subject, Observable, from, BehaviorSubject, defer, forkJoin, of, concat } from 'rxjs';
 import { Snapshot } from '../interfaces/snapshot';
@@ -9,6 +8,7 @@ import { Photo } from '../interfaces/photo';
 import { DataStoreService } from './data-store.service';
 import { Record } from '../interfaces/record';
 import { LocalStorageService } from './local-storage.service';
+import { RecordService } from './record.service';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -24,6 +24,7 @@ export class PhotoService {
   constructor(
     private dataStore: DataStoreService,
     private localStorage: LocalStorageService,
+    private recordService: RecordService,
     platform: Platform,
   ) {
     this.platform = platform;
@@ -215,11 +216,11 @@ export class PhotoService {
         })
       );
 
-    return this.dataStore.recordMetaList$
+    return this.dataStore.recordMetas$
       .pipe(
         take(1),
-        switchMap(recordMetaList => this.localStorage.saveRecord(record, recordMetaList)),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(recordMetas => this.recordService.saveRecord(record, recordMetas)),
+        switchMap(recordMetas => this.dataStore.updateRecordMetas(recordMetas)),
         switchMap(_ => deleteFile$),
       );
   }
