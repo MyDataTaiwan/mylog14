@@ -22,7 +22,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
   private destroy$ = new Subject();
-  private notSet: string = this.translateService.instant('SETTINGS.notSet');
+  private notSet: string = this.translateService.instant('title.notSet');
 
   public appVersion = version;
   public showDeveloperOptions = false;
@@ -85,7 +85,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private initNotSetTranslation() {
     this.translateService.onLangChange.subscribe((_: any) => {
-      this.notSet = this.translateService.instant('SETTINGS.notSet');
+      this.notSet = this.translateService.instant('title.notSet');
     });
   }
 

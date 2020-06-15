@@ -32,7 +32,10 @@
     "confirm": "確定",
     "addBodyTemperature": "体温を記録",
     "cancel": "キャンセル",
-    "delete": "削除"
+    "delete": "削除",
+    "skip": "省略",
+    "dataShared": "データが共有されました",
+    "johnDoe": "名無しの権兵衛"
   },
   "description": {
     "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
@@ -40,42 +43,11 @@
     "throughRecordDataAndAnonymousSharing": "匿名化されたデータの共有により",
     "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
     "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！",
-    "addingDataAndVerifiableInformation": "新たなデータまたは検証可能な情報を追加しています..."
-  },
-  "SHARE": {
-    "confirmShare": "共有可能なリンクを作成しますか?",
-    "confirmShareDesc": "(クラウド上にアップロードされたあなたのデータは一時的に保存されています。データは72時間後に削除されます。)",
-    "uploading": "共有可能なリンクを作成するのため、データをアップロードしています...",
-    "copyLink": "あなたのデータを共有するにはこちらのリンクをコピーしてください。",
+    "addingDataAndVerifiableInformation": "新たなデータまたは検証可能な情報を追加しています...",
+    "shareOnCloudTemporarily": "クラウド上にアップロードされたあなたのデータは一時的に保存されています。データは72時間後に削除されます。",
+    "uploadingDataToCreateShareableLink": "共有可能なリンクを作成するのため、データをアップロードしています...",
+    "copyLinkToShare": "あなたのデータを共有するにはこちらのリンクをコピーしてください。",
     "shareToWhom": "あなたはデータをどなたと共有したいですか?",
-    "cancel": "キャンセル",
-    "confirm": "確認",
-    "skip": "省略",
-    "placeholder": "例）名無しの権兵衛",
-    "success": "データが共有されました。",
-    "error": "ごめんなさい。アップロードに失敗しました。申し訳ないですが、少し間をおいてもう一度試してみてもらえますか?"
-  },
-  "SETTINGS": {
-    "settings": "Settings",
-    "notSet": "Not Set",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "name": "Name",
-    "email": "Email",
-    "dateOfBirth": "Date of Birth",
-    "editUserName": "Edit User Name",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "editEmail": "Edit Email",
-    "about": "About",
-    "version": "Version",
-    "language": "Language",
-    "en": "English",
-    "fr": "French",
-    "ja": "日本語",
-    "zh": "繁體中文",
-    "changeSchema": "Select Record Mode",
-    "defaultSchema": "Simple",
-    "customSchema": "Advanced"
+    "uploadingDataError": "ごめんなさい。アップロードに失敗しました。申し訳ないですが、少し間をおいてもう一度試してみてもらえますか?"
   }
 }

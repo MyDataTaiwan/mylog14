@@ -38,7 +38,26 @@
     "addBodyTemperature": "Add Body Temperature",
     "cancel": "Cancel",
     "areYouSure": "Are You Sure",
-    "delete": "Delete"
+    "delete": "Delete",
+    "skip": "Skip",
+    "dataShared": "Data Shared",
+    "johnDoe": "John Doe",
+    "finished": "Finished",
+    "settings": "Settings",
+    "notSet": "Not Set",
+    "name": "Name",
+    "email": "Email",
+    "dateOfBirth": "Date of Birth",
+    "editUserName": "Edit User Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "editEmail": "Edit Email",
+    "about": "About",
+    "version": "Version",
+    "language": "Language",
+    "selectRecordMode": "Select Record Mode",
+    "simple": "Simple",
+    "advanced": "Advanced"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -51,42 +70,17 @@
     "toLogNewData": "to log new data.",
     "addingDataAndVerifiableInformation": "Adding new data and verifiable information...",
     "cannotGetLocation": "Cannot get location.",
-    "deletingData": "Deleting the photo and updating verifiable information..."
-  },
-  "SHARE": {
-    "confirmShare": "Would you like to create a shareable link?",
-    "confirmShareDesc": "(Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours)",
-    "uploading": "Uploading data to create a shareable link...",
-    "copyLink": "Copy the following link to share your data",
+    "deletingData": "Deleting the photo and updating verifiable information...",
+    "shareOnCloudTemporarily": "Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours.",
+    "uploadingDataToCreateShareableLink": "Uploading data to create a shareable link...",
+    "copyLinkToShare": "Copy the following link to share your data.",
     "shareToWhom": "Who would you like to share your data with?",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "skip": "Skip",
-    "placeholder": "e.g. John Doe",
-    "success": "Data shared",
-    "error": "Upload error. Please try again later."
+    "uploadingDataError": "Upload error. Please try again later."
   },
-  "SETTINGS": {
-    "settings": "Settings",
-    "notSet": "Not Set",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "name": "Name",
-    "email": "Email",
-    "dateOfBirth": "Date of Birth",
-    "editUserName": "Edit User Name",
-    "firstName": "First Name",
-    "lastName": "Last Name",
-    "editEmail": "Edit Email",
-    "about": "About",
-    "version": "Version",
-    "language": "Language",
+  "language": {
     "en": "English",
     "fr": "French",
     "ja": "日本語",
-    "zh": "繁體中文",
-    "changeSchema": "Select Record Mode",
-    "defaultSchema": "Simple",
-    "customSchema": "Advanced"
+    "zh": "繁體中文"
   }
 }
