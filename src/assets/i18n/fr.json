@@ -43,14 +43,6 @@
     "clickTheButtonBelow": "Cliquer sur la touche ci-dessous",
     "toLogNewData": "pour ajouter une nouvelle donnée"
   },
-  "IMG_POPOVER": {
-    "confirmDelete": "Effacer la photo?",
-    "cancel": "Annuler",
-    "confirm": "Confirmer",
-    "delete": "Delete",
-    "locationError": "Can't get location",
-    "deleting": "Deleting photos..."
-  },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",
     "confirmShareDesc": "(Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours)",

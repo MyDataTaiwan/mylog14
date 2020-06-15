@@ -36,7 +36,9 @@
     "recordSaved": "Record Saved",
     "confirm": "Confirm",
     "addBodyTemperature": "Add Body Temperature",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "areYouSure": "Are You Sure",
+    "delete": "Delete"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -47,15 +49,9 @@
     "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!",
     "clickTheButtonBelow": "Click the button below",
     "toLogNewData": "to log new data.",
-    "addingDataAndVerifiableInformation": "Adding new data and verifiable information..."
-  },
-  "IMG_POPOVER": {
-    "confirmDelete": "Delete the photo?",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "delete": "Delete",
-    "locationError": "Can't get location",
-    "deleting": "Deleting the photo & updating verifiable information..."
+    "addingDataAndVerifiableInformation": "Adding new data and verifiable information...",
+    "cannotGetLocation": "Cannot get location.",
+    "deletingData": "Deleting the photo and updating verifiable information..."
   },
   "SHARE": {
     "confirmShare": "Would you like to create a shareable link?",

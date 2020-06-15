@@ -31,7 +31,8 @@
     "recordSaved": "記録が保存されました",
     "confirm": "確定",
     "addBodyTemperature": "体温を記録",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "delete": "削除"
   },
   "description": {
     "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
@@ -40,14 +41,6 @@
     "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
     "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！",
     "addingDataAndVerifiableInformation": "新たなデータまたは検証可能な情報を追加しています..."
-  },
-  "IMG_POPOVER": {
-    "confirmDelete": "写真を削除しますか?",
-    "cancel": "キャンセル",
-    "confirm": "削除",
-    "delete": "削除",
-    "locationError": "Can't get location",
-    "deleting": "Deleting photos..."
   },
   "SHARE": {
     "confirmShare": "共有可能なリンクを作成しますか?",

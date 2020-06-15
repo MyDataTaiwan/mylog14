@@ -1,6 +1,6 @@
 <ion-content>
   <ion-row>
-    <ion-col text-center>{{ 'IMG_POPOVER.confirmDelete' | translate }}</ion-col>
+    <ion-col text-center>{{ 'title.areYouSure' | translate }}</ion-col>
   </ion-row>
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
@@ -14,9 +14,11 @@
     </ion-col>
     <ion-col>
       <div style="display: flex; flex-direction:column;">
-        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'yyyy-MM-dd' }}</ion-label>
-        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'HH:mm:ss' }}</ion-label>
-        <ion-label  style="font-size: large;"class=".ion-text-center">{{ address$ | async   }}</ion-label>
+        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'yyyy-MM-dd' }}
+        </ion-label>
+        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'HH:mm:ss' }}
+        </ion-label>
+        <ion-label style="font-size: large;" class=".ion-text-center">{{ address$ | async   }}</ion-label>
 
         <!-- <ion-label class=".ion-text-center">{{ photo.locationStamp.latitude }}</ion-label>
         <ion-label class=".ion-text-center">{{ photo.locationStamp.longitude }}</ion-label> -->
@@ -28,7 +30,7 @@
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
   <ion-row>
-    <ion-button (click)="cancel()">{{ 'IMG_POPOVER.cancel' | translate }}</ion-button>
-    <ion-button (click)="confirm()">{{ 'IMG_POPOVER.confirm' | translate }}</ion-button>
+    <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
+    <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
   </ion-row>
 </ion-content>
