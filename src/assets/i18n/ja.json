@@ -16,11 +16,6 @@
     "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
     "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！"
   },
-  "DIARY": {
-    "title": "My Data",
-    "guide1": "Click",
-    "guide2": " to log new data"
-  },
   "SYMPTOM": {
     "coughing": "咳",
     "runnyNose": "鼻水",

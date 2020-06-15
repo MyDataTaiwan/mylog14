@@ -1,4 +1,5 @@
 {
+  "empty": "",
   "title": {
     "getStarted": "Get Started",
     "protectYourOwnData": "Protect Your Own Data",
@@ -7,7 +8,8 @@
     "reviewRecords": "Review Records",
     "addNewData": "Add New Data",
     "shareData": "Share Data",
-    "agree": "Agree"
+    "agree": "Agree",
+    "myData": "My Data"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -15,13 +17,9 @@
     "throughRecordDataAndAnonymousSharing": "Through record data and anonymous",
     "getInvolvedInResearch": "Get involved in health-related research",
     "careHealthIsLoveYourself": "Caring your own health status is one way to love yourself.",
-    "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!"
-  },
-  "empty": "",
-  "DIARY": {
-    "title": "My Data",
-    "guide1": "Click",
-    "guide2": " to log new data"
+    "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!",
+    "clickTheButtonBelow": "Click the button below",
+    "toLogNewData": "to log new data."
   },
   "SYMPTOM": {
     "coughing": "Cough",
