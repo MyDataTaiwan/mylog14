@@ -1,5 +1,6 @@
 {
   "empty": "",
+  "splitter": ", ",
   "title": {
     "getStarted": "Get Started",
     "protectYourOwnData": "Protect Your Own Data",
@@ -26,7 +27,16 @@
     "sputum": "Sputum",
     "fever": "Fever",
     "noSymptom": "No Symptom",
-    "noNote": "No Note"
+    "noNote": "No Note",
+    "dailyRecord": "Daily Record",
+    "bodyTemperature": "Body Temperature",
+    "symptoms": "Symptoms",
+    "submit": "Submit",
+    "clear": "Clear",
+    "recordSaved": "Record Saved",
+    "confirm": "Confirm",
+    "addBodyTemperature": "Add Body Temperature",
+    "cancel": "Cancel"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -36,39 +46,8 @@
     "careHealthIsLoveYourself": "Caring your own health status is one way to love yourself.",
     "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!",
     "clickTheButtonBelow": "Click the button below",
-    "toLogNewData": "to log new data."
-  },
-  "SYMPTOM": {
-    "coughing": "Cough",
-    "runnyNose": "Runny Nose",
-    "nasalCongestion": "Nasal Congestion",
-    "sneezing": "Sneezing",
-    "shortnessOfBreath": "Shortness of Breath",
-    "malaiseOrTiredness": "Malaise/Tiredness",
-    "lossOfTasteOrSmell": "Loss of Taste or Smell",
-    "diarrhea": "Diarrhea",
-    "abdominalPain": "Abdominal Pain",
-    "vomiting": "Vomiting",
-    "chills": "Chills",
-    "muscleOrJointSoreness": "Muscle or Joint Soreness",
-    "soreThroat": "Sore Throat",
-    "sputum": "Sputum",
-    "fever": "Fever",
-    "noSymptom": "To day",
-    "noNote": "noSymptom"
-  },
-  "DAILY_RECORD": {
-    "title": "Daily Record",
-    "bodyTemperature": "Body Temperature",
-    "symptoms": "Symptoms",
-    "splitter": ", ",
-    "submit": "Submit",
-    "clear": "Clear",
-    "recorded": "Record Saved",
-    "ok": "OK",
-    "saving": "Adding new data and verifiable information...",
-    "pickerTitle": "Add Body Temperature",
-    "cancel": "Cancel"
+    "toLogNewData": "to log new data.",
+    "addingDataAndVerifiableInformation": "Adding new data and verifiable information..."
   },
   "RECORD_FINISH": {
     "finish": "Record saved!"

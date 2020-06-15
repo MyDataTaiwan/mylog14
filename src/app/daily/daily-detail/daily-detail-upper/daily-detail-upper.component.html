@@ -21,7 +21,7 @@
         aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
       <div>
         <ion-label class="ion-text-center" style="font-size: 12px;">
-          {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }}
+          {{ 'title.bodyTemperature' | translate }}: {{ card.bt }}
           <!-- °C -->
         </ion-label>
         <img *ngIf="parseFloat(card.bt.slice(0,card.bt.indexOf('°C'))) >= 37.5" src="../../assets/ui/Wr_icon.svg" />
@@ -31,10 +31,10 @@
       <div style="align-items:center;">
         <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;">
           <!-- <img src="../../assets/ui/Wr_icon.svg" /> -->
-          {{ 'DAILY_RECORD.symptoms' | translate }}:
+          {{ 'title.symptoms' | translate }}:
           <ng-container (click)="selectedSymptoms=!selectedSymptoms"
             *ngFor="let symptom of card.presentedSymptoms.slice(0,1) ; let isLast = last">
-            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }} ...
+            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('splitter' | translate) }} ...
           </ng-container>
 
 
@@ -51,7 +51,7 @@
       box-shadow: 0 0 5px 5px #ebebeb;">
         <ion-label class="ion-text-center" style="font-size: 12px;">
           <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last">
-            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
+            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('splitter' | translate) }}
           </ng-container>
         </ion-label>
       </div>

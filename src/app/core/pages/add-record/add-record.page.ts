@@ -1,16 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PickerController, ModalController, PopoverController, AlertController, LoadingController } from '@ionic/angular';
-import { PickerOptions } from '@ionic/core';
-import { Symptoms } from '../../classes/symptoms';
-import { SnapshotService } from '../../services/snapshot.service';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable, from, defer, forkJoin, Subject, concat, pipe, timer, zip, of } from 'rxjs';
-import { switchMap, takeUntil, tap, delay, concatMap, take, map } from 'rxjs/operators';
-import { GeolocationService } from '../../services/geolocation.service';
-import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 import { Location } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LoadingController, PickerController, PopoverController } from '@ionic/angular';
+import { PickerOptions } from '@ionic/core';
+import { TranslateService } from '@ngx-translate/core';
+import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
+import { delay, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { Symptom } from '../../classes/symptom';
+import { Symptoms } from '../../classes/symptoms';
+import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 import { DataStoreService } from '../../services/data-store.service';
+import { GeolocationService } from '../../services/geolocation.service';
+import { SnapshotService } from '../../services/snapshot.service';
 
 @Component({
   selector: 'app-add-record',
@@ -56,13 +56,13 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   ) {
     this.resetPage();
-    this.recorded$ = this.translate.get('DAILY_RECORD.recorded');
+    this.recorded$ = this.translate.get('title.recordSaved');
     this.recorded$.subscribe((t: string) => this.text.recorded = t);
-    this.ok$ = this.translate.get('DAILY_RECORD.ok');
+    this.ok$ = this.translate.get('title.confirm');
     this.ok$.subscribe((t: string) => this.text.ok = t);
-    this.pickerTitle$ = this.translate.get('DAILY_RECORD.pickerTitle');
+    this.pickerTitle$ = this.translate.get('title.addBodyTemperature');
     this.pickerTitle$.subscribe((t: string) => this.text.pickerTitle = t);
-    this.cancel$ = this.translate.get('DAILY_RECORD.cancel');
+    this.cancel$ = this.translate.get('title.cancel');
     this.cancel$.subscribe((t: string) => this.text.cancel = t);
 
   }
@@ -135,7 +135,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
           cssClass: 'test',
         },
         {
-          text:  this.text.ok,
+          text: this.text.ok,
           handler: (value: any) => {
             this.bt = `${value.integer.value}${value.decimal.value}`;
             this.btUnit = value.unit.value;
@@ -156,14 +156,14 @@ export class AddRecordPage implements OnInit, OnDestroy {
           options: this.getColumnOptions(this.btUnitList)
         }
       ],
-      mode:'ios'
+      mode: 'ios'
     };
     const picker = await this.pickerCtrl.create(options);
     await picker.present();
   }
 
   presentLoading() {
-    return this.translate.get('DAILY_RECORD.saving')
+    return this.translate.get('description.addingDataAndVerifiableInformation')
       .pipe(
         switchMap(msg => {
           return defer(() => this.loadingCtrl.create({
@@ -192,7 +192,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   onSubmitClick() {
-    this.submitRecord().subscribe(() => {});
+    this.submitRecord().subscribe(() => { });
   }
 
   submitRecord(): Observable<any> {

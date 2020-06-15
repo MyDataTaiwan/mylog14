@@ -1,4 +1,5 @@
 {
+  "splitter": "、",
   "title": {
     "getStarted": "開始使用",
     "protectYourOwnData": "自己的資料自己顧",
@@ -25,7 +26,16 @@
     "sputum": "有痰",
     "fever": "發燒",
     "noSymptom": "沒有症狀",
-    "noNote": "沒有紀錄"
+    "noNote": "沒有紀錄",
+    "dailyRecord": "每日記錄",
+    "bodyTemperature": "體溫",
+    "symptoms": "症狀",
+    "submit": "送出",
+    "clear": "清除",
+    "recordSaved": "已紀錄",
+    "confirm": "確定",
+    "addBodyTemperature": "新增體溫",
+    "cancel": "取消"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -35,20 +45,8 @@
     "careHealthIsLoveYourself": "關心每天的健康狀態也是愛自己的一種方式呦！",
     "recordHealthSupportsMedical": "時常記錄自己的健康狀態，就是給醫事人員最大的打氣！",
     "clickTheButtonBelow": "點擊下方",
-    "toLogNewData": "以新增資料"
-  },
-  "DAILY_RECORD": {
-    "title": "每日記錄",
-    "bodyTemperature": "體溫",
-    "symptoms": "症狀",
-    "splitter": "、",
-    "submit": "送出",
-    "clear": "清除",
-    "recorded": "已紀錄",
-    "ok": "確定",
-    "saving": "新增資料與驗證資訊中...",
-    "pickerTitle": "新增體溫",
-    "cancel": "取消"
+    "toLogNewData": "以新增資料",
+    "addingDataAndVerifiableInformation": "新增資料與驗證資訊中..."
   },
   "RECORD_FINISH": {
     "finish": "新增成功！"

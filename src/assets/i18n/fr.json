@@ -22,7 +22,16 @@
     "muscleOrJointSoreness": "Douleurs musculaires ou articulaires",
     "soreThroat": "Maux de gorge",
     "sputum": "Crachats / Expectorations",
-    "fever": "Fièvre"
+    "fever": "Fièvre",
+    "dailyRecord": "Suivi journalier",
+    "bodyTemperature": "Température corporelle",
+    "symptoms": "Symptômes",
+    "submit": "Soumettre",
+    "clear": "Effacer",
+    "recordSaved": "Enregistré",
+    "confirm": "Accepter",
+    "addBodyTemperature": "Add Body Temperature",
+    "cancel": "Cancel"
   },
   "description": {
     "protectYourData": "Gérer vos données personnelles et partager avec consentement",
@@ -33,17 +42,6 @@
     "recordHealthSupportsMedical": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!",
     "clickTheButtonBelow": "Cliquer sur la touche ci-dessous",
     "toLogNewData": "pour ajouter une nouvelle donnée"
-  },
-  "DAILY_RECORD": {
-    "title": "Suivi journalier",
-    "bodyTemperature": "Température corporelle",
-    "symptoms": "Symptômes",
-    "splitter": ", ",
-    "submit": "Soumettre",
-    "clear": "Effacer",
-    "recorded": "Enregistré",
-    "ok": "Accepter",
-    "saving": "Adding new data and verifiable information..."
   },
   "RECORD_FINISH": {
     "finish": "Enregistré!"
