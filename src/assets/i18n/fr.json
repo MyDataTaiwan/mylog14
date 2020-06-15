@@ -3,33 +3,18 @@
     "getStarted": "Démarrage",
     "protectYourOwnData": "Protéger vos données personnelles",
     "logYourLifeActivities": "Suivre vos activités courantes",
-    "throughDataVisualization": "Visualiser les données"
+    "throughDataVisualization": "Visualiser les données",
+    "reviewRecords": "Revoir les enregistrements",
+    "addNewData": "Ajouter une nouvelle donnée",
+    "shareData": "Partager des données"
   },
   "description": {
     "protectYourData": "Gérer vos données personnelles et partager avec consentement",
     "throughDataVisualization": "Comprendre aisément les données journalières",
     "throughRecordDataAndAnonymousSharing": "Restez à la maison",
-    "getInvolvedInResearch": "Protéger le monde de manière solidaire"
-  },
-  "GUIDE": {
-    "slide1": {
-      "title1": "Revoir les enregistrements",
-      "title2": "",
-      "desc1": "Prendre soin de sa santé est une façon de s'aimer",
-      "desc2": ""
-    },
-    "slide2": {
-      "title1": "Ajouter une nouvelle donnée",
-      "title2": "",
-      "desc1": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!",
-      "desc2": ""
-    },
-    "slide3": {
-      "title1": "Partager des données",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    }
+    "getInvolvedInResearch": "Protéger le monde de manière solidaire",
+    "careHealthIsLoveYourself": "Prendre soin de sa santé est une façon de s'aimer",
+    "recordHealthSupportsMedical": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!"
   },
   "EULA": {
     "agree": "Accord"
