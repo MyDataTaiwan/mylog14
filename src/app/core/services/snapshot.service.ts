@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
 import { GeolocationPosition } from '@capacitor/core';
-import { GeolocationService } from './geolocation.service';
+import { PopoverController } from '@ionic/angular';
+import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
+import { catchError, delay, map, mergeMap, switchMap, take, takeUntil } from 'rxjs/operators';
+import { Symptoms } from '../classes/symptoms';
+import { RecordFinishPage } from '../components/record-finish/record-finish.page';
 import { LocationStamp } from '../interfaces/location-stamp';
-import { Snapshot } from '../interfaces/snapshot';
-import { PhotoService } from './photo.service';
-import { Observable, pipe,defer, forkJoin, from, of, Subject } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, takeUntil, tap, take, delay } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
-import { Symptoms } from '../classes/symptoms';
-import { LocalStorageService } from './local-storage.service';
-import { DataStoreService } from './data-store.service';
 import { RecordMeta } from '../interfaces/record-meta';
-import { RecordFinishPage } from '../components/record-finish/record-finish.page';
+import { Snapshot } from '../interfaces/snapshot';
+import { DataStoreService } from './data-store.service';
+import { GeolocationService } from './geolocation.service';
+import { LocalStorageService } from './local-storage.service';
+import { PhotoService } from './photo.service';
 import { RecordService } from './record.service';
 
 @Injectable({
@@ -96,11 +96,11 @@ export class SnapshotService {
   snapCapture() {
     return forkJoin([
       this.createPhotoWithSnapshot(),
-      this.dataStore.recordMetaList$.pipe(take(1)),
+      this.dataStore.recordMetas$.pipe(take(1)),
       this.dataStore.userData$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([photo, recordMetaList, userData]) => {
+        mergeMap(([photo, recordMetas, userData]) => {
           const record: Record = {
             timestamp: photo.timestamp,
             symptoms: new Symptoms(userData.defaultSchema),

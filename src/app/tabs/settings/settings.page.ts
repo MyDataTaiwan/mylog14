@@ -18,7 +18,7 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
-  SymptomNameList:any;
+  SymptomNameList: any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
   private destroy$ = new Subject();
@@ -130,7 +130,7 @@ export class SettingsPage implements OnInit, OnDestroy {
           return userData;
         }),
         switchMap(userData => this.dataStoreService.updateUserData(userData)),
-        switchMap(() => this.dataStoreService.updateRecordMetaList()),
+        switchMap(() => this.dataStoreService.updateRecordMetas()),
         takeUntil(this.destroy$),
       ).subscribe();
   }
