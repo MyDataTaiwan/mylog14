@@ -75,6 +75,12 @@ export class DataStoreService {
     const save$ = this.userDataService.saveUserData(userData);
     const update$ = (userData) ? save$ : load$;
     return update$.pipe(
+      map((data: UserData) => {
+        if (data.defaultSchema === undefined) {
+          data.defaultSchema = true;
+        }
+        return data;
+      }),
       tap((data: UserData) => this.userData.next(data)),
     );
   }

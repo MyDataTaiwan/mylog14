@@ -38,7 +38,14 @@
       <ion-icon name="information-circle-outline" slot="start"></ion-icon>
       <ion-label>{{ 'SETTINGS.about' | translate }}</ion-label>
     </ion-item>
-
+    <ion-item lines="inset">
+      <ion-icon name="documents-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'SETTINGS.changeSchema' | translate }}</ion-label>
+      <ion-select [value]="defaultSchema$ | async" (ionChange)="symptomSelected($event)">
+        <ion-select-option value="default">{{ 'SETTINGS.defaultSchema' | translate }}</ion-select-option>
+        <ion-select-option value="custom">{{ 'SETTINGS.customSchema' | translate }}</ion-select-option>
+      </ion-select>
+    </ion-item>
     <ion-item (click)="onClickVersion()" button>
       <ion-icon name="code-outline" slot="start"></ion-icon>
       <ion-label>{{ 'SETTINGS.version' | translate }}</ion-label>
@@ -48,7 +55,6 @@
     <ion-list-header *ngIf="showDeveloperOptions === true">
       開發人員選項
     </ion-list-header>
-
     <ion-item *ngIf="showDeveloperOptions === true" lines="inset">
       <ion-icon name="hammer-outline" slot="start"></ion-icon>
       <ion-label>上傳測試設定</ion-label>

@@ -21,8 +21,8 @@
 
       <ion-item *ngFor="let symptom of recordView.symptoms.list">
         <!-- <img *ngIf="symptom.present" src="../../assets/ui/today_icon_a.svg" /> -->
-        <ion-label *ngIf="symptom.present" style="color: #F9AD35;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
-        <ion-label *ngIf="symptom.present" class="ion-text-center" style="color: #F9AD35;">{{symptom.note}}
+        <ion-label *ngIf="symptom.present && !symptom.ignore" style="color: #F9AD35;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
+        <ion-label *ngIf="symptom.present && !symptom.ignore" class="ion-text-center" style="color: #F9AD35;">{{symptom.note}}
         </ion-label>
         <!-- <img *ngIf="!symptom.present" src="../../assets/ui/today_icon_a_d.svg" /> -->
         <!-- <ion-label *ngIf="!symptom.present" style="color: #D6D6D6;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>

@@ -18,7 +18,7 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
-
+  SymptomNameList:any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
   private destroy$ = new Subject();
@@ -68,12 +68,15 @@ export class SettingsPage implements OnInit, OnDestroy {
       return userData.language;
     })
   );
+  defaultSchema$ = this.dataStoreService.userData$.pipe(
+    map(userData => (userData.defaultSchema) ? 'default' : 'custom'),
+  );
 
   constructor(
     private translateService: TranslateService,
     private popoverController: PopoverController,
     private translateConfigService: TranslateConfigService,
-    private dataStoreService: DataStoreService
+    private dataStoreService: DataStoreService,
   ) { }
 
   ngOnInit() {
@@ -116,6 +119,20 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   onClickVersion() {
     this.versionClick.next(true);
+  }
+
+  symptomSelected(event: CustomEvent) {
+    this.dataStoreService.userData$
+      .pipe(
+        first(),
+        map(userData => {
+          userData.defaultSchema = (event.detail.value === 'default') ? true : false;
+          return userData;
+        }),
+        switchMap(userData => this.dataStoreService.updateUserData(userData)),
+        switchMap(() => this.dataStoreService.updateRecordMetaList()),
+        takeUntil(this.destroy$),
+      ).subscribe();
   }
 
   uploadHostSelected(event: CustomEvent) {
