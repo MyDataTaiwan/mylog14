@@ -27,7 +27,6 @@
     }
   },
   "GUIDE": {
-    "getStarted": "開始使用",
     "slide1": {
       "title1": "檢視紀錄資料",
       "title2": "",
@@ -52,9 +51,8 @@
   },
   "DIARY": {
     "title": "我的資料",
-    "select": "English",
     "guide1": "點擊下方",
-    "guide2": "以新增資料"      
+    "guide2": "以新增資料"
   },
   "SYMPTOM": {
     "coughing": "咳嗽",
@@ -80,10 +78,6 @@
     "bodyTemperature": "體溫",
     "symptoms": "症狀",
     "splitter": "、",
-    "coughing": "咳嗽",
-    "headache": "頭痛",
-    "runnyNose": "流鼻水",
-    "soreThroat": "喉嚨痛",
     "submit": "送出",
     "clear": "清除",
     "recorded": "已紀錄",

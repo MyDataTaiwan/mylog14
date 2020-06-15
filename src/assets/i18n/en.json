@@ -27,7 +27,6 @@
     }
   },
   "GUIDE": {
-    "getStarted": "Get Started",
     "slide1": {
       "title1": "Review records",
       "title2": "",
@@ -52,7 +51,6 @@
   },
   "DIARY": {
     "title": "My Data",
-    "select": "漢語",
     "guide1": "Click",
     "guide2": " to log new data"
   },
@@ -80,10 +78,6 @@
     "bodyTemperature": "Body Temperature",
     "symptoms": "Symptoms",
     "splitter": ", ",
-    "coughing": "Coughing",
-    "headache": "Headache",
-    "runnyNose": "Runny Nose",
-    "soreThroat": "Sore Throat",
     "submit": "Submit",
     "clear": "Clear",
     "recorded": "Record Saved",
