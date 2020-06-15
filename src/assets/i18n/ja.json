@@ -6,7 +6,8 @@
     "throughDataVisualization": "データの可視化",
     "reviewRecords": "ログデータを表示する",
     "addNewData": "データを追加",
-    "shareData": "データを共有する"
+    "shareData": "データを共有する",
+    "agree": "同意する"
   },
   "description": {
     "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
@@ -14,9 +15,6 @@
     "throughRecordDataAndAnonymousSharing": "匿名化されたデータの共有により",
     "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
     "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！"
-  },
-  "EULA": {
-    "agree": "同意する"
   },
   "DIARY": {
     "title": "My Data",

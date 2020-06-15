@@ -6,7 +6,8 @@
     "throughDataVisualization": "Visualiser les données",
     "reviewRecords": "Revoir les enregistrements",
     "addNewData": "Ajouter une nouvelle donnée",
-    "shareData": "Partager des données"
+    "shareData": "Partager des données",
+    "agree": "Accord"
   },
   "description": {
     "protectYourData": "Gérer vos données personnelles et partager avec consentement",
@@ -15,9 +16,6 @@
     "getInvolvedInResearch": "Protéger le monde de manière solidaire",
     "careHealthIsLoveYourself": "Prendre soin de sa santé est une façon de s'aimer",
     "recordHealthSupportsMedical": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!"
-  },
-  "EULA": {
-    "agree": "Accord"
   },
   "DIARY": {
     "title": "My Data",

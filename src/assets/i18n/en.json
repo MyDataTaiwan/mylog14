@@ -6,7 +6,8 @@
     "throughDataVisualization": "Through Data Visualization",
     "reviewRecords": "Review Records",
     "addNewData": "Add New Data",
-    "shareData": "Share Data"
+    "shareData": "Share Data",
+    "agree": "Agree"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -17,9 +18,6 @@
     "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!"
   },
   "empty": "",
-  "EULA": {
-    "agree": "AGREE"
-  },
   "DIARY": {
     "title": "My Data",
     "guide1": "Click",
