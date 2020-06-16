@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { RecordFinishPageRoutingModule } from './record-finish-routing.module';
-
-import { RecordFinishPage } from './record-finish.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { RecordFinishPageRoutingModule } from './record-finish-routing.module';
+import { RecordFinishPage } from './record-finish.page';
 
 @NgModule({
   imports: [
@@ -19,4 +16,4 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   declarations: [RecordFinishPage]
 })
-export class RecordFinishPageModule {}
+export class RecordFinishPageModule { }

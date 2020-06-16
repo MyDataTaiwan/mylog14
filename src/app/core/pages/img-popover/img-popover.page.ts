@@ -36,26 +36,14 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.translateService.get('description.cannotGetLocation').subscribe(
-      value => {
-        // value is our translated string
-        this.locationError = value;
-      }
+      value => { this.locationError = value; }
     );
-    // const url = this.geocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.geocodePostfix;
     const url = this.OSMgeocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.OSMgeocodePostfix;
     this.address$ = this.httpClient.get(url)
       .pipe(
-        // map((res: GeocodingResponse) => res.results[0]),
-        // tap(() => console.log("res")),
-        // tap((res) => console.log("res2", res)),
-        // tap((res: GeocodingResponse) => console.log("res4", res[0])),
-        // tap(() => console.log("res3", this.address$)),
-        // map((res: GeocodingResponse) => res.results[0].formatted_address),
         map((res: GeocodingResponse) => res[0].address.state + "," + res[0].address.suburb),
-        // map((res: GeocodingResponse) => res[0].display_name),
         tap(() => console.log("res", this.address$)),
         catchError(() => of(this.locationError)),
-        // catchError(() => of('無法取得地址資訊')),
       );
   }
 
@@ -83,8 +71,6 @@ interface GeocodingResponse {
 }
 
 interface GeocodingResult {
-  // formatted_address?: string;
-  // address_components?: string;
   address?: addr;
   display_name?: string;
 }

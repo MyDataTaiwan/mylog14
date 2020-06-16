@@ -1,6 +1,5 @@
-import { Component, OnInit ,Input} from '@angular/core';
-import { ModalController, NavParams, PopoverController } from '@ionic/angular';
-
+import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-record-finish',

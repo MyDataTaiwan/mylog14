@@ -6,9 +6,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { EmailPopoverPageRoutingModule } from './email-popover-routing.module';
 import { EmailPopoverPage } from './email-popover.page';
 
-
-
-
 @NgModule({
   imports: [
     CommonModule,

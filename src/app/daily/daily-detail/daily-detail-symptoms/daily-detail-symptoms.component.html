@@ -6,7 +6,6 @@
         {{ recordView.bt }}
       </ion-label>
       <div>
-        <!-- <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow"> -->
         <ion-icon name="caret-forward-outline" *ngIf="!recordView.expand" button
           (click)="recordView.expand=!recordView.expand;">
         </ion-icon>
@@ -14,8 +13,6 @@
       <div>
         <ion-icon name="caret-down-outline" *ngIf="recordView.expand" button
           (click)="recordView.expand=!recordView.expand;">
-          <!-- 加入選擇器 -->
-
         </ion-icon>
       </div>
     </ion-item>

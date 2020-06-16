@@ -9,7 +9,6 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!-- FIXME :  (click)="isShow=!isShow" ADD RECOR UI 中 icon 隨者 <ion-toggle> 撥動而改變顏色-->
 <ion-content>
   <ion-list>
     <ion-item (click)="onBodyTemperatureClick()">
@@ -36,9 +35,6 @@
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <!-- <ion-col size="3" class="ion-align-self-center">
-        <ion-button (click)="onClearClick()" fill="clear">其他</ion-button>
-      </ion-col> -->
       <ion-col size="3" class="ion-align-self-center">
         <ion-button (click)="onClearClick()" fill="clear">{{ 'title.clear' | translate }}</ion-button>
       </ion-col>

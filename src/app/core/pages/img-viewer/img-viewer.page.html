@@ -1,7 +1,4 @@
 <ion-header>
-  <!-- <ion-toolbar>
-    <ion-title>img-viewer</ion-title>
-  </ion-toolbar> -->
   <ion-row>
     <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
     <ion-col text-center>
@@ -21,9 +18,4 @@
   <div style="display: flex;flex-direction: column;height: 40vw;">
     <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString" style="width: 100%;"></ion-img>
   </div>
-  <!-- <ion-label>Label</ion-label>
-  <ion-label>{{ firstName   }}</ion-label>
-  <ion-label>{{ lastName   }}</ion-label>
-  <ion-label>{{ photo.locationStamp.latitude   }}</ion-label>
-  <ion-label>{{ 'data:image/jpeg;base64,' + photo.byteString  }}</ion-label> -->
 </ion-content>

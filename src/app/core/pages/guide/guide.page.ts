@@ -1,11 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateConfigService } from 'src/app/translate-config.service';
 import { UserData } from '../../interfaces/user-data';
-// import { IonSlides} from '@ionic/angular';
 import { DataStoreService } from '../../services/data-store.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { DataStoreService } from '../../services/data-store.service';
   templateUrl: './guide.page.html',
   styleUrls: ['./guide.page.scss'],
 })
-export class GuidePage implements OnInit {
+export class GuidePage {
   destroy$ = new Subject();
   slideOpts = {
     initialSlide: 0,
@@ -28,16 +27,8 @@ export class GuidePage implements OnInit {
     private router: Router,
     private modalCtrl: ModalController,
     public translateConfig: TranslateConfigService,
-
-    // private slides: IonSlides,
   ) { }
-  ngOnInit() {
-  }
-  //   move(slides){
-  //     console.log(slides)
-  //     slides.slideNext(2)
-  //     // this.slides.slideNext(slides);
-  // }
+
   moveToNext(slides) {
     console.log(slides);
     slides.slideNext();

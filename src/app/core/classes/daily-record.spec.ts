@@ -2,6 +2,6 @@ import { DailyRecord } from './daily-record';
 
 describe('DailyRecord', () => {
   it('should create an instance', () => {
-    expect(new DailyRecord()).toBeTruthy();
+    expect(new DailyRecord('date')).toBeTruthy();
   });
 });

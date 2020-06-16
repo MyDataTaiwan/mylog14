@@ -12,7 +12,6 @@ import { RecordMeta } from '../interfaces/record-meta';
 import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
 import { GeolocationService } from './geolocation.service';
-import { LocalStorageService } from './local-storage.service';
 import { PhotoService } from './photo.service';
 import { RecordService } from './record.service';
 
@@ -30,7 +29,6 @@ export class SnapshotService {
     private dataStore: DataStoreService,
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
-    private localStorage: LocalStorageService,
     private popoverCtrl: PopoverController,
     private recordService: RecordService,
   ) { }

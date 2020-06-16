@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { GuidePageRoutingModule } from './guide-routing.module';
-
-import { GuidePage } from './guide.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { GuidePageRoutingModule } from './guide-routing.module';
+import { GuidePage } from './guide.page';
 
 @NgModule({
   imports: [
@@ -19,4 +16,4 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   declarations: [GuidePage]
 })
-export class GuidePageModule {}
+export class GuidePageModule { }

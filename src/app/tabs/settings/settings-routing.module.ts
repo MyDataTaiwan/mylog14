@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 import { SettingsPage } from './settings.page';
 
 const routes: Routes = [
@@ -10,11 +9,11 @@ const routes: Routes = [
   },
   {
     path: 'name-popover',
-    loadChildren: () => import('./name-popover/name-popover.module').then( m => m.NamePopoverPageModule)
+    loadChildren: () => import('./name-popover/name-popover.module').then(m => m.NamePopoverPageModule)
   },
   {
     path: 'email-popover',
-    loadChildren: () => import('./email-popover/email-popover.module').then( m => m.EmailPopoverPageModule)
+    loadChildren: () => import('./email-popover/email-popover.module').then(m => m.EmailPopoverPageModule)
   }
 ];
 
@@ -22,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class SettingsPageRoutingModule {}
+export class SettingsPageRoutingModule { }

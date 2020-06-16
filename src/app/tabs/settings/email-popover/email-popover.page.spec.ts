@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { EmailPopoverPage } from './email-popover.page';
 
 describe('EmailPopoverPage', () => {
@@ -9,7 +8,7 @@ describe('EmailPopoverPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmailPopoverPage ],
+      declarations: [EmailPopoverPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

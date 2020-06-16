@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { TourPage } from './tour.page';
 
 describe('TourPage', () => {
@@ -9,7 +8,7 @@ describe('TourPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TourPage ],
+      declarations: [TourPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
