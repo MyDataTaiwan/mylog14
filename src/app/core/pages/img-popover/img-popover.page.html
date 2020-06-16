@@ -14,11 +14,15 @@
     </ion-col>
     <ion-col>
       <div style="display: flex; flex-direction:column;">
-        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'yyyy-MM-dd' }}
+        <ion-label style="font-size: large;" class=".ion-text-center">
+          {{ photo.timestamp | date: 'yyyy-MM-dd' }}
         </ion-label>
-        <ion-label style="font-size: large;" class=".ion-text-center">{{ photo.timestamp | date: 'HH:mm:ss' }}
+        <ion-label style="font-size: large;" class=".ion-text-center">
+          {{ photo.timestamp | date: 'HH:mm:ss' }}
         </ion-label>
-        <ion-label style="font-size: large;" class=".ion-text-center">{{ address$ | async   }}</ion-label>
+        <ion-label style="font-size: large;" class=".ion-text-center">
+          {{ address$ | async }}
+        </ion-label>
       </div>
 
     </ion-col>

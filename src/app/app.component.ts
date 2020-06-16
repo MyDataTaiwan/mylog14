@@ -5,7 +5,7 @@ import { Platform } from '@ionic/angular';
 import { tap } from 'rxjs/operators';
 import { DataStoreService } from './core/services/data-store.service';
 import { GeolocationService } from './core/services/geolocation.service';
-import { TranslateConfigService } from './translate-config.service';
+import { TranslateConfigService } from './core/services/translate-config.service';
 
 
 const { SplashScreen, StatusBar } = Plugins;
