@@ -1,8 +1,6 @@
 import { DailyCard } from '../interfaces/daily-card';
-import { Symptoms } from './symptoms';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { DailyRecord } from './daily-record';
-import { Symptom } from './symptom';
 
 export class OverviewDailyCard implements DailyCard {
     hasData: boolean;

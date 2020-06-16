@@ -4,8 +4,6 @@ import { Platform } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { TranslateConfigService } from './translate-config.service';
 
-
-
 describe('AppComponent', () => {
 
   let platformIsSpy, platformSpy, translateConfigSpy;
@@ -37,7 +35,4 @@ describe('AppComponent', () => {
     expect(platformSpy.is).toHaveBeenCalled();
     expect(translateConfigSpy.getAndUseDefaultLanguage).toHaveBeenCalled();
   });
-
-  // TODO: add more tests!
-
 });

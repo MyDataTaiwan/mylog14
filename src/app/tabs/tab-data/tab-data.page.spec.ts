@@ -18,8 +18,7 @@ describe('tabDataPage', () => {
         IonicModule.forRoot(),
         RouterModule.forRoot([]),
         MainHeaderModule,
-        DailyOverviewModule,
-        CategoryOverviewModule,
+        DailyOverviewModule
       ]
     }).compileComponents();
 

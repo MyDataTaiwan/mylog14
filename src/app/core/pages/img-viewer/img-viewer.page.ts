@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { PopoverController, ModalController } from '@ionic/angular';
-import { Observable, of, concat, Subject, defer, forkJoin, from } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { tap, map, catchError, takeUntil, switchMap } from 'rxjs/operators';
-import { Record } from '../../interfaces/record';
-import { Photo } from '../../interfaces/photo';
-import { PhotoService } from '../../services/photo.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { defer, forkJoin, from, Observable, Subject } from 'rxjs';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
+import { Photo } from '../../interfaces/photo';
+import { Record } from '../../interfaces/record';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-img-viewer',
@@ -68,7 +68,7 @@ export class ImgViewerPage implements OnInit, OnDestroy {
     return from(popover.onWillDismiss())
       .pipe(
         map(res => res.data.delete),
-        switchMap(willDelete => this.modalCtrl.dismiss({delete: willDelete})),
+        switchMap(willDelete => this.modalCtrl.dismiss({ delete: willDelete })),
       );
   }
 
@@ -88,8 +88,6 @@ interface GeocodingResponse {
 }
 
 interface GeocodingResult {
-  // formatted_address?: string;
-  // address_components?: string;
   address?: addr;
   display_name?: string;
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { UserData } from '../../interfaces/user-data';
+import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { TranslateConfigService } from 'src/app/translate-config.service';
+import { UserData } from '../../interfaces/user-data';
 import { GuidePage } from '../guide/guide.page';
 
 @Component({
@@ -20,7 +20,6 @@ export class EulaPage implements OnInit {
   }
   async presentGuideModal(userData: UserData) {
     const modal = await this.modalCtrl.create({
-      // translucent: true,
       backdropDismiss: false,
       component: GuidePage,
       componentProps: { userData },
@@ -33,8 +32,8 @@ export class EulaPage implements OnInit {
 
   async onClick() {
     this.userData.eulaAccepted = true;
-     this.presentGuideModal(this.userData);
-     await this.modalCtrl.dismiss(this.userData);
+    this.presentGuideModal(this.userData);
+    await this.modalCtrl.dismiss(this.userData);
   }
 
 }

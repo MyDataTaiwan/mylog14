@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { fromEvent, Subject, interval, defer } from 'rxjs';
-import { buffer, debounce, map, filter, switchMap, debounceTime, tap } from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-
+import { defer, Subject } from 'rxjs';
+import { buffer, debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { version } from '../../../../../package.json';
+
 
 @Component({
   selector: 'app-main-header',

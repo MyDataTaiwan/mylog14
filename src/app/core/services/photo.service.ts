@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
+import { CameraPhoto, CameraResultType, CameraSource, Capacitor, FilesystemDirectory, Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { Subject, Observable, from, BehaviorSubject, defer, forkJoin, of, concat } from 'rxjs';
-import { Snapshot } from '../interfaces/snapshot';
-import { map, tap, switchMap, take, catchError } from 'rxjs/operators';
+import { BehaviorSubject, defer, from, Observable, of, Subject } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
-import { DataStoreService } from './data-store.service';
 import { Record } from '../interfaces/record';
-import { LocalStorageService } from './local-storage.service';
+import { Snapshot } from '../interfaces/snapshot';
+import { DataStoreService } from './data-store.service';
 import { RecordService } from './record.service';
 
 const { Camera, Filesystem, Storage } = Plugins;
@@ -23,7 +22,6 @@ export class PhotoService {
   private PHOTO_STORAGE = 'photos';
   constructor(
     private dataStore: DataStoreService,
-    private localStorage: LocalStorageService,
     private recordService: RecordService,
     platform: Platform,
   ) {
@@ -66,7 +64,6 @@ export class PhotoService {
           delete photoCopy.byteString;
         }))
     });
-    // const photoBase64 = await this.readAsBase64(capturedPhoto);
     return {
       photo: savedImageFile,
       metadata: snapshot,
@@ -197,7 +194,7 @@ export class PhotoService {
       resolve(reader.result);
     };
     reader.readAsDataURL(blob);
-  })
+  });
 
   deletePhoto(record: Record, photo: Photo) {
     const idx = record.photos.findIndex(p => p.filepath === photo.filepath);

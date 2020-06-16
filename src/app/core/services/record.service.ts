@@ -1,12 +1,12 @@
-import { FileSystemService } from './file-system.service';
-import { FilesystemDirectory } from '@capacitor/core';
 import { Injectable } from '@angular/core';
-import { LedgerService } from './ledger.service';
-import { LocalStorageService } from './local-storage.service';
-import { Observable, forkJoin } from 'rxjs';
+import { FilesystemDirectory } from '@capacitor/core';
+import { forkJoin, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { Record } from '../interfaces/record';
 import { RecordMeta } from '../interfaces/record-meta';
-import { map, switchMap } from 'rxjs/operators';
+import { FileSystemService } from './file-system.service';
+import { LedgerService } from './ledger.service';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root'

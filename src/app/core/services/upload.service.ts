@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import * as JSZip from 'jszip';
-import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable, throwError } from 'rxjs';
-import { DataStoreService } from './data-store.service';
-import { map, switchMap, take, tap, delay, catchError, timeout, filter } from 'rxjs/operators';
+import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
+import { DataStoreService } from './data-store.service';
 import { RecordService } from './record.service';
 
 @Injectable({
@@ -79,7 +78,7 @@ export class UploadService {
       LOCAL: 'http://127.0.0.1:8000',
       DEV: 'https://logboard-dev.numbersprotocol.io',
       PROD: 'https://mylog14.numbersprotocol.io',
-    } ;
+    };
     const endpoint = '/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'mylog.zip');

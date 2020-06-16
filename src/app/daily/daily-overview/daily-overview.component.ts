@@ -1,8 +1,8 @@
-import { Component, OnInit, NgZone, OnDestroy } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
-import { AnimationOptions, } from 'ngx-lottie';
+import { AnimationOptions } from 'ngx-lottie';
 import { Observable, Subject, timer } from 'rxjs';
-import { tap, map, takeUntil, switchMap, filter } from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -11,7 +11,6 @@ import { DataStoreService } from 'src/app/core/services/data-store.service';
   styleUrls: ['./daily-overview.component.scss'],
 })
 
-
 export class DailyOverviewComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   items$ = new Observable<CardItem[]>();
@@ -19,21 +18,14 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   WhatIsItToday = 0;
 
-  // arry= [[616, 674], [125, 184], [195, 246], [254, 306]]
-  // TimeArry:{
-  //   [616, 674], [125, 184], [195, 246], [254, 306]
-  // }
-
-  // arry: [number, number][] = [[35, 36], [125, 184], [195, 246], [254, 306], [313, 365], [372, 420], [436, 490], [494, 548], [555, 611], [613, 670], [677, 734], [740, 792], [797, 850], [860, 902], [952, 922], [999, 1200]];
-  arry: [number, number][] = [[1, 3], [125, 184], [125, 246], [125, 306], [125, 365], [125, 420], [125, 490], [125, 548], [125, 611], [125, 670], [125, 734], [125, 792], [125, 850], [125, 902], [125, 922], [984, 1200],[35, 36]];
-  STFarry: [number, number][] = [ [1, 3], [245, 246], [305, 306], [364, 365], [419, 420], [489, 490], [547, 548], [610, 611], [669, 670], [733, 734], [791, 792], [849, 850], [901, 902], [921, 922], [984, 1200],[35, 36]];
+  arry: [number, number][] = [[1, 3], [125, 184], [125, 246], [125, 306], [125, 365], [125, 420], [125, 490], [125, 548], [125, 611], [125, 670], [125, 734], [125, 792], [125, 850], [125, 902], [125, 922], [984, 1200], [35, 36]];
+  STFarry: [number, number][] = [[1, 3], [245, 246], [305, 306], [364, 365], [419, 420], [489, 490], [547, 548], [610, 611], [669, 670], [733, 734], [791, 792], [849, 850], [901, 902], [921, 922], [984, 1200], [35, 36]];
 
   options: AnimationOptions = {
-    // path: '/assets/lottie-animation.json',
     path: '/assets/MyLogBBTfix.json',
   };
 
-  TEMPimg: '/assets/imgA.png'
+  TEMPimg: '/assets/imgA.png';
   private animationItem: AnimationItem;
   private isAnimationCreated: boolean = false;
   emptyCardItem = {
@@ -84,15 +76,14 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   private startCountdown(day: number) {
     const idx = (day > 14) ? 15 : day + 1; // The animation array has +1 offset
-    this.WhatIsItToday=idx;
+    this.WhatIsItToday = idx;
     this.animationPlay(idx);
-    // return timer((idx==15)? idx* 1 :idx*1000)
 
-    if (idx!=15){
-      return timer(idx*1000)
-      .pipe(
-        tap(() => this.animationStopOnDay(idx)),
-      );
+    if (idx != 15) {
+      return timer(idx * 1000)
+        .pipe(
+          tap(() => this.animationStopOnDay(idx)),
+        );
     }
   }
 

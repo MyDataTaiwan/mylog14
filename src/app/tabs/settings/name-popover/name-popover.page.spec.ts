@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { NamePopoverPage } from './name-popover.page';
 
 describe('NamePopoverPage', () => {
@@ -9,7 +8,7 @@ describe('NamePopoverPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NamePopoverPage ],
+      declarations: [NamePopoverPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

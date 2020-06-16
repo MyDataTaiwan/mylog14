@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
-import { AddRecordPage } from './add-record.page';
-import { RouterModule } from '@angular/router';
-import { TranslateTestingModule } from '../../tests/translate-testing/translate-testing.module';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { TranslateTestingModule } from '../../tests/translate-testing/translate-testing.module';
+import { AddRecordPage } from './add-record.page';
 
 describe('AddRecordPage', () => {
   let component: AddRecordPage;
@@ -12,7 +11,7 @@ describe('AddRecordPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddRecordPage ],
+      declarations: [AddRecordPage],
       imports: [
         IonicModule.forRoot(),
         RouterModule.forRoot([]),

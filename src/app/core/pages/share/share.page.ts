@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Plugins } from '@capacitor/core';
-import { ToastController, PopoverController } from '@ionic/angular';
-import { defer, concat, Subject, from } from 'rxjs';
-import { switchMap, takeUntil, take } from 'rxjs/operators';
-import { ShareFinishPage } from '../share-finish/share-finish.page';
+import { PopoverController, ToastController } from '@ionic/angular';
+import { defer, Subject } from 'rxjs';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { UploadService } from '../../services/upload.service';
 
 const { Clipboard } = Plugins;
@@ -35,7 +34,7 @@ export class SharePage implements OnInit, OnDestroy {
     this.uploadService.generatedUrl$
       .pipe(
         take(1),
-        switchMap(url => Clipboard.write({string: url})),
+        switchMap(url => Clipboard.write({ string: url })),
         switchMap(() => this.presentToastCopied()),
         takeUntil(this.destroy$),
       )
@@ -52,7 +51,7 @@ export class SharePage implements OnInit, OnDestroy {
     if (this.stage === 1) {
       this.uploadService.uploadZip()
         .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {}, err => {
+        .subscribe(() => { }, err => {
           console.log(err);
           this.stage = 4;
           this.uploadService.clearUrl();

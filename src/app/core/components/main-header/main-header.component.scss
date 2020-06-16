@@ -4,18 +4,10 @@ ion-toolbar {
     font-size: 16pt;
   }
   --background: #ffffff;
-  // --border-style	:;
   .header-md::after {
     display: none;
   }
   ion-button {
-    // --box-shadow	:50px;
-    // background-color:rgba(255, 255, 255, 0);
-    //--background: #ffffff;
-    //--background-focused: #000;
     height:50px ;
-    // --background-focused-opacity: translucent;
-    // margin: 20px;
-    // --padding: 100px;
   }
 }

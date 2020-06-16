@@ -5,7 +5,6 @@ import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
 import { RecordMeta } from '../interfaces/record-meta';
 import { UserData } from '../interfaces/user-data';
-import { LocalStorageService } from './local-storage.service';
 import { RecordService } from './record.service';
 import { UserDataService } from './user-data.service';
 
@@ -54,7 +53,6 @@ export class DataStoreService {
   public userData$ = this.userData.asObservable();
 
   constructor(
-    private localStorage: LocalStorageService,
     private recordService: RecordService,
     private userDataService: UserDataService,
   ) {

@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { ImgViewerPageRoutingModule } from './img-viewer-routing.module';
-
-import { ImgViewerPage } from './img-viewer.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { ImgViewerPageRoutingModule } from './img-viewer-routing.module';
+import { ImgViewerPage } from './img-viewer.page';
 
 @NgModule({
   imports: [
@@ -19,4 +16,4 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   declarations: [ImgViewerPage]
 })
-export class ImgViewerPageModule {}
+export class ImgViewerPageModule { }

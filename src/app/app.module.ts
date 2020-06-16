@@ -16,10 +16,6 @@ import { GuidePageModule } from './core/pages/guide/guide.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
 
-
-
-
-
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
