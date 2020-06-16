@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Observable, defer, from, Subject, forkJoin, of } from 'rxjs';
-import { Photo } from 'src/app/core/interfaces/photo';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
-import { map, switchMap, takeUntil, tap, take, filter } from 'rxjs/operators';
-import { PopoverController,ModalController, LoadingController } from '@ionic/angular';
-import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
-import { Record } from 'src/app/core/interfaces/record';
-import { PhotoService } from 'src/app/core/services/photo.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
+import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { Photo } from 'src/app/core/interfaces/photo';
+import { Record } from 'src/app/core/interfaces/record';
+import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
+import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { PhotoService } from 'src/app/core/services/photo.service';
 export interface Pic {
   src: string;
 }
@@ -50,7 +50,7 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-   showImageViewer(photo: Photo) {
+  showImageViewer(photo: Photo) {
     this.getRecordByPhoto(photo)
       .pipe(
         switchMap(record => forkJoin([of(record), this.createModal(record, photo)])),
@@ -60,7 +60,7 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
         ])),
         takeUntil(this.destroy$),
       )
-        .subscribe(() => {}, e => console.log(e));
+      .subscribe(() => { }, e => console.log(e));
   }
 
   deletePhotoOnDismissHandler(modal: HTMLIonModalElement, record: Record, photo: Photo) {
@@ -96,7 +96,7 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
   }
 
   private presentLoading() {
-    return this.translate.get('IMG_POPOVER.deleting')
+    return this.translate.get('description.deletingData')
       .pipe(
         switchMap(msg => {
           return defer(() => this.loadingCtrl.create({

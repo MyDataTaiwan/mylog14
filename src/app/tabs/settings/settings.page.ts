@@ -18,11 +18,11 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
-  SymptomNameList:any;
+  SymptomNameList: any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
   private destroy$ = new Subject();
-  private notSet: string = this.translateService.instant('SETTINGS.notSet');
+  private notSet: string = this.translateService.instant('title.notSet');
 
   public appVersion = version;
   public showDeveloperOptions = false;
@@ -85,7 +85,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private initNotSetTranslation() {
     this.translateService.onLangChange.subscribe((_: any) => {
-      this.notSet = this.translateService.instant('SETTINGS.notSet');
+      this.notSet = this.translateService.instant('title.notSet');
     });
   }
 
@@ -130,7 +130,7 @@ export class SettingsPage implements OnInit, OnDestroy {
           return userData;
         }),
         switchMap(userData => this.dataStoreService.updateUserData(userData)),
-        switchMap(() => this.dataStoreService.updateRecordMetaList()),
+        switchMap(() => this.dataStoreService.updateRecordMetas()),
         takeUntil(this.destroy$),
       ).subscribe();
   }

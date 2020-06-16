@@ -1,22 +1,21 @@
 <ion-header>
-    <ion-toolbar color="primary" >
-        <ion-title class="ion-text-center">
-            <!-- {{ 'DIARY.title' | translate }} -->
-            體溫
-        </ion-title>
-        <ion-buttons slot="start">
-            <ion-back-button text="" icon="arrow-back-outline">
-            </ion-back-button>
-        </ion-buttons>
-    </ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-title class="ion-text-center">
+      體溫
+    </ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="arrow-back-outline">
+      </ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 <ion-content>
-<!-- <ion-title class="ion-text-center">體溫</ion-title> -->
-<!-- <img src="https://cdn.pixabay.com/photo/2017/12/22/08/01/graph-3033203_1280.jpg"> -->
-<!-- <canvas #myCanvas width="100" height="90"></canvas> -->
-<!-- <canvas #myCanvas width="100" height="90" id="canvas">{ this.chart }</canvas> -->
-<canvas #barChart></canvas>
-<ion-item button (click)="isSelect=!isSelect" detail="false">
+  <!-- <ion-title class="ion-text-center">體溫</ion-title> -->
+  <!-- <img src="https://cdn.pixabay.com/photo/2017/12/22/08/01/graph-3033203_1280.jpg"> -->
+  <!-- <canvas #myCanvas width="100" height="90"></canvas> -->
+  <!-- <canvas #myCanvas width="100" height="90" id="canvas">{ this.chart }</canvas> -->
+  <canvas #barChart></canvas>
+  <ion-item button (click)="isSelect=!isSelect" detail="false">
     <img src="../../assets/ui/add_icon_2.svg" />
     <ion-label>選擇要分享的資料</ion-label>
     <ion-label>{{isSelectlist.length}}</ion-label>
@@ -27,7 +26,7 @@
   <ion-list>
 
     <div *ngFor="let ToDay of list">
-      <ion-item detail="false"  >
+      <ion-item detail="false">
         <div *ngIf="isSelect">
           <img *ngIf="!ToDay.isSelect" (click)="addSelect(ToDay)" src="../../assets/ui/add_icon_2.svg" />
           <img *ngIf="ToDay.isSelect" (click)="delSelect(ToDay)" src="../../assets/ui/add_icon_3.svg" />
@@ -37,14 +36,14 @@
         <ion-label class="ion-text-start">
           day {{ ToDay.day }}
         </ion-label>
-        <div >
+        <div>
           <!-- <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow"> -->
-            <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ChangeShow_push(ToDay)">
+          <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ChangeShow_push(ToDay)">
           </ion-icon>
         </div>
-        <div >
+        <div>
           <ion-icon name="caret-down-outline" *ngIf="ToDay.isShow" button (click)="ChangeShow_pop(ToDay)">
-<!-- 加入選擇器 -->
+            <!-- 加入選擇器 -->
 
           </ion-icon>
         </div>

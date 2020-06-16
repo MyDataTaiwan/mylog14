@@ -1,68 +1,22 @@
 {
-  "TOUR": {
+  "empty": "",
+  "splitter": ", ",
+  "title": {
     "getStarted": "Get Started",
-    "slide1": {
-      "title1": "Protect Your Own Data",
-      "title2": "",
-      "desc1": "Own your data and share with consent",
-      "desc2": ""
-    },
-    "slide2": {
-      "title1": "Log Your Life Activities",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    },
-    "slide3": {
-      "title1": "Through Data Visualization",
-      "title2": "",
-      "desc1": "Understand daily data easily",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "Through record data and anonymous sharing",
-      "title2": "Get involved in health-related  research",
-      "desc1": "",
-      "desc2": ""
-    }
-  },
-  "GUIDE": {
-    "getStarted": "Get Started",
-    "slide1": {
-      "title1": "Review records",
-      "title2": "",
-      "desc1": "Caring your own health status is one way to love yourself.",
-      "desc2": ""
-    },
-    "slide2": {
-      "title1": "Add new data",
-      "title2": "",
-      "desc1": "Record your health conditions regularly ",
-      "desc2": "is the best support for medical staff!"
-    },
-    "slide3": {
-      "title1": "Share data",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    }
-  },
-  "EULA": {
-    "agree": "AGREE"
-  },
-  "DIARY": {
-    "title": "My Data",
-    "select": "漢語",
-    "guide1": "Click",
-    "guide2": " to log new data"
-  },
-  "SYMPTOM": {
+    "protectYourOwnData": "Protect Your Own Data",
+    "logYourLifeActivities": "Log Your Life Activities",
+    "throughDataVisualization": "Through Data Visualization",
+    "reviewRecords": "Review Records",
+    "addNewData": "Add New Data",
+    "shareData": "Share Data",
+    "agree": "Agree",
+    "myData": "My Data",
     "coughing": "Cough",
     "runnyNose": "Runny Nose",
     "nasalCongestion": "Nasal Congestion",
     "sneezing": "Sneezing",
     "shortnessOfBreath": "Shortness of Breath",
-    "malaiseOrTiredness": "Malaise/Tiredness",
+    "malaiseOrTiredness": "Malaise or Tiredness",
     "lossOfTasteOrSmell": "Loss of Taste or Smell",
     "diarrhea": "Diarrhea",
     "abdominalPain": "Abdominal Pain",
@@ -72,55 +26,25 @@
     "soreThroat": "Sore Throat",
     "sputum": "Sputum",
     "fever": "Fever",
-    "noSymptom": "To day",
-    "noNote": "noSymptom"
-  },
-  "DAILY_RECORD": {
-    "title": "Daily Record",
+    "noSymptom": "No Symptom",
+    "noNote": "No Note",
+    "dailyRecord": "Daily Record",
     "bodyTemperature": "Body Temperature",
     "symptoms": "Symptoms",
-    "splitter": ", ",
-    "coughing": "Coughing",
-    "headache": "Headache",
-    "runnyNose": "Runny Nose",
-    "soreThroat": "Sore Throat",
     "submit": "Submit",
     "clear": "Clear",
-    "recorded": "Record Saved",
-    "ok": "OK",
-    "saving": "Adding new data and verifiable information...",
-    "pickerTitle": "Add Body Temperature",
-    "cancel": "Cancel"
-  },
-  "RECORD_FINISH": {
-    "finish": "Record saved!"
-  },
-  "IMG_POPOVER": {
-    "confirmDelete": "Delete the photo?",
-    "cancel": "Cancel",
+    "recordSaved": "Record Saved",
     "confirm": "Confirm",
+    "addBodyTemperature": "Add Body Temperature",
+    "cancel": "Cancel",
+    "areYouSure": "Are You Sure",
     "delete": "Delete",
-    "locationError": "Can't get location",
-    "deleting": "Deleting the photo & updating verifiable information..."
-  },
-  "SHARE": {
-    "confirmShare": "Would you like to create a shareable link?",
-    "confirmShareDesc": "(Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours)",
-    "uploading": "Uploading data to create a shareable link...",
-    "copyLink": "Copy the following link to share your data",
-    "shareToWhom": "Who would you like to share your data with?",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
     "skip": "Skip",
-    "placeholder": "e.g. John Doe",
-    "success": "Data shared",
-    "error": "Upload error. Please try again later."
-  },
-  "SETTINGS": {
+    "dataShared": "Data Shared",
+    "johnDoe": "John Doe",
+    "finished": "Finished",
     "settings": "Settings",
     "notSet": "Not Set",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
     "name": "Name",
     "email": "Email",
     "dateOfBirth": "Date of Birth",
@@ -131,12 +55,32 @@
     "about": "About",
     "version": "Version",
     "language": "Language",
+    "selectRecordMode": "Select Record Mode",
+    "simple": "Simple",
+    "advanced": "Advanced"
+  },
+  "description": {
+    "protectYourData": "Own your data and share with consent.",
+    "throughDataVisualization": "Understand daily data easily.",
+    "throughRecordDataAndAnonymousSharing": "Through record data and anonymous",
+    "getInvolvedInResearch": "Get involved in health-related research",
+    "careHealthIsLoveYourself": "Caring your own health status is one way to love yourself.",
+    "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!",
+    "clickTheButtonBelow": "Click the button below",
+    "toLogNewData": "to log new data.",
+    "addingDataAndVerifiableInformation": "Adding new data and verifiable information...",
+    "cannotGetLocation": "Cannot get location.",
+    "deletingData": "Deleting the photo and updating verifiable information...",
+    "shareOnCloudTemporarily": "Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours.",
+    "uploadingDataToCreateShareableLink": "Uploading data to create a shareable link...",
+    "copyLinkToShare": "Copy the following link to share your data.",
+    "shareToWhom": "Who would you like to share your data with?",
+    "uploadingDataError": "Upload error. Please try again later."
+  },
+  "language": {
     "en": "English",
     "fr": "French",
     "ja": "日本語",
-    "zh": "繁體中文",
-    "changeSchema": "Select Record Mode",
-    "defaultSchema": "Simple",
-    "customSchema": "Advanced"
+    "zh": "繁體中文"
   }
 }

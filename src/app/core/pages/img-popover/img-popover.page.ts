@@ -1,12 +1,12 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { PopoverController, ModalController } from '@ionic/angular';
-import { Observable, of, concat, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { tap, map, catchError, takeUntil } from 'rxjs/operators';
-import { Record } from '../../interfaces/record';
-import { Photo } from '../../interfaces/photo';
-import { PhotoService } from '../../services/photo.service';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { Photo } from '../../interfaces/photo';
+import { Record } from '../../interfaces/record';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-img-popover',
@@ -18,7 +18,7 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
   @Input() photo: Photo;
   address$: Observable<string>;
   destroy$ = new Subject();
-  locationError:string;
+  locationError: string;
   geocodeBaseUrl = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
   geocodePostfix = '&language=zh-TW&key=AIzaSyC8Yg8Ig6VEZIWz8cWH3yfYOjAGzqIpDMI'; // FIXME: Shouldn't expose the key
 
@@ -31,16 +31,16 @@ export class ImgPopoverPage implements OnInit, OnDestroy {
     private photoService: PhotoService,
     private translateService: TranslateService,
 
-    
+
   ) { }
 
   ngOnInit() {
-    this.translateService.get('IMG_POPOVER.locationError').subscribe(
+    this.translateService.get('description.cannotGetLocation').subscribe(
       value => {
         // value is our translated string
-        this.locationError= value;
+        this.locationError = value;
       }
-    )
+    );
     // const url = this.geocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.geocodePostfix;
     const url = this.OSMgeocodeBaseUrl + this.photo.locationStamp.latitude + ',' + this.photo.locationStamp.longitude + this.OSMgeocodePostfix;
     this.address$ = this.httpClient.get(url)

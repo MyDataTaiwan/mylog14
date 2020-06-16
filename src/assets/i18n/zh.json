@@ -1,62 +1,15 @@
 {
-  "TOUR": {
+  "splitter": "、",
+  "title": {
     "getStarted": "開始使用",
-    "slide1": {
-      "title1": "自己的資料自己顧",
-      "title2": "",
-      "desc1": "你的資料只屬於你",
-      "desc2": "只在你同意的情況下分享資訊"
-    },
-    "slide2": {
-      "title1": "紀錄健康狀況與生活史",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    },
-    "slide3": {
-      "title1": "資料視覺化",
-      "title2": "",
-      "desc1": "繁雜資料一目瞭然",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "透過紀錄資料與匿名捐贈",
-      "title2": "為健康研究盡一份心力",
-      "desc1": "",
-      "desc2": ""
-    }
-  },
-  "GUIDE": {
-    "getStarted": "開始使用",
-    "slide1": {
-      "title1": "檢視紀錄資料",
-      "title2": "",
-      "desc1": "關心每天的健康狀態也是愛自己的一種方式呦！",
-      "desc2": ""
-    },
-    "slide2": {
-      "title1": "新增資料",
-      "title2": "",
-      "desc1": "時常記錄自己的健康狀態，就是給醫事人員最大的打氣！",
-      "desc2": ""
-    },
-    "slide3": {
-      "title1": "分享資料",
-      "title2": "",
-      "desc1": "",
-      "desc2": ""
-    }
-  },
-  "EULA": {
-    "agree": "我已同意使用者條款"
-  },
-  "DIARY": {
-    "title": "我的資料",
-    "select": "English",
-    "guide1": "點擊下方",
-    "guide2": "以新增資料"      
-  },
-  "SYMPTOM": {
+    "protectYourOwnData": "自己的資料自己顧",
+    "logYourLifeActivities": "紀錄健康狀況與生活史",
+    "throughDataVisualization": "資料視覺化",
+    "reviewRecords": "檢視紀錄資料",
+    "addNewData": "新增資料",
+    "shareData": "分享資料",
+    "agree": "我已同意使用者條款",
+    "myData": "我的資料",
     "coughing": "咳嗽",
     "runnyNose": "流鼻水",
     "nasalCongestion": "鼻塞",
@@ -72,55 +25,24 @@
     "soreThroat": "喉嚨癢/腫痛",
     "sputum": "有痰",
     "fever": "發燒",
-    "noSymptom": "今日",
-    "noNote": "沒有症狀"
-  },
-  "DAILY_RECORD": {
-    "title": "每日記錄",
+    "noSymptom": "沒有症狀",
+    "noNote": "沒有紀錄",
+    "dailyRecord": "每日記錄",
     "bodyTemperature": "體溫",
     "symptoms": "症狀",
-    "splitter": "、",
-    "coughing": "咳嗽",
-    "headache": "頭痛",
-    "runnyNose": "流鼻水",
-    "soreThroat": "喉嚨痛",
     "submit": "送出",
     "clear": "清除",
-    "recorded": "已紀錄",
-    "ok": "確定",
-    "saving": "新增資料與驗證資訊中...",
-    "pickerTitle": "新增體溫",
-    "cancel": "取消"
-  },
-  "RECORD_FINISH": {
-    "finish": "新增成功！"
-  },
-  "IMG_POPOVER": {
-    "confirmDelete": "確定要刪除這張照片嗎？",
-    "cancel": "取消",
-    "confirm": "確認",
-    "delete": "刪除",
-    "locationError": "無法取得地址資訊",
-    "deleting": "正在刪除照片與更新驗證資訊..."
-  },
-  "SHARE": {
-    "confirmShare": "你想要建立分享連結嗎？",
-    "confirmShareDesc": "（資料會上傳並暫存於雲端，72 小時後自動刪除）",
-    "uploading": "正在上傳資料並產生分享連結...",
-    "copyLink": "複製下列網址以分享資料",
-    "shareToWhom": "紀錄要分享給誰吧",
-    "cancel": "取消",
+    "recordSaved": "已紀錄",
     "confirm": "確定",
+    "addBodyTemperature": "新增體溫",
+    "cancel": "取消",
+    "areYouSure": "你確定嗎",
+    "delete": "刪除",
     "skip": "略過",
-    "placeholder": "e.g. 小貓貓",
-    "success": "分享成功！",
-    "error": "上傳失敗。請稍後再試"
-  },
-  "SETTINGS": {
+    "dataShared": "分享成功",
+    "johnDoe": "小貓貓",
     "settings": "設定",
     "notSet": "尚未設定",
-    "cancel": "取消",
-    "confirm": "確定",
     "name": "姓名",
     "email": "電子信箱",
     "dateOfBirth": "出生日期",
@@ -131,12 +53,26 @@
     "about": "關於我們",
     "version": "版本",
     "language": "語言",
-    "en": "English",
-    "fr": "French",
-    "ja": "日本語",
-    "zh": "繁體中文",
-    "changeSchema": "選擇紀錄模式",
-    "defaultSchema": "簡易",
-    "customSchema": "進階"
+    "selectRecordMode": "選擇紀錄模式",
+    "simple": "簡易",
+    "advanced": "進階"
+  },
+  "description": {
+    "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
+    "throughDataVisualization": "繁雜資料一目瞭然。",
+    "throughRecordDataAndAnonymousSharing": "透過紀錄資料與匿名捐贈",
+    "getInvolvedInResearch": "為健康研究盡一份心力",
+    "careHealthIsLoveYourself": "關心每天的健康狀態也是愛自己的一種方式呦！",
+    "recordHealthSupportsMedical": "時常記錄自己的健康狀態，就是給醫事人員最大的打氣！",
+    "clickTheButtonBelow": "點擊下方",
+    "toLogNewData": "以新增資料",
+    "addingDataAndVerifiableInformation": "新增資料與驗證資訊中...",
+    "cannotGetLocation": "無法取得地址資訊",
+    "deletingData": "正在刪除照片與更新驗證資訊...",
+    "shareOnCloudTemporarily": "資料會上傳並暫存於雲端，72 小時後自動刪除。",
+    "uploadingDataToCreateShareableLink": "正在上傳資料並產生分享連結...",
+    "copyLinkToShare": "複製下列網址以分享資料",
+    "shareToWhom": "紀錄要分享給誰？",
+    "uploadingDataError": "上傳失敗，請稍後再試。"
   }
 }

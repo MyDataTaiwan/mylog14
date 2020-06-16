@@ -1,54 +1,54 @@
-<app-main-header [headerTitle]="'SETTINGS.settings' | translate"></app-main-header>
+<app-main-header [headerTitle]="'title.settings' | translate"></app-main-header>
 
 <ion-content>
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ion-list>
     <ion-item (click)="onClickNameItem()" button>
       <ion-icon name="person-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'SETTINGS.name' | translate }}</ion-label>
+      <ion-label>{{ 'title.name' | translate }}</ion-label>
       <ion-text>{{ name$ | async }}</ion-text>
     </ion-item>
 
     <ion-item (click)="onClickEmailItem()" button>
       <ion-icon name="mail-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'SETTINGS.email' | translate }}</ion-label>
+      <ion-label>{{ 'title.email' | translate }}</ion-label>
       <ion-text>{{ email$ | async }}</ion-text>
     </ion-item>
 
     <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
       <ion-icon name="calendar-outline" slot="start">
       </ion-icon>
-      <ion-label>{{ 'SETTINGS.dateOfBirth' | translate }}</ion-label>
-      <ion-text *ngIf="!(dateOfBirth$ | async)">{{ 'SETTINGS.notSet' | translate }}</ion-text>
+      <ion-label>{{ 'title.dateOfBirth' | translate }}</ion-label>
+      <ion-text *ngIf="!(dateOfBirth$ | async)">{{ 'title.notSet' | translate }}</ion-text>
       <ion-datetime #dateOfBirthPicker [value]="dateOfBirth$ | async" (ionChange)="onChangeDateOfBirthPicker()"
         [hidden]="!(dateOfBirth$ | async)"></ion-datetime>
     </ion-item>
 
     <ion-item lines="inset">
       <ion-icon name="language-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'SETTINGS.language' | translate }}</ion-label>
+      <ion-label>{{ 'title.language' | translate }}</ion-label>
       <ion-select [value]="currentLanguage$ | async" (ionChange)="onChangeLanguage($event)">
         <ion-select-option *ngFor="let language of languages" [value]="language">
-          {{ 'SETTINGS.' + language | translate }}
+          {{ 'language.' + language | translate }}
         </ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-item (click)="onClickAboutItem()" button>
       <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'SETTINGS.about' | translate }}</ion-label>
+      <ion-label>{{ 'title.about' | translate }}</ion-label>
     </ion-item>
     <ion-item lines="inset">
       <ion-icon name="documents-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'SETTINGS.changeSchema' | translate }}</ion-label>
+      <ion-label>{{ 'title.selectRecordMode' | translate }}</ion-label>
       <ion-select [value]="defaultSchema$ | async" (ionChange)="symptomSelected($event)">
-        <ion-select-option value="default">{{ 'SETTINGS.defaultSchema' | translate }}</ion-select-option>
-        <ion-select-option value="custom">{{ 'SETTINGS.customSchema' | translate }}</ion-select-option>
+        <ion-select-option value="default">{{ 'title.simple' | translate }}</ion-select-option>
+        <ion-select-option value="custom">{{ 'title.advanced' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item (click)="onClickVersion()" button>
       <ion-icon name="code-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'SETTINGS.version' | translate }}</ion-label>
+      <ion-label>{{ 'title.version' | translate }}</ion-label>
       <ion-text>{{ appVersion }}</ion-text>
     </ion-item>
 
