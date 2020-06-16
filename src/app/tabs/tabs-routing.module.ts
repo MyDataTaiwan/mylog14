@@ -23,15 +23,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'tab-taiwan',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then(m => m.TabTaiwanPageModule)
-          }
-        ]
-      },
-      {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
       },
