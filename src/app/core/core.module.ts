@@ -9,13 +9,18 @@ import { EulaPageModule } from './pages/eula/eula.module';
 import { ClickOutsideSameClassDirective } from './directives/click-outside-same-class.directive';
 import { SharePageModule } from './pages/share/share.module';
 import { ShareFinishPageModule } from './pages/share-finish/share-finish.module';
+import { PopoverComponent } from './components/popover/popover.component';
 
 
 
 @NgModule({
+  entryComponents: [
+    PopoverComponent,
+  ],
   declarations: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
+    PopoverComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +35,7 @@ import { ShareFinishPageModule } from './pages/share-finish/share-finish.module'
   exports: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
+    PopoverComponent,
   ]
 })
 export class CoreModule { }
