@@ -65,12 +65,25 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
  
   async open() {
+    
+       this.popoverController.dismiss({});
+  
     const modal = await this.popoverController.create({
       component: RecordFinishPage,
       translucent: true,
-      componentProps: {  }
+      componentProps: {type:"fail",text:"驗證失敗",showBar:false}
       // componentProps: {type:"ok", bottomBar:"ture",comp:<RecordFinishPage> }
+    });
+    return await modal.present();
+  }
+  async openEX() {
+    this.popoverController.dismiss({});
 
+    const modal = await this.popoverController.create({
+      component: RecordFinishPage,
+      translucent: true,
+      componentProps: {type:"confirm",text:"兌換成功",showBar:true}
+      // componentProps: {type:"ok", bottomBar:"ture",comp:<RecordFinishPage> }
     });
     return await modal.present();
   }
