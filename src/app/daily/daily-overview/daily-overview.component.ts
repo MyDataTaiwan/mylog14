@@ -87,6 +87,18 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     });
     return await modal.present();
   }
+  async openSelect() {
+    this.popoverController.dismiss({});
+
+    const modal = await this.popoverController.create({
+      component: RecordFinishPage,
+      translucent: true,
+      componentProps: {type:"Select",text:"是否兌換 20 元",Select:"true"}
+      // componentProps: {type:"ok", bottomBar:"ture",comp:<RecordFinishPage> }
+    });
+    return await modal.present();
+  }
+
 
   // async open() {
   //   const modal = await this.popoverController.create({
