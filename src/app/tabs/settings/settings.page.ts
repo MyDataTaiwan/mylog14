@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, defer, Subject } from 'rxjs';
 import { buffer, debounceTime, filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
-import { TranslateConfigService } from 'src/app/translate-config.service';
+import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
 import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from './name-popover/name-popover.page';

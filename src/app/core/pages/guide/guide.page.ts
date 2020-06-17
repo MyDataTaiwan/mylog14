@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { TranslateConfigService } from 'src/app/translate-config.service';
+import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
 import { UserData } from '../../interfaces/user-data';
 import { DataStoreService } from '../../services/data-store.service';
 

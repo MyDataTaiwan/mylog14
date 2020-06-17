@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { defer, forkJoin, from, Observable, Subject } from 'rxjs';
@@ -6,7 +5,6 @@ import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
 import { Photo } from '../../interfaces/photo';
 import { Record } from '../../interfaces/record';
-import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'app-img-viewer',
@@ -21,10 +19,8 @@ export class ImgViewerPage implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   constructor(
-    private httpClient: HttpClient,
     private popoverController: PopoverController,
-    private modalCtrl: ModalController,
-    private photoService: PhotoService,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -72,7 +68,7 @@ export class ImgViewerPage implements OnInit, OnDestroy {
       );
   }
 
-  delete() {
+  deleteImage() {
     this.showImageDeletePopover(this.photo, this.record);
   }
 
@@ -81,21 +77,4 @@ export class ImgViewerPage implements OnInit, OnDestroy {
       delete: false
     });
   }
-}
-
-interface GeocodingResponse {
-  results?: GeocodingResult[];
-}
-
-interface GeocodingResult {
-  address?: addr;
-  display_name?: string;
-}
-interface addr {
-  city?: string;
-  commercial?: string;
-  country?: string;
-  country_code?: string;
-  county?: string;
-  state?: string;
 }

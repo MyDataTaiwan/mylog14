@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { TranslateConfigService } from 'src/app/translate-config.service';
+import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
 import { UserData } from '../../interfaces/user-data';
 import { GuidePage } from '../guide/guide.page';
 
