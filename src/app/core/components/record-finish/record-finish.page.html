@@ -1,34 +1,37 @@
 <ion-content style="justify-items: center;margin-top: 50vh;">
   <ion-grid style="width:100%;height:100%;overflow:scroll;align-items: center;justify-items: center;">
-    <div style="display: flex;flex-direction: column;align-items: center;">
-      <!-- <img style="width:100px;height:100px;" src="../assets/ui/success.svg" /> -->
-      <img style="width:75px;height:75px;margin-top: 10%;"
-        src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />
-      <!-- <h4>{{ 'RECORD_FINISH.finish' | translate }}</h4> -->
-      <h4>{{text}}</h4>
-      <!-- <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_check.svg" />
-          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_confirm.svg" />
-          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_empty.svg" />
-          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_fail.svg" />
-          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_loading.svg" />
-          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_sorry.svg" />
-          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_verification.svg" /> -->
-      <!-- <img *ngIf="showBar"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' /> -->
-      <!-- <img *ngIf="type=='confirm'"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />
-          <img *ngIf="confirm()"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' /> -->
-      <!-- <img *ngIf="confirm()"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />  -->
-      <ion-content *ngIf="showBar">
+      <ion-content *ngIf="!Select;else SelectDiv">
+        <div style="display: flex;flex-direction: column;align-items: center;">
 
-        <div *ngIf="confirm()" style="display: flex;flex-direction: column;align-items: center;">
-
-          <h6>清新福全公館店</h6>
-          <h6>折扣 20 元</h6>
-          <h6>2020-06-09 22:13:30</h6>
-        </div>
+        <!-- <img style="width:100px;height:100px;" src="../assets/ui/success.svg" /> -->
+        <img style="width:75px;height:75px;margin-top: 10%;"
+          src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />
+        <!-- <h4>{{ 'RECORD_FINISH.finish' | translate }}</h4> -->
+        <h4>{{text}}</h4>
+        <ion-content *ngIf="showBar">
+          <div *ngIf="type=='confirm'" style="display: flex;flex-direction: column;align-items: center;">
+            <h6>清新福全公館店</h6>
+            <h6>折扣 20 元</h6>
+            <h6>2020-06-09 22:13:30</h6>
+          </div>
+        </ion-content>
+      </div>
       </ion-content>
-    </div>
+      <ng-template #SelectDiv>
+      <!-- <ion-content *ngIf="type=='Select'"> -->
+          <h6>折扣 20 元</h6>
+          <h3>清新福全公館店</h3>
+          <ion-row class="ion-justify-content-between">
+            <ion-button (click)="confirm()">{{ 'IMG_POPOVER.cancel' | translate }}</ion-button>
+            <ion-button (click)="confirm()">{{ 'IMG_POPOVER.confirm' | translate }}</ion-button>
+          </ion-row>
+        <!-- </ion-content> -->
+      </ng-template>
+
   </ion-grid>
 </ion-content>
+
+
 <!-- 
 check
 confirm
@@ -38,3 +41,14 @@ loading
 sorry
 verification
 -->
+<!-- <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_check.svg" />
+          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_confirm.svg" />
+          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_empty.svg" />
+          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_fail.svg" />
+          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_loading.svg" />
+          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_sorry.svg" />
+          <img *ngIf="showBar"  style="width:75px;height:75px;" src="../../../../assets/alert/Alert_icon_verification.svg" /> -->
+<!-- <img *ngIf="showBar"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' /> -->
+<!-- <img *ngIf="type=='confirm'"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />
+          <img *ngIf="confirm()"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' /> -->
+<!-- <img *ngIf="confirm()"  style="width:75px;height:75px;" src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />  -->
