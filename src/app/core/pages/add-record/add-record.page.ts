@@ -95,6 +95,8 @@ export class AddRecordPage implements OnInit, OnDestroy {
     return defer(() => this.popoverController.create({
       component: RecordFinishPage,
       translucent: true,
+      componentProps: {type:"check",text:"'RECORD_FINISH.finish' | translate ",showBar:false}
+
     }))
       .pipe(
         switchMap(popover => forkJoin([
