@@ -1,31 +1,18 @@
-<ion-content style="justify-items: center;margin-top: 50vh;">
-  <ion-grid style="width:100%;height:100%;overflow:scroll;align-items: center;justify-items: center;">
-    <ion-content *ngIf="!Select;else SelectDiv">
-      <div style="display: flex;flex-direction: column;align-items: center;">
-    
-        <!-- <img style="width:100px;height:100px;" src="../assets/ui/success.svg" /> -->
-        <img style="width:75px;height:75px;margin-top: 10%;"
-          src='{{"../../../../assets/alert/Alert_icon_" +type + ".svg"}}' />
-        <!-- <h4>{{ 'RECORD_FINISH.finish' | translate }}</h4> -->
-        <h4>{{text}}</h4>
-        <ion-content *ngIf="showBar">
-          <div *ngIf="type=='confirm'" style="display: flex;flex-direction: column;align-items: center;">
-            <h6>清新福全公館店</h6>
-            <h6>折扣 20 元</h6>
-            <h6>2020-06-09 22:13:30</h6>
-          </div>
-        </ion-content>
+<ion-content>
+  <ion-grid>
+    <div class="message-box">
+      <img [src]='iconPath' />
+      <h4>{{ i18nTitle | translate }}</h4>
+      <div class="message-content">
+        <h6>{{ i18nMessage | translate }}</h6>
       </div>
-    </ion-content>
-    <ng-template #SelectDiv>
-      <!-- <ion-content *ngIf="type=='Select'"> -->
-      <h6>折扣 20 元</h6>
-      <h3>清新福全公館店</h3>
-      <ion-row class="ion-justify-content-between">
-        <ion-button (click)="confirm()">cancel</ion-button>
-        <ion-button (click)="confirm()">confirm</ion-button>
+    </div>
+    <div>
+      <h6>{{ i18nExtraMessage | translate }}</h6>
+      <ion-row *ngIf="buttonSet === 'confirm'" class="ion-justify-content-between">
+        <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
+        <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
       </ion-row>
-      <!-- </ion-content> -->
-    </ng-template>
+    </div>
   </ion-grid>
 </ion-content>

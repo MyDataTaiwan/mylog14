@@ -1,0 +1,28 @@
+ion-content {
+    justify-items: center;
+    margin-top: 50vh;
+}
+
+ion-grid {
+    width:100%;
+    height:100%;
+    overflow:scroll;
+    align-items: center;
+    justify-items: center;
+}
+
+.message-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    img {
+        width:75px;
+        height:75px;
+        margin-top: 10%;
+    }
+    .message-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
