@@ -1,9 +1,12 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-import { Observable, Subject, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { Observable, from, defer, forkJoin, Subject, concat, pipe, timer, zip, of } from 'rxjs';
+import { RecordFinishPage } from '../../core/components/record-finish/record-finish.page';
+import { ImgPopoverPage } from '../../core/pages/img-popover/img-popover.page';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-daily-overview',
@@ -40,6 +43,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   constructor(
     public dataStore: DataStoreService,
+    private popoverController: PopoverController,
     private ngZone: NgZone
   ) {
     this.items$ = this.dataStore.overviewCards$
@@ -51,6 +55,44 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
   }
+ /////// FIXME Debug ui start
+
+  async open() {
+    
+       this.popoverController.dismiss({});
+  
+    const modal = await this.popoverController.create({
+      component: RecordFinishPage,
+      translucent: true,
+      componentProps: {type:"fail",text:"驗證失敗",showBar:false}
+      // componentProps: {type:"ok", bottomBar:"ture",comp:<RecordFinishPage> }
+    });
+    return await modal.present();
+  }
+  async openEX() {
+    this.popoverController.dismiss({});
+
+    const modal = await this.popoverController.create({
+      component: RecordFinishPage,
+      translucent: true,
+      componentProps: {type:"confirm",text:"兌換成功",showBar:true}
+      // componentProps: {type:"ok", bottomBar:"ture",comp:<RecordFinishPage> }
+    });
+    return await modal.present();
+  }
+  async openSelect() {
+    this.popoverController.dismiss({});
+
+    const modal = await this.popoverController.create({
+      component: RecordFinishPage,
+      translucent: true,
+      componentProps: {type:"Select",text:"是否兌換 20 元",Select:"true"}
+      // componentProps: {type:"ok", bottomBar:"ture",comp:<RecordFinishPage> }
+    });
+    return await modal.present();
+  }
+/////// FIXME Debug ui end
+
 
   ngOnDestroy() {
     this.destroy$.next();

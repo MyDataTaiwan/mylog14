@@ -4,6 +4,12 @@
   justify-content:center;
   /* border:1px solid #000; */
   ">
+    <!-- FIXME Debug ui start -->
+    <ion-button (click)="open()">"OP"</ion-button>
+    <ion-button (click)="openEX()">"EX"</ion-button>
+    <ion-button (click)="openSelect()">"openSelect"</ion-button>
+    <!-- FIXME Debug ui end -->
+
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
       <ng-lottie (click)="goToLink('https://www.mydata.org.tw/')" [options]="options"
         (animationCreated)="onAnimationCreated($event)" (configReady)="onConfigReady()"></ng-lottie>
