@@ -55,7 +55,8 @@
     "language": "語言",
     "selectRecordMode": "選擇紀錄模式",
     "simple": "簡易",
-    "advanced": "進階"
+    "advanced": "進階",
+    "agreeTheTermsAndConditions": "同意 MyLog 使用者條款摘要"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

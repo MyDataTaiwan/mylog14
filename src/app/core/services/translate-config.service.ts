@@ -24,11 +24,12 @@ export class TranslateConfigService {
 
 
   initialize() {
-    this.getAndUseDefaultLanguage();
+    this.translateService.setDefaultLang('en');
     this.dataStoreService.userData$.pipe(
       map(userData => userData.language)
     ).subscribe(language => {
-      this.translateService.use(language);
+      if (language == undefined) this.translateService.use(this.translateService.getBrowserLang());
+      else this.translateService.use(language);
     });
   }
 
