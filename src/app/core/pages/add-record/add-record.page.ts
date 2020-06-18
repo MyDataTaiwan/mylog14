@@ -198,7 +198,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
         take(1),
         map(userData => userData.defaultSchema),
         tap(defaultSchema => {
-          this.symptoms.setDefault();
+          this.symptoms.setDefault(defaultSchema);
           this.symptomsView = this.symptoms.list;
           this.symptomsView = this.symptomsView.map(symptomView => {
             symptomView.expand = false;
