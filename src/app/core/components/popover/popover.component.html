@@ -1,0 +1,18 @@
+<ion-content>
+  <ion-grid>
+    <div class="message-box">
+      <img [src]='iconPath' />
+      <h4>{{ i18nTitle | translate }}</h4>
+      <div class="message-content">
+        <h6>{{ i18nMessage | translate }}</h6>
+      </div>
+    </div>
+    <div>
+      <h6>{{ i18nExtraMessage | translate }}</h6>
+      <ion-row *ngIf="buttonSet === 'confirm'" class="ion-justify-content-between">
+        <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
+        <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
+      </ion-row>
+    </div>
+  </ion-grid>
+</ion-content>
