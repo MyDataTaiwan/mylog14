@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 
 @Component({
@@ -8,10 +8,16 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MainHeaderComponent implements OnInit {
   @Input() headerTitle: string;
+  @Input() showDismissButton?: boolean;
+  @Output() dismissClicked = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onDismissClicked() {
+    this.dismissClicked.emit(true);
   }
 
 }

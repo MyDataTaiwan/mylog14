@@ -1,4 +1,5 @@
-<app-main-header [headerTitle]="'title.scanQrcode' | translate"></app-main-header>
+<app-main-header [headerTitle]="'title.scanQrcode' | translate" showDismissButton="true" (dismissClicked)="cancel()">
+</app-main-header>
 <ion-content>
   <ion-grid fixed>
     <ion-row>

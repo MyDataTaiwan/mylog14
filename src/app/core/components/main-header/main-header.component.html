@@ -1,5 +1,10 @@
 <ion-header>
   <ion-toolbar mode="ios">
+    <ion-buttons *ngIf="showDismissButton" slot="secondary">
+      <ion-button (click)="onDismissClicked()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>  
     <ion-title text-center slot="secondary">
       {{ headerTitle }}
     </ion-title>
