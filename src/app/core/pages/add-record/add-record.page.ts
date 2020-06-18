@@ -41,7 +41,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
   pickerTitle$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
-  symptoms = new Symptoms();
+  symptoms = new Symptoms(true);
   symptomsView: SymptomView[] = this.symptoms.list;
 
   constructor(
