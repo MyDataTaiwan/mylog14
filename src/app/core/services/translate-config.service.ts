@@ -33,12 +33,6 @@ export class TranslateConfigService {
     });
   }
 
-  getAndUseDefaultLanguage() {
-    let language = this.translateService.getBrowserLang();
-    this.translateService.setDefaultLang(language);
-    return language;
-  }
-
   setLanguage(lang: string): Observable<UserData> {
     this.translateService.use(lang);
     return this.dataStoreService.userData$.pipe(
