@@ -57,13 +57,13 @@
     "language": "Language",
     "selectRecordMode": "Select Record Mode",
     "simple": "Simple",
-    "advanced": "Advanced"
+    "advanced": "Advanced",
+    "agreeTheTermsAndConditions": "Agree the Terms and Conditions"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
     "throughDataVisualization": "Understand daily data easily.",
-    "throughRecordDataAndAnonymousSharing": "Through record data and anonymous",
-    "getInvolvedInResearch": "Get involved in health-related research",
+    "getInvolvedInResearch": "Get involved in health-related research through record data and anonymous sharing.",
     "careHealthIsLoveYourself": "Caring your own health status is one way to love yourself.",
     "recordHealthSupportsMedical": "Record your health conditions regularly is the best support for medical staff!",
     "clickTheButtonBelow": "Click the button below",

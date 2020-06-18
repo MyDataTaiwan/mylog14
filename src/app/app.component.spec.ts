@@ -11,7 +11,6 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     platformIsSpy = Promise.resolve();
     platformSpy = jasmine.createSpyObj('Platform', { is: platformIsSpy });
-    translateConfigSpy = jasmine.createSpyObj('TranslateConfigService', ['getAndUseDefaultLanguage']);
 
     TestBed.configureTestingModule({
       declarations: [AppComponent],
@@ -33,6 +32,5 @@ describe('AppComponent', () => {
   it('should initialize the app', async () => {
     TestBed.createComponent(AppComponent);
     expect(platformSpy.is).toHaveBeenCalled();
-    expect(translateConfigSpy.getAndUseDefaultLanguage).toHaveBeenCalled();
   });
 });
