@@ -1,0 +1,18 @@
+<app-main-header [headerTitle]="'title.scanQrcode' | translate"></app-main-header>
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <app-qr-scanner (scanResult)="scanResultHandler($event)"></app-qr-scanner>
+    </ion-row>
+    <ion-row>
+      <h3>{{ shopId }}</h3>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
+<ion-footer>
+  <div class="ion-justify-content-between">
+    <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
+    <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
+  </div>
+</ion-footer>

@@ -93,11 +93,8 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (code) {
         this.scanResult.emit(code.data);
-      } else {
-        requestAnimationFrame(this.scan.bind(this));
       }
-    } else {
-      requestAnimationFrame(this.scan.bind(this));
     }
+    requestAnimationFrame(this.scan.bind(this));
   }
 }

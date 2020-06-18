@@ -63,7 +63,8 @@
     "generated": "Generated",
     "notGenerated": "Not Generated",
     "copy": "Copy",
-    "copied": "Copied"
+    "copied": "Copied",
+    "scanQrcode": "Scan QR Code"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

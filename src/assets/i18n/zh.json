@@ -61,7 +61,8 @@
     "generated": "已分享",
     "notGenerated": "尚未分享",
     "copy": "複製",
-    "copied": "已複製"
+    "copied": "已複製",
+    "scanQrcode": "掃描 QR Code"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

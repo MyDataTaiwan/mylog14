@@ -7,6 +7,8 @@ import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { GuidePage } from '../core/pages/guide/guide.page';
 import { SharePage } from '../core/pages/share/share.page';
 import { SnapshotService } from '../core/services/snapshot.service';
+import { QrScannerComponent } from '../core/components/qr-scanner/qr-scanner.component';
+import { ShopScannerComponent } from '../core/components/shop-scanner/shop-scanner.component';
 
 @Component({
   selector: 'app-tabs',
@@ -55,7 +57,18 @@ export class TabsPage implements OnDestroy {
     return Promise.resolve(data);
   }
 
+  async presentQrModal() {
+    const modal = await this.modalController.create({
+      backdropDismiss: false,
+      component: ShopScannerComponent,
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    return Promise.resolve(data);
+  }
+
   onClickCameraButton() {
+    return this.presentQrModal();
     this.snapshotService.snapCapture()
       .pipe(
         debounce((() => interval(1000))),

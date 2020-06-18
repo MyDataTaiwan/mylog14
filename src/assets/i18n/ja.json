@@ -35,7 +35,8 @@
     "delete": "削除",
     "skip": "省略",
     "dataShared": "データが共有されました",
-    "johnDoe": "名無しの権兵衛"
+    "johnDoe": "名無しの権兵衛",
+    "scanQrcode": "Scan QR Code"
   },
   "description": {
     "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
