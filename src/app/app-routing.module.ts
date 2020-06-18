@@ -19,14 +19,6 @@ const routes: Routes = [
     loadChildren: () => import('./core/pages/img-popover/img-popover.module').then(m => m.ImgPopoverPageModule)
   },
   {
-    path: 'tour',
-    loadChildren: () => import('./core/pages/tour/tour.module').then(m => m.TourPageModule)
-  },
-  {
-    path: 'eula',
-    loadChildren: () => import('./core/pages/eula/eula.module').then(m => m.EulaPageModule)
-  },
-  {
     path: 'share',
     loadChildren: () => import('./core/pages/share/share.module').then(m => m.SharePageModule)
   },
@@ -41,6 +33,10 @@ const routes: Routes = [
   {
     path: 'img-viewer',
     loadChildren: () => import('./core/pages/img-viewer/img-viewer.module').then(m => m.ImgViewerPageModule)
+  },
+  {
+    path: 'onboarding',
+    loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingPageModule)
   },
 ];
 @NgModule({

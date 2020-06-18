@@ -40,8 +40,7 @@
   "description": {
     "protectYourData": "あなたはあなたのデータを所有しています。個人データはあなたの同意を得られた場合のみ共有されます。",
     "throughDataVisualization": "毎日記録したデータが一覧できる。",
-    "throughRecordDataAndAnonymousSharing": "匿名化されたデータの共有により",
-    "getInvolvedInResearch": "健康調査に関わることができます。一緒に世界を守りましょう。",
+    "getInvolvedInResearch": "匿名化されたデータの共有により。健康調査に関わることができます。一緒に世界を守りましょう。",
     "recordHealthSupportsMedical": "定期的に自分の健康状態を記録することは医療スタッフにとって最高のサポートです！",
     "addingDataAndVerifiableInformation": "新たなデータまたは検証可能な情報を追加しています...",
     "shareOnCloudTemporarily": "クラウド上にアップロードされたあなたのデータは一時的に保存されています。データは72時間後に削除されます。",
