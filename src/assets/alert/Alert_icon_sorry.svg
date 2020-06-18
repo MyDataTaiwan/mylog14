@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36" height="36" viewBox="0 0 36 36">
+  <defs>
+    <clipPath id="clip-Alert_icon_sorry">
+      <rect width="36" height="36"/>
+    </clipPath>
+  </defs>
+  <g id="Alert_icon_sorry" clip-path="url(#clip-Alert_icon_sorry)">
+    <g id="Group_1708" data-name="Group 1708" transform="translate(1.671 2)">
+      <path id="Exclusion_3" data-name="Exclusion 3" d="M16.5,33A16.5,16.5,0,1,1,33,16.5,16.519,16.519,0,0,1,16.5,33ZM14.716,14.367V23.54h.006a1.577,1.577,0,0,0,.5,1.018,1.549,1.549,0,0,0,2.111,0,1.577,1.577,0,0,0,.5-1.018h.007V14.367h-.007a1.579,1.579,0,0,0-.5-1.019,1.547,1.547,0,0,0-2.111,0,1.58,1.58,0,0,0-.5,1.019Zm1.561-5.893a1.561,1.561,0,1,0,1.561,1.561A1.563,1.563,0,0,0,16.277,8.473Z" transform="translate(0.329)" fill="#f9ad35"/>
+    </g>
+  </g>
+</svg>

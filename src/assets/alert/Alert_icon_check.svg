@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="37" height="36" viewBox="0 0 37 36">
+  <defs>
+    <clipPath id="clip-Alert_icon_check">
+      <rect width="37" height="36"/>
+    </clipPath>
+  </defs>
+  <g id="Alert_icon_check" clip-path="url(#clip-Alert_icon_check)">
+    <g id="Group_1706" data-name="Group 1706" transform="translate(2 1)">
+      <g id="tick" transform="translate(0 0)">
+        <g id="Group_797" data-name="Group 797">
+          <path id="Path_1312" data-name="Path 1312" d="M16.568,0A16.536,16.536,0,1,0,33.137,16.536,16.572,16.572,0,0,0,16.568,0Zm9.26,12.185L15.24,22.67a1.631,1.631,0,0,1-2.284.041l-5.606-5.1a1.679,1.679,0,0,1-.125-2.321,1.645,1.645,0,0,1,2.325-.083l4.443,4.062,9.468-9.449a1.672,1.672,0,1,1,2.367,2.362Z" fill="#52c7f4"/>
+        </g>
+      </g>
+      <g id="tick-2" data-name="tick" transform="translate(0 0)">
+        <g id="Group_797-2" data-name="Group 797">
+          <path id="Path_1312-2" data-name="Path 1312" d="M16.568,0A16.536,16.536,0,1,0,33.137,16.536,16.572,16.572,0,0,0,16.568,0Zm9.26,12.185L15.24,22.67a1.631,1.631,0,0,1-2.284.041l-5.606-5.1a1.679,1.679,0,0,1-.125-2.321,1.645,1.645,0,0,1,2.325-.083l4.443,4.062,9.468-9.449a1.672,1.672,0,1,1,2.367,2.362Z" fill="#52c7f4"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

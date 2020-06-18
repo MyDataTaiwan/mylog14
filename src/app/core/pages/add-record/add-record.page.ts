@@ -1,16 +1,16 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LoadingController, PickerController, PopoverController } from '@ionic/angular';
+import { LoadingController, PickerController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
 import { delay, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { Symptom } from '../../classes/symptom';
 import { Symptoms } from '../../classes/symptoms';
-import { RecordFinishPage } from '../../components/record-finish/record-finish.page';
 import { DataStoreService } from '../../services/data-store.service';
 import { GeolocationService } from '../../services/geolocation.service';
 import { SnapshotService } from '../../services/snapshot.service';
+import { PopoverService, PopoverIcon } from '../../services/popover.service';
 
 @Component({
   selector: 'app-add-record',
@@ -52,8 +52,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
     private geolocationService: GeolocationService,
     private snapshotService: SnapshotService,
     private translate: TranslateService,
-    public popoverController: PopoverController,
-
+    private popoverService: PopoverService,
   ) {
     this.resetPage();
     this.recorded$ = this.translate.get('title.recordSaved');
@@ -91,30 +90,12 @@ export class AddRecordPage implements OnInit, OnDestroy {
       });
   }
 
-  showRecordFinish() {
-    return defer(() => this.popoverController.create({
-      component: RecordFinishPage,
-      translucent: true,
-    }))
+  showRecordFinish(): Observable<any> {
+    return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500)
       .pipe(
-        switchMap(popover => forkJoin([
-          this.displayPopoverForDuration(popover, 0.5),
-          this.onPopoverDismissNavigateBack(popover),
-        ])),
+        tap(() => this.location.back()),
+        takeUntil(this.destroy$)
       );
-  }
-
-  private displayPopoverForDuration(popover: HTMLIonPopoverElement, seconds: number) {
-    return from(popover.present())
-      .pipe(
-        delay(seconds * 1000),
-        switchMap(() => popover.dismiss()),
-      );
-  }
-
-  private onPopoverDismissNavigateBack(popover: HTMLIonPopoverElement) {
-    return from(popover.onDidDismiss())
-      .pipe(tap(() => this.location.back()));
   }
 
   async presentBtPicker() {
