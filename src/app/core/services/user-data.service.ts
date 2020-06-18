@@ -8,10 +8,8 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class UserDataService {
   USER_DATA_REPOSITORY = 'userData';
-  defaultUserData = {
+  defaultUserData: UserData = {
     newUser: true,
-    eulaAccepted: false,
-    guideAccepted: false,
     firstName: '',
     lastName: '',
   };
