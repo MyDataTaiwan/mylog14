@@ -1,13 +1,11 @@
-import { AfterViewInit, Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { defer, interval, Observable, Subject } from 'rxjs';
-import { debounce, filter, switchMap, take, takeUntil } from 'rxjs/operators';
+import { debounce, switchMap, take, takeUntil } from 'rxjs/operators';
 import { UserData } from '../core/interfaces/user-data';
 import { AddRecordPage } from '../core/pages/add-record/add-record.page';
-import { EulaPage } from '../core/pages/eula/eula.page';
 import { GuidePage } from '../core/pages/guide/guide.page';
 import { SharePage } from '../core/pages/share/share.page';
-import { DataStoreService } from '../core/services/data-store.service';
 import { SnapshotService } from '../core/services/snapshot.service';
 
 @Component({
@@ -15,38 +13,26 @@ import { SnapshotService } from '../core/services/snapshot.service';
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss']
 })
-export class TabsPage implements AfterViewInit, OnDestroy {
+export class TabsPage implements OnDestroy {
   destroy$ = new Subject();
   selectedTab: string;
   showDebugButton = false;
-  eulaLoader$: Observable<UserData>;
   GuideLoader$: Observable<UserData>;
   constructor(
-    private dataStore: DataStoreService,
     private modalController: ModalController,
     private popoverCtrl: PopoverController,
     private snapshotService: SnapshotService
   ) { }
 
-  ngAfterViewInit() {
-    this.eulaLoader$ = this.dataStore.userData$
-      .pipe(
-        filter(userData => userData.eulaAccepted === false),
-        switchMap(userData => this.presentEulaModal(userData)),
-        switchMap(userData => this.dataStore.updateUserData(userData)),
-      );
-  }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-
-
   }
 
   ionTabsDidChange(event: TabsEvent) {
     this.selectedTab = event.tab;
   }
+
   async presentGuideModal(userData: UserData) {
     const modal = await this.modalController.create({
       backdropDismiss: false,
@@ -63,18 +49,6 @@ export class TabsPage implements AfterViewInit, OnDestroy {
     const modal = await this.modalController.create({
       backdropDismiss: false,
       component: AddRecordPage,
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
-  }
-
-  async presentEulaModal(userData: UserData) {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: EulaPage,
-      componentProps: { userData },
-      cssClass: 'eula-modal',
     });
     await modal.present();
     const { data } = await modal.onWillDismiss();
