@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import { DataStoreService } from '../core/services/data-store.service';
 import { TranslateConfigService } from '../core/services/translate-config.service';
 
@@ -28,18 +28,17 @@ export class OnboardingPage implements OnDestroy {
   ) { }
 
   onSubmit() {
-    this.dataStoreService.updateUserData()
-      .pipe(
-        takeUntil(this.destroy$),
-        map(userData => {
-          userData.email = this.onboardingForm.controls.email.value;
-          userData.newUser = false;
-          return userData;
-        })
-      )
-      .subscribe(() => {
-        this.router.navigate(['/']);
-      });
+    this.dataStoreService.userData$.pipe(
+      first(),
+      map(userData => {
+        userData.email = this.onboardingForm.controls.email.value;
+        userData.newUser = false;
+        return userData;
+      }),
+      switchMap(userData => this.dataStoreService.updateUserData(userData))
+    ).subscribe(() => {
+      this.router.navigate(['/']);
+    });
   }
 
   ngOnDestroy() {
