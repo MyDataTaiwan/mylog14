@@ -59,10 +59,10 @@ export const enum PopoverButtonSet {
 
 export interface PopoverProps {
   i18nTitle: string;
-  icon: PopoverIcon;
-  i18nMessage ?: string;
-  i18nExtraMessage ?: string;
-  buttonSet ?: PopoverButtonSet;
-  onConfirm ?: () => { };
-  onCancel ?: () => { };
+  icon?: PopoverIcon;
+  i18nMessage?: string;
+  i18nExtraMessage?: string;
+  buttonSet?: PopoverButtonSet;
+  onConfirm?: () => { };
+  onCancel?: () => { };
 }

@@ -10,7 +10,7 @@ import { PopoverButtonSet, PopoverIcon } from '../../services/popover.service';
 export class PopoverComponent implements OnInit {
 
   @Input() i18nTitle: string;
-  @Input() icon: PopoverIcon;
+  @Input() icon?: PopoverIcon;
   @Input() i18nMessage?: string;
   @Input() i18nExtraMessage?: string;
   @Input() buttonSet?: PopoverButtonSet;

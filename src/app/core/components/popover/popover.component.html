@@ -1,7 +1,7 @@
 <ion-content>
   <ion-grid>
     <div class="message-box">
-      <img [src]='iconPath' />
+      <img *ngIf="icon" [src]='iconPath' />
       <h4>{{ i18nTitle | translate }}</h4>
       <div class="message-content">
         <h6>{{ i18nMessage | translate }}</h6>

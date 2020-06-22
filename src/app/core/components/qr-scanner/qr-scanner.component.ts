@@ -1,7 +1,7 @@
 import jsQR from 'jsqr';
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { defer, Subject } from 'rxjs';
+import { defer, Subject, Observable } from 'rxjs';
 import { tap, takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -11,6 +11,7 @@ import { tap, takeUntil } from 'rxjs/operators';
 })
 export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  @Input() scanEnabled: Observable<boolean>;
   @Output() scanResult = new EventEmitter<string>();
   @ViewChild('video', { static: false }) video: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
@@ -20,6 +21,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
   canvasContext: any;
   canvasElement: any;
   videoElement: any;
+  scanOn = true;
 
   destroy$ = new Subject();
 
@@ -34,7 +36,8 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);
@@ -45,7 +48,16 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
-    this.startScan();
+    this.scanEnabled
+      .pipe(
+        tap(scanEnabled => {
+          this.scanOn = scanEnabled;
+          if (this.scanOn) {
+            this.startScan();
+          }
+        }),
+        takeUntil(this.destroy$),
+      ).subscribe();
   }
 
   startScan() {
@@ -95,6 +107,8 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
         this.scanResult.emit(code.data);
       }
     }
-    requestAnimationFrame(this.scan.bind(this));
+    if (this.scanOn) {
+      requestAnimationFrame(this.scan.bind(this));
+    }
   }
 }

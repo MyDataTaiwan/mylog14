@@ -62,7 +62,11 @@
     "notGenerated": "尚未分享",
     "copy": "複製",
     "copied": "已複製",
-    "scanQrcode": "掃描 QR Code"
+    "scanQrcode": "掃描 QR Code",
+    "currentBalance": "目前可兌換金額",
+    "canItBeRedeemed": "剩餘兌換名額",
+    "canRedeem": "尚有名額",
+    "cannotRedeem": "暫無名額"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

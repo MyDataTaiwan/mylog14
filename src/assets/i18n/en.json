@@ -64,7 +64,11 @@
     "notGenerated": "Not Generated",
     "copy": "Copy",
     "copied": "Copied",
-    "scanQrcode": "Scan QR Code"
+    "scanQrcode": "Scan QR Code",
+    "currentBalance": "Current Balance",
+    "canItBeRedeemed": "Redeem Quota",
+    "canRedeem": "Available",
+    "cannotRedeem": "Out of Stock"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
