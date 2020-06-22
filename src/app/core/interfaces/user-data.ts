@@ -4,8 +4,6 @@ export interface UserData {
     email?: string;
     dateOfBirth?: string; // ISO 8601
     newUser: boolean;
-    eulaAccepted: boolean;
-    guideAccepted: boolean;
     defaultSchema?: boolean;
     uuid?: string;
     language?: string;

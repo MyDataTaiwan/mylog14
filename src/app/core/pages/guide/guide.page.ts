@@ -1,11 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
 import { UserData } from '../../interfaces/user-data';
-import { DataStoreService } from '../../services/data-store.service';
 
 @Component({
   selector: 'app-guide',
@@ -23,8 +20,6 @@ export class GuidePage {
   };
   @Input() userData: UserData;
   constructor(
-    private dataStore: DataStoreService,
-    private router: Router,
     private modalCtrl: ModalController,
     public translateConfig: TranslateConfigService,
   ) { }
@@ -34,17 +29,6 @@ export class GuidePage {
     slides.slideNext();
   }
   onClick() {
-    this.dataStore.updateUserData({
-      firstName: '',
-      lastName: '',
-      newUser: false,
-      eulaAccepted: false,
-      guideAccepted: false
-    }).pipe(
-      takeUntil(this.destroy$),
-    ).subscribe(() => {
-      this.router.navigate(['/']);
-    }, err => console.log(err));
   }
 
   cancel() {
@@ -52,7 +36,6 @@ export class GuidePage {
   }
 
   onStarted() {
-    this.userData.guideAccepted = true;
     this.modalCtrl.dismiss(this.userData);
   }
   ngOnDestroy() {

@@ -43,13 +43,7 @@ export class DataStoreService {
     }),
   );
 
-  private userData = new BehaviorSubject<UserData>({
-    firstName: '',
-    lastName: '',
-    newUser: true,
-    eulaAccepted: false,
-    guideAccepted: false
-  });
+  private userData = new BehaviorSubject<UserData>(this.userDataService.defaultUserData);
   public userData$ = this.userData.asObservable();
 
   constructor(
