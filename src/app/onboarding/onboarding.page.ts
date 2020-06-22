@@ -22,15 +22,15 @@ export class OnboardingPage implements OnDestroy {
   });
   confirmButtonEnabled = true;
 
-  private destroy$ = new Subject();
+  private readonly destroy$ = new Subject();
 
   constructor(
     public translateConfigService: TranslateConfigService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    private toastController: ToastController,
-    private dataStoreService: DataStoreService,
-    private privateCouponService: PrivateCouponService
+    private readonly formBuilder: FormBuilder,
+    private readonly router: Router,
+    private readonly toastController: ToastController,
+    private readonly dataStoreService: DataStoreService,
+    private readonly privateCouponService: PrivateCouponService
   ) { }
 
   onSubmit() {
@@ -47,9 +47,13 @@ export class OnboardingPage implements OnDestroy {
     ).subscribe(() => {
       this.router.navigate(['/']);
     }, (error: HttpErrorResponse) => {
-      this.confirmButtonEnabled = true;
-      console.error(error);
-      this.presentToast(error.error.reason || error.statusText);
+      if (error.error.reason === 'USED_EMAIL') {
+        this.router.navigate(['/']);
+      } else {
+        console.error(error);
+        this.confirmButtonEnabled = true;
+        this.presentToast(error.error.reason || error.statusText);
+      }
     });
   }
 
