@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Plugins } from "@capacitor/core";
+import { Plugins } from '@capacitor/core';
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest, defer, Subject } from 'rxjs';
@@ -9,6 +9,7 @@ import { TranslateConfigService } from 'src/app/core/services/translate-config.s
 import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from './name-popover/name-popover.page';
+import { SharedLinkPopoverPage } from './shared-link-popover/shared-link-popover.page';
 
 const { Browser } = Plugins;
 
@@ -18,15 +19,16 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
+
+  private readonly destroy$ = new Subject();
   SymptomNameList: any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
-  private destroy$ = new Subject();
   private notSet: string = this.translateService.instant('title.notSet');
 
-  public appVersion = version;
-  public showDeveloperOptions = false;
-  private versionClick = new Subject<boolean>();
+  appVersion = version;
+  showDeveloperOptions = false;
+  private readonly versionClick = new Subject<boolean>();
   versionClick$ = this.versionClick.pipe(
     buffer(this.versionClick
       .pipe(debounceTime(500))
@@ -36,7 +38,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     tap(() => this.showDeveloperOptions = true),
   );
 
-  name$ = combineLatest(this.dataStoreService.userData$, this.translateConfigService.stream()).pipe(
+  name$ = combineLatest([this.dataStoreService.userData$, this.translateConfigService.stream()]).pipe(
     map(([userData, _]) => {
       if (!userData.firstName && !userData.lastName) {
         return this.notSet;
@@ -44,7 +46,7 @@ export class SettingsPage implements OnInit, OnDestroy {
       return `${userData.firstName} ${userData.lastName}`;
     })
   );
-  email$ = combineLatest(this.dataStoreService.userData$, this.translateConfigService.stream()).pipe(
+  email$ = combineLatest([this.dataStoreService.userData$, this.translateConfigService.stream()]).pipe(
     map(([userData, _]) => {
       if (!userData.email) {
         return this.notSet;
@@ -71,12 +73,16 @@ export class SettingsPage implements OnInit, OnDestroy {
   defaultSchema$ = this.dataStoreService.userData$.pipe(
     map(userData => (userData.defaultSchema) ? 'default' : 'custom'),
   );
+  hasGeneratedSharedLink$ = this.dataStoreService.userData$.pipe(
+    map(userData => userData.generatedUrl),
+    map(generatedUrl => !!generatedUrl)
+  );
 
   constructor(
-    private translateService: TranslateService,
-    private popoverController: PopoverController,
-    private translateConfigService: TranslateConfigService,
-    private dataStoreService: DataStoreService,
+    private readonly dataStoreService: DataStoreService,
+    private readonly translateService: TranslateService,
+    private readonly popoverController: PopoverController,
+    private readonly translateConfigService: TranslateConfigService
   ) { }
 
   ngOnInit() {
@@ -111,6 +117,10 @@ export class SettingsPage implements OnInit, OnDestroy {
   onChangeLanguage(event: CustomEvent) {
     const newLang = event.detail.value;
     this.translateConfigService.setLanguage(newLang).subscribe();
+  }
+
+  onClickSharedLogboardLinkItem() {
+    this.showPopover(SharedLinkPopoverPage);
   }
 
   onClickAboutItem() {
@@ -148,7 +158,7 @@ export class SettingsPage implements OnInit, OnDestroy {
       ).subscribe(() => { }, err => console.log(err));
   }
 
-  private showPopover(component) {
+  private showPopover(component: any) {
     defer(() => this.popoverController.create({
       component,
       animated: false

@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'email-popover',
     loadChildren: () => import('./email-popover/email-popover.module').then(m => m.EmailPopoverPageModule)
+  },
+  {
+    path: 'shared-link-popover',
+    loadChildren: () => import('./shared-link-popover/shared-link-popover.module').then( m => m.SharedLinkPopoverPageModule)
   }
 ];
 
