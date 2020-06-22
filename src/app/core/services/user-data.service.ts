@@ -15,7 +15,7 @@ export class UserDataService {
   };
 
   constructor(
-    private localStorage: LocalStorageService
+    private readonly localStorage: LocalStorageService
   ) { }
 
   getUserData(): Observable<UserData> {

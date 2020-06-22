@@ -34,10 +34,6 @@
       </ion-select>
     </ion-item>
 
-    <ion-item (click)="onClickAboutItem()" button>
-      <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'title.about' | translate }}</ion-label>
-    </ion-item>
     <ion-item lines="inset">
       <ion-icon name="documents-outline" slot="start"></ion-icon>
       <ion-label>{{ 'title.selectRecordMode' | translate }}</ion-label>
@@ -46,6 +42,18 @@
         <ion-select-option value="custom">{{ 'title.advanced' | translate }}</ion-select-option>
       </ion-select>
     </ion-item>
+
+    <ion-item (click)="onClickSharedLogboardLinkItem()" button>
+      <ion-icon name="link-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.sharedLogboardLink' | translate }}</ion-label>
+      <ion-text>{{ sharedLogboardLink$ | async }}</ion-text>
+    </ion-item>
+
+    <ion-item (click)="onClickAboutItem()" button>
+      <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.about' | translate }}</ion-label>
+    </ion-item>
+
     <ion-item (click)="onClickVersion()" button>
       <ion-icon name="code-outline" slot="start"></ion-icon>
       <ion-label>{{ 'title.version' | translate }}</ion-label>
