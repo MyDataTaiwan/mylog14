@@ -78,6 +78,7 @@
     "uploadingDataToCreateShareableLink": "正在上傳資料並產生分享連結...",
     "copyLinkToShare": "複製下列網址以分享資料",
     "shareToWhom": "紀錄要分享給誰？",
-    "uploadingDataError": "上傳失敗，請稍後再試。"
+    "uploadingDataError": "上傳失敗，請稍後再試。",
+    "registeringUser": "使用者註冊中，請稍候..."
   }
 }

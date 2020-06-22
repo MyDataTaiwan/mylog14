@@ -80,7 +80,8 @@
     "uploadingDataToCreateShareableLink": "Uploading data to create a shareable link...",
     "copyLinkToShare": "Copy the following link to share your data.",
     "shareToWhom": "Who would you like to share your data with?",
-    "uploadingDataError": "Upload error. Please try again later."
+    "uploadingDataError": "Upload error. Please try again later.",
+    "registeringUser": "Please wait for user registration..."
   },
   "language": {
     "en": "English",
