@@ -193,20 +193,13 @@ export class AddRecordPage implements OnInit, OnDestroy {
   resetPage() {
     this.bt = this.defaultBt;
     this.btUnit = this.defaultBtUnit;
-    this.dataStore.userData$
-      .pipe(
-        take(1),
-        map(userData => userData.defaultSchema),
-        tap(defaultSchema => {
-          this.symptoms.setDefault(defaultSchema);
-          this.symptomsView = this.symptoms.list;
-          this.symptomsView = this.symptomsView.map(symptomView => {
-            symptomView.expand = false;
-            return symptomView;
-          });
-        }),
-        takeUntil(this.destroy$),
-      ).subscribe();
+    const defaultSchema = this.dataStore.getUserData().defaultSchema;
+    this.symptoms.setDefault(defaultSchema);
+    this.symptomsView = this.symptoms.list;
+    this.symptomsView = this.symptomsView.map(symptomView => {
+      symptomView.expand = false;
+      return symptomView;
+    });
   }
 
   // Create an integer array [start..end]

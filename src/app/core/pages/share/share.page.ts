@@ -37,11 +37,10 @@ export class SharePage implements OnDestroy {
   confirm() {
     this.stage += 1;
     if (this.stage === Stage.Upload) {
-      combineLatest([this.uploadService.uploadZip(), this.dataStoreService.userData$])
+      this.uploadService.uploadZip()
         .pipe(
-          first(),
-          map(([generatedUrl, userData]) => {
-            console.log(generatedUrl, userData);
+          map(generatedUrl => {
+            const userData = this.dataStoreService.getUserData();
             userData.generatedUrl = generatedUrl;
             return userData;
           }),

@@ -95,13 +95,12 @@ export class SnapshotService {
     return forkJoin([
       this.createPhotoWithSnapshot(),
       this.dataStore.recordMetas$.pipe(take(1)),
-      this.dataStore.userData$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([photo, recordMetas, userData]) => {
+        mergeMap(([photo, recordMetas]) => {
           const record: Record = {
             timestamp: photo.timestamp,
-            symptoms: new Symptoms(userData.defaultSchema),
+            symptoms: new Symptoms(this.dataStore.getUserData().defaultSchema),
             photos: [photo],
           };
           return forkJoin([

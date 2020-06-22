@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { first, map, switchMap, tap } from 'rxjs/operators';
 import { DataStoreService } from '../core/services/data-store.service';
 import { TranslateConfigService } from '../core/services/translate-config.service';
@@ -34,27 +34,24 @@ export class OnboardingPage implements OnDestroy {
   ) { }
 
   onSubmit() {
-    this.dataStoreService.userData$.pipe(
-      first(),
-      tap(() => this.confirmButtonEnabled = false),
-      map(userData => {
-        userData.email = this.onboardingForm.controls.email.value;
-        userData.newUser = false;
-        return userData;
-      }),
-      switchMap(userData => this.dataStoreService.updateUserData(userData)),
-      switchMap(userData => this.privateCouponService.signup(userData.email))
-    ).subscribe(() => {
-      this.router.navigate(['/']);
-    }, (error: HttpErrorResponse) => {
-      if (error.error.reason === 'USED_EMAIL') {
+    const userData = this.dataStoreService.getUserData();
+    this.confirmButtonEnabled = false;
+    userData.email = this.onboardingForm.controls.email.value;
+    userData.newUser = false;
+    const updateUserData$ = this.dataStoreService.updateUserData(userData);
+    const signup$ = this.privateCouponService.signup(userData.email);
+    forkJoin([updateUserData$, signup$])
+      .subscribe(() => {
         this.router.navigate(['/']);
-      } else {
-        console.error(error);
-        this.confirmButtonEnabled = true;
-        this.presentToast(error.error.reason || error.statusText);
-      }
-    });
+      }, (error: HttpErrorResponse) => {
+        if (error.error.reason === 'USED_EMAIL') {
+          this.router.navigate(['/']);
+        } else {
+          console.error(error);
+          this.confirmButtonEnabled = true;
+          this.presentToast(error.error.reason || error.statusText);
+        }
+      });
   }
 
   private presentToast(message: string) {

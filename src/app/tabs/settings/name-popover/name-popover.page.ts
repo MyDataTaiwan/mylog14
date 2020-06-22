@@ -32,16 +32,13 @@ export class NamePopoverPage implements OnInit {
   }
 
   onSubmit() {
-    this.dataStoreService.userData$.pipe(
-      first(),
-      map(userData => {
-        userData.firstName = this.nameForm.controls.firstName.value;
-        userData.lastName = this.nameForm.controls.lastName.value;
-        return userData;
-      }),
-      switchMap(userData => this.dataStoreService.updateUserData(userData)),
-      switchMap(_ => this.popoverController.dismiss()),
-    ).subscribe();
+    const userData = this.dataStoreService.getUserData();
+    userData.firstName = this.nameForm.controls.firstName.value;
+    userData.lastName = this.nameForm.controls.lastName.value;
+    this.dataStoreService.updateUserData(userData)
+      .pipe(
+        switchMap(_ => this.popoverController.dismiss()),
+      ).subscribe();
   }
 
   onCancel() {
