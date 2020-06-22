@@ -4,8 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController, LoadingController } from '@ionic/angular';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
-import { Subject, forkJoin, defer, of } from 'rxjs';
-import { first, map, switchMap, tap } from 'rxjs/operators';
+import { Subject, forkJoin, defer, of, from, Observable } from 'rxjs';
+import { first, map, switchMap, tap, catchError } from 'rxjs/operators';
 import { DataStoreService } from '../core/services/data-store.service';
 import { TranslateConfigService } from '../core/services/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,6 +22,7 @@ export class OnboardingPage implements OnDestroy {
     agreeTermsAndConditions: [false, Validators.requiredTrue]
   });
   confirmButtonEnabled = true;
+  private loadingElement: HTMLIonLoadingElement;
 
   private readonly destroy$ = new Subject();
 
@@ -35,30 +36,43 @@ export class OnboardingPage implements OnDestroy {
     private readonly privateCouponService: PrivateCouponService,
     private readonly loadingCtrl: LoadingController,
   ) { }
- 
+
   onSubmit() {
-    const userData = this.dataStoreService.getUserData();
     this.confirmButtonEnabled = false;
-    userData.email = this.onboardingForm.controls.email.value;
-    userData.newUser = false;
-    const updateUserData$ = this.dataStoreService.updateUserData(userData);
-    const signup$ = this.privateCouponService.signup(userData.email);
     const loading$ = this.presentLoading();
-    forkJoin([updateUserData$, signup$, loading$])
+    const signup$ = this.privateCouponService.signup(this.onboardingForm.controls.email.value)
       .pipe(
-        map(([u, s, l]) => l),
-        tap(([loading, _]) => loading.dismiss()),
+        catchError((err: HttpErrorResponse) => {
+          if (err.error.reason === 'USED_EMAIL') {
+            console.log('The API returns USED_EMAIL error.');
+            return of(null);
+          }
+          console.error(err);
+          this.confirmButtonEnabled = true;
+          this.presentToast(err.error.reason || err.statusText);
+          throw (err);
+        }),
+        switchMap((res: SignupResponse) => {
+          const userData = this.dataStoreService.getUserData();
+          userData.email = this.onboardingForm.controls.email.value;
+          userData.newUser = false;
+          if (res) {
+            userData.userId = res.response.user_id;
+          }
+          return this.dataStoreService.updateUserData(userData);
+        }),
+      );
+
+    loading$
+      .pipe(
+        tap(loadingElement => this.loadingElement = loadingElement),
+        switchMap(loadingElement => signup$.pipe(map(() => loadingElement))),
+        switchMap(loadingElement => loadingElement.dismiss()),
       )
       .subscribe(() => {
         this.router.navigate(['/']);
-      }, (error: HttpErrorResponse) => {
-        if (error.error.reason === 'USED_EMAIL') {
-          this.router.navigate(['/']);
-        } else {
-          console.error(error);
-          this.confirmButtonEnabled = true;
-          this.presentToast(error.error.reason || error.statusText);
-        }
+      }, () => {
+        this.loadingElement.dismiss();
       });
   }
 
@@ -69,7 +83,7 @@ export class OnboardingPage implements OnDestroy {
     }).then(toast => toast.present());
   }
 
-  private presentLoading() {
+  private presentLoading(): Observable<HTMLIonLoadingElement> {
     return this.translate.get('description.registeringUser')
       .pipe(
         switchMap(msg => {
@@ -78,7 +92,10 @@ export class OnboardingPage implements OnDestroy {
             duration: 10000,
           }));
         }),
-        switchMap(loading => forkJoin([of(loading), loading.present()])),
+        switchMap(loading => from(loading.present())
+          .pipe(
+            map(() => loading),
+          )),
       );
   }
 
@@ -86,4 +103,13 @@ export class OnboardingPage implements OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+}
+
+export interface SignupResponse {
+  status: string;
+  response: {
+    expires: number;
+    token: string;
+    user_id: string;
+  };
 }
