@@ -59,7 +59,11 @@
     "selectRecordMode": "Select Record Mode",
     "simple": "Simple",
     "advanced": "Advanced",
-    "agreeTheTermsAndConditions": "Agree the Terms and Conditions"
+    "agreeTheTermsAndConditions": "Agree the Terms and Conditions",
+    "generated": "Generated",
+    "notGenerated": "Not Generated",
+    "copy": "Copy",
+    "copied": "Copied"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

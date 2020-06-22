@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder } from '@angular/forms';
 import { PopoverController } from '@ionic/angular';
-import { first, map, tap, switchMap } from 'rxjs/operators';
+import { first, map, switchMap, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
@@ -18,14 +18,14 @@ export class NamePopoverPage implements OnInit {
   name$ = this.dataStoreService.userData$
     .pipe(
       tap(userData => {
-        this.nameForm.patchValue({firstName: userData.firstName, lastName: userData.lastName});
+        this.nameForm.patchValue({ firstName: userData.firstName, lastName: userData.lastName });
       }),
     );
 
   constructor(
-    private formBuilder: FormBuilder,
-    private popoverController: PopoverController,
-    private dataStoreService: DataStoreService
+    private readonly formBuilder: FormBuilder,
+    private readonly popoverController: PopoverController,
+    private readonly dataStoreService: DataStoreService
   ) { }
 
   ngOnInit() {

@@ -5,9 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { MainHeaderModule } from '../../core/components/main-header/main-header.module';
 import { EmailPopoverPageModule } from './email-popover/email-popover.module';
-import { NamePopoverPageModule } from "./name-popover/name-popover.module";
+import { NamePopoverPageModule } from './name-popover/name-popover.module';
 import { SettingsPageRoutingModule } from './settings-routing.module';
 import { SettingsPage } from './settings.page';
+import { SharedLinkPopoverPageModule } from './shared-link-popover/shared-link-popover.module';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { SettingsPage } from './settings.page';
     SettingsPageRoutingModule,
     MainHeaderModule,
     NamePopoverPageModule,
-    EmailPopoverPageModule
+    EmailPopoverPageModule,
+    SharedLinkPopoverPageModule
   ],
   declarations: [SettingsPage]
 })
