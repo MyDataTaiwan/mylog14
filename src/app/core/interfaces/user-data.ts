@@ -11,4 +11,5 @@ export interface UserData {
     startDate?: string; // yyyy-MM-dd
     endDate?: string; // yyyy-MM-dd
     uploadHost?: string;
+    generatedUrl?: string;
 }

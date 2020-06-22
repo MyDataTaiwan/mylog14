@@ -1,0 +1,13 @@
+<ion-content>
+  <ion-list>
+    <ion-item lines="none">
+      <ion-text>{{ generatedUrl$ | async }}</ion-text>
+    </ion-item>
+  </ion-list>
+
+  <ion-button (click)="onCopy()" fill="clear" class="ion-float-right">
+    {{ 'title.copy' | translate }}</ion-button>
+  <ion-button (click)="onCancel()" fill="clear" class="ion-float-right">
+    {{ 'title.cancel' | translate }}
+  </ion-button>
+</ion-content>

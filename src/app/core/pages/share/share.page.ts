@@ -1,33 +1,61 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import { PopoverController, ToastController } from '@ionic/angular';
-import { defer, Subject } from 'rxjs';
-import { switchMap, take, takeUntil } from 'rxjs/operators';
+import { combineLatest, defer, Subject } from 'rxjs';
+import { first, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { DataStoreService } from '../../services/data-store.service';
 import { UploadService } from '../../services/upload.service';
 
 const { Clipboard } = Plugins;
+
+enum Stage {
+  AreYouSure = 0,
+  Upload = 1,
+  ShareToWhom = 2,
+  Shared = 3,
+  Error = 4
+}
 
 @Component({
   selector: 'app-share',
   templateUrl: './share.page.html',
   styleUrls: ['./share.page.scss'],
 })
-export class SharePage implements OnInit, OnDestroy {
+export class SharePage implements OnDestroy {
+
   destroy$ = new Subject();
-  stage = 0;
+  stage = Stage.AreYouSure;
+  StageEnum = Stage;
 
   constructor(
-    private popoverCtrl: PopoverController,
-    private toastCtrl: ToastController,
-    public uploadService: UploadService,
+    public readonly uploadService: UploadService,
+    private readonly popoverCtrl: PopoverController,
+    private readonly toastCtrl: ToastController,
+    private readonly dataStoreService: DataStoreService
   ) { }
 
-  ngOnInit() {
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  confirm() {
+    this.stage += 1;
+    if (this.stage === Stage.Upload) {
+      combineLatest([this.uploadService.uploadZip(), this.dataStoreService.userData$])
+        .pipe(
+          first(),
+          map(([generatedUrl, userData]) => {
+            console.log(generatedUrl, userData);
+            userData.generatedUrl = generatedUrl;
+            return userData;
+          }),
+          switchMap(userData => this.dataStoreService.updateUserData(userData))
+        )
+        .subscribe(() => { }, err => {
+          console.log(err);
+          this.stage = Stage.Error;
+          this.uploadService.clearUrl();
+        });
+    }
+    if (this.stage === Stage.Shared) {
+      this.uploadService.clearUrl();
+    }
   }
 
   onClickCopy() {
@@ -36,30 +64,9 @@ export class SharePage implements OnInit, OnDestroy {
         take(1),
         switchMap(url => Clipboard.write({ string: url })),
         switchMap(() => this.presentToastCopied()),
-        takeUntil(this.destroy$),
+        takeUntil(this.destroy$)
       )
       .subscribe();
-  }
-
-  cancel() {
-    this.uploadService.clearUrl();
-    this.popoverCtrl.dismiss();
-  }
-
-  confirm() {
-    this.stage += 1;
-    if (this.stage === 1) {
-      this.uploadService.uploadZip()
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => { }, err => {
-          console.log(err);
-          this.stage = 4;
-          this.uploadService.clearUrl();
-        });
-    }
-    if (this.stage === 3) {
-      this.uploadService.clearUrl();
-    }
   }
 
   private presentToastCopied() {
@@ -73,6 +80,16 @@ export class SharePage implements OnInit, OnDestroy {
       .pipe(
         switchMap(toast => toast.present()),
       );
+  }
+
+  cancel() {
+    this.uploadService.clearUrl();
+    this.popoverCtrl.dismiss();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }
