@@ -21,24 +21,21 @@ export class EmailPopoverPage implements OnInit {
     );
 
   constructor(
-    private formBuilder: FormBuilder,
-    private popoverController: PopoverController,
-    private dataStoreService: DataStoreService
+    private readonly formBuilder: FormBuilder,
+    private readonly popoverController: PopoverController,
+    private readonly dataStoreService: DataStoreService
   ) { }
 
   ngOnInit() {
   }
 
   onSubmit() {
-    this.dataStoreService.userData$.pipe(
-      first(),
-      map(userData => {
-        userData.email = this.emailForm.controls.email.value;
-        return userData;
-      }),
-      switchMap(userData => this.dataStoreService.updateUserData(userData)),
-      switchMap(_ => this.popoverController.dismiss()),
-    ).subscribe();
+    const userData = this.dataStoreService.getUserData();
+    userData.email = this.emailForm.controls.email.value;
+    this.dataStoreService.updateUserData(userData)
+      .pipe(
+        switchMap(_ => this.popoverController.dismiss()),
+      ).subscribe();
   }
 
   onCancel() {

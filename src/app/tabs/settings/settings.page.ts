@@ -104,14 +104,10 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onChangeDateOfBirthPicker() {
-    this.dataStoreService.userData$.pipe(
-      first(),
-      map(userData => {
-        userData.dateOfBirth = this.dateOfBirthPicker.value;
-        return userData;
-      }),
-      switchMap(userData => this.dataStoreService.updateUserData(userData)),
-    ).subscribe();
+    const userData = this.dataStoreService.getUserData();
+    userData.dateOfBirth = this.dateOfBirthPicker.value;
+    this.dataStoreService.updateUserData(userData)
+      .subscribe();
   }
 
   onChangeLanguage(event: CustomEvent) {
@@ -132,28 +128,20 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   symptomSelected(event: CustomEvent) {
-    this.dataStoreService.userData$
+    const userData = this.dataStoreService.getUserData();
+    userData.defaultSchema = (event.detail.value === 'default') ? true : false;
+    this.dataStoreService.updateUserData(userData)
       .pipe(
-        first(),
-        map(userData => {
-          userData.defaultSchema = (event.detail.value === 'default') ? true : false;
-          return userData;
-        }),
-        switchMap(userData => this.dataStoreService.updateUserData(userData)),
         switchMap(() => this.dataStoreService.updateRecordMetas()),
         takeUntil(this.destroy$),
       ).subscribe();
   }
 
   uploadHostSelected(event: CustomEvent) {
-    this.dataStoreService.userData$
+    const userData = this.dataStoreService.getUserData();
+    userData.uploadHost = event.detail.value;
+    this.dataStoreService.updateUserData(userData)
       .pipe(
-        first(),
-        map(userData => {
-          userData.uploadHost = event.detail.value;
-          return userData;
-        }),
-        switchMap(userData => this.dataStoreService.updateUserData(userData)),
         takeUntil(this.destroy$),
       ).subscribe(() => { }, err => console.log(err));
   }

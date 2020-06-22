@@ -12,6 +12,7 @@ export class UserDataService {
     newUser: true,
     firstName: '',
     lastName: '',
+    defaultSchema: true,
   };
 
   constructor(

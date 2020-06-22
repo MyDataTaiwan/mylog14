@@ -82,12 +82,11 @@ export class UploadService {
     const endpoint = '/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'mylog.zip');
-    return this.dataStore.userData$
+    const hostType = (this.dataStore.getUserData().uploadHost) ? this.dataStore.getUserData().uploadHost : 'PROD';
+    const url = hostUrl[hostType] + endpoint;
+    return this.http.post(url, formData)
       .pipe(
-        map(userData => (userData.uploadHost) ? userData.uploadHost : 'PROD'),
-        map(hostType => hostUrl[hostType] + endpoint),
-        switchMap(url => forkJoin([this.http.post(url, formData), of(url.replace(endpoint, ''))])),
-        map(([res, host]: [string, string]) => res.replace(hostUrl.PROD, host)),
+        map((res: string) => res.replace(hostUrl.PROD, hostUrl[hostType])),
         tap(logboardUrl => this.generatedUrl.next(logboardUrl)),
         catchError(err => this.httpErrorHandler(err)),
       );

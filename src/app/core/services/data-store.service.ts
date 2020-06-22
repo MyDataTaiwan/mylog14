@@ -12,7 +12,7 @@ import { UserDataService } from './user-data.service';
   providedIn: 'root'
 })
 export class DataStoreService {
-  private recordMetas = new BehaviorSubject<RecordMeta[]>([]);
+  private readonly recordMetas = new BehaviorSubject<RecordMeta[]>([]);
   public recordMetas$ = this.recordMetas.asObservable();
 
   public dailyRecords$ = this.recordMetas$.pipe(
@@ -20,19 +20,13 @@ export class DataStoreService {
     switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
     map(records => new DailyRecords(records)),
     switchMap(dailyRecords => {
-      const userData = this.userData.getValue();
+      const userData = this.userData;
       userData.startDate = dailyRecords.startDate;
       userData.endDate = dailyRecords.endDate;
       return forkJoin([this.updateUserData(userData), of(dailyRecords)]);
     }),
     map(([_, dailyRecords]) => dailyRecords),
     tap(d => console.log('Daily records', d)),
-  );
-
-  public dailydrips$ = this.recordMetas$.pipe(
-    map(recordMetas => (recordMetas) ? recordMetas : []),
-    switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
-    map(records => records.length),
   );
 
   public overviewCards$ = this.dailyRecords$.pipe(
@@ -43,14 +37,24 @@ export class DataStoreService {
     }),
   );
 
-  private userData = new BehaviorSubject<UserData>(this.userDataService.defaultUserData);
-  public userData$ = this.userData.asObservable();
+  private userData: UserData = this.userDataService.defaultUserData;
+  public userData$ = new BehaviorSubject<UserData>(this.userDataService.defaultUserData);
 
   constructor(
-    private recordService: RecordService,
-    private userDataService: UserDataService,
+    private readonly recordService: RecordService,
+    private readonly userDataService: UserDataService,
   ) {
-    this.updateRecordMetas().subscribe(); // Initial update (load from storage)
+    this.userData$
+      .pipe(tap(userData => this.userData = userData))
+      .subscribe();
+  }
+
+  initialize() {
+    return forkJoin([this.updateUserData(), this.updateRecordMetas()]);
+  }
+
+  getUserData() {
+    return this.userData;
   }
 
   updateRecordMetas(recordMetas?: RecordMeta[]): Observable<RecordMeta[]> {
@@ -73,7 +77,7 @@ export class DataStoreService {
         }
         return data;
       }),
-      tap((data: UserData) => this.userData.next(data)),
+      tap(data => this.userData$.next(data)),
     );
   }
 

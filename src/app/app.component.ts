@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { tap } from 'rxjs/operators';
 import { DataStoreService } from './core/services/data-store.service';
 import { GeolocationService } from './core/services/geolocation.service';
 import { TranslateConfigService } from './core/services/translate-config.service';
+import { first, tap } from 'rxjs/operators';
 
 
 const { SplashScreen, StatusBar } = Plugins;
@@ -36,11 +36,14 @@ export class AppComponent {
       }
     }
     this.geolocation.getPosition().subscribe(); // Update location cache
-    this.dataStore.updateUserData()
+    this.dataStore.initialize()
       .pipe(
-        tap(userData => {
-          if (userData.newUser) this.router.navigate(['/onboarding']);
-        })
+        first(),
+        tap(() => {
+          if (this.dataStore.getUserData().newUser) {
+            this.router.navigate(['/onboarding']);
+          }
+        }),
       ).subscribe(() => { }, err => console.log(err));
     SplashScreen.hide();
   }
