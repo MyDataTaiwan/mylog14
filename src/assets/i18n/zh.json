@@ -66,7 +66,8 @@
     "currentBalance": "目前可兌換金額",
     "canItBeRedeemed": "剩餘兌換名額",
     "canRedeem": "尚有名額",
-    "cannotRedeem": "暫無名額"
+    "cannotRedeem": "暫無名額",
+    "redeeming": "正在兌換..."
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

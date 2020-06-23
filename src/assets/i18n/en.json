@@ -68,7 +68,8 @@
     "currentBalance": "Current Balance",
     "canItBeRedeemed": "Redeem Quota",
     "canRedeem": "Available",
-    "cannotRedeem": "Out of Stock"
+    "cannotRedeem": "Out of Stock",
+    "redeeming": "Redeeming..."
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

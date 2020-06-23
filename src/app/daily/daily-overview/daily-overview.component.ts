@@ -5,6 +5,7 @@ import { Observable, Subject, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { CouponService } from 'src/app/core/services/coupon.service';
+import { ShopScannerService } from 'src/app/core/services/shop-scanner.service';
 
 @Component({
   selector: 'app-daily-overview',
@@ -42,7 +43,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   constructor(
     public dataStore: DataStoreService,
     private ngZone: NgZone,
-    public couponService: CouponService,
+    public shopScannerService: ShopScannerService,
   ) {
     this.items$ = this.dataStore.overviewCards$
       .pipe(
@@ -94,7 +95,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onClickAnimation() {
-    this.couponService.showShopScanner()
+    this.shopScannerService.showShopScanner()
     .pipe(
       takeUntil(this.destroy$),
     ).subscribe();

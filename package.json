@@ -77,7 +77,7 @@
     "typescript": "~3.4.3"
   },
   "optionalDependencies": {
-    "@numbersprotocol/private-coupon": "0.0.2"
+    "@numbersprotocol/private-coupon": "0.0.4"
   },
   "description": "An Ionic project"
 }

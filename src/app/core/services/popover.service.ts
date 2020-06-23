@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, defer } from 'rxjs';
 import { PopoverComponent } from '../components/popover/popover.component';
 import { PopoverController } from '@ionic/angular';
-import { switchMap, delay } from 'rxjs/operators';
+import { switchMap, delay, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,20 @@ import { switchMap, delay } from 'rxjs/operators';
 export class PopoverService {
 
   constructor(
-    private popoverCtrl: PopoverController,
+    private readonly popoverCtrl: PopoverController,
   ) { }
 
   showPopover(componentProps: PopoverProps, dismissTime?: number): Observable<any> {
     return this.createPopover(componentProps)
       .pipe(
         switchMap(popover => this.presentPopover(popover, dismissTime)),
+      );
+  }
+
+  showPopoverManualDismiss(componentProps: PopoverProps): Observable<HTMLIonPopoverElement> {
+    return this.createPopover(componentProps)
+      .pipe(
+        switchMap(popover => this.presentPopoverManualDismiss(popover)),
       );
   }
 
@@ -39,6 +46,13 @@ export class PopoverService {
         switchMap(() => popover.dismiss()),
       );
     return (dismissTime) ? autoDismiss$ : manualDismiss$;
+  }
+
+  private presentPopoverManualDismiss(popover: HTMLIonPopoverElement): Observable<HTMLIonPopoverElement> {
+    return defer(() => popover.present())
+      .pipe(
+        map(() => popover),
+      );
   }
 }
 
