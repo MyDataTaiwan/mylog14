@@ -29,7 +29,8 @@
     "submit": "Soumettre",
     "clear": "Effacer",
     "recordSaved": "Enregistré",
-    "confirm": "Accepter"
+    "confirm": "Accepter",
+    "scanQrcode": "Scan QR Code"
   },
   "description": {
     "protectYourData": "Gérer vos données personnelles et partager avec consentement",

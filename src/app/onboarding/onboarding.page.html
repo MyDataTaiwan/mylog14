@@ -448,7 +448,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button type="submit" [disabled]="!onboardingForm.valid">
+              <ion-button type="submit" [disabled]="!onboardingForm.valid || !confirmButtonEnabled">
                 {{ 'title.confirm' | translate }}</ion-button>
             </ion-col>
           </ion-row>

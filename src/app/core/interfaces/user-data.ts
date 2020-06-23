@@ -5,7 +5,7 @@ export interface UserData {
     dateOfBirth?: string; // ISO 8601
     newUser: boolean;
     defaultSchema?: boolean;
-    uuid?: string;
+    userId?: string;
     language?: string;
     timezone?: string;
     startDate?: string; // yyyy-MM-dd

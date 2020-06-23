@@ -4,6 +4,8 @@ import { AnimationOptions } from 'ngx-lottie';
 import { Observable, Subject, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { CouponService } from 'src/app/core/services/coupon.service';
+import { ShopScannerService } from 'src/app/core/services/shop-scanner.service';
 
 @Component({
   selector: 'app-daily-overview',
@@ -40,7 +42,8 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   constructor(
     public dataStore: DataStoreService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public shopScannerService: ShopScannerService,
   ) {
     this.items$ = this.dataStore.overviewCards$
       .pipe(
@@ -91,11 +94,14 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.arry[idx], true));
   }
 
-  goToLink(url: string) {
-    const date = this.WhatIsItToday;
-    if (date >= 14) {
-      window.open(url, "_blank");
+  onClickAnimation() {
+    if (!this.dataStore.getUserData().startDate) {
+      return;
     }
+    this.shopScannerService.showShopScanner()
+    .pipe(
+      takeUntil(this.destroy$),
+    ).subscribe();
   }
 
   private animationStopOnDay(idx: number) {

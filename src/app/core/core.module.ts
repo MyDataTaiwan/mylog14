@@ -9,17 +9,23 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { ShareFinishPageModule } from './pages/share-finish/share-finish.module';
 import { SharePageModule } from './pages/share/share.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
+import { ShopScannerComponent } from './components/shop-scanner/shop-scanner.component';
 
 
 
 @NgModule({
   entryComponents: [
     PopoverComponent,
+    ShopScannerComponent,
+    QrScannerComponent,
   ],
   declarations: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
     PopoverComponent,
+    ShopScannerComponent,
+    QrScannerComponent,
   ],
   imports: [
     CommonModule,
@@ -34,6 +40,8 @@ import { TranslateModule } from '@ngx-translate/core';
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
     PopoverComponent,
+    ShopScannerComponent,
+    QrScannerComponent,
   ]
 })
 export class CoreModule { }

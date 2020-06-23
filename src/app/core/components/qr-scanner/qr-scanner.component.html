@@ -1,0 +1,6 @@
+<div>
+  <ion-spinner *ngIf="!cameraStreamReady"></ion-spinner>
+  <video #video [hidden]="!cameraStreamReady" width="100%"></video>
+  <!-- Used to render the camera stream images -->
+  <canvas #canvas hidden></canvas>
+</div>
