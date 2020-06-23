@@ -19,7 +19,7 @@ export class ShopScannerComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly modalCtrl: ModalController,
-    private readonly couponService: CouponService,
+    public couponService: CouponService,
   ) { }
 
   ngOnInit() {

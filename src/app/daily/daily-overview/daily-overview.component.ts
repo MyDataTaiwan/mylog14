@@ -95,6 +95,9 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onClickAnimation() {
+    if (!this.dataStore.getUserData().startDate) {
+      return;
+    }
     this.shopScannerService.showShopScanner()
     .pipe(
       takeUntil(this.destroy$),

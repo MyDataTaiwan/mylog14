@@ -69,7 +69,8 @@
     "canItBeRedeemed": "Redeem Quota",
     "canRedeem": "Available",
     "cannotRedeem": "Out of Stock",
-    "redeeming": "Redeeming..."
+    "redeeming": "Redeeming...",
+    "daysRecorded": "Days recorded"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
