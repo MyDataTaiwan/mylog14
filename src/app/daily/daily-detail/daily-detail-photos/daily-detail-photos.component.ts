@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { LoadingController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { Record } from 'src/app/core/interfaces/record';
 import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
+import { LoadingService } from 'src/app/core/services/loading.service';
 export interface Pic {
   src: string;
 }
@@ -27,11 +28,11 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   constructor(
-    private dataStore: DataStoreService,
-    private loadingCtrl: LoadingController,
+    private readonly dataStore: DataStoreService,
+    private readonly loadingService: LoadingService,
     public modalController: ModalController,
-    private photoService: PhotoService,
-    private translate: TranslateService,
+    private readonly photoService: PhotoService,
+    private readonly translate: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -69,10 +70,10 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
         map(res => res.data.delete),
         filter(willDelete => willDelete === true),
         switchMap(() => forkJoin([
-          this.presentLoading(),
+          this.showDeletingDataLoading(),
           this.photoService.deletePhoto(record, photo),
         ])),
-        switchMap(([[loadingElement, _], __]) => loadingElement.dismiss()),
+        switchMap(([loadingElement, __]) => loadingElement.dismiss()),
       );
   }
 
@@ -95,16 +96,10 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
       );
   }
 
-  private presentLoading() {
+  showDeletingDataLoading(): Observable<HTMLIonLoadingElement> {
     return this.translate.get('description.deletingData')
       .pipe(
-        switchMap(msg => {
-          return defer(() => this.loadingCtrl.create({
-            message: msg,
-            duration: 10000,
-          }));
-        }),
-        switchMap(loading => forkJoin([of(loading), loading.present()])),
+        switchMap(msg => this.loadingService.showLoading(msg, 10000)),
       );
   }
 }

@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LoadingController, PickerController } from '@ionic/angular';
+import { PickerController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
@@ -11,6 +11,7 @@ import { DataStoreService } from '../../services/data-store.service';
 import { GeolocationService } from '../../services/geolocation.service';
 import { SnapshotService } from '../../services/snapshot.service';
 import { PopoverService, PopoverIcon } from '../../services/popover.service';
+import { LoadingService } from '../../services/loading.service';
 
 @Component({
   selector: 'app-add-record',
@@ -46,7 +47,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   constructor(
     private dataStore: DataStoreService,
-    private loadingCtrl: LoadingController,
+    private loadingService: LoadingService,
     private location: Location,
     private pickerCtrl: PickerController,
     private geolocationService: GeolocationService,
@@ -143,16 +144,10 @@ export class AddRecordPage implements OnInit, OnDestroy {
     await picker.present();
   }
 
-  presentLoading() {
+  showAddingDataLoading(): Observable<HTMLIonLoadingElement> {
     return this.translate.get('description.addingDataAndVerifiableInformation')
       .pipe(
-        switchMap(msg => {
-          return defer(() => this.loadingCtrl.create({
-            message: msg,
-            duration: 10000,
-          }));
-        }),
-        switchMap(loading => forkJoin([of(loading), loading.present()])),
+        switchMap(msg => this.loadingService.showLoading(msg, 10000)),
       );
   }
 
@@ -180,11 +175,12 @@ export class AddRecordPage implements OnInit, OnDestroy {
     // FIXME: It's a dirty hack to add/remove expand value for symptoms view
     this.symptoms.list = this.symptomsView;
     this.symptoms.list.forEach((symptom: SymptomView) => delete symptom.expand);
-    const loading$ = this.presentLoading();
-    const snapRecord$ = this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms);
-    return forkJoin([loading$, snapRecord$])
+    return forkJoin([
+      this.showAddingDataLoading,
+      this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms),
+    ])
       .pipe(
-        switchMap(([[loadingElement, _1], _]) => loadingElement.dismiss()),
+        switchMap(([loadingElement, _]) => loadingElement.dismiss()),
         switchMap(() => this.showRecordFinish()),
         takeUntil(this.destroy$),
       );

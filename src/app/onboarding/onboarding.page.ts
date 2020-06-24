@@ -2,13 +2,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
 import { Subject, forkJoin, defer, of, from, Observable } from 'rxjs';
 import { first, map, switchMap, tap, catchError } from 'rxjs/operators';
 import { DataStoreService } from '../core/services/data-store.service';
 import { TranslateConfigService } from '../core/services/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LoadingService } from '../core/services/loading.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -34,12 +35,12 @@ export class OnboardingPage implements OnDestroy {
     private readonly toastController: ToastController,
     private readonly dataStoreService: DataStoreService,
     private readonly privateCouponService: PrivateCouponService,
-    private readonly loadingCtrl: LoadingController,
+    private readonly loadingService: LoadingService,
   ) { }
 
   onSubmit() {
     this.confirmButtonEnabled = false;
-    const loading$ = this.presentLoading();
+    const loading$ = this.showRegisteringUserLoading();
     const signup$ = this.privateCouponService.signup(this.onboardingForm.controls.email.value)
       .pipe(
         catchError((err: HttpErrorResponse) => {
@@ -83,19 +84,10 @@ export class OnboardingPage implements OnDestroy {
     }).then(toast => toast.present());
   }
 
-  private presentLoading(): Observable<HTMLIonLoadingElement> {
+  showRegisteringUserLoading(): Observable<HTMLIonLoadingElement> {
     return this.translate.get('description.registeringUser')
       .pipe(
-        switchMap(msg => {
-          return defer(() => this.loadingCtrl.create({
-            message: msg,
-            duration: 10000,
-          }));
-        }),
-        switchMap(loading => from(loading.present())
-          .pipe(
-            map(() => loading),
-          )),
+        switchMap(msg => this.loadingService.showLoading(msg, 10000)),
       );
   }
 

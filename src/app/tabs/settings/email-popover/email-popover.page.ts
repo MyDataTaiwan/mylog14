@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from "@angular/forms";
-import { PopoverController, LoadingController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { first, map, switchMap, tap, catchError } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { Observable, defer, from, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoadingService } from 'src/app/core/services/loading.service';
 
 @Component({
   selector: 'app-email-popover',
@@ -28,7 +29,7 @@ export class EmailPopoverPage implements OnInit {
   constructor(
     private readonly dataStoreService: DataStoreService,
     private readonly formBuilder: FormBuilder,
-    private readonly loadingCtrl: LoadingController,
+    private readonly loadingService: LoadingService,
     private readonly popoverController: PopoverController,
     private readonly privateCouponService: PrivateCouponService,
     private readonly translate: TranslateService,
@@ -38,7 +39,7 @@ export class EmailPopoverPage implements OnInit {
   }
 
   onSubmit() {
-    const loading$ = this.presentLoading();
+    const loading$ = this.showRegisteringUserLoading();
     const signup$ = this.privateCouponService.signup(this.emailForm.controls.email.value)
       .pipe(
         catchError((err: HttpErrorResponse) => {
@@ -77,19 +78,10 @@ export class EmailPopoverPage implements OnInit {
     this.popoverController.dismiss();
   }
 
-  private presentLoading(): Observable<HTMLIonLoadingElement> {
+  showRegisteringUserLoading(): Observable<HTMLIonLoadingElement> {
     return this.translate.get('description.registeringUser')
       .pipe(
-        switchMap(msg => {
-          return defer(() => this.loadingCtrl.create({
-            message: msg,
-            duration: 10000,
-          }));
-        }),
-        switchMap(loading => from(loading.present())
-          .pipe(
-            map(() => loading),
-          )),
+        switchMap(msg => this.loadingService.showLoading(msg, 10000)),
       );
   }
 
