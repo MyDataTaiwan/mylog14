@@ -13,8 +13,8 @@ export class PopoverService {
     private readonly popoverCtrl: PopoverController,
   ) { }
 
-  showPopover(componentProps: PopoverProps, dismissTime?: number): Observable<any> {
-    return this.createPopover(componentProps)
+  showPopover(componentProps: PopoverProps, dismissTime?: number, animated?: boolean): Observable<any> {
+    return this.createPopover(componentProps, animated)
       .pipe(
         switchMap(popover => this.presentPopover(popover, dismissTime)),
       );
@@ -27,11 +27,11 @@ export class PopoverService {
       );
   }
 
-  private createPopover(componentProps: PopoverProps): Observable<HTMLIonPopoverElement> {
+  private createPopover(componentProps: PopoverProps, animated: boolean = false): Observable<HTMLIonPopoverElement> {
     return defer(() => this.popoverCtrl.create({
       component: PopoverComponent,
       componentProps,
-      animated: false,
+      animated,
     }));
   }
 

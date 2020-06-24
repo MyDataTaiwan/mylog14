@@ -91,7 +91,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
       });
   }
 
-  showRecordFinish(): Observable<any> {
+  showRecordSavedPopover(): Observable<any> {
     return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500)
       .pipe(
         tap(() => this.location.back()),
@@ -176,12 +176,12 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.symptoms.list = this.symptomsView;
     this.symptoms.list.forEach((symptom: SymptomView) => delete symptom.expand);
     return forkJoin([
-      this.showAddingDataLoading,
+      this.showAddingDataLoading(),
       this.snapshotService.snapRecord(+this.bt, this.btUnit, this.symptoms),
     ])
       .pipe(
         switchMap(([loadingElement, _]) => loadingElement.dismiss()),
-        switchMap(() => this.showRecordFinish()),
+        switchMap(() => this.showRecordSavedPopover()),
         takeUntil(this.destroy$),
       );
   }

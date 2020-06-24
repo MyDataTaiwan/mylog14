@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { GeolocationPosition } from '@capacitor/core';
 import { PopoverController } from '@ionic/angular';
 import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
-import { catchError, delay, map, mergeMap, switchMap, take, takeUntil } from 'rxjs/operators';
+import { catchError, delay, map, mergeMap, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { Symptoms } from '../classes/symptoms';
-import { RecordFinishPage } from '../components/record-finish/record-finish.page';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
@@ -14,6 +13,7 @@ import { DataStoreService } from './data-store.service';
 import { GeolocationService } from './geolocation.service';
 import { PhotoService } from './photo.service';
 import { RecordService } from './record.service';
+import { PopoverIcon, PopoverService } from './popover.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +26,11 @@ export class SnapshotService {
     timestamp: 0,
   };
   constructor(
-    private dataStore: DataStoreService,
-    private geolocationService: GeolocationService,
-    private photoService: PhotoService,
-    private popoverCtrl: PopoverController,
-    private recordService: RecordService,
+    private readonly dataStore: DataStoreService,
+    private readonly geolocationService: GeolocationService,
+    private readonly photoService: PhotoService,
+    private readonly popoverService: PopoverService,
+    private readonly recordService: RecordService,
   ) { }
 
   getLocationStamp(): Observable<LocationStamp> {
@@ -105,29 +105,19 @@ export class SnapshotService {
           };
           return forkJoin([
             this.recordService.saveRecord(record, recordMetas),
-            this.showCaptureFinish(),
+            this.showRecordSavedPopover(),
           ]);
         }),
         switchMap(([recordMetas, _]) => this.dataStore.updateRecordMetas(recordMetas)),
       );
   }
 
-
-  showCaptureFinish() {
-    return defer(() => this.popoverCtrl.create({
-      component: RecordFinishPage,
-    }))
-      .pipe(
-        switchMap(popover => this.displayPopoverForDuration(popover, 0.5)),
-      );
-  }
-
-  private displayPopoverForDuration(popover: HTMLIonPopoverElement, seconds: number) {
-    return from(popover.present())
-      .pipe(
-        delay(seconds * 1000),
-        switchMap(() => popover.dismiss()),
-      );
+  showRecordSavedPopover(): Observable<any> {
+    return this.popoverService.showPopover(
+      { i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM },
+      500,
+      true,
+    );
   }
 
   snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {

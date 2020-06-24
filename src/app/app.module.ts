@@ -9,7 +9,6 @@ import player from 'lottie-web';
 import { LottieModule } from 'ngx-lottie';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
 import { CoreModule } from './core/core.module';
 import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
 import { GuidePageModule } from './core/pages/guide/guide.module';
@@ -37,7 +36,6 @@ export function playerFactory() {
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    RecordFinishPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
