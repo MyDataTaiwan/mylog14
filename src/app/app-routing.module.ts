@@ -23,10 +23,6 @@ const routes: Routes = [
     loadChildren: () => import('./core/pages/share/share.module').then(m => m.SharePageModule)
   },
   {
-    path: 'share-finish',
-    loadChildren: () => import('./core/pages/share-finish/share-finish.module').then(m => m.ShareFinishPageModule)
-  },
-  {
     path: 'guide',
     loadChildren: () => import('./core/pages/guide/guide.module').then(m => m.GuidePageModule)
   },

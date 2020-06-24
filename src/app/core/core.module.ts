@@ -6,7 +6,6 @@ import { MainHeaderModule } from './components/main-header/main-header.module';
 import { NgModule } from '@angular/core';
 import { PopoverComponent } from './components/popover/popover.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { ShareFinishPageModule } from './pages/share-finish/share-finish.module';
 import { SharePageModule } from './pages/share/share.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
@@ -34,7 +33,6 @@ import { ShopScannerComponent } from './components/shop-scanner/shop-scanner.com
     MainHeaderModule,
     AddRecordPageModule,
     SharePageModule,
-    ShareFinishPageModule,
   ],
   exports: [
     SafeUrlPipe,
