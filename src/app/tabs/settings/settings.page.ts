@@ -132,7 +132,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     userData.defaultSchema = (event.detail.value === 'default') ? true : false;
     this.dataStoreService.updateUserData(userData)
       .pipe(
-        switchMap(() => this.dataStoreService.updateRecordMetas()),
+        switchMap(() => this.dataStoreService.updateMetas()),
         takeUntil(this.destroy$),
       ).subscribe();
   }

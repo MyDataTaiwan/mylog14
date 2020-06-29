@@ -21,29 +21,29 @@ export class UploadService {
   ) { }
 
   private createCachedFiles() {
-    return this.dataStore.recordMetas$
+    return this.dataStore.metas$
       .pipe(
         take(1),
-        map(recordMetas => {
+        map(metas => {
           const now = Date.now();
           const earliestTimeForUpload = now - 1000 * 86400 * 14; // Only upload  data in 14 Days
-          return recordMetas.filter(recordMeta => recordMeta.timestamp > earliestTimeForUpload);
+          return metas.filter(meta => meta.timestamp > earliestTimeForUpload);
         }),
-        switchMap(recordMetas => {
+        switchMap(metas => {
           return forkJoin([
-            of(recordMetas.map(recordMeta => recordMeta.path)),
-            this.recordService.getRawRecords(recordMetas),
-            of(recordMetas),
+            of(metas.map(meta => meta.path)),
+            this.recordService.getRawRecords(metas),
+            of(metas),
           ]);
         }),
-        map(([filenames, rawRecords, recordMetas]) => {
+        map(([filenames, rawRecords, metas]) => {
           const cachedFiles: CachedFile[] = [];
           filenames.map((filename, idx) => cachedFiles.push({
             filename,
             type: 'json',
             content: rawRecords[idx],
-            hash: recordMetas[idx].hash,
-            transactionHash: recordMetas[idx].transactionHash,
+            hash: metas[idx].hash,
+            transactionHash: metas[idx].transactionHash,
           }));
           return cachedFiles;
         })

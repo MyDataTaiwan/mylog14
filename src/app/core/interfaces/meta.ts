@@ -1,6 +1,6 @@
 import { FilesystemDirectory } from '@capacitor/core';
 
-export interface Metadata {
+export interface Meta {
     timestamp: number;
     path: string;
     directory: FilesystemDirectory;

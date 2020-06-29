@@ -7,13 +7,14 @@ import { Symptoms } from '../classes/symptoms';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
-import { RecordMeta } from '../interfaces/record-meta';
+import { Meta } from '../interfaces/meta';
 import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
 import { GeolocationService } from './geolocation.service';
 import { PhotoService } from './photo.service';
 import { RecordService } from './record.service';
 import { PopoverIcon, PopoverService } from './popover.service';
+import { ProofService } from './proof.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,88 +28,40 @@ export class SnapshotService {
   };
   constructor(
     private readonly dataStore: DataStoreService,
-    private readonly geolocationService: GeolocationService,
+    private readonly proofService: ProofService,
     private readonly photoService: PhotoService,
     private readonly popoverService: PopoverService,
     private readonly recordService: RecordService,
   ) { }
 
-  getLocationStamp(): Observable<LocationStamp> {
-    return this.geolocationService.getPosition()
-      .pipe(
-        catchError(err => {
-          console.log('Geolocation timeout. Set all value to 0.', err);
-          return of(this.fakePos);
-        }),
-        map(pos => pos.coords),
-        map(coords => {
-          return {
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-            accuracy: coords.accuracy,
-          };
-        }),
-      );
-  }
-
-  getTimestamp(): number {
-    return Date.now();
-  }
-
-  createSnapshot(): Observable<Snapshot> {
-    return this.getLocationStamp()
-      .pipe(
-        map(location => {
-          return {
-            timestamp: this.getTimestamp(),
-            locationStamp: location,
-          };
-        })
-      );
-  }
-
-  createPhotoWithSnapshot(): Observable<Photo> {
-    // Start trying to get geolocation as soon as this function is called.
-    // In the meanwhile, open the built-in camera. If the user finished taking a photo,
-    // takePhotoSignal$ is used to trigger complete signal for createSnapshot observable
-    // The observable then yields fake location data
-    const takePhotoSignal$ = new Subject();
-    const subscription = takePhotoSignal$.subscribe();
+  createPhotoWithProof(): Observable<Photo> {
     return forkJoin([
-      this.photoService.startCapture(takePhotoSignal$),
-      this.createSnapshot().pipe(takeUntil(takePhotoSignal$)),
+      this.photoService.createPhotoByCamera(),
+      this.proofService.createProofWithLocation(),
     ])
       .pipe(
-        switchMap(([capturedPhoto, snapshot]) => {
-          subscription.unsubscribe();
-          return from(this.photoService.createPicture(capturedPhoto, snapshot));
-        }),
-        map(({ photo, metadata }) => {
-          photo.timestamp = metadata.timestamp;
-          photo.locationStamp = metadata.locationStamp;
-          return photo;
-        }),
+        map(([photo, proof]) => ({ ...photo, proof })),
       );
   }
 
   snapCapture() {
     return forkJoin([
-      this.createPhotoWithSnapshot(),
-      this.dataStore.recordMetas$.pipe(take(1)),
+      this.createPhotoWithProof(),
+      this.dataStore.metas$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([photo, recordMetas]) => {
+        mergeMap(([photo, metas]) => {
           const record: Record = {
-            timestamp: photo.timestamp,
+            timestamp: Date.now(),
             symptoms: new Symptoms(this.dataStore.getUserData().defaultSchema),
             photos: [photo],
           };
           return forkJoin([
-            this.recordService.saveRecord(record, recordMetas),
+            this.recordService.saveRecord(record, metas),
             this.showRecordSavedPopover(),
           ]);
         }),
-        switchMap(([recordMetas, _]) => this.dataStore.updateRecordMetas(recordMetas)),
+        switchMap(([metas, _]) => this.dataStore.updateMetas(metas)),
       );
   }
 
@@ -120,24 +73,25 @@ export class SnapshotService {
     );
   }
 
-  snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
+  snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<Meta[]> {
+    return this.photoService.createPhotoByCamera().pipe(map(_ => []));
     return forkJoin([
-      this.createSnapshot(),
-      this.dataStore.recordMetas$.pipe(take(1)),
+      this.proofService.createProofWithLocation(),
+      this.dataStore.metas$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([snapshot, recordMetas]) => {
+        mergeMap(([proof, metas]) => {
           const record: Record = {
             bodyTemperature,
             bodyTemperatureUnit,
             symptoms,
-            timestamp: snapshot.timestamp,
-            locationStamp: snapshot.locationStamp,
+            timestamp: proof.timestamp,
+            locationStamp: proof.locationStamp,
             photos: [],
           };
-          return this.recordService.saveRecord(record, recordMetas);
+          return this.recordService.saveRecord(record, metas);
         }),
-        switchMap(recordMetas => this.dataStore.updateRecordMetas(recordMetas)),
+        switchMap(metas => this.dataStore.updateMetas(metas)),
       );
   }
 

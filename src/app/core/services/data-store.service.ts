@@ -3,7 +3,7 @@ import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
-import { RecordMeta } from '../interfaces/record-meta';
+import { Meta } from '../interfaces/meta';
 import { UserData } from '../interfaces/user-data';
 import { RecordService } from './record.service';
 import { UserDataService } from './user-data.service';
@@ -12,12 +12,12 @@ import { UserDataService } from './user-data.service';
   providedIn: 'root'
 })
 export class DataStoreService {
-  private readonly recordMetas = new BehaviorSubject<RecordMeta[]>([]);
-  public recordMetas$ = this.recordMetas.asObservable();
+  private readonly metas = new BehaviorSubject<Meta[]>([]);
+  public metas$ = this.metas.asObservable();
 
-  public dailyRecords$ = this.recordMetas$.pipe(
-    map(recordMetas => (recordMetas) ? recordMetas : []),
-    switchMap(recordMetas => this.recordService.getRecords(recordMetas)),
+  public dailyRecords$ = this.metas$.pipe(
+    map(metas => (metas) ? metas : []),
+    switchMap(metas => this.recordService.getRecords(metas)),
     map(records => new DailyRecords(records)),
     switchMap(dailyRecords => {
       const userData = this.userData;
@@ -50,19 +50,19 @@ export class DataStoreService {
   }
 
   initialize() {
-    return forkJoin([this.updateUserData(), this.updateRecordMetas()]);
+    return forkJoin([this.updateUserData(), this.updateMetas()]);
   }
 
   getUserData() {
     return this.userData;
   }
 
-  updateRecordMetas(recordMetas?: RecordMeta[]): Observable<RecordMeta[]> {
-    const loadList$ = this.recordService.getRecordMetas();
-    const saveList$ = this.recordService.saveRecordMetas(recordMetas);
-    const update$ = (recordMetas) ? saveList$ : loadList$;
+  updateMetas(metas?: Meta[]): Observable<Meta[]> {
+    const loadList$ = this.recordService.getMetas();
+    const saveList$ = this.recordService.saveMetas(metas);
+    const update$ = (metas) ? saveList$ : loadList$;
     return update$.pipe(
-      tap((list: RecordMeta[]) => this.recordMetas.next(list)),
+      tap((list: Meta[]) => this.metas.next(list)),
     );
   }
 

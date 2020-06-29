@@ -1,9 +1,7 @@
 import { LocationStamp } from './location-stamp';
+import { Proof } from './proof';
 
 export interface Photo {
-    filepath: string;
-    webviewPath: string;
-    byteString?: string;
-    timestamp?: number;
-    locationStamp?: LocationStamp;
+    byteString: string;
+    proof?: Proof;
 }

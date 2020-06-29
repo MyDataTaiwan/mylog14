@@ -3,10 +3,10 @@ import { FilesystemDirectory } from '@capacitor/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Record } from '../interfaces/record';
-import { RecordMeta } from '../interfaces/record-meta';
 import { FileSystemService } from './file-system.service';
 import { LedgerService } from './ledger.service';
 import { LocalStorageService } from './local-storage.service';
+import { Meta } from '../interfaces/meta';
 
 @Injectable({
   providedIn: 'root'
@@ -16,28 +16,28 @@ export class RecordService {
   RECORD_DIRECTORY = FilesystemDirectory.Data;
 
   constructor(
-    private fileSystem: FileSystemService,
-    private ledger: LedgerService,
-    private localStorage: LocalStorageService,
+    private readonly fileSystem: FileSystemService,
+    private readonly ledger: LedgerService,
+    private readonly localStorage: LocalStorageService,
   ) { }
 
-  getRecord(recordMeta: RecordMeta): Observable<Record> {
-    return this.fileSystem.getJsonData(recordMeta.path, recordMeta.directory);
+  getRecord(meta: Meta): Observable<Record> {
+    return this.fileSystem.getJsonData(meta.path, meta.directory);
   }
 
-  getRecords(recordMetas: RecordMeta[]): Observable<Record[]> {
+  getRecords(metas: Meta[]): Observable<Record[]> {
     return forkJoin(
-      recordMetas.map(recordMeta => this.getRecord(recordMeta)),
+      metas.map(meta => this.getRecord(meta)),
     );
   }
 
-  getRawRecords(recordMetas: RecordMeta[]): Observable<string[]> {
+  getRawRecords(metas: Meta[]): Observable<string[]> {
     return forkJoin(
-      recordMetas.map(recordMeta => this.fileSystem.getJsonData(recordMeta.path, recordMeta.directory, false)),
+      metas.map(meta => this.fileSystem.getJsonData(meta.path, meta.directory, false)),
     );
   }
 
-  saveRecord(record: Record, recordMetas: RecordMeta[]): Observable<RecordMeta[]> {
+  saveRecord(record: Record, metas: Meta[]): Observable<Meta[]> {
     const fileSave$ = this.fileSystem.saveJsonData(record);
     return fileSave$
       .pipe(
@@ -51,24 +51,24 @@ export class RecordService {
           )
         ),
         map(([filename, fileHash, transactionHash]) => {
-          return this.createRecordMeta(record.timestamp, filename, fileHash, transactionHash);
+          return this.createMeta(record.timestamp, filename, fileHash, transactionHash);
         }),
-        map(recordMeta => {
-          recordMetas.push(recordMeta);
-          return recordMetas;
+        map(meta => {
+          metas.push(meta);
+          return metas;
         }),
       );
   }
 
-  getRecordMetas(): Observable<RecordMeta[]> {
+  getMetas(): Observable<Meta[]> {
     return this.localStorage.getData(this.RECORD_META_REPOSITORY, []);
   }
 
-  saveRecordMetas(recordMetas: RecordMeta[]): Observable<RecordMeta[]> {
-    return this.localStorage.setData(recordMetas, this.RECORD_META_REPOSITORY);
+  saveMetas(metas: Meta[]): Observable<Meta[]> {
+    return this.localStorage.setData(metas, this.RECORD_META_REPOSITORY);
   }
 
-  private createRecordMeta(timestamp: number, filename: string, fileHash: string, transactionHash: string): RecordMeta {
+  private createMeta(timestamp: number, filename: string, fileHash: string, transactionHash: string): Meta {
     return {
       timestamp,
       path: filename,
