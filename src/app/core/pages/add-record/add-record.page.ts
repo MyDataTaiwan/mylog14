@@ -41,7 +41,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
   pickerTitle$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
-  symptoms = new Symptoms(true);
+  symptoms = new Symptoms(this.dataStore.getUserData().defaultSchema);
   symptomsView: SymptomView[] = this.symptoms.list;
 
   constructor(
@@ -63,7 +63,6 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.pickerTitle$.subscribe((t: string) => this.text.pickerTitle = t);
     this.cancel$ = this.translate.get('title.cancel');
     this.cancel$.subscribe((t: string) => this.text.cancel = t);
-
   }
 
   ngOnInit() {

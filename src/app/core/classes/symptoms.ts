@@ -19,19 +19,33 @@ const FULL_SYMPTOM_LIST = [
 ];
 
 const DEFAULT_SYMPTOM_LIST = [
-        'coughing',
-        'runnyNose',
-        'nasalCongestion',
-        'sneezing'
+    'coughing',
+    'runnyNose',
+    'nasalCongestion',
+    'sneezing'
+];
+
+const HEART_FAILURE_LIST = [
+    'SBP',
+    'DBP',
+    'heartbeat',
+    'bloodSugar',
+    'weight',
+    'urineVolume',
 ];
 
 export class Symptoms {
     list: Symptom[] = [];
     constructor(defaultSchema: boolean) {
-        FULL_SYMPTOM_LIST.forEach(symptomName => {
-            const ignore = (!DEFAULT_SYMPTOM_LIST.includes(symptomName) && defaultSchema);
-            this.list.push(new Symptom(symptomName, ignore));
-        });
+        if (defaultSchema) {
+            DEFAULT_SYMPTOM_LIST.forEach(symptomName => {
+                this.list.push(new Symptom(symptomName, false));
+            });
+        } else {
+            HEART_FAILURE_LIST.forEach(symptomName => {
+                this.list.push(new Symptom(symptomName, false, null));
+            });
+        }
     }
 
     setDefault(defaultSchema: boolean) {
@@ -39,9 +53,7 @@ export class Symptoms {
             symptom.present = false;
             symptom.note = '';
             symptom.ignore = false;
-            if (!DEFAULT_SYMPTOM_LIST.includes(symptom.name)) {
-                symptom.ignore = defaultSchema;
-            }
+            symptom.value = null;
             return symptom;
         });
     }

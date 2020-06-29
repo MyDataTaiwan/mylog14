@@ -70,7 +70,13 @@
     "canRedeem": "Available",
     "cannotRedeem": "Out of Stock",
     "redeeming": "Redeeming...",
-    "daysRecorded": "Days recorded"
+    "daysRecorded": "Days recorded",
+    "SBP": "Systolic Blood Pressure",
+    "DBP": "Diastolic Blood Pressure",
+    "heartbeat": "Heartbeat",
+    "bloodSugar": "Blood Sugar",
+    "weight": "Weight",
+    "urineVolume": "Urine Volume"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
