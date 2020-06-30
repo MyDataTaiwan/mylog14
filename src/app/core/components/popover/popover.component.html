@@ -7,6 +7,12 @@
         <h6>{{ i18nMessage | translate }}</h6>
       </div>
     </div>
+    <div class="form-box ion-justify-content-between" *ngIf="formFields && formModel">
+      <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+        <formly-form [form]="form" [fields]="formFields" [model]="formModel"></formly-form>
+        <ion-button type="submit">{{ 'title.submit' | translate }}</ion-button>
+      </form>
+    </div>
     <div>
       <h6>{{ i18nExtraMessage | translate }}</h6>
       <ion-row *ngIf="buttonSet === 'confirm'" class="ion-justify-content-between">

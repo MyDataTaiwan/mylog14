@@ -3,6 +3,7 @@ import { Observable, defer } from 'rxjs';
 import { PopoverComponent } from '../components/popover/popover.component';
 import { PopoverController } from '@ionic/angular';
 import { switchMap, delay, map } from 'rxjs/operators';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Injectable({
   providedIn: 'root'
@@ -79,4 +80,6 @@ export interface PopoverProps {
   buttonSet?: PopoverButtonSet;
   onConfirm?: () => { };
   onCancel?: () => { };
+  formModel?: {};
+  formFields?: FormlyFieldConfig[];
 }

@@ -6,7 +6,7 @@
         <ion-icon name="person-outline" slot="start"></ion-icon>
         <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
         <ion-toggle *ngIf="field.type === recordFieldType.boolean"></ion-toggle>
-        <ion-text *ngIf="field.type !== recordFieldType.boolean">{{ field.defaultValue }}</ion-text>
+        <ion-text *ngIf="field.type !== recordFieldType.boolean" (click)="editRecord(field, record.templateName)">{{ (field.value) ? field.value : 'title.notSet' | translate }}</ion-text>
       </ion-item>
     </ng-container>
   </ion-list>

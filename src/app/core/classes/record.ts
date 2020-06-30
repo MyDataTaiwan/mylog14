@@ -3,12 +3,12 @@ import { RecordField, RecordFieldType, RecordFieldValueRange, RecordFieldValue }
 
 export class Record {
 
-    readonly timestamp: number;
-    readonly proof: Proof;
+    timestamp: number;
+    proof: Proof;
     templateName: string;
     readonly fields: RecordField[];
 
-    constructor(timestamp: number, proof: Proof) {
+    constructor(timestamp: number, proof?: Proof) {
         this.timestamp = timestamp;
         this.proof = proof;
         this.fields = [];
@@ -33,6 +33,11 @@ export class Record {
 
     setFieldValue(name: string, value: RecordFieldValue): void {
         this.fields.find(el => el.name === name).value = value;
+    }
+
+    setProof(proof: Proof) {
+        this.timestamp = proof.timestamp;
+        this.proof = proof;
     }
 
     setTemplateName(templateName: string): void {

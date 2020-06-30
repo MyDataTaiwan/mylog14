@@ -15,7 +15,8 @@ import { LoadingService } from '../../services/loading.service';
 import { Record } from '../../classes/record';
 import { RecordActionService } from '../../services/record-action.service';
 import { RecordPreset } from '../../services/preset.service';
-import { RecordFieldType } from '../../interfaces/record-field';
+import { RecordFieldType, RecordField } from '../../interfaces/record-field';
+import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-add-record',
@@ -51,6 +52,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
     private readonly translate: TranslateService,
     private readonly popoverService: PopoverService,
     private readonly recordActionService: RecordActionService,
+    private readonly formService: FormService,
   ) {
     this.recorded$ = this.translate.get('title.recordSaved');
     this.recorded$.subscribe((t: string) => this.text.recorded = t);
@@ -71,6 +73,17 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   onToggleChanged() {
+  }
+
+  editRecord(field: RecordField, templateName: string) {
+    const formModel = {};
+    formModel[field.name] = field.value;
+    this.popoverService.showPopover({
+      i18nTitle: `preset.${templateName}.${field.name}`,
+      i18nMessage: '',
+      formModel,
+      formFields: this.formService.createFormFields(field, templateName),
+    }).subscribe();
   }
 
   showRecordSavedPopover(): Observable<any> {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PresetService, RecordPreset } from './preset.service';
 import { RecordService } from './record.service';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { ProofService } from './proof.service';
 import { Record } from '../classes/record';
 import { map, switchMap } from 'rxjs/operators';
@@ -19,11 +19,8 @@ export class RecordActionService {
   ) { }
 
   create(preset: RecordPreset): Observable<Record> {
-    return this.proofService.createProof()
-      .pipe(
-        map(proof => new Record(proof.timestamp, proof)),
-        map(record => this.presetService.initRecordWithPreset(record, preset)),
-      );
+    const record = new Record(Date.now());
+    return of(this.presetService.initRecordWithPreset(record, preset));
   }
 
   save(record: Record): Observable<Meta[]> {

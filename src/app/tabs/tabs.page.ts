@@ -7,6 +7,8 @@ import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { GuidePage } from '../core/pages/guide/guide.page';
 import { SharePage } from '../core/pages/share/share.page';
 import { SnapshotService } from '../core/services/snapshot.service';
+import { PopoverService } from '../core/services/popover.service';
+import { FormService } from '../core/services/form.service';
 
 @Component({
   selector: 'app-tabs',
@@ -21,7 +23,9 @@ export class TabsPage implements OnDestroy {
   constructor(
     private modalController: ModalController,
     private popoverCtrl: PopoverController,
-    private snapshotService: SnapshotService
+    private snapshotService: SnapshotService,
+    private popoverService: PopoverService,
+    private formService: FormService,
   ) { }
 
   ngOnDestroy() {
@@ -56,32 +60,33 @@ export class TabsPage implements OnDestroy {
   }
 
   onClickCameraButton() {
+    return 0;
     this.snapshotService.snapCapture()
-      .pipe(
-        debounce((() => interval(1000))),
-        take(1),
-      )
-      .subscribe();
+  .pipe(
+    debounce((() => interval(1000))),
+    take(1),
+  )
+  .subscribe();
   }
 
-  async onClickRecordButton() {
-    await this.presentAddRecordModal();
-  }
+async onClickRecordButton() {
+  await this.presentAddRecordModal();
+}
 
-  onClickShareButton() {
-    this.createSharePopover()
-      .pipe(
-        switchMap(popover => popover.present()),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => { }, e => console.log(e));
-  }
+onClickShareButton() {
+  this.createSharePopover()
+    .pipe(
+      switchMap(popover => popover.present()),
+      takeUntil(this.destroy$),
+    )
+    .subscribe(() => { }, e => console.log(e));
+}
 
-  private createSharePopover(): Observable<HTMLIonPopoverElement> {
-    return defer(() => this.popoverCtrl.create({
-      component: SharePage,
-    }));
-  }
+  private createSharePopover(): Observable < HTMLIonPopoverElement > {
+  return defer(() => this.popoverCtrl.create({
+    component: SharePage,
+  }));
+}
 
 }
 

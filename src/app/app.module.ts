@@ -14,6 +14,9 @@ import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
 import { GuidePageModule } from './core/pages/guide/guide.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyIonicModule } from '@ngx-formly/ionic';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -48,7 +51,10 @@ export function playerFactory() {
     ImgPopoverPageModule,
     GuidePageModule,
     ImgViewerPageModule,
-    LottieModule.forRoot({ player: playerFactory })
+    LottieModule.forRoot({ player: playerFactory }),
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyIonicModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

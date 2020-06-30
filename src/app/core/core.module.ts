@@ -10,6 +10,9 @@ import { SharePageModule } from './pages/share/share.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
 import { ShopScannerComponent } from './components/shop-scanner/shop-scanner.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormlyIonicModule } from '@ngx-formly/ionic';
+import { FormlyModule } from '@ngx-formly/core';
 
 
 
@@ -33,6 +36,9 @@ import { ShopScannerComponent } from './components/shop-scanner/shop-scanner.com
     MainHeaderModule,
     AddRecordPageModule,
     SharePageModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyIonicModule,
   ],
   exports: [
     SafeUrlPipe,

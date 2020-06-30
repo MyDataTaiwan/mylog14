@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { PopoverButtonSet, PopoverIcon } from '../../services/popover.service';
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'app-popover',
@@ -17,9 +19,12 @@ export class PopoverComponent implements OnInit {
   @Input() onConfirm?: () => {};
   @Input() onCancel?: () => {};
   public iconPath: string;
+  form = new FormGroup({});
+  @Input() formModel?: {};
+  @Input() formFields?: FormlyFieldConfig[];
 
   constructor(
-    private popoverCtrl: PopoverController,
+    private readonly popoverCtrl: PopoverController,
   ) { }
 
   ngOnInit() {
