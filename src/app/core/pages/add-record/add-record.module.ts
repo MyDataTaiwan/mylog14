@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { AddRecordPageRoutingModule } from './add-record-routing.module';
 import { AddRecordPage } from './add-record.page';
+import { CoreModule } from '../../core.module';
+import { MainHeaderModule } from '../../components/main-header/main-header.module';
 
 @NgModule({
   imports: [
@@ -13,6 +15,7 @@ import { AddRecordPage } from './add-record.page';
     IonicModule,
     AddRecordPageRoutingModule,
     TranslateModule,
+    MainHeaderModule,
   ],
   declarations: [AddRecordPage],
   entryComponents: [AddRecordPage],

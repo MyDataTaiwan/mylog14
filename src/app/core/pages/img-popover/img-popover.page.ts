@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Photo } from '../../interfaces/photo';
+import { Photo } from '../../interfaces/old-photo';
 import { Record } from '../../interfaces/record';
 import { GeolocationService } from '../../services/geolocation.service';
 

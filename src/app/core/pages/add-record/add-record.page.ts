@@ -12,6 +12,10 @@ import { GeolocationService } from '../../services/geolocation.service';
 import { SnapshotService } from '../../services/snapshot.service';
 import { PopoverService, PopoverIcon } from '../../services/popover.service';
 import { LoadingService } from '../../services/loading.service';
+import { Record } from '../../classes/record';
+import { RecordActionService } from '../../services/record-action.service';
+import { RecordPreset } from '../../services/preset.service';
+import { RecordFieldType } from '../../interfaces/record-field';
 
 @Component({
   selector: 'app-add-record',
@@ -19,11 +23,6 @@ import { LoadingService } from '../../services/loading.service';
   styleUrls: ['./add-record.page.scss'],
 })
 export class AddRecordPage implements OnInit, OnDestroy {
-  isShow = true;
-  isSelect = true;
-  isShow1 = true;
-  isShow2 = true;
-  isShow3 = true;
   btCIntegerList = this.genIntArr(34, 40).map(x => x.toString());
   btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
   btUnitList = ['°C'];
@@ -42,20 +41,17 @@ export class AddRecordPage implements OnInit, OnDestroy {
   pickerTitle$: Observable<string>;
   ok$: Observable<string>;
   destroy$ = new Subject();
-  symptoms = new Symptoms(true);
-  symptomsView: SymptomView[] = this.symptoms.list;
+  record$: Observable<Record> = this.recordActionService.create(RecordPreset.COMMON_COLD);
+  recordFieldType = RecordFieldType;
 
   constructor(
-    private dataStore: DataStoreService,
-    private loadingService: LoadingService,
-    private location: Location,
-    private pickerCtrl: PickerController,
-    private geolocationService: GeolocationService,
-    private snapshotService: SnapshotService,
-    private translate: TranslateService,
-    private popoverService: PopoverService,
+    private readonly loadingService: LoadingService,
+    private readonly location: Location,
+    private readonly pickerCtrl: PickerController,
+    private readonly translate: TranslateService,
+    private readonly popoverService: PopoverService,
+    private readonly recordActionService: RecordActionService,
   ) {
-    this.resetPage();
     this.recorded$ = this.translate.get('title.recordSaved');
     this.recorded$.subscribe((t: string) => this.text.recorded = t);
     this.ok$ = this.translate.get('title.confirm');
@@ -64,13 +60,9 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.pickerTitle$.subscribe((t: string) => this.text.pickerTitle = t);
     this.cancel$ = this.translate.get('title.cancel');
     this.cancel$.subscribe((t: string) => this.text.cancel = t);
-
   }
 
   ngOnInit() {
-    // Trigger location cache update
-    this.geolocationService.getPosition().subscribe();
-    this.presentBtPicker();
   }
 
   ngOnDestroy() {
@@ -78,17 +70,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onToggleChanged(toggledSymptom: Symptom) {
-    this.symptomsView = this.symptomsView
-      .map(symptomView => {
-        if (symptomView.name === toggledSymptom.name) {
-          symptomView.expand = symptomView.present;
-          return symptomView;
-        } else {
-          symptomView.expand = false;
-          return symptomView;
-        }
-      });
+  onToggleChanged() {
   }
 
   showRecordSavedPopover(): Observable<any> {
@@ -101,7 +83,7 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   async presentBtPicker() {
     const options: PickerOptions = {
-      id: "add_bt",
+      id: 'add_bt',
       buttons: [
         {
           text: this.text.cancel,
@@ -172,7 +154,9 @@ export class AddRecordPage implements OnInit, OnDestroy {
   }
 
   submitRecord(): Observable<any> {
+    return of([]);
     // FIXME: It's a dirty hack to add/remove expand value for symptoms view
+    /*
     this.symptoms.list = this.symptomsView;
     this.symptoms.list.forEach((symptom: SymptomView) => delete symptom.expand);
     return forkJoin([
@@ -184,18 +168,11 @@ export class AddRecordPage implements OnInit, OnDestroy {
         switchMap(() => this.showRecordSavedPopover()),
         takeUntil(this.destroy$),
       );
+      */
   }
 
   resetPage() {
-    this.bt = this.defaultBt;
-    this.btUnit = this.defaultBtUnit;
-    const defaultSchema = this.dataStore.getUserData().defaultSchema;
-    this.symptoms.setDefault(defaultSchema);
-    this.symptomsView = this.symptoms.list;
-    this.symptomsView = this.symptomsView.map(symptomView => {
-      symptomView.expand = false;
-      return symptomView;
-    });
+    
   }
 
   // Create an integer array [start..end]

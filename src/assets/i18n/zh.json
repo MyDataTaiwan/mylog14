@@ -87,5 +87,32 @@
     "shareToWhom": "紀錄要分享給誰？",
     "uploadingDataError": "上傳失敗，請稍後再試。",
     "registeringUser": "使用者註冊中，請稍候..."
+  },
+  "preset": {
+    "commonCold": {
+      "bodyTemperature": "體溫",
+      "coughing": "咳嗽",
+      "runnyNose": "流鼻水",
+      "nasalCongestion": "鼻塞",
+      "sneezing": "打噴嚏",
+      "note": "筆記"
+    },
+    "heartFailure": {
+      "SBP": "收縮壓",
+      "DBP": "舒張壓",
+      "heartbeat": "心跳",
+      "bloodSugar": "血糖",
+      "weight": "體重",
+      "urineVolume": "尿量",
+      "noData": "尚未輸入",
+      "unit": {
+        "mmHg": "mmHg",
+        "bpm": "bpm",
+        "mg/dL": "mg/dL",
+        "kg": "公斤",
+        "cm": "公分",
+        "mL": "毫升"
+      }
+    }
   }
 }

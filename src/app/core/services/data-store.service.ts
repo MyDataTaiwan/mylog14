@@ -18,7 +18,7 @@ export class DataStoreService {
   public dailyRecords$ = this.metas$.pipe(
     map(metas => (metas) ? metas : []),
     switchMap(metas => this.recordService.getRecords(metas)),
-    map(records => new DailyRecords(records)),
+    map(records => new DailyRecords([])),
     switchMap(dailyRecords => {
       const userData = this.userData;
       userData.startDate = dailyRecords.startDate;

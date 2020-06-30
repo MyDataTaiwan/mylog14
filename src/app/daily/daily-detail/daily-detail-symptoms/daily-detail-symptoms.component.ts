@@ -43,10 +43,12 @@ export class DailyDetailSymptomsComponent implements OnInit {
     const recordView: RecordView = record;
     recordView.expand = false;
     recordView.time = formatDate(record.timestamp, 'HH:mm', 'en-us');
+    /*
     if (record.bodyTemperature && record.bodyTemperatureUnit) {
       recordView.bt = `${record.bodyTemperature}${record.bodyTemperatureUnit}`;
     }
     recordView.symptoms.list = recordView.symptoms.list.filter((symptom) => symptom.present === true);
+    */
     return recordView;
   }
 

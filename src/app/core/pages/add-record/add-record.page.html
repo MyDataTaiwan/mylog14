@@ -1,37 +1,14 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      {{ 'title.dailyRecord' | translate }}
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button text="" icon="arrow-back-outline">
-      </ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<app-main-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="cancel()"></app-main-header>
 <ion-content>
   <ion-list>
-    <ion-item (click)="onBodyTemperatureClick()">
-      <ion-label color="primary">{{ 'title.bodyTemperature' | translate }}</ion-label>
-      <ion-label class="ion-text-right" slot="end">{{ bt }}{{ btUnit }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary">{{ 'title.symptoms' | translate }}</ion-label>
-    </ion-item>
-
-
-    <ion-list *ngFor="let symptom of symptomsView">
-      <ng-container *ngIf="symptom.ignore === false">
-        <ion-item>
-          <ion-label class="ion-padding-start">{{ 'title.' + symptom.name | translate }}</ion-label>
-          <ion-toggle [(ngModel)]="symptom.present" (ionChange)="onToggleChanged(symptom)"></ion-toggle>
-        </ion-item>
-        <ion-item *ngIf="symptom.expand">
-          <ion-label position="stacked">Notes</ion-label>
-          <ion-textarea type="text" [(ngModel)]="symptom.note"></ion-textarea>
-        </ion-item>
-      </ng-container>
-    </ion-list>
+    <ng-container *ngIf="record$ | async as record">
+      <ion-item *ngFor="let field of record.fields" button>
+        <ion-icon name="person-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
+        <ion-toggle *ngIf="field.type === recordFieldType.boolean"></ion-toggle>
+        <ion-text *ngIf="field.type !== recordFieldType.boolean">{{ field.defaultValue }}</ion-text>
+      </ion-item>
+    </ng-container>
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">

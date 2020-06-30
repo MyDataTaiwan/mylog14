@@ -1,10 +1,10 @@
 export type RecordFieldValue = number | string | boolean;
 
 export enum RecordFieldType {
-   INTEGER = 'integer',
-   NUMBER = 'number',
-   STRING = 'string',
-   BOOLEAN = 'boolean',
+   integer = 'integer',
+   number = 'number',
+   string = 'string',
+   boolean = 'boolean',
 }
 
 export interface RecordFieldValueRange {

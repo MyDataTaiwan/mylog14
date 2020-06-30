@@ -37,7 +37,7 @@ export class SnapshotService {
   createPhotoWithProof(): Observable<Photo> {
     return forkJoin([
       this.photoService.createPhotoByCamera(),
-      this.proofService.createProofWithLocation(),
+      this.proofService.createProof(),
     ])
       .pipe(
         map(([photo, proof]) => ({ ...photo, proof })),
@@ -45,6 +45,8 @@ export class SnapshotService {
   }
 
   snapCapture() {
+    return of([]);
+    /*
     return forkJoin([
       this.createPhotoWithProof(),
       this.dataStore.metas$.pipe(take(1)),
@@ -63,6 +65,7 @@ export class SnapshotService {
         }),
         switchMap(([metas, _]) => this.dataStore.updateMetas(metas)),
       );
+      */
   }
 
   showRecordSavedPopover(): Observable<any> {
@@ -75,6 +78,7 @@ export class SnapshotService {
 
   snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<Meta[]> {
     return this.photoService.createPhotoByCamera().pipe(map(_ => []));
+    /*
     return forkJoin([
       this.proofService.createProofWithLocation(),
       this.dataStore.metas$.pipe(take(1)),
@@ -93,6 +97,7 @@ export class SnapshotService {
         }),
         switchMap(metas => this.dataStore.updateMetas(metas)),
       );
+      */
   }
 
 }

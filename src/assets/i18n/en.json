@@ -95,5 +95,32 @@
     "fr": "French",
     "ja": "日本語",
     "zh": "繁體中文"
+  },
+  "preset": {
+    "commonCold": {
+      "bodyTemperature": "Body Temperature",
+      "coughing": "Cough",
+      "runnyNose": "Runny Nose",
+      "nasalCongestion": "Nasal Congestion",
+      "sneezing": "Sneezing",
+      "note": "Note"
+    },
+    "heartFailure": {
+      "SBP": "Systolic Blood Pressure",
+      "DBP": "Diastolic Blood Pressure",
+      "heartbeat": "Heartbeat",
+      "bloodSugar": "Blood Sugar",
+      "weight": "Weight",
+      "urineVolume": "Urine Volume",
+      "noData": "Not Set",
+      "unit": {
+        "mmHg": "mmHg",
+        "bpm": "bpm",
+        "mg/dL": "mg/dL",
+        "kg": "kg",
+        "cm": "cm",
+        "mL": "mL"
+      }
+    }
   }
 }
