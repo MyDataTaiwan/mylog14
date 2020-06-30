@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, defer } from 'rxjs';
+import { Observable, defer, from } from 'rxjs';
 import { PopoverComponent } from '../components/popover/popover.component';
 import { PopoverController } from '@ionic/angular';
 import { switchMap, delay, map } from 'rxjs/operators';
@@ -39,7 +39,7 @@ export class PopoverService {
   private presentPopover(popover: HTMLIonPopoverElement, dismissTime?: number): Observable<any> {
     const manualDismiss$ = defer(() => popover.present())
       .pipe(
-        switchMap(() => popover.onDidDismiss()),
+        switchMap(() => from(popover.onDidDismiss())),
       );
     const autoDismiss$ = defer(() => popover.present())
       .pipe(

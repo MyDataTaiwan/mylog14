@@ -46,7 +46,7 @@
     "name": "姓名",
     "email": "電子信箱",
     "dateOfBirth": "出生日期",
-    "editUserName": "修改姓名",
+    "editName": "修改姓名",
     "firstName": "名",
     "lastName": "姓",
     "editEmail": "修改電子信箱",

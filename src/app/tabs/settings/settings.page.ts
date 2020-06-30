@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import { IonDatetime, PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { combineLatest, defer, Subject } from 'rxjs';
+import { combineLatest, defer, Subject, BehaviorSubject, Observable } from 'rxjs';
 import { buffer, debounceTime, filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
@@ -10,6 +10,10 @@ import { version } from '../../../../package.json';
 import { EmailPopoverPage } from './email-popover/email-popover.page';
 import { NamePopoverPage } from './name-popover/name-popover.page';
 import { SharedLinkPopoverPage } from './shared-link-popover/shared-link-popover.page';
+import { PopoverService } from 'src/app/core/services/popover.service';
+import { FormService, UserDataFormField } from 'src/app/core/services/form.service';
+import { UserDataService } from 'src/app/core/services/user-data.service';
+import { UserData } from 'src/app/core/interfaces/user-data';
 
 const { Browser } = Plugins;
 
@@ -26,6 +30,9 @@ export class SettingsPage implements OnInit, OnDestroy {
   languages = this.translateConfigService.langs;
   private notSet: string = this.translateService.instant('title.notSet');
 
+  private readonly userData = new BehaviorSubject<UserData>(this.dataStoreService.getUserData());
+  userData$: Observable<UserData> = this.userData;
+
   appVersion = version;
   showDeveloperOptions = false;
   private readonly versionClick = new Subject<boolean>();
@@ -38,54 +45,43 @@ export class SettingsPage implements OnInit, OnDestroy {
     tap(() => this.showDeveloperOptions = true),
   );
 
-  name$ = combineLatest([this.dataStoreService.userData$, this.translateConfigService.stream()]).pipe(
-    map(([userData, _]) => {
-      if (!userData.firstName && !userData.lastName) {
-        return this.notSet;
-      }
-      return `${userData.firstName} ${userData.lastName}`;
+  private readonly edit = new Subject<UserDataFormField>();
+  edit$ = this.edit
+    .pipe(
+      switchMap(field => this.editField(field)),
+    );
+
+  private editField(field: UserDataFormField): Observable<any> {
+    return this.popoverService.showPopover({
+      i18nTitle: `title.edit${field}`,
+      formModel: Object.assign({}, this.userData.getValue()),
+      formFields: this.formService.createFormFieldsByUserData(field),
     })
-  );
-  email$ = combineLatest([this.dataStoreService.userData$, this.translateConfigService.stream()]).pipe(
-    map(([userData, _]) => {
-      if (!userData.email) {
-        return this.notSet;
-      }
-      return userData.email;
-    })
-  );
-  dateOfBirth$ = this.dataStoreService.userData$.pipe(
-    map(userData => {
-      if (!userData.dateOfBirth) {
-        return '';
-      }
-      return userData.dateOfBirth;
-    })
-  );
-  currentLanguage$ = this.dataStoreService.userData$.pipe(
-    map(userData => {
-      if (!userData.language) {
-        return this.translateService.defaultLang;
-      }
-      return userData.language;
-    })
-  );
-  defaultSchema$ = this.dataStoreService.userData$.pipe(
-    map(userData => (userData.defaultSchema) ? 'default' : 'custom'),
-  );
-  hasGeneratedSharedLink$ = this.dataStoreService.userData$.pipe(
-    map(userData => userData.generatedUrl),
-    map(generatedUrl => !!generatedUrl)
-  );
+      .pipe(
+        map(result => result.data),
+        filter(data => (data)),
+        tap(userData => this.userData.next(userData)),
+      );
+  }
 
   constructor(
     private readonly dataStoreService: DataStoreService,
     private readonly translateService: TranslateService,
     private readonly popoverController: PopoverController,
-    private readonly translateConfigService: TranslateConfigService
+    private readonly translateConfigService: TranslateConfigService,
+    private readonly popoverService: PopoverService,
+    private readonly formService: FormService,
+    private readonly userDataService: UserDataService,
   ) { }
 
   ngOnInit() {
+    this.userDataService.getUserData()
+      .subscribe(userData => this.userData.next(userData));
+    this.userData$
+      .pipe(
+        switchMap(userData => this.userDataService.saveUserData(userData)),
+      ).subscribe();
+    this.edit$.subscribe();
     this.initNotSetTranslation();
   }
 
@@ -96,11 +92,11 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onClickNameItem() {
-    this.showPopover(NamePopoverPage);
+    this.edit.next(UserDataFormField.NAME);
   }
 
   onClickEmailItem() {
-    this.showPopover(EmailPopoverPage);
+    this.edit.next(UserDataFormField.EMAIL);
   }
 
   onChangeDateOfBirthPicker() {
@@ -116,7 +112,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onClickSharedLogboardLinkItem() {
-    this.showPopover(SharedLinkPopoverPage);
+    // this.showPopover(SharedLinkPopoverPage);
   }
 
   onClickAboutItem() {
@@ -144,16 +140,6 @@ export class SettingsPage implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
       ).subscribe(() => { }, err => console.log(err));
-  }
-
-  private showPopover(component: any) {
-    defer(() => this.popoverController.create({
-      component,
-      animated: false
-    })).pipe(
-      switchMap(popover => popover.present()),
-      takeUntil(this.destroy$)
-    ).subscribe(() => { }, e => console.log(e));
   }
 
   ngOnDestroy() {

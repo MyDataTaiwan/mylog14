@@ -48,7 +48,7 @@
     "name": "Name",
     "email": "Email",
     "dateOfBirth": "Date of Birth",
-    "editUserName": "Edit User Name",
+    "editName": "Edit User Name",
     "firstName": "First Name",
     "lastName": "Last Name",
     "editEmail": "Edit Email",

@@ -8,9 +8,14 @@
       </div>
     </div>
     <div class="form-box ion-justify-content-between" *ngIf="formFields && formModel">
-      <form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+      <form [formGroup]="form" (ngSubmit)="submit(formModel)">
         <formly-form [form]="form" [fields]="formFields" [model]="formModel"></formly-form>
-        <ion-button type="submit">{{ 'title.submit' | translate }}</ion-button>
+        <ion-button type="submit" [disabled]="!form.valid" class="ion-float-right">
+          {{ 'title.confirm' | translate }}
+        </ion-button>
+        <ion-button (click)="cancel()" fill="clear" class="ion-float-right">
+          {{ 'title.cancel' | translate }}
+        </ion-button>
       </form>
     </div>
     <div>

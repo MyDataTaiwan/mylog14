@@ -45,6 +45,12 @@ export class PopoverComponent implements OnInit {
     this.popoverCtrl.dismiss();
   }
 
+  submit(): void {
+    if (this.form.valid) {
+      this.popoverCtrl.dismiss(this.formModel);
+    }
+  }
+
   getIconPath(icon: PopoverIcon): string {
     return `../../../../assets/alert/Alert_icon_${icon}.svg`;
   }
