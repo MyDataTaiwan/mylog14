@@ -8,10 +8,9 @@ export class Record {
     templateName: string;
     readonly fields: RecordField[];
 
-    constructor(timestamp: number, proof: Proof, templateName: string) {
+    constructor(timestamp: number, proof: Proof) {
         this.timestamp = timestamp;
         this.proof = proof;
-        this.templateName = templateName;
         this.fields = [];
     }
 

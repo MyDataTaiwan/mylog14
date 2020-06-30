@@ -13,7 +13,7 @@ export class ProofService {
     private readonly geolocationService: GeolocationService,
   ) { }
 
-  createProofWithLocation(): Observable<Proof> {
+  createProof(): Observable<Proof> {
     return this.geolocationService.getPosition()
       .pipe(
         map(geolocationPosition => {

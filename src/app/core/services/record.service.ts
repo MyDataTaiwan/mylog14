@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { FilesystemDirectory } from '@capacitor/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { Record } from '../interfaces/record';
+import { Record } from '../classes/record';
 import { FileSystemService } from './file-system.service';
 import { LedgerService } from './ledger.service';
 import { LocalStorageService } from './local-storage.service';
@@ -37,9 +37,27 @@ export class RecordService {
     );
   }
 
-  saveRecord(record: Record, metas: Meta[]): Observable<Meta[]> {
-    const fileSave$ = this.fileSystem.saveJsonData(record);
-    return fileSave$
+saveRecord(record: Record): Observable<Meta> {
+  return this.fileSystem.saveJsonData(record)
+    .pipe(
+      switchMap(filename => this.fileSystem.getFileHash(filename)
+        .pipe(
+          map(fileHash => [filename, fileHash]),
+        )
+      ),
+      map(([filename, fileHash]) => {
+        return {
+          timestamp: record.timestamp,
+          path: filename,
+          directory: this.RECORD_DIRECTORY,
+          hash: fileHash,
+        } as Meta;
+      }),
+    );
+}
+
+  saveRecordo(record: Record): Observable<Meta[]> {
+    const save$ = this.fileSystem.saveJsonData(record)
       .pipe(
         switchMap(filename => this.fileSystem.getFileHash(filename)
           .pipe(
@@ -53,10 +71,11 @@ export class RecordService {
         map(([filename, fileHash, transactionHash]) => {
           return this.createMeta(record.timestamp, filename, fileHash, transactionHash);
         }),
-        map(meta => {
-          metas.push(meta);
-          return metas;
-        }),
+      );
+    return forkJoin([this.getMetas(), save$])
+      .pipe(
+        map(([metas, newMeta]) => ([...metas, newMeta] as Meta[])),
+        switchMap(metas => this.saveMetas(metas)),
       );
   }
 
