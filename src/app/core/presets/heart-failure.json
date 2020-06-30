@@ -1,0 +1,70 @@
+{
+    "templateName": "heartFailure",
+    "fields": [
+        {
+            "name": "SBP",
+            "type": "number",
+            "defaultValue": null,
+            "valueUnit": "mmHg",
+            "valueRange": {
+                "max": 200,
+                "min": 60
+            }
+        },
+        {
+            "name": "DBP",
+            "type": "number",
+            "defaultValue": null,
+            "valueUnit": "mmHg",
+            "valueRange": {
+                "max": 110,
+                "min": 10
+            }
+        },
+        {
+            "name": "heartbeat",
+            "type": "integer",
+            "defaultValue": null,
+            "valueUnit": "bpm",
+            "valueRange": {
+                "max": 300,
+                "min": 30
+            }
+        },
+        {
+            "name": "bloodSugar",
+            "type": "number",
+            "defaultValue": null,
+            "valueUnit": "mg/dL",
+            "valueRange": {
+                "max": 1000,
+                "min": 0
+            }
+        },
+        {
+            "name": "weight",
+            "type": "number",
+            "defaultValue": null,
+            "valueUnit": "kg",
+            "valueRange": {
+                "max": 300,
+                "min": 1
+            }
+        },
+        {
+            "name": "urineVolume",
+            "type": "number",
+            "defaultValue": 0,
+            "valueUnit": "ml",
+            "valueRange": {
+                "max": 3000,
+                "min": 0
+            }
+        },
+        {
+            "name": "note",
+            "type": "string",
+            "defaultValue": ""
+        }
+    ]
+}
