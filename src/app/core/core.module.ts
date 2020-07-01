@@ -13,6 +13,7 @@ import { ShopScannerComponent } from './components/shop-scanner/shop-scanner.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldInputComponent } from './forms/formly-field-input/formly-field-input-component';
 
 
 
@@ -28,6 +29,7 @@ import { FormlyModule } from '@ngx-formly/core';
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,
+    FormlyFieldInputComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,11 @@ import { FormlyModule } from '@ngx-formly/core';
     AddRecordComponentModule,
     SharePageModule,
     ReactiveFormsModule,
-    FormlyModule.forRoot(),
+    FormlyModule.forRoot({
+      types: [
+        { name: 'customInput', component: FormlyFieldInputComponent },
+      ],
+    }),
     FormlyIonicModule,
   ],
   exports: [

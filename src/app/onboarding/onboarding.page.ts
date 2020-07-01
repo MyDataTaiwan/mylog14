@@ -55,6 +55,7 @@ export class OnboardingPage implements OnDestroy {
           throw (err);
         }),
         switchMap((res: SignupResponse) => {
+          console.log('Signup success');
           const userData = this.dataStoreService.getUserData();
           userData.email = this.onboardingForm.controls.email.value;
           userData.newUser = false;

@@ -9,7 +9,8 @@
             "valueRange": {
                 "max": 41,
                 "min": 34
-            }
+            },
+            "valueUnit": "°C"
         },
         {
             "name": "coughing",

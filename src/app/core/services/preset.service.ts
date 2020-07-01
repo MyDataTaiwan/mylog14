@@ -44,7 +44,7 @@ export class PresetService {
       RecordFieldType[field.type],
       field.defaultValue,
       field.icon,
-      null,
+      field.valueUnit,
       field.valueRange,
       ));
     return record;

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { RecordField } from '../interfaces/record-field';
+import { RecordField, RecordFieldType } from '../interfaces/record-field';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Validators } from '@angular/forms';
 
 
 export const enum UserDataFormField {
@@ -19,14 +20,23 @@ export class FormService {
   ) { }
 
   createFormFieldsByRecordField(field: RecordField, templateName: string): FormlyFieldConfig[] {
+    const name = this.translate.instant('preset.' + templateName + '.' + field.name);
+    const unit = (field.valueUnit) ? this.translate.instant('preset.' + templateName + '.unit.' + field.valueUnit) : '';
+    const numberOnly = (field.type === RecordFieldType.number || field.type === RecordFieldType.integer);
+    const min = (field.valueRange) ? field.valueRange.min : null;
+    const max = (field.valueRange) ? field.valueRange.max : null;
     const formFields: FormlyFieldConfig[] = [
       {
         key: field.name,
-        type: 'input',
+        type: 'customInput',
         templateOptions: {
-          label: this.translate.instant('preset.' + templateName + '.' + field.name),
-          placeholder: this.translate.instant('title.notSet'),
+          label: name,
+          type: (numberOnly) ? 'number' : 'text',
+          placeholder: this.translate.instant('title.noData'),
           required: true,
+          min,
+          max,
+          unit,
         }
       }
     ];
@@ -51,6 +61,8 @@ export class FormService {
         type: 'input',
         templateOptions: {
           label: this.translate.instant('title.firstName'),
+          maxlength: 40,
+          minlength: 1,
           placeholder: this.translate.instant('title.notSet'),
           required: true,
         },
@@ -61,10 +73,11 @@ export class FormService {
         type: 'input',
         templateOptions: {
           label: this.translate.instant('title.lastName'),
+          maxlength: 40,
+          minlength: 1,
           placeholder: this.translate.instant('title.notSet'),
           required: true,
         },
-        focus: true,
       },
     ];
     return formFields;
@@ -78,6 +91,9 @@ export class FormService {
         type: 'input',
         templateOptions: {
           label: this.translate.instant('title.email'),
+          type: 'email',
+          maxlength: 345,
+          minlength: 6,
           placeholder: this.translate.instant('title.notSet'),
           required: true,
         },

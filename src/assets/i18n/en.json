@@ -45,6 +45,7 @@
     "finished": "Finished",
     "settings": "Settings",
     "notSet": "Not Set",
+    "noData": "No Data",
     "name": "Name",
     "email": "Email",
     "dateOfBirth": "Date of Birth",
@@ -104,7 +105,10 @@
       "runnyNose": "Runny Nose",
       "nasalCongestion": "Nasal Congestion",
       "sneezing": "Sneezing",
-      "note": "Note"
+      "note": "Note",
+      "unit": {
+        "°C": "°C"
+      }
     },
     "heartFailure": {
       "presetName": "Heart Failure",

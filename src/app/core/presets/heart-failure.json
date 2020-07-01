@@ -61,7 +61,7 @@
             "icon": "water-outline",
             "type": "number",
             "defaultValue": 0,
-            "valueUnit": "ml",
+            "valueUnit": "mL",
             "valueRange": {
                 "max": 3000,
                 "min": 0

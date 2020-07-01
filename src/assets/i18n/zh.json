@@ -43,6 +43,7 @@
     "johnDoe": "小貓貓",
     "settings": "設定",
     "notSet": "尚未設定",
+    "noData": "暫無資料",
     "name": "姓名",
     "email": "電子信箱",
     "dateOfBirth": "出生日期",
@@ -96,7 +97,10 @@
       "runnyNose": "流鼻水",
       "nasalCongestion": "鼻塞",
       "sneezing": "打噴嚏",
-      "note": "筆記"
+      "note": "筆記",
+      "unit": {
+        "°C": "°C"
+      }
     },
     "heartFailure": {
       "presetName": "心衰竭",
