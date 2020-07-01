@@ -3,6 +3,7 @@
     "fields": [
         {
             "name": "bodyTemperature",
+            "icon": "thermometer-outline",
             "type": "number",
             "defaultValue": null,
             "valueRange": {
@@ -12,26 +13,31 @@
         },
         {
             "name": "coughing",
+            "icon": "medkit-outline",
             "type": "boolean",
             "defaultValue": false
         },
         {
             "name": "runnyNose",
+            "icon": "medkit-outline",
             "type": "boolean",
             "defaultValue": false
         },
         {
             "name": "nasalCongestion",
+            "icon": "medkit-outline",
             "type": "boolean",
             "defaultValue": false
         },
         {
             "name": "sneezing",
+            "icon": "medkit-outline",
             "type": "boolean",
             "defaultValue": false
         },
         {
             "name": "note",
+            "icon": "pencil-outline",
             "type": "string",
             "defaultValue": ""
         }

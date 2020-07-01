@@ -3,6 +3,7 @@
     "fields": [
         {
             "name": "SBP",
+            "icon": "pulse-outline",
             "type": "number",
             "defaultValue": null,
             "valueUnit": "mmHg",
@@ -13,6 +14,7 @@
         },
         {
             "name": "DBP",
+            "icon": "pulse-outline",
             "type": "number",
             "defaultValue": null,
             "valueUnit": "mmHg",
@@ -23,6 +25,7 @@
         },
         {
             "name": "heartbeat",
+            "icon": "heart-outline",
             "type": "integer",
             "defaultValue": null,
             "valueUnit": "bpm",
@@ -33,6 +36,7 @@
         },
         {
             "name": "bloodSugar",
+            "icon": "medkit-outline",
             "type": "number",
             "defaultValue": null,
             "valueUnit": "mg/dL",
@@ -43,6 +47,7 @@
         },
         {
             "name": "weight",
+            "icon": "body-outline",
             "type": "number",
             "defaultValue": null,
             "valueUnit": "kg",
@@ -53,6 +58,7 @@
         },
         {
             "name": "urineVolume",
+            "icon": "water-outline",
             "type": "number",
             "defaultValue": 0,
             "valueUnit": "ml",
@@ -63,6 +69,7 @@
         },
         {
             "name": "note",
+            "icon": "pencil-outline",
             "type": "string",
             "defaultValue": ""
         }

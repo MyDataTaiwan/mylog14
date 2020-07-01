@@ -98,6 +98,7 @@
   },
   "preset": {
     "commonCold": {
+      "presetName": "Common Cold",
       "bodyTemperature": "Body Temperature",
       "coughing": "Cough",
       "runnyNose": "Runny Nose",
@@ -106,13 +107,14 @@
       "note": "Note"
     },
     "heartFailure": {
+      "presetName": "Heart Failure",
       "SBP": "Systolic Blood Pressure",
       "DBP": "Diastolic Blood Pressure",
       "heartbeat": "Heartbeat",
       "bloodSugar": "Blood Sugar",
       "weight": "Weight",
       "urineVolume": "Urine Volume",
-      "noData": "Not Set",
+      "note": "Note",
       "unit": {
         "mmHg": "mmHg",
         "bpm": "bpm",

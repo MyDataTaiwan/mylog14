@@ -10,6 +10,7 @@ import { DataStoreService } from '../core/services/data-store.service';
 import { TranslateConfigService } from '../core/services/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../core/services/loading.service';
+import { RecordPreset } from '../core/services/preset.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -57,6 +58,7 @@ export class OnboardingPage implements OnDestroy {
           const userData = this.dataStoreService.getUserData();
           userData.email = this.onboardingForm.controls.email.value;
           userData.newUser = false;
+          userData.recordPreset = RecordPreset.COMMON_COLD;
           if (res) {
             userData.userId = res.response.user_id;
           }

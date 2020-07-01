@@ -3,11 +3,11 @@
 <ion-content>
   <ion-list *ngIf="record$ | async as record">
     <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">
-      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-icon [name]="field.icon" slot="start"></ion-icon>
       <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
       <ion-toggle *ngIf="field.type === recordFieldType.boolean" [(ngModel)]="field.value"></ion-toggle>
       <ion-text *ngIf="field.type !== recordFieldType.boolean">
-        {{ (field.value) ? field.value : 'title.notSet' | translate }}</ion-text>
+        {{ (field.value) ? field.value + ' ' + field.valueUnit : 'title.notSet' | translate }}</ion-text>
     </ion-item>
   </ion-list>
   <ion-grid>

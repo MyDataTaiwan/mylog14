@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserData } from '../interfaces/user-data';
 import { LocalStorageService } from './local-storage.service';
+import { RecordPreset } from './preset.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserDataService {
     newUser: true,
     firstName: '',
     lastName: '',
-    defaultSchema: true,
+    recordPreset: RecordPreset.COMMON_COLD,
   };
 
   constructor(

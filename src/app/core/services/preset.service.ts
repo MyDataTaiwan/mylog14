@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Record } from '../classes/record';
-import { throwError } from 'rxjs';
 import { RecordFieldType } from '../interfaces/record-field';
 
 import * as CommonCold from 'src/app/core/presets/common-cold.json';
@@ -8,8 +7,8 @@ import * as HeartFailure from 'src/app/core/presets/heart-failure.json';
 
 
 export const enum RecordPreset {
-  COMMON_COLD,
-  HEART_FAILURE,
+  COMMON_COLD = 'commonCold',
+  HEART_FAILURE = 'heartFailure',
 }
 
 
@@ -17,6 +16,10 @@ export const enum RecordPreset {
   providedIn: 'root'
 })
 export class PresetService {
+
+  public presets: string[] = [
+    'commonCold', 'heartFailure',
+  ];
 
   constructor() { }
 
@@ -40,6 +43,7 @@ export class PresetService {
       field.name,
       RecordFieldType[field.type],
       field.defaultValue,
+      field.icon,
       null,
       field.valueRange,
       ));
@@ -52,6 +56,7 @@ export class PresetService {
       field.name,
       RecordFieldType[field.type],
       field.defaultValue,
+      field.icon,
       field.valueUnit,
       field.valueRange,
     ));

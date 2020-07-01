@@ -18,11 +18,13 @@ export class Record {
         name: string,
         type: RecordFieldType,
         defaultValue: RecordFieldValue,
+        icon?: string,
         valueUnit?: string,
         valueRange?: RecordFieldValueRange
     ): void {
         this.fields.push({
             name,
+            icon,
             type,
             defaultValue,
             value: defaultValue,

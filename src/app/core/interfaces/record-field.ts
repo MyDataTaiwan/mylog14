@@ -14,6 +14,7 @@ export interface RecordFieldValueRange {
 
 export interface RecordField {
     readonly name: string;
+    readonly icon: string;
     readonly type: RecordFieldType;
     readonly defaultValue: RecordFieldValue;
     value: RecordFieldValue;

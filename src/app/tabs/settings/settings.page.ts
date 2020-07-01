@@ -10,6 +10,7 @@ import { PopoverService } from 'src/app/core/services/popover.service';
 import { FormService, UserDataFormField } from 'src/app/core/services/form.service';
 import { UserDataService } from 'src/app/core/services/user-data.service';
 import { UserData } from 'src/app/core/interfaces/user-data';
+import { RecordPreset, PresetService } from 'src/app/core/services/preset.service';
 
 const { Browser } = Plugins;
 
@@ -24,6 +25,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   SymptomNameList: any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
+  recordPresets = this.presetService.presets;
 
   private readonly userData = new BehaviorSubject<UserData>(this.dataStoreService.getUserData());
   userData$: Observable<UserData> = this.userData;
@@ -52,6 +54,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly popoverService: PopoverService,
     private readonly formService: FormService,
     private readonly userDataService: UserDataService,
+    private readonly presetService: PresetService,
   ) { }
 
   ngOnInit() {
@@ -98,8 +101,10 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.versionClick.next(true);
   }
 
-  // TODO: Add preset switching page
-  symptomSelected(event: CustomEvent): void {
+  presetSelected(event: CustomEvent): void {
+    const userData = this.userData.getValue();
+    userData.recordPreset = event.detail.value;
+    this.userData.next(userData);
   }
 
   // TODO: Revise this

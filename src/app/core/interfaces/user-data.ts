@@ -1,10 +1,12 @@
+import { RecordPreset } from '../services/preset.service';
+
 export interface UserData {
     firstName: string;
     lastName: string;
+    recordPreset: RecordPreset;
+    newUser: boolean;
     email?: string;
     dateOfBirth?: string; // ISO 8601
-    newUser: boolean;
-    defaultSchema?: boolean;
     userId?: string;
     language?: string;
     timezone?: string;
