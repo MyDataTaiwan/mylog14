@@ -1,13 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+import { PopoverController } from '@ionic/angular';
 import { defer, interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap, take, takeUntil } from 'rxjs/operators';
 import { UserData } from '../core/interfaces/user-data';
-import { GuidePage } from '../core/pages/guide/guide.page';
 import { SharePage } from '../core/pages/share/share.page';
-import { SnapshotService } from '../core/services/snapshot.service';
-import { PopoverService } from '../core/services/popover.service';
-import { FormService } from '../core/services/form.service';
 import { ModalService } from '../core/services/modal.service';
 
 @Component({
@@ -22,7 +18,6 @@ export class TabsPage implements OnDestroy {
   GuideLoader$: Observable<UserData>;
   constructor(
     private popoverCtrl: PopoverController,
-    private snapshotService: SnapshotService,
     private modalService: ModalService,
   ) { }
 
@@ -37,12 +32,6 @@ export class TabsPage implements OnDestroy {
 
   onClickCameraButton() {
     return 0;
-    this.snapshotService.snapCapture()
-  .pipe(
-    debounce((() => interval(1000))),
-    take(1),
-  )
-  .subscribe();
   }
 
 onClickRecordButton() {
