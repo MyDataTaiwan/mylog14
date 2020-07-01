@@ -1,24 +1,23 @@
-<app-main-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="onCancelClick()"></app-main-header>
+<app-main-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true"
+  (dismissClicked)="onClickCancel()"></app-main-header>
 <ion-content>
-  <ion-list>
-    <ng-container *ngIf="record$ | async as record">
-      <ion-item *ngFor="let field of record.fields" button>
-        <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
-        <ion-toggle *ngIf="field.type === recordFieldType.boolean"></ion-toggle>
-        <ion-text *ngIf="field.type !== recordFieldType.boolean" (click)="editRecord(field, record.templateName)">{{ (field.value) ? field.value : 'title.notSet' | translate }}</ion-text>
-      </ion-item>
-    </ng-container>
+  <ion-list *ngIf="record$ | async as record">
+    <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">
+      <ion-icon name="person-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
+      <ion-toggle *ngIf="field.type === recordFieldType.boolean" [(ngModel)]="field.value"></ion-toggle>
+      <ion-text *ngIf="field.type !== recordFieldType.boolean">
+        {{ (field.value) ? field.value : 'title.notSet' | translate }}</ion-text>
+    </ion-item>
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="3" class="ion-align-self-center">
-        <ion-button (click)="onClearClick()" fill="clear">{{ 'title.clear' | translate }}</ion-button>
+        <ion-button (click)="onClickClear()" fill="clear">{{ 'title.clear' | translate }}</ion-button>
       </ion-col>
       <ion-col size="3" class="ion-align-self-center">
-        <ion-button (click)="onSubmitClick()">{{ 'title.submit' | translate }}</ion-button>
+        <ion-button (click)="onClickSubmit()">{{ 'title.submit' | translate }}</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
-<ng-container *ngIf="recorded$ | async"></ng-container>
