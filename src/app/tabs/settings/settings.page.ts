@@ -1,15 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Plugins } from '@capacitor/core';
-import { IonDatetime, PopoverController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
-import { combineLatest, defer, Subject, BehaviorSubject, Observable } from 'rxjs';
-import { buffer, debounceTime, filter, first, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { IonDatetime } from '@ionic/angular';
+import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { buffer, debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
 import { version } from '../../../../package.json';
-import { EmailPopoverPage } from './email-popover/email-popover.page';
-import { NamePopoverPage } from './name-popover/name-popover.page';
-import { SharedLinkPopoverPage } from './shared-link-popover/shared-link-popover.page';
 import { PopoverService } from 'src/app/core/services/popover.service';
 import { FormService, UserDataFormField } from 'src/app/core/services/form.service';
 import { UserDataService } from 'src/app/core/services/user-data.service';
@@ -28,7 +24,6 @@ export class SettingsPage implements OnInit, OnDestroy {
   SymptomNameList: any;
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
   languages = this.translateConfigService.langs;
-  private notSet: string = this.translateService.instant('title.notSet');
 
   private readonly userData = new BehaviorSubject<UserData>(this.dataStoreService.getUserData());
   userData$: Observable<UserData> = this.userData;
@@ -51,23 +46,8 @@ export class SettingsPage implements OnInit, OnDestroy {
       switchMap(field => this.editField(field)),
     );
 
-  private editField(field: UserDataFormField): Observable<any> {
-    return this.popoverService.showPopover({
-      i18nTitle: `title.edit${field}`,
-      formModel: Object.assign({}, this.userData.getValue()),
-      formFields: this.formService.createFormFieldsByUserData(field),
-    })
-      .pipe(
-        map(result => result.data),
-        filter(data => (data)),
-        tap(userData => this.userData.next(userData)),
-      );
-  }
-
   constructor(
     private readonly dataStoreService: DataStoreService,
-    private readonly translateService: TranslateService,
-    private readonly popoverController: PopoverController,
     private readonly translateConfigService: TranslateConfigService,
     private readonly popoverService: PopoverService,
     private readonly formService: FormService,
@@ -82,69 +62,66 @@ export class SettingsPage implements OnInit, OnDestroy {
         switchMap(userData => this.userDataService.saveUserData(userData)),
       ).subscribe();
     this.edit$.subscribe();
-    this.initNotSetTranslation();
   }
 
-  private initNotSetTranslation() {
-    this.translateService.onLangChange.subscribe((_: any) => {
-      this.notSet = this.translateService.instant('title.notSet');
-    });
-  }
-
-  onClickNameItem() {
+  onClickNameItem(): void {
     this.edit.next(UserDataFormField.NAME);
   }
 
-  onClickEmailItem() {
+  onClickEmailItem(): void {
     this.edit.next(UserDataFormField.EMAIL);
   }
 
-  onChangeDateOfBirthPicker() {
-    const userData = this.dataStoreService.getUserData();
+  onChangeDateOfBirthPicker(): void {
+    const userData = this.userData.getValue();
     userData.dateOfBirth = this.dateOfBirthPicker.value;
-    this.dataStoreService.updateUserData(userData)
-      .subscribe();
+    this.userData.next(userData);
   }
 
-  onChangeLanguage(event: CustomEvent) {
+  onChangeLanguage(event: CustomEvent): void {
     const newLang = event.detail.value;
-    this.translateConfigService.setLanguage(newLang).subscribe();
+    this.translateConfigService.setLanguage(newLang);
+    const userData = this.userData.getValue();
+    userData.language = newLang;
+    this.userData.next(userData);
   }
 
-  onClickSharedLogboardLinkItem() {
+  onClickSharedLogboardLinkItem(): void {
     // this.showPopover(SharedLinkPopoverPage);
   }
 
-  onClickAboutItem() {
+  onClickAboutItem(): void {
     Browser.open({ url: 'https://mydata.org.tw/' });
   }
 
-  onClickVersion() {
+  onClickVersion(): void {
     this.versionClick.next(true);
   }
 
-  symptomSelected(event: CustomEvent) {
-    const userData = this.dataStoreService.getUserData();
-    userData.defaultSchema = (event.detail.value === 'default') ? true : false;
-    this.dataStoreService.updateUserData(userData)
-      .pipe(
-        switchMap(() => this.dataStoreService.updateMetas()),
-        takeUntil(this.destroy$),
-      ).subscribe();
+  // TODO: Add preset switching page
+  symptomSelected(event: CustomEvent): void {
   }
 
-  uploadHostSelected(event: CustomEvent) {
-    const userData = this.dataStoreService.getUserData();
-    userData.uploadHost = event.detail.value;
-    this.dataStoreService.updateUserData(userData)
-      .pipe(
-        takeUntil(this.destroy$),
-      ).subscribe(() => { }, err => console.log(err));
+  // TODO: Revise this
+  uploadHostSelected(event: CustomEvent): void {
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private editField(field: UserDataFormField): Observable<any> {
+    return this.popoverService.showPopover({
+      i18nTitle: `title.edit${field}`,
+      formModel: Object.assign({}, this.userData.getValue()),
+      formFields: this.formService.createFormFieldsByUserData(field),
+    })
+      .pipe(
+        map(result => result.data),
+        filter(data => (data)),
+        tap(userData => this.userData.next(userData)),
+      );
   }
 
 }

@@ -1,44 +1,38 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { UserData } from '../interfaces/user-data';
-import { DataStoreService } from './data-store.service';
+import { Subject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslateConfigService {
 
-  readonly langs = ['en', 'fr', 'ja', 'zh'];
+  private readonly setLang = new Subject<string>();
+  setLang$ = this.setLang
+    .pipe(
+      switchMap(lang => this.translateService.use(lang)),
+    );
+
+  public readonly langs = ['en', 'fr', 'ja', 'zh'];
 
   constructor(
     private readonly translateService: TranslateService,
-    private readonly dataStoreService: DataStoreService
-  ) { }
-
+  ) {
+    this.setLang$.subscribe(() => console.log('Language switched'));
+  }
 
   public get currentLanguage(): string {
     return this.translateService.currentLang;
   }
 
-
-  initialize() {
+  initialize(lang?: string): void {
     this.translateService.setDefaultLang('en');
-    if (!this.dataStoreService.getUserData().language) {
-      this.translateService.use(this.translateService.getBrowserLang());
-    } else {
-      this.translateService.use(this.dataStoreService.getUserData().language);
-    }
+    const browserLang = this.translateService.getBrowserLang();
+    return (lang) ? this.setLang.next(lang) : this.setLang.next(browserLang);
   }
 
-  setLanguage(lang: string): Observable<UserData> {
-    this.translateService.use(lang);
-    const userData = this.dataStoreService.getUserData();
-    userData.language = lang;
-    return this.dataStoreService.updateUserData(userData);
-  }
-
-  stream(): Observable<string> {
-    return this.translateService.stream(this.langs);
+  setLanguage(lang: string): void {
+    this.setLang.next(lang);
   }
 }

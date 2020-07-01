@@ -39,9 +39,11 @@ export class AppComponent {
     this.dataStore.initialize()
       .pipe(
         first(),
-        tap(() => {
-          if (this.dataStore.getUserData().newUser) {
+        tap(([userData, metas]) => {
+          if (userData.newUser) {
             this.router.navigate(['/onboarding']);
+          } else {
+            this.translateConfigService.initialize(userData.language);
           }
         }),
       ).subscribe(() => { }, err => console.log(err));

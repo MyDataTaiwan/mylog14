@@ -7,28 +7,32 @@
       <ion-item (click)="onClickNameItem()" button>
         <ion-icon name="person-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.name' | translate }}</ion-label>
-        <ion-text>{{ userDataView.firstName + ' ' + userDataView.lastName }}</ion-text>
+        <ion-text *ngIf="userDataView.firstName || userDataView.lastName">
+          {{ userDataView.firstName + ' ' + userDataView.lastName }}
+        </ion-text>
+        <ion-text *ngIf="!userDataView.firstName && !userDataView.lastName">{{ 'title.notSet' | translate }}</ion-text>
       </ion-item>
 
       <ion-item (click)="onClickEmailItem()" button>
         <ion-icon name="mail-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.email' | translate }}</ion-label>
-        <ion-text>{{ userDataView.email }}</ion-text>
+        <ion-text *ngIf="userDataView.email">{{ userDataView.email }}</ion-text>
+        <ion-text *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</ion-text>
       </ion-item>
 
-      <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
+      <ion-item lines="inset" button>
         <ion-icon name="calendar-outline" slot="start">
         </ion-icon>
         <ion-label>{{ 'title.dateOfBirth' | translate }}</ion-label>
-        <ion-text *ngIf="!(dateOfBirth$ | async)">{{ 'title.notSet' | translate }}</ion-text>
-        <ion-datetime #dateOfBirthPicker [value]="dateOfBirth$ | async" (ionChange)="onChangeDateOfBirthPicker()"
-          [hidden]="!(dateOfBirth$ | async)"></ion-datetime>
+        <ion-text *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</ion-text>
+        <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
+          (ionChange)="onChangeDateOfBirthPicker()"></ion-datetime>
       </ion-item>
 
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.language' | translate }}</ion-label>
-        <ion-select [value]="currentLanguage$ | async" (ionChange)="onChangeLanguage($event)">
+        <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)">
           <ion-select-option *ngFor="let language of languages" [value]="language">
             {{ 'language.' + language | translate }}
           </ion-select-option>
