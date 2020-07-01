@@ -3,12 +3,12 @@ import { ModalController, PopoverController } from '@ionic/angular';
 import { defer, interval, Observable, Subject } from 'rxjs';
 import { debounce, switchMap, take, takeUntil } from 'rxjs/operators';
 import { UserData } from '../core/interfaces/user-data';
-import { AddRecordPage } from '../core/pages/add-record/add-record.page';
 import { GuidePage } from '../core/pages/guide/guide.page';
 import { SharePage } from '../core/pages/share/share.page';
 import { SnapshotService } from '../core/services/snapshot.service';
 import { PopoverService } from '../core/services/popover.service';
 import { FormService } from '../core/services/form.service';
+import { ModalService } from '../core/services/modal.service';
 
 @Component({
   selector: 'app-tabs',
@@ -21,11 +21,9 @@ export class TabsPage implements OnDestroy {
   showDebugButton = false;
   GuideLoader$: Observable<UserData>;
   constructor(
-    private modalController: ModalController,
     private popoverCtrl: PopoverController,
     private snapshotService: SnapshotService,
-    private popoverService: PopoverService,
-    private formService: FormService,
+    private modalService: ModalService,
   ) { }
 
   ngOnDestroy() {
@@ -35,28 +33,6 @@ export class TabsPage implements OnDestroy {
 
   ionTabsDidChange(event: TabsEvent) {
     this.selectedTab = event.tab;
-  }
-
-  async presentGuideModal(userData: UserData) {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: GuidePage,
-      componentProps: { userData },
-      cssClass: 'Guide-modal',
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
-  }
-
-  async presentAddRecordModal() {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: AddRecordPage,
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
   }
 
   onClickCameraButton() {
@@ -69,8 +45,8 @@ export class TabsPage implements OnDestroy {
   .subscribe();
   }
 
-async onClickRecordButton() {
-  await this.presentAddRecordModal();
+onClickRecordButton() {
+  this.modalService.showAddRecordModal().subscribe();
 }
 
 onClickShareButton() {

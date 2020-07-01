@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { AddRecordPageRoutingModule } from './add-record-routing.module';
-import { AddRecordPage } from './add-record.page';
+import { AddRecordComponent } from './add-record.component';
 import { CoreModule } from '../../core.module';
 import { MainHeaderModule } from '../../components/main-header/main-header.module';
 
@@ -13,11 +12,10 @@ import { MainHeaderModule } from '../../components/main-header/main-header.modul
     CommonModule,
     FormsModule,
     IonicModule,
-    AddRecordPageRoutingModule,
     TranslateModule,
     MainHeaderModule,
   ],
-  declarations: [AddRecordPage],
-  entryComponents: [AddRecordPage],
+  declarations: [AddRecordComponent],
+  entryComponents: [AddRecordComponent],
 })
-export class AddRecordPageModule { }
+export class AddRecordComponentModule { }

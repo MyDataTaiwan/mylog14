@@ -1,15 +1,11 @@
 import { Location } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PickerController } from '@ionic/angular';
+import { PickerController, ModalController } from '@ionic/angular';
 import { PickerOptions } from '@ionic/core';
 import { TranslateService } from '@ngx-translate/core';
 import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
 import { delay, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { Symptom } from '../../classes/symptom';
-import { Symptoms } from '../../classes/symptoms';
-import { DataStoreService } from '../../services/data-store.service';
-import { GeolocationService } from '../../services/geolocation.service';
-import { SnapshotService } from '../../services/snapshot.service';
 import { PopoverService, PopoverIcon } from '../../services/popover.service';
 import { LoadingService } from '../../services/loading.service';
 import { Record } from '../../classes/record';
@@ -20,10 +16,10 @@ import { FormService } from '../../services/form.service';
 
 @Component({
   selector: 'app-add-record',
-  templateUrl: './add-record.page.html',
-  styleUrls: ['./add-record.page.scss'],
+  templateUrl: './add-record.component.html',
+  styleUrls: ['./add-record.component.scss'],
 })
-export class AddRecordPage implements OnInit, OnDestroy {
+export class AddRecordComponent implements OnInit, OnDestroy {
   btCIntegerList = this.genIntArr(34, 40).map(x => x.toString());
   btDecimalList = this.genIntArr(0, 9).map(x => `.${x}`);
   btUnitList = ['°C'];
@@ -47,12 +43,12 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly loadingService: LoadingService,
-    private readonly location: Location,
     private readonly pickerCtrl: PickerController,
     private readonly translate: TranslateService,
     private readonly popoverService: PopoverService,
     private readonly recordActionService: RecordActionService,
     private readonly formService: FormService,
+    private readonly modalCtrl: ModalController,
   ) {
     this.recorded$ = this.translate.get('title.recordSaved');
     this.recorded$.subscribe((t: string) => this.text.recorded = t);
@@ -82,14 +78,14 @@ export class AddRecordPage implements OnInit, OnDestroy {
       i18nTitle: `preset.${templateName}.${field.name}`,
       i18nMessage: '',
       formModel,
-      formFields: this.formService.createFormFields(field, templateName),
+      formFields: this.formService.createFormFieldsByRecordField(field, templateName),
     }).subscribe();
   }
 
   showRecordSavedPopover(): Observable<any> {
     return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500)
       .pipe(
-        tap(() => this.location.back()),
+        tap(() => this.modalCtrl.dismiss()),
         takeUntil(this.destroy$)
       );
   }
@@ -156,6 +152,10 @@ export class AddRecordPage implements OnInit, OnDestroy {
 
   onBodyTemperatureClick() {
     this.presentBtPicker();
+  }
+
+  onCancelClick() {
+    this.modalCtrl.dismiss();
   }
 
   onClearClick() {

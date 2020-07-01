@@ -1,4 +1,4 @@
-import { AddRecordPageModule } from './pages/add-record/add-record.module';
+import { AddRecordComponentModule } from './components/add-record/add-record.module';
 import { ClickOutsideSameClassDirective } from './directives/click-outside-same-class.directive';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -34,7 +34,7 @@ import { FormlyModule } from '@ngx-formly/core';
     IonicModule,
     TranslateModule,
     MainHeaderModule,
-    AddRecordPageModule,
+    AddRecordComponentModule,
     SharePageModule,
     ReactiveFormsModule,
     FormlyModule.forRoot(),

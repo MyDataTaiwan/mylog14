@@ -3,15 +3,15 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateTestingModule } from '../../tests/translate-testing/translate-testing.module';
-import { AddRecordPage } from './add-record.page';
+import { AddRecordComponent } from './add-record.component';
 
-describe('AddRecordPage', () => {
-  let component: AddRecordPage;
-  let fixture: ComponentFixture<AddRecordPage>;
+describe('AddRecordComponent', () => {
+  let component: AddRecordComponent;
+  let fixture: ComponentFixture<AddRecordComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AddRecordPage],
+      declarations: [AddRecordComponent],
       imports: [
         IonicModule.forRoot(),
         RouterModule.forRoot([]),
@@ -20,7 +20,7 @@ describe('AddRecordPage', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddRecordPage);
+    fixture = TestBed.createComponent(AddRecordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -1,4 +1,4 @@
-<app-main-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="cancel()"></app-main-header>
+<app-main-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="onCancelClick()"></app-main-header>
 <ion-content>
   <ion-list>
     <ng-container *ngIf="record$ | async as record">

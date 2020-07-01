@@ -7,10 +7,6 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'add-record',
-    loadChildren: () => import('./core/pages/add-record/add-record.module').then(m => m.AddRecordPageModule)
-  },
-  {
     path: 'img-popover',
     loadChildren: () => import('./core/pages/img-popover/img-popover.module').then(m => m.ImgPopoverPageModule)
   },

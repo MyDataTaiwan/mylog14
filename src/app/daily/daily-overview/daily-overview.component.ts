@@ -5,7 +5,7 @@ import { Observable, Subject, timer } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { CouponService } from 'src/app/core/services/coupon.service';
-import { ShopScannerService } from 'src/app/core/services/shop-scanner.service';
+import { ModalService } from 'src/app/core/services/modal.service';
 
 @Component({
   selector: 'app-daily-overview',
@@ -43,7 +43,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   constructor(
     public dataStore: DataStoreService,
     private ngZone: NgZone,
-    public shopScannerService: ShopScannerService,
+    public modalService: ModalService,
   ) {
     this.items$ = this.dataStore.overviewCards$
       .pipe(
@@ -95,10 +95,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onClickAnimation() {
-    if (!this.dataStore.getUserData().startDate) {
-      return;
-    }
-    this.shopScannerService.showShopScanner()
+    this.modalService.showShopScannerModal()
     .pipe(
       takeUntil(this.destroy$),
     ).subscribe();

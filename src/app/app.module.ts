@@ -10,7 +10,7 @@ import { LottieModule } from 'ngx-lottie';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
+import { AddRecordComponentModule } from './core/components/add-record/add-record.module';
 import { GuidePageModule } from './core/pages/guide/guide.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
@@ -47,7 +47,7 @@ export function playerFactory() {
       }
     }),
     CoreModule,
-    AddRecordPageModule,
+    AddRecordComponentModule,
     ImgPopoverPageModule,
     GuidePageModule,
     ImgViewerPageModule,
