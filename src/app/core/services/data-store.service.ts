@@ -5,8 +5,8 @@ import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
 import { Meta } from '../interfaces/meta';
 import { UserData } from '../interfaces/user-data';
-import { RecordService } from './repository/record.service';
-import { UserDataService } from './repository/user-data.service';
+import { RecordRepositoryService } from './repository/record-repository.service';
+import { UserDataRepositoryService } from './repository/user-data-repository.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class DataStoreService {
 
   public dailyRecords$ = this.metas$.pipe(
     map(metas => (metas) ? metas : []),
-    switchMap(metas => this.recordService.getRecords(metas)),
+    switchMap(metas => this.recordRepository.getRecords(metas)),
     map(records => new DailyRecords([])),
     switchMap(dailyRecords => {
       const userData = this.userData;
@@ -37,12 +37,12 @@ export class DataStoreService {
     }),
   );
 
-  private userData: UserData = this.userDataService.defaultUserData;
-  public userData$ = new BehaviorSubject<UserData>(this.userDataService.defaultUserData);
+  private userData: UserData = this.userDataRepository.defaultUserData;
+  public userData$ = new BehaviorSubject<UserData>(this.userDataRepository.defaultUserData);
 
   constructor(
-    private readonly recordService: RecordService,
-    private readonly userDataService: UserDataService,
+    private readonly recordRepository: RecordRepositoryService,
+    private readonly userDataRepository: UserDataRepositoryService,
   ) {
     this.userData$
       .pipe(tap(userData => this.userData = userData))
@@ -58,8 +58,8 @@ export class DataStoreService {
   }
 
   updateMetas(metas?: Meta[]): Observable<Meta[]> {
-    const loadList$ = this.recordService.getMetas();
-    const saveList$ = this.recordService.saveMetas(metas);
+    const loadList$ = this.recordRepository.getMetas();
+    const saveList$ = this.recordRepository.saveMetas(metas);
     const update$ = (metas) ? saveList$ : loadList$;
     return update$.pipe(
       tap((list: Meta[]) => this.metas.next(list)),
@@ -67,8 +67,8 @@ export class DataStoreService {
   }
 
   updateUserData(userData?: UserData): Observable<UserData> {
-    const load$ = this.userDataService.getUserData();
-    const save$ = this.userDataService.saveUserData(userData);
+    const load$ = this.userDataRepository.getUserData();
+    const save$ = this.userDataRepository.saveUserData(userData);
     const update$ = (userData) ? save$ : load$;
     return update$.pipe(
       tap(data => this.userData$.next(data)),

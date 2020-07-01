@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PresetService, RecordPreset } from './preset.service';
-import { RecordService } from './repository/record.service';
+import { RecordRepositoryService } from './repository/record-repository.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { ProofService } from './proof.service';
 import { Record } from '../classes/record';
@@ -15,7 +15,7 @@ export class RecordActionService {
   constructor(
     private readonly presetService: PresetService,
     private readonly proofService: ProofService,
-    private readonly recordService: RecordService,
+    private readonly recordRepository: RecordRepositoryService,
   ) { }
 
   create(preset: RecordPreset): Observable<Record> {
@@ -24,15 +24,15 @@ export class RecordActionService {
   }
 
   save(record: Record): Observable<Meta[]> {
-    return forkJoin([this.recordService.getMetas(), this.recordService.saveRecord(record)])
+    return forkJoin([this.recordRepository.getMetas(), this.recordRepository.saveRecord(record)])
       .pipe(
         map(([metas, newMeta]) => ([...metas, newMeta] as Meta[])),
-        switchMap(metas => this.recordService.saveMetas(metas)),
+        switchMap(metas => this.recordRepository.saveMetas(metas)),
       );
   }
 
   query(queryOptions: RecordQueryOptions): Observable<Record[]> {
-    return this.recordService.getMetas()
+    return this.recordRepository.getMetas()
       .pipe(
         map(metas => {
           if (queryOptions.hash) {
@@ -52,7 +52,7 @@ export class RecordActionService {
           }
           return metas;
         }),
-        switchMap(metas => this.recordService.getRecords(metas)),
+        switchMap(metas => this.recordRepository.getRecords(metas)),
       );
   }
 

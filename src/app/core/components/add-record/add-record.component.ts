@@ -11,7 +11,7 @@ import { RecordPreset } from '../../services/preset.service';
 import { RecordFieldType, RecordField } from '../../interfaces/record-field';
 import { FormService } from '../../services/form.service';
 import { DataStoreService } from '../../services/data-store.service';
-import { UserDataService } from '../../services/repository/user-data.service';
+import { UserDataRepositoryService } from '../../services/repository/user-data-repository.service';
 
 @Component({
   selector: 'app-add-record',
@@ -36,7 +36,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly loadingService: LoadingService,
-    private readonly userDataService: UserDataService,
+    private readonly userDataRepository: UserDataRepositoryService,
     private readonly popoverService: PopoverService,
     private readonly recordActionService: RecordActionService,
     private readonly formService: FormService,
@@ -97,7 +97,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private loadEmptyRecord() {
-    this.userDataService.getUserData()
+    this.userDataRepository.getUserData()
       .pipe(
         first(),
         switchMap(userData => this.recordActionService.create(userData.recordPreset)),

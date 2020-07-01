@@ -5,7 +5,7 @@ import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rx
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 import { DataStoreService } from './data-store.service';
-import { RecordService } from './repository/record.service';
+import { RecordRepositoryService } from './repository/record-repository.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class UploadService {
   constructor(
     private dataStore: DataStoreService,
     private http: HttpClient,
-    private recordService: RecordService,
+    private recordRepository: RecordRepositoryService,
   ) { }
 
   private createCachedFiles() {
@@ -32,7 +32,7 @@ export class UploadService {
         switchMap(metas => {
           return forkJoin([
             of(metas.map(meta => meta.path)),
-            this.recordService.getRawRecords(metas),
+            this.recordRepository.getRawRecords(metas),
             of(metas),
           ]);
         }),

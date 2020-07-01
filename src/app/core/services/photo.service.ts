@@ -7,7 +7,7 @@ import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
 import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
-import { RecordService } from './repository/record.service';
+import { RecordRepositoryService } from './repository/record-repository.service';
 import { FileSystemService } from './storage/file-system.service';
 import { Meta } from '../interfaces/meta';
 import { LocalStorage } from 'openpgp';

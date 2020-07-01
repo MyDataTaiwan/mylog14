@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class UserDataService {
+export class UserDataRepositoryService {
   USER_DATA_REPOSITORY = 'userData';
   defaultUserData: UserData = {
     newUser: true,

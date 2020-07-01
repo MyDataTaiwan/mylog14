@@ -5,12 +5,12 @@ import { LocalStorageService } from '../storage/local-storage.service';
 import { Meta } from '../../interfaces/meta';
 import { Record } from '../../classes/record';
 import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecordService {
+export class RecordRepositoryService {
   RECORD_META_KEY = 'records';
   RECORD_DIRECTORY = FilesystemDirectory.Data;
 

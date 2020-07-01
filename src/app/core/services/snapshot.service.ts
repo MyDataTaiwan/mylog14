@@ -12,7 +12,7 @@ import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
 import { GeolocationService } from './geolocation.service';
 import { PhotoService } from './photo.service';
-import { RecordService } from './repository/record.service';
+import { RecordRepositoryService } from './repository/record-repository.service';
 import { PopoverIcon, PopoverService } from './popover.service';
 import { ProofService } from './proof.service';
 
@@ -31,7 +31,7 @@ export class SnapshotService {
     private readonly proofService: ProofService,
     private readonly photoService: PhotoService,
     private readonly popoverService: PopoverService,
-    private readonly recordService: RecordService,
+    private readonly recordRepository: RecordRepositoryService,
   ) { }
 
   createPhotoWithProof(): Observable<Photo> {
@@ -59,7 +59,7 @@ export class SnapshotService {
             photos: [photo],
           };
           return forkJoin([
-            this.recordService.saveRecord(record, metas),
+            this.recordRepository.saveRecord(record, metas),
             this.showRecordSavedPopover(),
           ]);
         }),
@@ -93,7 +93,7 @@ export class SnapshotService {
             locationStamp: proof.locationStamp,
             photos: [],
           };
-          return this.recordService.saveRecord(record, metas);
+          return this.recordRepository.saveRecord(record, metas);
         }),
         switchMap(metas => this.dataStore.updateMetas(metas)),
       );

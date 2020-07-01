@@ -8,7 +8,7 @@ import { TranslateConfigService } from 'src/app/core/services/translate-config.s
 import { version } from '../../../../package.json';
 import { PopoverService } from 'src/app/core/services/popover.service';
 import { FormService, UserDataFormField } from 'src/app/core/services/form.service';
-import { UserDataService } from 'src/app/core/services/repository/user-data.service';
+import { UserDataRepositoryService } from 'src/app/core/services/repository/user-data-repository.service';
 import { UserData } from 'src/app/core/interfaces/user-data';
 import { RecordPreset, PresetService } from 'src/app/core/services/preset.service';
 
@@ -53,16 +53,16 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly translateConfigService: TranslateConfigService,
     private readonly popoverService: PopoverService,
     private readonly formService: FormService,
-    private readonly userDataService: UserDataService,
+    private readonly userDataRepository: UserDataRepositoryService,
     private readonly presetService: PresetService,
   ) { }
 
   ngOnInit() {
-    this.userDataService.getUserData()
+    this.userDataRepository.getUserData()
       .subscribe(userData => this.userData.next(userData));
     this.userData$
       .pipe(
-        switchMap(userData => this.userDataService.saveUserData(userData)),
+        switchMap(userData => this.userDataRepository.saveUserData(userData)),
       ).subscribe();
     this.edit$.subscribe();
   }
