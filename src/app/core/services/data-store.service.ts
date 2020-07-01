@@ -5,8 +5,8 @@ import { DailyRecords } from '../classes/daily-records';
 import { OverviewDailyCard } from '../classes/overview-daily-card';
 import { Meta } from '../interfaces/meta';
 import { UserData } from '../interfaces/user-data';
-import { RecordService } from './record.service';
-import { UserDataService } from './user-data.service';
+import { RecordService } from './repository/record.service';
+import { UserDataService } from './repository/user-data.service';
 
 @Injectable({
   providedIn: 'root'

@@ -12,7 +12,7 @@ import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
 import { GeolocationService } from './geolocation.service';
 import { PhotoService } from './photo.service';
-import { RecordService } from './record.service';
+import { RecordService } from './repository/record.service';
 import { PopoverIcon, PopoverService } from './popover.service';
 import { ProofService } from './proof.service';
 

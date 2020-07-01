@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
 import { FilesystemDirectory, FilesystemEncoding, Plugins } from '@capacitor/core';
+import { Injectable } from '@angular/core';
 import { crypto, util } from 'openpgp';
-import { defer, from, Observable } from 'rxjs';
 import { defaultIfEmpty, filter, map, switchMap, take } from 'rxjs/operators';
+import { defer, from, Observable } from 'rxjs';
 
 const { Filesystem } = Plugins;
 
@@ -16,7 +16,7 @@ export class FileSystemService {
   getFileHash(fileName: string, dir = FilesystemDirectory.Data): Observable<any> {
     return from(Filesystem.readFile({
       path: fileName,
-      directory: FilesystemDirectory.Data,
+      directory: dir,
     }))
       .pipe(
         take(1),

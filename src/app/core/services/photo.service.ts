@@ -7,11 +7,11 @@ import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
 import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
-import { RecordService } from './record.service';
-import { FileSystemService } from './file-system.service';
+import { RecordService } from './repository/record.service';
+import { FileSystemService } from './storage/file-system.service';
 import { Meta } from '../interfaces/meta';
 import { LocalStorage } from 'openpgp';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from './storage/local-storage.service';
 
 const { Camera, Filesystem, Storage, Permissions } = Plugins;
 

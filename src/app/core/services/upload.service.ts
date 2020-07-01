@@ -5,7 +5,7 @@ import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rx
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
 import { DataStoreService } from './data-store.service';
-import { RecordService } from './record.service';
+import { RecordService } from './repository/record.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { UserData } from '../interfaces/user-data';
-import { LocalStorageService } from './local-storage.service';
-import { RecordPreset } from './preset.service';
+import { UserData } from '../../interfaces/user-data';
+import { LocalStorageService } from '../storage/local-storage.service';
+import { RecordPreset } from '../preset.service';
 import { tap } from 'rxjs/operators';
 
 @Injectable({

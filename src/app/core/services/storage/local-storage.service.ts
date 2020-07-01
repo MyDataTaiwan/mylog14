@@ -12,12 +12,12 @@ export class LocalStorageService {
   constructor() { }
 
   /**
-   * @param  repo repository identifier for Capacitor Storage Plugin
+   * @param  key repository key for Capacitor Storage Plugin
    * @param  defaultData default return value if data does not exist
    * @returns Observable<T>
    */
-  getData<T>(repo: string, defaultData: T): Observable<T> {
-    return defer(() => Storage.get({ key: repo })).pipe(
+  getData<T>(key: string, defaultData: T): Observable<T> {
+    return defer(() => Storage.get({ key })).pipe(
       map(raw => raw.value),
       map(value => (value) ? JSON.parse(value) : defaultData),
     );
@@ -25,13 +25,13 @@ export class LocalStorageService {
 
   /**
    * @param  data JSON-stringifiable data
-   * @param  repo repository identifier for Capacitor Storage Plugin
+   * @param  key repository key for Capacitor Storage Plugin
    * @returns Observable<T>
    */
-  setData<T>(data: T, repo: string): Observable<T> {
+  setData<T>(data: T, key: string): Observable<T> {
     return defer(() =>
       Storage.set({
-        key: repo,
+        key,
         value: JSON.stringify(data),
       })
     ).pipe(

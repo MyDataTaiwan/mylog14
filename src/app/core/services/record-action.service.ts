@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { PresetService, RecordPreset } from './preset.service';
-import { RecordService } from './record.service';
+import { RecordService } from './repository/record.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { ProofService } from './proof.service';
 import { Record } from '../classes/record';
