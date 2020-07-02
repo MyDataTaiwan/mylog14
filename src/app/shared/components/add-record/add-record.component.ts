@@ -10,7 +10,7 @@ import { Record } from '@core/classes/record';
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { FormService } from '@core/forms/form.service';
 import { RecordField } from '@core/interfaces/record-field';
-import { RecordActionService } from '@core/services/record-action.service';
+import { RecordService } from '@core/services/record.service';
 import {
   UserDataRepositoryService,
 } from '@core/services/repository/user-data-repository.service';
@@ -43,7 +43,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     private readonly loadingService: LoadingService,
     private readonly userDataRepo: UserDataRepositoryService,
     private readonly popoverService: PopoverService,
-    private readonly recordActionService: RecordActionService,
+    private readonly recordService: RecordService,
     private readonly formService: FormService,
     private readonly modalCtrl: ModalController,
   ) {
@@ -91,7 +91,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   submitRecord(): Observable<any> {
     return forkJoin([
       this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
-      this.recordActionService.save(this.record.getValue()),
+      this.recordService.save(this.record.getValue()),
     ])
       .pipe(
         mergeMap(([loading, _]) => loading.dismiss()),
@@ -105,7 +105,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.userDataRepo.get()
       .pipe(
         first(),
-        switchMap(userData => this.recordActionService.create(userData.recordPreset)),
+        switchMap(userData => this.recordService.create(userData.recordPreset)),
         tap(record => this.record.next(record)),
         takeUntil(this.destroy$),
       ).subscribe();

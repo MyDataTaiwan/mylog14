@@ -1,21 +1,35 @@
 import { Injectable } from '@angular/core';
-import { PresetService, RecordPreset } from './preset.service';
-import { RecordRepositoryService } from './repository/record-repository.service';
+
 import { Observable, of } from 'rxjs';
-import { ProofService } from './proof.service';
+import { map } from 'rxjs/operators';
+
 import { Record } from '../classes/record';
-import { map, switchMap } from 'rxjs/operators';
+import { PresetService, RecordPreset } from './preset.service';
+import { ProofService } from './proof.service';
+import {
+  RecordRepositoryService,
+} from './repository/record-repository.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecordActionService {
+export class RecordService {
 
   constructor(
     private readonly presetService: PresetService,
     private readonly proofService: ProofService,
     private readonly recordRepo: RecordRepositoryService,
   ) { }
+
+  attachProof(record: Record): Observable<Record> {
+    return this.proofService.createProof()
+      .pipe(
+        map(proof => {
+          record.setProof(proof);
+          return record;
+        }),
+      );
+  }
 
   create(preset: RecordPreset): Observable<Record> {
     const record = new Record(Date.now());

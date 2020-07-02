@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RecordActionService } from './record-action.service';
+import { RecordService } from './record.service';
 
-describe('RecordActionService', () => {
+describe('RecordService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: RecordActionService = TestBed.get(RecordActionService);
+    const service: RecordService = TestBed.get(RecordService);
     expect(service).toBeTruthy();
   });
 });
