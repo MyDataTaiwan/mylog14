@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {
   FormlyFieldInputComponent,
@@ -11,6 +11,9 @@ import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
+import {
+  AddRecordComponent,
+} from './components/add-record/add-record.component';
 import { PopoverComponent } from './components/popover/popover.component';
 import {
   QrScannerComponent,
@@ -21,11 +24,13 @@ import {
 
 @NgModule({
   entryComponents: [
+    AddRecordComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,
   ],
   declarations: [
+    AddRecordComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,
@@ -36,6 +41,7 @@ import {
     IonicModule,
     CoreModule,
     TranslateModule,
+    FormsModule,
     ReactiveFormsModule,
     FormlyModule.forRoot({
       types: [
@@ -45,6 +51,7 @@ import {
     FormlyIonicModule,
   ],
   exports: [
+    AddRecordComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,

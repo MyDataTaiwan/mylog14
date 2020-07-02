@@ -24,7 +24,7 @@ export class ImgPopoverPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.address$ = this.geolocationService.getFromLocation(0, 0);
+    // this.address$ = this.geolocationService.getFromLocation(0, 0);
   }
 
   cancel() {

@@ -12,6 +12,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SharedModule } from '@shared/shared.module';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,6 +53,7 @@ export function playerFactory() {
       }
     }),
     CoreModule,
+    SharedModule,
     ImgPopoverPageModule,
     ImgViewerPageModule,
     LottieModule.forRoot({ player: playerFactory }),
