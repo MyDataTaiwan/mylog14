@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Plugins } from '@capacitor/core';
 import { PopoverController, ToastController } from '@ionic/angular';
-import { combineLatest, defer, Subject } from 'rxjs';
+import { defer, Subject, forkJoin } from 'rxjs';
 import { first, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { DataStoreService } from '../../services/data-store.service';
 import { UploadService } from '../../services/upload.service';
+import { UserDataRepositoryService } from '../../services/repository/user-data-repository.service';
 
 const { Clipboard } = Plugins;
 
@@ -31,20 +31,16 @@ export class SharePage implements OnDestroy {
     public readonly uploadService: UploadService,
     private readonly popoverCtrl: PopoverController,
     private readonly toastCtrl: ToastController,
-    private readonly dataStoreService: DataStoreService
+    private readonly userDataRepo: UserDataRepositoryService,
   ) { }
 
   confirm() {
     this.stage += 1;
     if (this.stage === Stage.Upload) {
-      this.uploadService.uploadZip()
+      forkJoin([this.uploadService.uploadZip(), this.userDataRepo.get()])
         .pipe(
-          map(generatedUrl => {
-            const userData = this.dataStoreService.getUserData();
-            userData.generatedUrl = generatedUrl;
-            return userData;
-          }),
-          switchMap(userData => this.dataStoreService.updateUserData(userData))
+          map(([generatedUrl, userData]) => ({...userData, generatedUrl})),
+          switchMap(userData => this.userDataRepo.save(userData))
         )
         .subscribe(() => { }, err => {
           console.log(err);

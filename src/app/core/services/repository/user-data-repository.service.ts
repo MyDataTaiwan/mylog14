@@ -23,11 +23,11 @@ export class UserDataRepositoryService {
     private readonly localStorage: LocalStorageService
   ) { }
 
-  getUserData(): Observable<UserData> {
+  get(): Observable<UserData> {
     return this.localStorage.getData(this.USER_DATA_REPOSITORY, this.defaultUserData);
   }
 
-  saveUserData(userData: UserData): Observable<UserData> {
+  save(userData: UserData): Observable<UserData> {
     return this.localStorage.setData(userData, this.USER_DATA_REPOSITORY)
       .pipe(tap(u => this.userData.next(u)));
   }

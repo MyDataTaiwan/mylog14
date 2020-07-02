@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Photo } from '../../interfaces/old-photo';
-import { Record } from '../../interfaces/record';
+import { Photo } from '../../interfaces/photo';
+import { Record } from '../../classes/record';
 import { GeolocationService } from '../../services/geolocation.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class ImgPopoverPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.address$ = this.geolocationService.getFromLocation(this.photo.locationStamp.latitude, this.photo.locationStamp.longitude);
+    this.address$ = this.geolocationService.getFromLocation(0, 0);
   }
 
   cancel() {

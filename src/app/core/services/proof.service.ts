@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Proof, LocationProof } from '../interfaces/proof';
+import { Proof } from '../interfaces/proof';
+import { LocationProof } from '../interfaces/location-proof';
 import { Observable } from 'rxjs';
 import { GeolocationService } from './geolocation.service';
 import { map } from 'rxjs/operators';

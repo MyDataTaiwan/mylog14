@@ -11,7 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { AddRecordComponentModule } from './core/components/add-record/add-record.module';
-import { GuidePageModule } from './core/pages/guide/guide.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
 import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -49,7 +48,6 @@ export function playerFactory() {
     CoreModule,
     AddRecordComponentModule,
     ImgPopoverPageModule,
-    GuidePageModule,
     ImgViewerPageModule,
     LottieModule.forRoot({ player: playerFactory }),
     ReactiveFormsModule,

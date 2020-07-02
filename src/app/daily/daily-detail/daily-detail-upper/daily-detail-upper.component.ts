@@ -1,9 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { OverviewDailyCard } from 'src/app/core/classes/overview-daily-card';
-import { LocationStamp } from 'src/app/core/interfaces/location-stamp';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
   selector: 'app-daily-detail-upper',
@@ -17,18 +12,11 @@ export class DailyDetailUpperComponent implements OnInit {
   baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
   url = this.baseUrl + this.tempLocation;
   isShowMap = false;
-  card$: Observable<OverviewDailyCard>;
 
   constructor(
-    public dataStore: DataStoreService,
   ) { }
 
   ngOnInit() {
-    this.card$ = this.dataStore.overviewCards$
-      .pipe(
-        map(cards => cards.find(card => +card.day === this.dayCount)),
-        tap(card => this.updateMapUrl(card.locations)),
-      );
   }
 
   onClickOutside() {
@@ -37,7 +25,7 @@ export class DailyDetailUpperComponent implements OnInit {
     }
   }
 
-  updateMapUrl(locations: LocationStamp[]): void {
+  updateMapUrl(locations: any): void {
     if (locations.length < 1) {
       this.isShowMap = false;
       return;

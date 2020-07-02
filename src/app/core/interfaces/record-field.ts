@@ -1,16 +1,10 @@
+import { RecordFieldValueRange } from './record-field-value-range';
+import { RecordFieldType } from '../enums/record-field-type.enum';
+
 export type RecordFieldValue = number | string | boolean;
 
-export enum RecordFieldType {
-   integer = 'integer',
-   number = 'number',
-   string = 'string',
-   boolean = 'boolean',
-}
 
-export interface RecordFieldValueRange {
-    max: number;
-    min: number;
-}
+
 
 export interface RecordField {
     readonly name: string;

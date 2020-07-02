@@ -1,16 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
 import { defer, forkJoin, from, Observable, of, Subject, BehaviorSubject } from 'rxjs';
 import { delay, map, switchMap, take, takeUntil, tap, filter, first, mergeMap } from 'rxjs/operators';
 import { PopoverService, PopoverIcon } from '../../services/popover.service';
 import { LoadingService } from '../../services/loading.service';
 import { Record } from '../../classes/record';
 import { RecordActionService } from '../../services/record-action.service';
-import { RecordPreset } from '../../services/preset.service';
-import { RecordFieldType, RecordField } from '../../interfaces/record-field';
+import { RecordField } from '../../interfaces/record-field';
+import { RecordFieldType } from '../../enums/record-field-type.enum';
 import { FormService } from '../../services/form.service';
-import { DataStoreService } from '../../services/data-store.service';
 import { UserDataRepositoryService } from '../../services/repository/user-data-repository.service';
 
 @Component({
@@ -36,7 +34,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly loadingService: LoadingService,
-    private readonly userDataRepository: UserDataRepositoryService,
+    private readonly userDataRepo: UserDataRepositoryService,
     private readonly popoverService: PopoverService,
     private readonly recordActionService: RecordActionService,
     private readonly formService: FormService,
@@ -97,7 +95,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private loadEmptyRecord() {
-    this.userDataRepository.getUserData()
+    this.userDataRepo.get()
       .pipe(
         first(),
         switchMap(userData => this.recordActionService.create(userData.recordPreset)),

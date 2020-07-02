@@ -4,23 +4,25 @@ import * as JSZip from 'jszip';
 import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
-import { DataStoreService } from './data-store.service';
 import { RecordRepositoryService } from './repository/record-repository.service';
+import { UserDataRepositoryService } from './repository/user-data-repository.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private generatedUrl = new BehaviorSubject<string>('');
+  private readonly generatedUrl = new BehaviorSubject<string>('');
   public generatedUrl$ = this.generatedUrl.asObservable();
 
   constructor(
-    private dataStore: DataStoreService,
-    private http: HttpClient,
-    private recordRepository: RecordRepositoryService,
+    private readonly http: HttpClient,
+    private readonly recordRepo: RecordRepositoryService,
+    private readonly userDataRepo: UserDataRepositoryService,
   ) { }
 
   private createCachedFiles() {
+    return of([]);
+    /*
     return this.dataStore.metas$
       .pipe(
         take(1),
@@ -32,7 +34,7 @@ export class UploadService {
         switchMap(metas => {
           return forkJoin([
             of(metas.map(meta => meta.path)),
-            this.recordRepository.getRawRecords(metas),
+            this.recordRepo.getJsonAll(metas),
             of(metas),
           ]);
         }),
@@ -48,6 +50,7 @@ export class UploadService {
           return cachedFiles;
         })
       );
+      */
   }
 
   private createVerificationJson(cachedFiles: CachedFile[]): CachedFile {
@@ -82,7 +85,7 @@ export class UploadService {
     const endpoint = '/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'mylog.zip');
-    const hostType = (this.dataStore.getUserData().uploadHost) ? this.dataStore.getUserData().uploadHost : 'PROD';
+    const hostType = 'PROD';
     const url = hostUrl[hostType] + endpoint;
     return this.http.post(url, formData)
       .pipe(

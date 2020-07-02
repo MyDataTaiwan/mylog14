@@ -4,7 +4,8 @@ import { PopoverController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { defer } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { DataStoreService } from 'src/app/core/services/store/data-store.service';
+import { UserDataRepositoryService } from 'src/app/core/services/repository/user-data-repository.service';
 
 const { Clipboard } = Plugins;
 
@@ -15,7 +16,7 @@ const { Clipboard } = Plugins;
 })
 export class SharedLinkPopoverPage {
 
-  generatedUrl$ = this.dataStoreService.userData$.pipe(
+  generatedUrl$ = this.userDataRepo.userData$.pipe(
     map(userData => userData.generatedUrl)
   );
 
@@ -23,7 +24,7 @@ export class SharedLinkPopoverPage {
     private readonly popoverController: PopoverController,
     private readonly toastController: ToastController,
     private readonly translateService: TranslateService,
-    private readonly dataStoreService: DataStoreService
+    private readonly userDataRepo: UserDataRepositoryService,
   ) { }
 
   onCopy() {

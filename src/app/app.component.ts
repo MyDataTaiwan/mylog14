@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { DataStoreService } from './core/services/data-store.service';
-import { GeolocationService } from './core/services/geolocation.service';
 import { TranslateConfigService } from './core/services/translate-config.service';
-import { first, tap } from 'rxjs/operators';
+import { switchMap, filter, first, tap } from 'rxjs/operators';
+import { DataStoreService } from './core/services/store/data-store.service';
+import { defer, of, Observable } from 'rxjs';
+import { UserData } from './core/interfaces/user-data';
 
 
 const { SplashScreen, StatusBar } = Plugins;
@@ -18,35 +19,32 @@ const { SplashScreen, StatusBar } = Plugins;
 export class AppComponent {
 
   constructor(
-    private dataStore: DataStoreService,
-    private geolocation: GeolocationService,
-    private platform: Platform,
-    private router: Router,
-    private translateConfigService: TranslateConfigService
+    private readonly dataStore: DataStoreService,
+    private readonly platform: Platform,
+    private readonly router: Router,
+    private readonly translateConfigService: TranslateConfigService
   ) {
-    this.translateConfigService.initialize();
-    this.initializeApp();
+    this.setStatusBarStyle().subscribe();
+    this.dataInitialized()
+      .subscribe(userData => {
+        this.translateConfigService.initialize(userData.language);
+        if (userData.newUser) {
+          this.router.navigate(['/onboarding']);
+        }
+        SplashScreen.hide();
+      });
   }
-  async initializeApp() {
-    if (this.platform.is('hybrid')) {
-      try {
-        await StatusBar.setStyle({ style: StatusBarStyle.Light });
-      } catch {
-        console.log('Status Bar is not implemented in web');
-      }
-    }
-    this.geolocation.getPosition().subscribe(); // Update location cache
-    this.dataStore.initialize()
+
+  private setStatusBarStyle(): Observable<void> {
+    const setStyle$ = defer(() => StatusBar.setStyle({ style: StatusBarStyle.Light })).pipe(first());
+    return (this.platform.is('hybrid')) ? setStyle$ : of(null);
+  }
+
+  private dataInitialized(): Observable<UserData> {
+    return this.dataStore.initialized$
       .pipe(
-        first(),
-        tap(([userData, metas]) => {
-          if (userData.newUser) {
-            this.router.navigate(['/onboarding']);
-          } else {
-            this.translateConfigService.initialize(userData.language);
-          }
-        }),
-      ).subscribe(() => { }, err => console.log(err));
-    SplashScreen.hide();
+        filter(isInitialized => isInitialized === true),
+        switchMap(() => this.dataStore.userData$),
+      );
   }
 }

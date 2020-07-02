@@ -1,5 +1,7 @@
 import { Proof } from '../interfaces/proof';
-import { RecordField, RecordFieldType, RecordFieldValueRange, RecordFieldValue } from '../interfaces/record-field';
+import { RecordField, RecordFieldValue } from '../interfaces/record-field';
+import { RecordFieldType } from '../enums/record-field-type.enum';
+import { RecordFieldValueRange } from '../interfaces/record-field-value-range';
 
 export class Record {
 

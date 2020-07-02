@@ -3,7 +3,6 @@ import { Plugins } from '@capacitor/core';
 import { IonDatetime } from '@ionic/angular';
 import { Subject, BehaviorSubject, Observable } from 'rxjs';
 import { buffer, debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
 import { version } from '../../../../package.json';
 import { PopoverService } from 'src/app/core/services/popover.service';
@@ -27,7 +26,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   languages = this.translateConfigService.langs;
   recordPresets = this.presetService.presets;
 
-  private readonly userData = new BehaviorSubject<UserData>(this.dataStoreService.getUserData());
+  private readonly userData = new BehaviorSubject<UserData>(this.userDataRepo.defaultUserData);
   userData$: Observable<UserData> = this.userData;
 
   appVersion = version;
@@ -49,20 +48,19 @@ export class SettingsPage implements OnInit, OnDestroy {
     );
 
   constructor(
-    private readonly dataStoreService: DataStoreService,
     private readonly translateConfigService: TranslateConfigService,
     private readonly popoverService: PopoverService,
     private readonly formService: FormService,
-    private readonly userDataRepository: UserDataRepositoryService,
+    private readonly userDataRepo: UserDataRepositoryService,
     private readonly presetService: PresetService,
   ) { }
 
   ngOnInit() {
-    this.userDataRepository.getUserData()
+    this.userDataRepo.get()
       .subscribe(userData => this.userData.next(userData));
     this.userData$
       .pipe(
-        switchMap(userData => this.userDataRepository.saveUserData(userData)),
+        switchMap(userData => this.userDataRepo.save(userData)),
       ).subscribe();
     this.edit$.subscribe();
   }

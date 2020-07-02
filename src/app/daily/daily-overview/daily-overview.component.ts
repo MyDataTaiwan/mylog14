@@ -1,10 +1,9 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-import { Observable, Subject, timer } from 'rxjs';
+import { Observable, Subject, timer, BehaviorSubject, empty } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
-import { CouponService } from 'src/app/core/services/coupon.service';
+import { DataStoreService } from 'src/app/core/services/store/data-store.service';
 import { ModalService } from 'src/app/core/services/modal.service';
 
 @Component({
@@ -29,26 +28,22 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   TEMPimg: '/assets/imgA.png';
   private animationItem: AnimationItem;
-  private isAnimationCreated: boolean = false;
   emptyCardItem = {
-    hasData: false,
-    day: null,
-    month: null,
-    date: null,
-    bt: null,
+    hasData: true,
+    day: '15',
+    month: 'Dec',
+    date: '12/15',
+    bt: '37.5',
     imgSrc: null,
-    imgHeight: null,
+    imgHeight: 400,
   };
 
+  item$ = new BehaviorSubject(this.emptyCardItem);
+
   constructor(
-    public dataStore: DataStoreService,
-    private ngZone: NgZone,
+    private readonly ngZone: NgZone,
     public modalService: ModalService,
   ) {
-    this.items$ = this.dataStore.overviewCards$
-      .pipe(
-        map(cards => cards.reverse()),
-      );
   }
 
   ngOnInit() {
@@ -65,14 +60,8 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   }
 
   onConfigReady() {
-    this.dataStore.userData$
-      .pipe(
-        map(userData => userData.startDate),
-        map(startDate => this.dateDiff((new Date(startDate)).getTime(), Date.now())),
-        map(dateDiff => isNaN(dateDiff) ? -1 : dateDiff),
-        filter(dateDiff => this.cachedDateDiff !== dateDiff), // Don't trigger animation if dateDiff is not changed
-        tap(dateDiff => this.cachedDateDiff = dateDiff),
-        switchMap(dateDiff => this.startCountdown(dateDiff)),
+    this.startCountdown(0)
+    .pipe(
         takeUntil(this.destroy$),
       ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
   }
@@ -82,7 +71,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     this.WhatIsItToday = idx;
     this.animationPlay(idx);
 
-    if (idx != 15) {
+    if (idx !== 15) {
       return timer(idx * 1000)
         .pipe(
           tap(() => this.animationStopOnDay(idx)),
@@ -103,10 +92,6 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   private animationStopOnDay(idx: number) {
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[idx], true));
-  }
-
-  private dateDiff(current: number, end: number): number {
-    return Math.floor((end - current) / (1000 * 3600 * 24));
   }
 
 }

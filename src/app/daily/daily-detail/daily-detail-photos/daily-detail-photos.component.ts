@@ -4,9 +4,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { Photo } from 'src/app/core/interfaces/photo';
-import { Record } from 'src/app/core/interfaces/record';
+import { Record } from 'src/app/core/classes/record';
 import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
+import { DataStoreService } from 'src/app/core/services/store/data-store.service';
 import { PhotoService } from 'src/app/core/services/photo.service';
 import { LoadingService } from 'src/app/core/services/loading.service';
 export interface Pic {
@@ -28,24 +28,12 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   constructor(
-    private readonly dataStore: DataStoreService,
     private readonly loadingService: LoadingService,
     public modalController: ModalController,
-    private readonly photoService: PhotoService,
     private readonly translate: TranslateService,
   ) { }
 
   ngOnInit() {
-    /*
-    this.photos$ = this.dataStore.dailyRecords$
-      .pipe(
-        map(dailyRecords => dailyRecords.list.find(dailyRecord => dailyRecord.dayCount === this.dayCount)),
-        map(dailyRecord => dailyRecord.records),
-        map(records => records.map(record => record.photos)),
-        map(nestedPhotos => nestedPhotos.reduce((flat, next) => flat.concat(next), [])),
-        map(photos => photos.sort((a, b) => +b.timestamp - +a.timestamp)),
-      );
-      */
   }
 
   ngOnDestroy(): void {
@@ -54,6 +42,7 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
   }
 
   showImageViewer(photo: Photo) {
+    /*
     this.getRecordByPhoto(photo)
       .pipe(
         switchMap(record => forkJoin([of(record), this.createModal(record, photo)])),
@@ -64,6 +53,7 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(() => { }, e => console.log(e));
+      */
   }
 
   deletePhotoOnDismissHandler(modal: HTMLIonModalElement, record: Record, photo: Photo) {
@@ -85,19 +75,6 @@ export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
       component: ImgViewerPage,
       componentProps: { record, photo }
     })));
-  }
-
-  getRecordByPhoto(photo: Photo): Observable<Record> {
-    return this.dataStore.dailyRecords$
-      .pipe(
-        take(1),
-        map(dailyRecords => dailyRecords.list.find(dailyRecord => dailyRecord.dayCount === this.dayCount)),
-        map(dailyRecord => dailyRecord.records),
-        map(records => {
-          // return records.find(record => record.photos.some(p => p.filepath === photo.filepath));
-          return records[0];
-        }),
-      );
   }
 
   showDeletingDataLoading(): Observable<HTMLIonLoadingElement> {

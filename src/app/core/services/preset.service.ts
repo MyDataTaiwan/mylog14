@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Record } from '../classes/record';
-import { RecordFieldType } from '../interfaces/record-field';
+import { RecordFieldType } from '../enums/record-field-type.enum';
 
 import * as CommonCold from 'src/app/core/presets/common-cold.json';
 import * as HeartFailure from 'src/app/core/presets/heart-failure.json';

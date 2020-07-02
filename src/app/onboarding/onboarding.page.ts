@@ -6,11 +6,11 @@ import { ToastController } from '@ionic/angular';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
 import { Subject, forkJoin, defer, of, from, Observable } from 'rxjs';
 import { first, map, switchMap, tap, catchError } from 'rxjs/operators';
-import { DataStoreService } from '../core/services/data-store.service';
 import { TranslateConfigService } from '../core/services/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '../core/services/loading.service';
 import { RecordPreset } from '../core/services/preset.service';
+import { UserDataRepositoryService } from '../core/services/repository/user-data-repository.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -34,9 +34,9 @@ export class OnboardingPage implements OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly router: Router,
     private readonly toastController: ToastController,
-    private readonly dataStoreService: DataStoreService,
     private readonly privateCouponService: PrivateCouponService,
     private readonly loadingService: LoadingService,
+    private readonly userDataRepo: UserDataRepositoryService,
   ) { }
 
   onSubmit() {
@@ -54,17 +54,15 @@ export class OnboardingPage implements OnDestroy {
           this.presentToast(err.error.reason || err.statusText);
           throw (err);
         }),
-        switchMap((res: SignupResponse) => {
-          console.log('Signup success');
-          const userData = this.dataStoreService.getUserData();
-          userData.email = this.onboardingForm.controls.email.value;
-          userData.newUser = false;
-          userData.recordPreset = RecordPreset.COMMON_COLD;
-          if (res) {
-            userData.userId = res.response.user_id;
-          }
-          return this.dataStoreService.updateUserData(userData);
-        }),
+        switchMap((res: SignupResponse) => forkJoin([of(res), this.userDataRepo.get()])),
+        map(([res, userData]) => ({
+          ...userData,
+          email: this.onboardingForm.controls.email.value,
+          newUser: false,
+          recordPreset: RecordPreset.COMMON_COLD,
+          userId: (res) ? res.response.user_id : null,
+        })),
+        switchMap(userData => this.userDataRepo.save(userData)),
       );
 
     loading$

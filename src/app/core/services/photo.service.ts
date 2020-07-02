@@ -1,39 +1,25 @@
 import { Injectable } from '@angular/core';
-import { CameraPhoto, CameraResultType, CameraSource, Capacitor, FilesystemDirectory, Plugins, CameraOptions, PermissionsOptions, PermissionResult, PermissionType } from '@capacitor/core';
-import { Platform } from '@ionic/angular';
-import { BehaviorSubject, defer, from, Observable, of, Subject, forkJoin } from 'rxjs';
+import { CameraPhoto, CameraResultType, CameraSource, Plugins, CameraOptions, PermissionsOptions, PermissionResult, PermissionType } from '@capacitor/core';
+import { defer, from, Observable, of, Subject, forkJoin } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
-import { Record } from '../interfaces/record';
-import { DataStoreService } from './data-store.service';
-import { RecordRepositoryService } from './repository/record-repository.service';
 import { FileSystemService } from './storage/file-system.service';
 import { Meta } from '../interfaces/meta';
-import { LocalStorage } from 'openpgp';
 import { LocalStorageService } from './storage/local-storage.service';
 
-const { Camera, Filesystem, Storage, Permissions } = Plugins;
+const { Camera, Permissions } = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class PhotoService {
-  public photos: Photo[] = [];
-  private photosSubject = new BehaviorSubject<Photo[]>([]);
-  public readonly photos$ = this.photosSubject.asObservable();
-  private platform: Platform;
-  private PHOTO_STORAGE = 'photosd';
 
-  PHOTO_META_REPOSITORY = 'photos';
-  PHOTO_DIRECTORY = FilesystemDirectory.Data;
+  PHOTO_META_KEY = 'photos';
 
   constructor(
-    private readonly dataStore: DataStoreService,
     private readonly fileSystem: FileSystemService,
     private readonly localStorage: LocalStorageService,
-    platform: Platform,
   ) {
-    this.platform = platform;
   }
 
   createPhotoByCamera(): Observable<Photo> {
@@ -44,7 +30,7 @@ export class PhotoService {
   }
 
   getPhoto(meta: Meta): Observable<Photo> {
-    return this.fileSystem.getJsonData(meta.path, meta.directory);
+    return this.fileSystem.getJsonData(meta.path);
   }
 
   getPhotos(metas: Meta[]): Observable<Photo[]> {
@@ -54,11 +40,11 @@ export class PhotoService {
   }
 
   getMetas(): Observable<Meta[]> {
-    return this.localStorage.getData(this.PHOTO_META_REPOSITORY, []);
+    return this.localStorage.getData(this.PHOTO_META_KEY, []);
   }
 
   saveMetas(metas: Meta[]): Observable<Meta[]> {
-    return this.localStorage.setData(metas, this.PHOTO_META_REPOSITORY);
+    return this.localStorage.setData(metas, this.PHOTO_META_KEY);
   }
 
   private getCameraPhoto(): Observable<CameraPhoto> {

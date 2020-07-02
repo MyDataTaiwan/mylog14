@@ -4,7 +4,7 @@ import { defer, forkJoin, from, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
 import { Photo } from '../../interfaces/photo';
-import { Record } from '../../interfaces/record';
+import { Record } from '../../classes/record';
 
 @Component({
   selector: 'app-img-viewer',
