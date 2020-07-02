@@ -1,19 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
+import { CoreModule } from '@core/core.module';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { ImgViewerPageRoutingModule } from './img-viewer-routing.module';
-import { ImgViewerPage } from './img-viewer.page';
+
+import { AddRecordComponent } from './add-record.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ImgViewerPageRoutingModule,
+    CoreModule,
     TranslateModule,
   ],
-  declarations: [ImgViewerPage]
+  declarations: [AddRecordComponent],
+  entryComponents: [AddRecordComponent],
 })
-export class ImgViewerPageModule { }
+export class AddRecordComponentModule { }

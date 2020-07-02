@@ -1,15 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import {
+  filter, first, map, mergeMap, switchMap,
+  takeUntil, tap,
+} from 'rxjs/operators';
+
+import { Record } from '@core/classes/record';
+import { RecordFieldType } from '@core/enums/record-field-type.enum';
+import { FormService } from '@core/forms/form.service';
+import { RecordField } from '@core/interfaces/record-field';
+import { RecordActionService } from '@core/services/record-action.service';
+import {
+  UserDataRepositoryService,
+} from '@core/services/repository/user-data-repository.service';
 import { ModalController } from '@ionic/angular';
-import { defer, forkJoin, from, Observable, of, Subject, BehaviorSubject } from 'rxjs';
-import { delay, map, switchMap, take, takeUntil, tap, filter, first, mergeMap } from 'rxjs/operators';
-import { PopoverService, PopoverIcon } from '../../services/popover.service';
-import { LoadingService } from '../../services/loading.service';
-import { Record } from '../../classes/record';
-import { RecordActionService } from '../../services/record-action.service';
-import { RecordField } from '../../interfaces/record-field';
-import { RecordFieldType } from '../../enums/record-field-type.enum';
-import { FormService } from '../../services/form.service';
-import { UserDataRepositoryService } from '../../services/repository/user-data-repository.service';
+import { LoadingService } from '@shared/services/loading.service';
+import { PopoverIcon, PopoverService } from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-add-record',

@@ -2,11 +2,11 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 
 
 @Component({
-  selector: 'app-main-header',
-  templateUrl: './main-header.component.html',
-  styleUrls: ['./main-header.component.scss'],
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
 })
-export class MainHeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit {
   @Input() headerTitle: string;
   @Input() showDismissButton?: boolean;
   @Output() dismissClicked = new EventEmitter<boolean>();

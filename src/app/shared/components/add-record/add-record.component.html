@@ -1,5 +1,5 @@
-<app-main-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true"
-  (dismissClicked)="onClickCancel()"></app-main-header>
+<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true"
+  (dismissClicked)="onClickCancel()"></app-header>
 <ion-content>
   <ion-list *ngIf="record$ | async as record">
     <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">

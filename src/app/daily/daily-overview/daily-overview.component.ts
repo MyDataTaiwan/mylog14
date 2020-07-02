@@ -1,10 +1,11 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-import { Observable, Subject, timer, BehaviorSubject, empty } from 'rxjs';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { DataStoreService } from 'src/app/core/services/store/data-store.service';
-import { ModalService } from 'src/app/core/services/modal.service';
+import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+
+import { ModalService } from '@shared/services/modal.service';
 
 @Component({
   selector: 'app-daily-overview',

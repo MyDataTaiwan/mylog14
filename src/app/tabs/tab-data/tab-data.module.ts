@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { MainHeaderModule } from '../../core/components/main-header/main-header.module';
 import { DailyOverviewModule } from '../../daily/daily-overview/daily-overview.module';
 import { TabDataPage } from './tab-data.page';
+import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { TabDataPage } from './tab-data.page';
     FormsModule,
     RouterModule.forChild([{ path: '', component: TabDataPage }]),
     TranslateModule,
-    MainHeaderModule,
+    CoreModule,
     DailyOverviewModule,
   ],
   declarations: [

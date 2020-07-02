@@ -1,10 +1,14 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
+
 import { defer, forkJoin, from, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
-import { ImgPopoverPage } from 'src/app/core/pages/img-popover/img-popover.page';
-import { Photo } from '../../interfaces/photo';
-import { Record } from '../../classes/record';
+
+import { Record } from '@core/classes/record';
+import { Photo } from '@core/interfaces/photo';
+import { ModalController, PopoverController } from '@ionic/angular';
+import {
+  ImgPopoverPage,
+} from '@shared/components/img-popover/img-popover.page';
 
 @Component({
   selector: 'app-img-viewer',

@@ -1,9 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+
+import { BehaviorSubject, Subject } from 'rxjs';
+import {
+  distinctUntilChanged, filter, switchMap, takeUntil, tap,
+} from 'rxjs/operators';
+
+import { ShopInfo } from '@core/interfaces/shop-info';
+import { CouponService } from '@core/services/coupon.service';
 import { ModalController } from '@ionic/angular';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
-import { takeUntil, switchMap, tap, filter, distinctUntilChanged, map, take } from 'rxjs/operators';
-import { ShopInfo } from '../../interfaces/shop-info';
-import { CouponService } from '../../services/coupon.service';
 
 @Component({
   selector: 'app-shop-scanner',

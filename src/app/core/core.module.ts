@@ -1,57 +1,37 @@
-import { AddRecordComponentModule } from './components/add-record/add-record.module';
-import { ClickOutsideSameClassDirective } from './directives/click-outside-same-class.directive';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { MainHeaderModule } from './components/main-header/main-header.module';
 import { NgModule } from '@angular/core';
-import { PopoverComponent } from './components/popover/popover.component';
-import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { SharePageModule } from './pages/share/share.module';
+
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { QrScannerComponent } from './components/qr-scanner/qr-scanner.component';
-import { ShopScannerComponent } from './components/shop-scanner/shop-scanner.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormlyIonicModule } from '@ngx-formly/ionic';
-import { FormlyModule } from '@ngx-formly/core';
-import { FormlyFieldInputComponent } from './forms/formly-field-input/formly-field-input-component';
 
-
+import {
+  SharePopoverPageModule,
+} from '../shared/components/share-popover/share-popover.module';
+import {
+  ClickOutsideSameClassDirective,
+} from './directives/click-outside-same-class.directive';
+import { HeaderComponent } from './header/header.component';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   entryComponents: [
-    PopoverComponent,
-    ShopScannerComponent,
-    QrScannerComponent,
+    HeaderComponent,
   ],
   declarations: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
-    PopoverComponent,
-    ShopScannerComponent,
-    QrScannerComponent,
-    FormlyFieldInputComponent,
+    HeaderComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
     TranslateModule,
-    MainHeaderModule,
-    AddRecordComponentModule,
-    SharePageModule,
-    ReactiveFormsModule,
-    FormlyModule.forRoot({
-      types: [
-        { name: 'customInput', component: FormlyFieldInputComponent },
-      ],
-    }),
-    FormlyIonicModule,
+    SharePopoverPageModule,
   ],
   exports: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,
-    PopoverComponent,
-    ShopScannerComponent,
-    QrScannerComponent,
+    HeaderComponent,
   ]
 })
 export class CoreModule { }

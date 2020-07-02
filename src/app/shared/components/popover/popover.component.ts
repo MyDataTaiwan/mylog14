@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
-import { PopoverButtonSet, PopoverIcon } from '../../services/popover.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
+import { PopoverController } from '@ionic/angular';
 import { FormlyFieldConfig, FormlyFormOptions } from '@ngx-formly/core';
+import {
+  PopoverButtonSet, PopoverIcon,
+} from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-popover',

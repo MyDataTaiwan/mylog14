@@ -1,20 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { SharePageRoutingModule } from './share-routing.module';
-import { SharePage } from './share.page';
+
+import { CoreModule } from '../../../core/core.module';
+import { ImgPopoverPage } from './img-popover.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SharePageRoutingModule,
+    CoreModule,
     TranslateModule,
   ],
-  declarations: [SharePage],
-  entryComponents: [SharePage],
+  declarations: [ImgPopoverPage],
+  entryComponents: [ImgPopoverPage],
 })
-export class SharePageModule { }
+export class ImgPopoverPageModule { }

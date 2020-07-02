@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+
 import { Observable } from 'rxjs';
-import { Photo } from '../../interfaces/photo';
-import { Record } from '../../classes/record';
-import { GeolocationService } from '../../services/geolocation.service';
+
+import { Record } from '@core/classes/record';
+import { Photo } from '@core/interfaces/photo';
+import { GeolocationService } from '@core/services/geolocation.service';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-img-popover',

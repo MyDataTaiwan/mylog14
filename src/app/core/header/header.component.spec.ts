@@ -1,23 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MainHeaderComponent } from './main-header.component';
+import { HeaderComponent } from './header.component';
 import { RouterModule } from '@angular/router';
 
-describe('MainHeaderComponent', () => {
-  let component: MainHeaderComponent;
-  let fixture: ComponentFixture<MainHeaderComponent>;
+describe('HeaderComponent', () => {
+  let component: HeaderComponent;
+  let fixture: ComponentFixture<HeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MainHeaderComponent ],
+      declarations: [ HeaderComponent ],
       imports: [
         IonicModule.forRoot(),
         RouterModule.forRoot([]),
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MainHeaderComponent);
+    fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

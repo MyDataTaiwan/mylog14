@@ -2,15 +2,22 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+
 import { ToastController } from '@ionic/angular';
-import { PrivateCouponService } from '@numbersprotocol/private-coupon';
-import { Subject, forkJoin, defer, of, from, Observable } from 'rxjs';
-import { first, map, switchMap, tap, catchError } from 'rxjs/operators';
-import { TranslateConfigService } from '../core/services/translate-config.service';
 import { TranslateService } from '@ngx-translate/core';
-import { LoadingService } from '../core/services/loading.service';
+import { PrivateCouponService } from '@numbersprotocol/private-coupon';
+
 import { RecordPreset } from '../core/services/preset.service';
-import { UserDataRepositoryService } from '../core/services/repository/user-data-repository.service';
+import {
+  UserDataRepositoryService,
+} from '../core/services/repository/user-data-repository.service';
+import {
+  TranslateConfigService,
+} from '../core/services/translate-config.service';
+import { LoadingService } from '../shared/services/loading.service';
 
 @Component({
   selector: 'app-onboarding',

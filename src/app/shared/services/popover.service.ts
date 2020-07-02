@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, defer, from } from 'rxjs';
-import { PopoverComponent } from '../components/popover/popover.component';
+
+import { defer, from, Observable } from 'rxjs';
+import { delay, map, switchMap } from 'rxjs/operators';
+
 import { PopoverController } from '@ionic/angular';
-import { switchMap, delay, map } from 'rxjs/operators';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { PopoverComponent } from '@shared/components/popover/popover.component';
 
 @Injectable({
   providedIn: 'root'

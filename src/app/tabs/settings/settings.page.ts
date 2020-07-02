@@ -1,15 +1,25 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Plugins } from '@capacitor/core';
-import { IonDatetime } from '@ionic/angular';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
-import { buffer, debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
-import { TranslateConfigService } from 'src/app/core/services/translate-config.service';
-import { version } from '../../../../package.json';
-import { PopoverService } from 'src/app/core/services/popover.service';
-import { FormService, UserDataFormField } from 'src/app/core/services/form.service';
-import { UserDataRepositoryService } from 'src/app/core/services/repository/user-data-repository.service';
+
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import {
+  buffer, debounceTime, filter, map, switchMap,
+  tap,
+} from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
-import { RecordPreset, PresetService } from 'src/app/core/services/preset.service';
+import { PresetService } from 'src/app/core/services/preset.service';
+import {
+  UserDataRepositoryService,
+} from 'src/app/core/services/repository/user-data-repository.service';
+import {
+  TranslateConfigService,
+} from 'src/app/core/services/translate-config.service';
+
+import { Plugins } from '@capacitor/core';
+import { FormService, UserDataFormField } from '@core/forms/form.service';
+import { IonDatetime } from '@ionic/angular';
+import { PopoverService } from '@shared/services/popover.service';
+
+import { version } from '../../../../package.json';
 
 const { Browser } = Plugins;
 

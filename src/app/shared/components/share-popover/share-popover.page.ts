@@ -1,10 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
+
+import { defer, forkJoin, Subject } from 'rxjs';
+import { map, switchMap, take, takeUntil } from 'rxjs/operators';
+
 import { Plugins } from '@capacitor/core';
+import {
+  UserDataRepositoryService,
+} from '@core/services/repository/user-data-repository.service';
+import { UploadService } from '@core/services/upload.service';
 import { PopoverController, ToastController } from '@ionic/angular';
-import { defer, Subject, forkJoin } from 'rxjs';
-import { first, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { UploadService } from '../../services/upload.service';
-import { UserDataRepositoryService } from '../../services/repository/user-data-repository.service';
 
 const { Clipboard } = Plugins;
 
@@ -17,11 +21,11 @@ enum Stage {
 }
 
 @Component({
-  selector: 'app-share',
-  templateUrl: './share.page.html',
-  styleUrls: ['./share.page.scss'],
+  selector: 'app-share-popover',
+  templateUrl: './share-popover.page.html',
+  styleUrls: ['./share-popover.page.scss'],
 })
-export class SharePage implements OnDestroy {
+export class SharePopoverPage implements OnDestroy {
 
   destroy$ = new Subject();
   stage = Stage.AreYouSure;

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { RecordField } from '../interfaces/record-field';
-import { RecordFieldType } from '../enums/record-field-type.enum';
+
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 
+import { RecordFieldType } from '../enums/record-field-type.enum';
+import { RecordField } from '../interfaces/record-field';
 
 export const enum UserDataFormField {
   NAME = 'Name',

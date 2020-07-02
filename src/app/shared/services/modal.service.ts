@@ -1,9 +1,15 @@
-import { Injectable, ComponentRef } from '@angular/core';
+import { Injectable } from '@angular/core';
+
+import { defer, from, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { ModalController } from '@ionic/angular';
-import { switchMap, map, delay } from 'rxjs/operators';
-import { Observable, defer, from } from 'rxjs';
-import { ShopScannerComponent } from '../components/shop-scanner/shop-scanner.component';
-import { AddRecordComponent } from '../components/add-record/add-record.component';
+import {
+  AddRecordComponent,
+} from '@shared/components/add-record/add-record.component';
+import {
+  ShopScannerComponent,
+} from '@shared/components/shop-scanner/shop-scanner.component';
 
 @Injectable({
   providedIn: 'root'

@@ -1,10 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, forkJoin, of, BehaviorSubject } from 'rxjs';
-import { switchMap, tap, map, filter, first, take, defaultIfEmpty } from 'rxjs/operators';
+
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import {
+  filter, first, map, switchMap, take,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  PrivateCouponService, UserDetailResult, UserResult,
+} from '@numbersprotocol/private-coupon';
+
+import {
+  PopoverButtonSet, PopoverIcon, PopoverService,
+} from '../../shared/services/popover.service';
 import { ShopInfo } from '../interfaces/shop-info';
-import { PopoverService, PopoverIcon, PopoverButtonSet } from './popover.service';
-import { PrivateCouponService, UserResult, UserDetailResult } from '@numbersprotocol/private-coupon';
-import { UserDataRepositoryService } from './repository/user-data-repository.service';
+import {
+  UserDataRepositoryService,
+} from './repository/user-data-repository.service';
 
 @Injectable({
   providedIn: 'root'

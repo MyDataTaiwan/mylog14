@@ -1,14 +1,18 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+
+import {
+  defer, forkJoin, from, Observable, of,
+  Subject,
+} from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { Record } from 'src/app/core/classes/record';
+import { Photo } from 'src/app/core/interfaces/photo';
+
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
-import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
-import { Photo } from 'src/app/core/interfaces/photo';
-import { Record } from 'src/app/core/classes/record';
-import { ImgViewerPage } from 'src/app/core/pages/img-viewer/img-viewer.page';
-import { DataStoreService } from 'src/app/core/services/store/data-store.service';
-import { PhotoService } from 'src/app/core/services/photo.service';
-import { LoadingService } from 'src/app/core/services/loading.service';
+import { ImgViewerPage } from '@shared/components/img-viewer/img-viewer.page';
+import { LoadingService } from '@shared/services/loading.service';
+
 export interface Pic {
   src: string;
 }

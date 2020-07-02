@@ -1,5 +1,5 @@
-<app-main-header [headerTitle]="'title.scanQrcode' | translate" showDismissButton="true" (dismissClicked)="cancel()">
-</app-main-header>
+<app-header [headerTitle]="'title.scanQrcode' | translate" showDismissButton="true" (dismissClicked)="cancel()">
+</app-header>
 <ion-content>
   <ng-container
     *ngIf="{ poolBalance: couponService.poolBalance$ | async, userBalance: couponService.userBalance$ | async, daysRecorded: couponService.daysRecorded$ | async } as data; else loading">
