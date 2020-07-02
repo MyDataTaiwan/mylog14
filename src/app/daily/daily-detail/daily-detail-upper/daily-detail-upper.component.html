@@ -1,16 +1,12 @@
 <ng-container *ngIf="card$ | async as card">
   <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
     <div style="display: flex;flex: 1;flex-direction: column; justify-self:center; ">
-      <!-- <div style="display: flex;flex: 1;flex-direction: column;">
-        <ion-label style="font-size: 32px;" class="ion-text-center">{{ card.date }}</ion-label>
-        <ion-label class="ion-text-center">{{ card.month }}</ion-label>
-        <ion-label class="ion-text-center"> DAY{{ card.day }}</ion-label>
-      </div> -->
       <div style="display: flex;flex: 1;flex-direction: column-reverse;">
-    
+
         <ion-label class="ion-text-center" style="color: #52C7F4;"> DAY{{ card.day }}</ion-label>
-        <ion-label class="ion-text-center" style="color: #000;" >{{ card.month }}</ion-label>
+
         <ion-label style="font-size: 32px;color: #000;" class="ion-text-center">{{ card.date }}</ion-label>
+        <ion-label class="ion-text-center" style="color: #000;">{{ card.month }}</ion-label>
 
       </div>
     </div>
@@ -20,38 +16,37 @@
         aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
       <div>
         <ion-label class="ion-text-center" style="font-size: 12px;">
-          {{ 'DAILY_RECORD.bodyTemperature' | translate }}: {{ card.bt }} 
-          <!-- °C -->
+          {{ 'title.bodyTemperature' | translate }}: {{ card.bt }}
         </ion-label>
-        <img *ngIf="card.bt.slice(0,card.bt.indexOf('°C')) >=37.5" src="../../assets/ui/Wr_icon.svg" />
-        <img *ngIf="card.bt.slice(0,card.bt.indexOf('°C')) =='N/'" src="../../assets/ui/Er_icon.svg" /> 
+        <img *ngIf="parseFloat(card.bt.slice(0,card.bt.indexOf('°C'))) >= 37.5" src="../../assets/ui/Wr_icon.svg" />
+        <img *ngIf="card.bt.slice(0,card.bt.indexOf('°C')) =='N/'" src="../../assets/ui/Er_icon.svg" />
       </div>
-      <!-- {{ card.bt.slice(0,card.bt.indexOf('°C'))}} -->
-      <div style="align-items:center;" >
-        <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;" >
-          <!-- <img src="../../assets/ui/Wr_icon.svg" /> -->
-          {{ 'DAILY_RECORD.symptoms' | translate }}:
-          <ng-container
-          (click)="selectedSymptoms=!selectedSymptoms"
-           *ngFor="let symptom of card.presentedSymptoms.slice(0,1) ; let isLast = last">
-            {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }} ...
+      <div style="align-items:center;">
+        <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;">
+          {{ 'title.symptoms' | translate }}:
+          <ng-container (click)="selectedSymptoms=!selectedSymptoms"
+            *ngFor="let symptom of card.presentedSymptoms.slice(0,1) ; let isLast = last">
+            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('splitter' | translate) }} ...
           </ng-container>
 
-       
-        <img   class="symptoms-popup" *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true" src="../../../../assets/ui/symptoms_on.svg">
-        <img   class="symptoms-popup" *ngIf="selectedSymptoms" (click)="selectedSymptoms=false" src="../../../../assets/ui/symptoms_off.svg" />
-      </ion-label>
+
+          <img class="symptoms-popup" *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true"
+            src="../../../../assets/ui/symptoms_on.svg">
+          <img class="symptoms-popup" *ngIf="selectedSymptoms" (click)="selectedSymptoms=false"
+            src="../../../../assets/ui/symptoms_off.svg" />
+        </ion-label>
       </div>
 
-      <div class="symptoms-popup" appClickOutsideSameClass (clickOutside)="onClickOutside()" *ngIf="selectedSymptoms" style="font-size: 12px; width: 45vw; position: absolute;z-index: 100; margin: 1vw;margin-left: 3vw;padding: 2vw; background-color: white;border-radius: 10px;-webkit-box-shadow: 0 0 5px 5px #ebebeb;
+      <div class="symptoms-popup" appClickOutsideSameClass (clickOutside)="onClickOutside()" *ngIf="selectedSymptoms"
+        style="font-size: 12px; width: 45vw; position: absolute;z-index: 100; margin: 1vw;margin-left: 3vw;padding: 2vw; background-color: white;border-radius: 10px;-webkit-box-shadow: 0 0 5px 5px #ebebeb;
       -moz-box-shadow: 0 0 5px 5px #ebebeb;
       box-shadow: 0 0 5px 5px #ebebeb;">
-      <ion-label class="ion-text-center" style="font-size: 12px;">
-        <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last" >
-          {{ 'SYMPTOM.' + symptom | translate }}{{isLast ? '' : ('DAILY_RECORD.splitter' | translate) }}
-        </ng-container>
-      </ion-label>
-    </div>
+        <ion-label class="ion-text-center" style="font-size: 12px;">
+          <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last">
+            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('splitter' | translate) }}
+          </ng-container>
+        </ion-label>
+      </div>
     </div>
   </div>
 </ng-container>

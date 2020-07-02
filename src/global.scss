@@ -54,8 +54,8 @@
   // --min-hight: 300px !important;
   --min-width: 100%;
 
-  width: 30px !important;
-  height:  80vw !important;
+  // width: 30px !important;
+  // height:  80vw !important;
 }
 .success_class {
   // --min-hight: 300px !important;
@@ -64,17 +64,44 @@
   width: 100% !important;
   height:  30vw !important;
 }
+.Guide-modal{
+  --background: transparent !important;
+  --height: 100%;
+  --width: 110%;
 
-.eula-modal {
-  --height: 80%;
-  --width: 80%;
-  --border-radius: 25px;
+  // --background: "#FFff0f" !important;
+  // --height: 100%;
+  // --width: 100%;
+  // clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 40% 100%, 40% 91%, 18% 91%, 18% 100%, 0% 100%);
+
+
+   // --height: 80%;
+  // --width: 80%;
+  // --border-radius: 25px;
+  // clip-path: circle(11.9% at 13% 88%);
+  // clip-path: polygon(0% 91%, 18% 91%, 18% 100%, 100% 100%, 100% 0%, 0% 0%);
+
+  // clip-path: circle(10.2% at 11% 11%);
+  // clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 93% 55%, 39% 35%);
+
+ // content:'';
+  // position:absolute;
+  // bottom:50%;
+  // width:100%;
+  // height:100%;
+  // border-radius:100%;
+    // // --background: transparent !important;
+    // --background: "#FFff0f" !important;
+    // --height: 100%;
+    // --width: 100%;
+    // clip-path: polygon(33% 100%, 32% 78%, 63% 79%, 63% 99%, 100% 100%, 100% 1%, 0% 0%, 0% 100%);
 }
 
 .toast {
     text-align: center;
     font-weight: bold;
 }
+
 
 .picker-button.test{
   background: forestgreen!important;

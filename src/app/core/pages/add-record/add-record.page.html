@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      {{ 'DAILY_RECORD.title' | translate }}
+      {{ 'title.dailyRecord' | translate }}
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button text="" icon="arrow-back-outline">
@@ -9,39 +9,37 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<!-- FIXME :  (click)="isShow=!isShow" ADD RECOR UI 中 icon 隨者 <ion-toggle> 撥動而改變顏色-->
 <ion-content>
   <ion-list>
     <ion-item (click)="onBodyTemperatureClick()">
-      <ion-label color="primary">{{ 'DAILY_RECORD.bodyTemperature' | translate }}</ion-label>
+      <ion-label color="primary">{{ 'title.bodyTemperature' | translate }}</ion-label>
       <ion-label class="ion-text-right" slot="end">{{ bt }}{{ btUnit }}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label color="primary">{{ 'DAILY_RECORD.symptoms' | translate }}</ion-label>
+      <ion-label color="primary">{{ 'title.symptoms' | translate }}</ion-label>
     </ion-item>
 
 
     <ion-list *ngFor="let symptom of symptomsView">
-      <ion-item>
-        <ion-label class="ion-padding-start">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
-        <ion-toggle [(ngModel)]="symptom.present" (ionChange)="onToggleChanged(symptom)"></ion-toggle>
-      </ion-item>
-      <ion-item *ngIf="symptom.expand">
-        <ion-label position="stacked">Notes</ion-label>
-        <ion-textarea  type="text"  [(ngModel)]="symptom.note"></ion-textarea>
-      </ion-item>
+      <ng-container *ngIf="symptom.ignore === false">
+        <ion-item>
+          <ion-label class="ion-padding-start">{{ 'title.' + symptom.name | translate }}</ion-label>
+          <ion-toggle [(ngModel)]="symptom.present" (ionChange)="onToggleChanged(symptom)"></ion-toggle>
+        </ion-item>
+        <ion-item *ngIf="symptom.expand">
+          <ion-label position="stacked">Notes</ion-label>
+          <ion-textarea type="text" [(ngModel)]="symptom.note"></ion-textarea>
+        </ion-item>
+      </ng-container>
     </ion-list>
   </ion-list>
   <ion-grid>
     <ion-row class="ion-justify-content-center">
-      <!-- <ion-col size="3" class="ion-align-self-center">
-        <ion-button (click)="onClearClick()" fill="clear">其他</ion-button>
-      </ion-col> -->
       <ion-col size="3" class="ion-align-self-center">
-        <ion-button (click)="onClearClick()" fill="clear">{{ 'DAILY_RECORD.clear' | translate }}</ion-button>
+        <ion-button (click)="onClearClick()" fill="clear">{{ 'title.clear' | translate }}</ion-button>
       </ion-col>
       <ion-col size="3" class="ion-align-self-center">
-        <ion-button (click)="onSubmitClick()">{{ 'DAILY_RECORD.submit' | translate }}</ion-button>
+        <ion-button (click)="onSubmitClick()">{{ 'title.submit' | translate }}</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

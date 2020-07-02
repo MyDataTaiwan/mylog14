@@ -19,37 +19,12 @@ const routes: Routes = [
             path: 'daily-detail/:day',
             loadChildren: () =>
               import('../daily/daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
-          },
-          {
-            path: 'category-bt',
-            loadChildren: () =>
-              import('../category/category-bt/category-bt.module').then(m => m.CategoryBtPageModule)
-          },
-          {
-            path: 'category-symptoms',
-            loadChildren: () =>
-              import('../category/category-symptoms/category-symptoms.module').then(m => m.CategorySymptomsPageModule)
-          },
-          {
-            path: 'category-location',
-            loadChildren: () =>
-              import('../category/category-location/category-location.module').then(m => m.CategoryLocationPageModule)
-          },
-          {
-            path: 'category-pending',
-            loadChildren: () =>
-              import('../category/category-pending/category-pending.module').then(m => m.CategoryPendingPageModule)
-          },
+          }
         ]
       },
       {
-        path: 'tab-taiwan',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('./tab-taiwan/tab-taiwan.module').then( m => m.TabTaiwanPageModule)
-          }
-        ]
+        path: 'settings',
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
       },
       {
         path: '',
@@ -69,4 +44,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

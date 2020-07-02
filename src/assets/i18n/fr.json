@@ -1,39 +1,13 @@
 {
-  "TOUR": {
+  "title": {
     "getStarted": "Démarrage",
-    "slide1": {
-      "title1": "Protéger vos données personnelles",
-      "title2": "",
-      "desc1": "Gérer vos données personnelles",
-      "desc2": "et partager avec consentement"
-    },
-    "slide2": {
-      "title1": "Suivre vos activités courantes",
-      "title2": "",
-      "desc1": "Suivre vos symtômes liés au COVID-19",
-      "desc2": "Réduire la pression des services de santé"
-    },
-    "slide3": {
-      "title1": "Visualiser les données",
-      "title2": "",
-      "desc1": "Comprendre aisément les données journalières",
-      "desc2": ""
-    },
-    "slide4": {
-      "title1": "Participer à la lutte pour la maîtrise de la pandémie",
-      "title2": "",
-      "desc1": "Restez à la maison",
-      "desc2": "Protéger le monde de manière solidaire"
-    }
-  },
-  "EULA": {
-    "agree": "Accord"
-  },
-  "DIARY": {
-    "title": "My Data",
-    "select": "漢語"
-  },
-  "SYMPTOM": {
+    "protectYourOwnData": "Protéger vos données personnelles",
+    "logYourLifeActivities": "Suivre vos activités courantes",
+    "throughDataVisualization": "Visualiser les données",
+    "reviewRecords": "Revoir les enregistrements",
+    "addNewData": "Ajouter une nouvelle donnée",
+    "shareData": "Partager des données",
+    "agree": "Accord",
     "coughing": "Toux",
     "runnyNose": "Ecoulement nasal",
     "nasalCongestion": "Congestion nasale",
@@ -48,42 +22,23 @@
     "muscleOrJointSoreness": "Douleurs musculaires ou articulaires",
     "soreThroat": "Maux de gorge",
     "sputum": "Crachats / Expectorations",
-    "fever": "Fièvre"
-  },
-  "DAILY_RECORD": {
-    "title": "Suivi journalier",
+    "fever": "Fièvre",
+    "dailyRecord": "Suivi journalier",
     "bodyTemperature": "Température corporelle",
     "symptoms": "Symptômes",
-    "splitter": ", ",
-    "coughing": "Tousser",
-    "headache": "Maux de tête",
-    "runnyNose": "Ecoulement nasal",
-    "soreThroat": "Maux de gorge",
     "submit": "Soumettre",
     "clear": "Effacer",
-    "recorded": "Enregistré",
-    "ok": "Accepter",
-    "saving": "Adding new data and verifiable information..."
+    "recordSaved": "Enregistré",
+    "confirm": "Accepter",
+    "scanQrcode": "Scan QR Code"
   },
-  "RECORD_FINISH": {
-    "finish": "Enregistré!"
-  },
-  "IMG_POPOVER": {
-    "confirmDelete": "Effacer la photo?",
-    "cancel": "Annuler",
-    "confirm": "Confirmer"
-  },
-  "SHARE": {
-    "confirmShare": "Would you like to create a shareable link?",
-    "confirmShareDesc": "(Your data will be uploaded and saved on Cloud temporarily. The data stored on Cloud will be removed after 72 hours)",
-    "uploading": "Uploading data to create a shareable link...",
-    "copyLink": "Copy the following link to share your data",
-    "shareToWhom": "Who would you like to share your data with?",
-    "cancel": "Cancel",
-    "confirm": "Confirm",
-    "skip": "Skip",
-    "placeholder": "e.g. John Doe",
-    "success": "Data shared",
-    "error": "Upload error. Please try again later."
+  "description": {
+    "protectYourData": "Gérer vos données personnelles et partager avec consentement",
+    "throughDataVisualization": "Comprendre aisément les données journalières",
+    "getInvolvedInResearch": "Restez à la maison Protéger le monde de manière solidaire",
+    "careHealthIsLoveYourself": "Prendre soin de sa santé est une façon de s'aimer",
+    "recordHealthSupportsMedical": "Enregistrer votre état de santé régulièrement est la meilleure manière d'aider le personnel médical!",
+    "clickTheButtonBelow": "Cliquer sur la touche ci-dessous",
+    "toLogNewData": "pour ajouter une nouvelle donnée"
   }
 }

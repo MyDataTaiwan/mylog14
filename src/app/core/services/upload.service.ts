@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { LocalStorageService } from './local-storage.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import * as JSZip from 'jszip';
-import { defer, from, forkJoin, of, BehaviorSubject, concat, Observable, throwError } from 'rxjs';
-import { DataStoreService } from './data-store.service';
-import { map, switchMap, take, tap, delay, catchError, timeout } from 'rxjs/operators';
+import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
+import { DataStoreService } from './data-store.service';
+import { RecordService } from './record.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,28 +17,33 @@ export class UploadService {
   constructor(
     private dataStore: DataStoreService,
     private http: HttpClient,
-    private localStorage: LocalStorageService,
+    private recordService: RecordService,
   ) { }
 
   private createCachedFiles() {
-    return this.dataStore.recordMetaList$
+    return this.dataStore.recordMetas$
       .pipe(
         take(1),
-        switchMap(recordMetaList => {
+        map(recordMetas => {
+          const now = Date.now();
+          const earliestTimeForUpload = now - 1000 * 86400 * 14; // Only upload  data in 14 Days
+          return recordMetas.filter(recordMeta => recordMeta.timestamp > earliestTimeForUpload);
+        }),
+        switchMap(recordMetas => {
           return forkJoin([
-            of(recordMetaList.map(recordMeta => recordMeta.path)),
-            this.localStorage.getRawRecords(recordMetaList),
-            of(recordMetaList),
+            of(recordMetas.map(recordMeta => recordMeta.path)),
+            this.recordService.getRawRecords(recordMetas),
+            of(recordMetas),
           ]);
         }),
-        map(([filenames, rawRecords, recordMetaList]) => {
+        map(([filenames, rawRecords, recordMetas]) => {
           const cachedFiles: CachedFile[] = [];
           filenames.map((filename, idx) => cachedFiles.push({
             filename,
             type: 'json',
             content: rawRecords[idx],
-            hash: recordMetaList[idx].hash,
-            transactionHash: recordMetaList[idx].transactionHash,
+            hash: recordMetas[idx].hash,
+            transactionHash: recordMetas[idx].transactionHash,
           }));
           return cachedFiles;
         })
@@ -69,13 +74,20 @@ export class UploadService {
   }
 
   private postArchive(blob: Blob) {
-    const tmpUrl = 'http://127.0.0.1:8000/api/v1/archives/';
-    const url = 'https://mylog14.numbersprotocol.io/api/v1/archives/';
+    const hostUrl = {
+      LOCAL: 'http://127.0.0.1:8000',
+      DEV: 'https://logboard-dev.numbersprotocol.io',
+      PROD: 'https://mylog14.numbersprotocol.io',
+    };
+    const endpoint = '/api/v1/archives/';
     const formData = new FormData();
-    formData.append('file', blob, 'beta1.zip');
+    formData.append('file', blob, 'mylog.zip');
+    const hostType = (this.dataStore.getUserData().uploadHost) ? this.dataStore.getUserData().uploadHost : 'PROD';
+    const url = hostUrl[hostType] + endpoint;
     return this.http.post(url, formData)
       .pipe(
-        tap((res: string) => this.generatedUrl.next(res)),
+        map((res: string) => res.replace(hostUrl.PROD, hostUrl[hostType])),
+        tap(logboardUrl => this.generatedUrl.next(logboardUrl)),
         catchError(err => this.httpErrorHandler(err)),
       );
   }

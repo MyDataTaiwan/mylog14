@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Plugins, FilesystemDirectory, FilesystemEncoding, FileWriteResult } from '@capacitor/core';
-import { defer, from, Observable, of } from 'rxjs';
-import { take, map, filter, defaultIfEmpty, switchMap, tap } from 'rxjs/operators';
+import { FilesystemDirectory, FilesystemEncoding, Plugins } from '@capacitor/core';
 import { crypto, util } from 'openpgp';
+import { defer, from, Observable } from 'rxjs';
+import { defaultIfEmpty, filter, map, switchMap, take } from 'rxjs/operators';
 
 const { Filesystem } = Plugins;
 
@@ -20,9 +20,9 @@ export class FileSystemService {
     }))
       .pipe(
         take(1),
-          map(result => (util.encode_utf8(result.data))),
-          switchMap(ab => crypto.hash.sha256(ab)),
-          map((intArr: Uint8Array) => util.Uint8Array_to_hex(intArr)),
+        map(result => (util.encode_utf8(result.data))),
+        switchMap(ab => crypto.hash.sha256(ab)),
+        map((intArr: Uint8Array) => util.Uint8Array_to_hex(intArr)),
       );
   }
 
@@ -44,11 +44,11 @@ export class FileSystemService {
   saveJsonData<T extends Data>(data: T, dir = FilesystemDirectory.Data): Observable<string> {
     const fileName = (data.timestamp) ? `${data.timestamp}.json` : `${Date.now()}.json`;
     const writeFile$ = defer(() => from(Filesystem.writeFile({
-        encoding: this.defaultEncoding,
-        path: fileName,
-        data: JSON.stringify(data),
-        directory: dir,
-      })));
+      encoding: this.defaultEncoding,
+      path: fileName,
+      data: JSON.stringify(data),
+      directory: dir,
+    })));
     return writeFile$.pipe(map(() => fileName));
   }
 

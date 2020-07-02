@@ -6,32 +6,29 @@
         {{ recordView.bt }}
       </ion-label>
       <div>
-        <!-- <ion-icon name="caret-forward-outline" *ngIf="!ToDay.isShow" button (click)="ToDay.isShow=!ToDay.isShow"> -->
-        <ion-icon name="caret-forward-outline" *ngIf="!recordView.expand" button (click)="recordView.expand=!recordView.expand;">
+        <ion-icon name="caret-forward-outline" *ngIf="!recordView.expand" button
+          (click)="recordView.expand=!recordView.expand;">
         </ion-icon>
       </div>
       <div>
-        <ion-icon name="caret-down-outline" *ngIf="recordView.expand" button (click)="recordView.expand=!recordView.expand;">
-          <!-- 加入選擇器 -->
-
+        <ion-icon name="caret-down-outline" *ngIf="recordView.expand" button
+          (click)="recordView.expand=!recordView.expand;">
         </ion-icon>
       </div>
     </ion-item>
     <ion-list *ngIf="recordView.expand">
 
       <ion-item *ngFor="let symptom of recordView.symptoms.list">
-        <!-- <img *ngIf="symptom.present" src="../../assets/ui/today_icon_a.svg" /> -->
-        <ion-label *ngIf="symptom.present" style="color: #F9AD35;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
-        <ion-label *ngIf="symptom.present" class="ion-text-center" style="color: #F9AD35;">{{symptom.note}}
+        <ion-label *ngIf="symptom.present && !symptom.ignore" style="color: #F9AD35;">
+          {{ 'title.' + symptom.name | translate }}</ion-label>
+        <ion-label *ngIf="symptom.present && !symptom.ignore" class="ion-text-center" style="color: #F9AD35;">
+          {{symptom.note}}
         </ion-label>
-        <!-- <img *ngIf="!symptom.present" src="../../assets/ui/today_icon_a_d.svg" /> -->
-        <!-- <ion-label *ngIf="!symptom.present" style="color: #D6D6D6;">{{ 'SYMPTOM.' + symptom.name | translate }}</ion-label>
-        <ion-label *ngIf="!symptom.present" class="ion-text-center" style="color: #D6D6D6;">沒有症狀</ion-label> -->
       </ion-item>
 
       <ion-item *ngIf="recordView.symptoms.list.length==0">
-        <ion-label  style="color: #D6D6D6;">{{ 'SYMPTOM.noSymptom' | translate }}</ion-label>
-        <ion-label  class="ion-text-center" style="color: #D6D6D6;">{{ 'SYMPTOM.noNote' | translate }}</ion-label>
+        <ion-label style="color: #D6D6D6;">{{ 'title.noSymptom' | translate }}</ion-label>
+        <ion-label class="ion-text-center" style="color: #D6D6D6;">{{ 'title.noNote' | translate }}</ion-label>
       </ion-item>
     </ion-list>
   </div>

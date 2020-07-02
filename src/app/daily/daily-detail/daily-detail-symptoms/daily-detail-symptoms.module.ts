@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { DailyDetailSymptomsComponent } from './daily-detail-symptoms.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { DailyDetailSymptomsComponent } from './daily-detail-symptoms.component';
 
 @NgModule({
   imports: [
@@ -17,4 +15,4 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [DailyDetailSymptomsComponent],
   exports: [DailyDetailSymptomsComponent],
 })
-export class DailyDetailSymptomsModule {}
+export class DailyDetailSymptomsModule { }

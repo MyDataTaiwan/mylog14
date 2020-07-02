@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { RecordFinishPage } from './record-finish.page';
 
 describe('RecordFinishPage', () => {
@@ -9,7 +8,7 @@ describe('RecordFinishPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecordFinishPage ],
+      declarations: [RecordFinishPage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

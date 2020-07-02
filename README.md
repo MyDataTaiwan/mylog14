@@ -1,4 +1,4 @@
-# mylog14
+# MyLog
 
 ## Build & Run
 

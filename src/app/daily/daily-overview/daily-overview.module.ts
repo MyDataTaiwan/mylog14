@@ -1,13 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
-import { DailyOverviewComponent } from './daily-overview.component';
 import { RouterModule } from '@angular/router';
-import { LottieModule } from 'ngx-lottie';
+import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
+import { LottieModule } from 'ngx-lottie';
+import { DailyOverviewComponent } from './daily-overview.component';
 
 export function playerFactory() {
   return import('lottie-web');
@@ -24,4 +22,4 @@ export function playerFactory() {
   declarations: [DailyOverviewComponent],
   exports: [DailyOverviewComponent],
 })
-export class DailyOverviewModule {}
+export class DailyOverviewModule { }

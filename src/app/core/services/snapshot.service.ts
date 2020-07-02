@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { GeolocationPosition } from '@capacitor/core';
-import { GeolocationService } from './geolocation.service';
+import { PopoverController } from '@ionic/angular';
+import { defer, forkJoin, from, Observable, of, Subject } from 'rxjs';
+import { catchError, delay, map, mergeMap, switchMap, take, takeUntil } from 'rxjs/operators';
+import { Symptoms } from '../classes/symptoms';
+import { RecordFinishPage } from '../components/record-finish/record-finish.page';
 import { LocationStamp } from '../interfaces/location-stamp';
-import { Snapshot } from '../interfaces/snapshot';
-import { PhotoService } from './photo.service';
-import { Observable, pipe, forkJoin, from, of, Subject } from 'rxjs';
-import { catchError, map, switchMap, mergeMap, takeUntil, tap, take } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
 import { Record } from '../interfaces/record';
-import { Symptoms } from '../classes/symptoms';
-import { LocalStorageService } from './local-storage.service';
+import { RecordMeta } from '../interfaces/record-meta';
+import { Snapshot } from '../interfaces/snapshot';
 import { DataStoreService } from './data-store.service';
-import { RecordMeta } from '../classes/record-meta';
+import { GeolocationService } from './geolocation.service';
+import { PhotoService } from './photo.service';
+import { RecordService } from './record.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +29,8 @@ export class SnapshotService {
     private dataStore: DataStoreService,
     private geolocationService: GeolocationService,
     private photoService: PhotoService,
-    private localStorage: LocalStorageService,
+    private popoverCtrl: PopoverController,
+    private recordService: RecordService,
   ) { }
 
   getLocationStamp(): Observable<LocationStamp> {
@@ -91,28 +94,49 @@ export class SnapshotService {
   snapCapture() {
     return forkJoin([
       this.createPhotoWithSnapshot(),
-      this.dataStore.recordMetaList$.pipe(take(1)),
+      this.dataStore.recordMetas$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([photo, recordMetaList]) => {
+        mergeMap(([photo, recordMetas]) => {
           const record: Record = {
             timestamp: photo.timestamp,
-            symptoms: new Symptoms(),
+            symptoms: new Symptoms(this.dataStore.getUserData().defaultSchema),
             photos: [photo],
           };
-          return this.localStorage.saveRecord(record, recordMetaList);
+          return forkJoin([
+            this.recordService.saveRecord(record, recordMetas),
+            this.showCaptureFinish(),
+          ]);
         }),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(([recordMetas, _]) => this.dataStore.updateRecordMetas(recordMetas)),
+      );
+  }
+
+
+  showCaptureFinish() {
+    return defer(() => this.popoverCtrl.create({
+      component: RecordFinishPage,
+    }))
+      .pipe(
+        switchMap(popover => this.displayPopoverForDuration(popover, 0.5)),
+      );
+  }
+
+  private displayPopoverForDuration(popover: HTMLIonPopoverElement, seconds: number) {
+    return from(popover.present())
+      .pipe(
+        delay(seconds * 1000),
+        switchMap(() => popover.dismiss()),
       );
   }
 
   snapRecord(bodyTemperature: number, bodyTemperatureUnit: string, symptoms: Symptoms): Observable<RecordMeta[]> {
     return forkJoin([
       this.createSnapshot(),
-      this.dataStore.recordMetaList$.pipe(take(1)),
+      this.dataStore.recordMetas$.pipe(take(1)),
     ])
       .pipe(
-        mergeMap(([snapshot, recordMetaList]) => {
+        mergeMap(([snapshot, recordMetas]) => {
           const record: Record = {
             bodyTemperature,
             bodyTemperatureUnit,
@@ -121,9 +145,9 @@ export class SnapshotService {
             locationStamp: snapshot.locationStamp,
             photos: [],
           };
-          return this.localStorage.saveRecord(record, recordMetaList);
+          return this.recordService.saveRecord(record, recordMetas);
         }),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        switchMap(recordMetas => this.dataStore.updateRecordMetas(recordMetas)),
       );
   }
 

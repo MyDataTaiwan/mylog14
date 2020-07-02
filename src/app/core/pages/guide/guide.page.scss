@@ -1,0 +1,45 @@
+ion-content{
+        --background: transparent;
+        --height: 100%;
+        --width: 100vw;
+    }
+ion-img{
+        --height: 100%;
+        --width: 100%;
+         
+}
+ion-slides {
+        height: 110%;
+    }
+.svg{
+      width: 100%;
+      height: 150%;
+        background-size: cover;
+        bottom: 0;
+}
+
+    .text-container {
+        width: 100%;
+        position: fixed;
+        bottom: 25vh;
+    }
+
+    .title {
+        margin-bottom: 5px;
+        color: #FFF;
+        font: {
+            family: 'Trebuchet MS, PingFangTC-Medium, PingFang TC';
+            size: 24px;
+            weight: bold;
+        }
+    }
+
+    .desc {
+        margin: 0;
+        color: #FFF;
+        font: {
+            family: 'Trebuchet MS, PingFangTC-Medium, PingFang TC';
+            size: 12px;
+            weight: 300;
+        }
+    }

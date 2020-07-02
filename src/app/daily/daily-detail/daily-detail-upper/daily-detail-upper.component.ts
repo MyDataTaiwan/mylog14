@@ -1,9 +1,9 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
-import { DataStoreService } from 'src/app/core/services/data-store.service';
-import { Observable, forkJoin } from 'rxjs';
-import { OverviewDailyCard } from 'src/app/core/classes/overview-daily-card';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { OverviewDailyCard } from 'src/app/core/classes/overview-daily-card';
 import { LocationStamp } from 'src/app/core/interfaces/location-stamp';
+import { DataStoreService } from 'src/app/core/services/data-store.service';
 
 @Component({
   selector: 'app-daily-detail-upper',
@@ -26,7 +26,7 @@ export class DailyDetailUpperComponent implements OnInit {
   ngOnInit() {
     this.card$ = this.dataStore.overviewCards$
       .pipe(
-        map(cards => cards[this.dayCount - 1]),
+        map(cards => cards.find(card => +card.day === this.dayCount)),
         tap(card => this.updateMapUrl(card.locations)),
       );
   }
@@ -48,4 +48,7 @@ export class DailyDetailUpperComponent implements OnInit {
     this.isShowMap = true;
   }
 
+  parseFloat(string: string): number {
+    return parseFloat(string);
+  }
 }

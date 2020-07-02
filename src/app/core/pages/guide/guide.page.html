@@ -1,0 +1,39 @@
+<ion-content>
+  <ion-slides scrollbar="false" pager="true" [options]="slideOpts" #theSlides>
+    <ion-slide>
+      <img class="svg" (click)="moveToNext(theSlides)" src="../../assets/mask/Mask_view.svg" />
+      <div class="text-container">
+        <h1 class="title">{{ 'title.reviewRecords' | translate }}</h1>
+        <h1 class="title">{{ 'empty' | translate }}</h1>
+        <p class="desc">{{ 'description.careHealthIsLoveYourself' | translate }}</p>
+        <p class="desc">{{ 'empty' | translate }}</p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <img class="svg" (click)="moveToNext(theSlides)" src="../../assets/mask/Mask_add.svg" />
+      <div class="text-container">
+        <h1 class="title">{{ 'title.addNewData' | translate }}</h1>
+        <h1 class="title">{{ 'empty' | translate }}</h1>
+        <p class="desc">{{ 'description.recordHealthSupportsMedical' | translate }}</p>
+        <p class="desc">{{ 'empty' | translate }}</p>
+      </div>
+    </ion-slide>
+    <ion-slide>
+      <img class="svg" (click)="moveToNext(theSlides)" src="../../assets/mask/Mask_share.svg" />
+      <div class="text-container">
+        <h1 class="title">{{ 'title.shareData' | translate }}</h1>
+        <h1 class="title">{{ 'empty' | translate }}</h1>
+        <p class="desc">{{ 'empty' | translate }}</p>
+        <p class="desc">{{ 'empty' | translate }}</p>
+      </div>
+    </ion-slide>
+    <ion-slide class="svg">
+      <div style="padding-bottom: 50vh; flex-direction: column;justify-content: center;align-items: center;">
+        <ion-button (click)="cancel()" expand="block" shape="round">
+          {{ 'getStarted' | translate }}
+        </ion-button>
+      </div>
+
+    </ion-slide>
+  </ion-slides>
+</ion-content>

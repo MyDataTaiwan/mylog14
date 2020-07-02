@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      {{ 'DIARY.title' | translate }}
+      {{ 'title.myData' | translate }}
     </ion-title>
     <ion-buttons slot="start">
       <ion-back-button text="" icon="arrow-back-outline">
@@ -11,9 +11,6 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ion-slides>
-
-    <ion-slide> -->
   <ion-card>
     <ion-list>
       <ng-container *ngIf="dayCount$ | async as day">

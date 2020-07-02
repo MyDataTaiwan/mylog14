@@ -1,13 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { SharePageRoutingModule } from './share-routing.module';
-
-import { SharePage } from './share.page';
 import { TranslateModule } from '@ngx-translate/core';
+import { SharePageRoutingModule } from './share-routing.module';
+import { SharePage } from './share.page';
 
 @NgModule({
   imports: [
@@ -20,4 +17,4 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [SharePage],
   entryComponents: [SharePage],
 })
-export class SharePageModule {}
+export class SharePageModule { }

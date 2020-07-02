@@ -1,8 +1,6 @@
 import { DailyCard } from '../interfaces/daily-card';
-import { Symptoms } from './symptoms';
 import { LocationStamp } from '../interfaces/location-stamp';
 import { DailyRecord } from './daily-record';
-import { Symptom } from './symptom';
 
 export class OverviewDailyCard implements DailyCard {
     hasData: boolean;
@@ -12,6 +10,7 @@ export class OverviewDailyCard implements DailyCard {
     bt: string;
     imgSrc: string;
     imgHeight: number;
+    imgByteString?: string;
     presentedSymptoms?: string[];
     locations?: LocationStamp[];
 
@@ -33,13 +32,15 @@ export class OverviewDailyCard implements DailyCard {
         }
         this.bt = `${dailyRecord.getHighestBt()}`;
         this.imgSrc = dailyRecord.getLatestPhotoPath();
+        this.imgByteString = dailyRecord.getLatestPhotoByteString();
         this.locations = dailyRecord.records
             .map(record => record.locationStamp)
             .filter(locationStamp => locationStamp !== undefined);
         this.presentedSymptoms = dailyRecord.records
             .map(record => {
                 return record.symptoms.list
-                    .filter(symptom => symptom.present === true);
+                    .filter(symptom => symptom.present === true)
+                    .filter(symptom => symptom.ignore === false);
             })
             .reduce((flat, next) => flat.concat(next), []) // Flatten
             .map(symptoms => symptoms.name)

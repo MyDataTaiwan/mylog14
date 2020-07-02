@@ -32,5 +32,7 @@ npm-debug.log*
 # /android
 # /ios
 /.gradle
+/resources/ios
+/resources/android
 
 capacitor.config.json

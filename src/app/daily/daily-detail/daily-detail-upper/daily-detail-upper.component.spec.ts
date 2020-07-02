@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { DailyDetailUpperComponent } from './daily-detail-upper.component';
 
 describe('DailyDetailUpperComponent', () => {
@@ -9,7 +8,7 @@ describe('DailyDetailUpperComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DailyDetailUpperComponent ],
+      declarations: [DailyDetailUpperComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

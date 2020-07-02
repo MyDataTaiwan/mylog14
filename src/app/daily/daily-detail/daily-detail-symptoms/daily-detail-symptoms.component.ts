@@ -30,7 +30,8 @@ export class DailyDetailSymptomsComponent implements OnInit {
   ngOnInit() {
     this.recordViews$ = this.dataStore.dailyRecords$
       .pipe(
-        map(dailyRecords => dailyRecords.list[this.dayCount - 1].records),
+        map(dailyRecords => dailyRecords.list.find(dailyRecord => dailyRecord.dayCount === this.dayCount)),
+        map(dailyRecord => dailyRecord.records),
         map(records => records
           .map(record => this.createRecordView(record))
           .filter(recordView => recordView.bt !== undefined)
@@ -45,7 +46,7 @@ export class DailyDetailSymptomsComponent implements OnInit {
     if (record.bodyTemperature && record.bodyTemperatureUnit) {
       recordView.bt = `${record.bodyTemperature}${record.bodyTemperatureUnit}`;
     }
-    recordView.symptoms.list=recordView.symptoms.list.filter((symptom)=>symptom.present==true);
+    recordView.symptoms.list = recordView.symptoms.list.filter((symptom) => symptom.present === true);
     return recordView;
   }
 

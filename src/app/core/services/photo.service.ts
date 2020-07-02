@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Capacitor, Plugins, CameraResultType, CameraSource, FilesystemDirectory, CameraPhoto } from '@capacitor/core';
-import { formatDate } from '@angular/common';
+import { CameraPhoto, CameraResultType, CameraSource, Capacitor, FilesystemDirectory, Plugins } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { Subject, Observable, from, BehaviorSubject, defer, forkJoin, of } from 'rxjs';
-import { Snapshot } from '../interfaces/snapshot';
-import { map, tap, switchMap, take, catchError } from 'rxjs/operators';
+import { BehaviorSubject, defer, from, Observable, of, Subject } from 'rxjs';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { Photo } from '../interfaces/photo';
-import { DataStoreService } from './data-store.service';
 import { Record } from '../interfaces/record';
-import { LocalStorageService } from './local-storage.service';
+import { Snapshot } from '../interfaces/snapshot';
+import { DataStoreService } from './data-store.service';
+import { RecordService } from './record.service';
 
 const { Camera, Filesystem, Storage } = Plugins;
 
@@ -23,7 +22,7 @@ export class PhotoService {
   private PHOTO_STORAGE = 'photos';
   constructor(
     private dataStore: DataStoreService,
-    private localStorage: LocalStorageService,
+    private recordService: RecordService,
     platform: Platform,
   ) {
     this.platform = platform;
@@ -65,7 +64,6 @@ export class PhotoService {
           delete photoCopy.byteString;
         }))
     });
-    // const photoBase64 = await this.readAsBase64(capturedPhoto);
     return {
       photo: savedImageFile,
       metadata: snapshot,
@@ -143,7 +141,8 @@ export class PhotoService {
   // Retrieve the photo metadata based on the platform the app is running on
   private async getPhotoFile(cameraPhoto: CameraPhoto, fileName: string): Promise<Photo> {
     let base64String = await this.readAsBase64(cameraPhoto);
-    base64String = base64String.split(',')[1]; // Remove "data:image/jpeg;base64," data schema
+    // Remove "data:image/jpeg;base64," data schema if is web
+    base64String = (this.platform.is('hybrid')) ? base64String : base64String.split(',')[1];
     if (this.platform.is('hybrid')) {
       // Get the new, complete filepath of the photo saved on filesystem
       const fileUri = await Filesystem.getUri({
@@ -195,28 +194,31 @@ export class PhotoService {
       resolve(reader.result);
     };
     reader.readAsDataURL(blob);
-  })
+  });
 
   deletePhoto(record: Record, photo: Photo) {
+    const idx = record.photos.findIndex(p => p.filepath === photo.filepath);
+    record.photos.splice(idx);
+
     const tmpArr = photo.filepath.split('/');
     const filename = tmpArr[tmpArr.length - 1];
-    return defer(() => from(Filesystem.deleteFile({
+    const deleteFile$ = defer(() => Filesystem.deleteFile({
       path: filename,
       directory: FilesystemDirectory.Data,
-    })))
+    }))
       .pipe(
         catchError(err => {
           console.log(err);
-          console.log(photo);
           return of();
-        }),
-        switchMap(() => this.dataStore.recordMetaList$.pipe(take(1))),
-        tap(() => {
-          const idx = record.photos.findIndex(p => p.filepath === photo.filepath);
-          record.photos.splice(idx);
-        }),
-        switchMap(recordMetaList => this.localStorage.saveRecord(record, recordMetaList)),
-        switchMap(recordMetaList => this.dataStore.updateRecordMetaList(recordMetaList)),
+        })
+      );
+
+    return this.dataStore.recordMetas$
+      .pipe(
+        take(1),
+        switchMap(recordMetas => this.recordService.saveRecord(record, recordMetas)),
+        switchMap(recordMetas => this.dataStore.updateRecordMetas(recordMetas)),
+        switchMap(_ => deleteFile$),
       );
   }
 }

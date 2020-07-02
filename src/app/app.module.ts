@@ -1,24 +1,20 @@
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import player from 'lottie-web';
+import { LottieModule } from 'ngx-lottie';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-
-import { LottieModule } from 'ngx-lottie';
-import player from 'lottie-web';
+import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
 import { CoreModule } from './core/core.module';
 import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
-import { CategorizeFinishPageModule } from './category/category-pending/categorize-finish/categorize-finish.module';
-import { CategorizeImgPopoverPageModule } from './category/category-pending/categorize-img-popover/categorize-img-popover.module';
-import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
+import { GuidePageModule } from './core/pages/guide/guide.module';
 import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
+import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -41,25 +37,25 @@ export function playerFactory() {
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    CategorizeFinishPageModule,
     RecordFinishPageModule,
-    CategorizeImgPopoverPageModule,
     TranslateModule.forRoot({
-    loader: {
-      provide: TranslateLoader,
-      useFactory: (LanguageLoader),
-      deps: [HttpClient],
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (LanguageLoader),
+        deps: [HttpClient],
       }
     }),
     CoreModule,
     AddRecordPageModule,
     ImgPopoverPageModule,
+    GuidePageModule,
+    ImgViewerPageModule,
     LottieModule.forRoot({ player: playerFactory })
-],
+  ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
 

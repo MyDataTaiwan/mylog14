@@ -1,19 +1,13 @@
 <ion-header>
-  <ion-toolbar  mode="ios">
-    <!-- <ion-title slot="secondary"> -->
+  <ion-toolbar mode="ios">
+    <ion-buttons *ngIf="showDismissButton" slot="secondary">
+      <ion-button (click)="onDismissClicked()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>  
     <ion-title text-center slot="secondary">
       {{ headerTitle }}
     </ion-title>
-   
-    <!-- <ion-buttons slot="start">
-      <ion-back-button text="123" icon="arrow-back-outline" color="danger">
-      </ion-back-button>
-    </ion-buttons> -->
-    <!-- <ion-buttons  >
-      <ion-back-button text="123" icon="arrow-back-outline" color="danger">
-      </ion-back-button>
-    </ion-buttons> -->
     <div slot="end" style="width: 15%;"></div>
-    
   </ion-toolbar>
 </ion-header>

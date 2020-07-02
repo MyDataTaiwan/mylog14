@@ -1,0 +1,30 @@
+<ion-content>
+  <ng-container *ngIf="name$ | async"></ng-container>
+  <form [formGroup]="nameForm" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item lines="none">
+        <ion-text>
+          <h4>{{ 'title.editUserName' | translate }}</h4>
+        </ion-text>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">{{ 'title.firstName' | translate }}</ion-label>
+        <ion-input formControlName="firstName" autocapitalize="on" autocomplete="on" clearInput inputmode="text">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">{{ 'title.lastName' | translate }}</ion-label>
+        <ion-input formControlName="lastName" autocapitalize="on" autocomplete="on" clearInput inputmode="text">
+        </ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-button type="submit" [disabled]="!nameForm.valid" fill="clear" class="ion-float-right">
+      {{ 'title.confirm' | translate }}</ion-button>
+    <ion-button (click)="onCancel()" fill="clear" class="ion-float-right">
+      {{ 'title.cancel' | translate }}
+    </ion-button>
+  </form>
+</ion-content>

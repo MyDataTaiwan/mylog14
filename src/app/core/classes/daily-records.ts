@@ -9,24 +9,33 @@ export class DailyRecords {
     isInitiated: boolean;
 
     constructor(records?: Record[]) {
-        this.list = this.createEmptyDailyRecords();
         if (records) {
-            this.fillDates(records);
+            this.list = this.createDates(records);
+            this.startDate = this.list[0].date;
+            this.endDate = this.dateDelta(this.startDate, 13);
+            this.fillDayCounts();
             this.pushRecords(records);
         }
     }
 
-    fillDates(records: Record[]): void {
-        const dayOne = this.getRecordDayOne(records);
-        if (!dayOne) {
-            return;
-        }
-        this.list.forEach((dailyRecord, idx) => {
-            dailyRecord.date = this.dateDelta(dayOne, idx);
-            this.list[idx] = dailyRecord;
+    createDates(records: Record[]): DailyRecord[] {
+        const dates: string[] = [];
+        records.forEach(record => {
+            const recordDate = this.toDateString(record.timestamp);
+            if (!dates.includes(recordDate)) {
+                dates.push(recordDate);
+            }
         });
-        this.startDate = this.list[0].date;
-        this.endDate = this.list[this.list.length - 1].date;
+        const dailyRecords: DailyRecord[] = [];
+        dates.forEach(date => dailyRecords.push(new DailyRecord(date)));
+        return dailyRecords;
+    }
+
+    fillDayCounts() {
+        this.list = this.list.map(dailyRecord => {
+            dailyRecord.dayCount = this.dateDiff(this.startDate, dailyRecord.date) + 1;
+            return dailyRecord;
+        });
     }
 
     pushRecords(records: Record[]): void {
@@ -41,30 +50,19 @@ export class DailyRecords {
         });
     }
 
-    private createEmptyDailyRecords(): DailyRecord[] {
-        const DAY_LENGTH = 14;
-        const dailyRecords: DailyRecord[] = new Array(DAY_LENGTH);
-        for (let i = 0; i < DAY_LENGTH; i++) {
-            dailyRecords[i] = new DailyRecord(i + 1);
-        }
-        return dailyRecords;
-    }
-
     private dateDelta(time: string | number | Date, delta: number) {
         const date = new Date(time);
         const epochTime = date.setDate(date.getDate() + delta);
         return this.toDateString(epochTime);
     }
 
+    private dateDiff(startDate: string, endDate: string): number {
+        const timeDiff = (new Date(endDate)).getTime() - (new Date(startDate)).getTime();
+        return Math.floor(timeDiff / (86400 * 1000));
+    }
+
     private toDateString(time: number) {
         return formatDate(time, 'yyyy-MM-dd', 'en-us'); // Convert from epoch time to JS timestamp
     }
 
-    private getRecordDayOne(records: Record[]): string {
-        if (records.length < 1) {
-            return null;
-        }
-        const ascendingRecords = records.sort((a, b) => +a.timestamp - +b.timestamp);
-        return this.toDateString(ascendingRecords[0].timestamp);
-    }
 }

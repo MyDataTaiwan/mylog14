@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
-
 import { SharePage } from './share.page';
 
 describe('SharePage', () => {
@@ -9,7 +8,7 @@ describe('SharePage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharePage ],
+      declarations: [SharePage],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

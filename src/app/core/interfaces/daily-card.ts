@@ -1,4 +1,3 @@
-import { Symptoms } from '../classes/symptoms';
 import { LocationStamp } from './location-stamp';
 
 export interface DailyCard {

@@ -1,14 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { ImgPopoverPageRoutingModule } from './img-popover-routing.module';
-
-import { ImgPopoverPage } from './img-popover.page';
-import { CoreModule } from '../../core.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { CoreModule } from '../../core.module';
+import { ImgPopoverPageRoutingModule } from './img-popover-routing.module';
+import { ImgPopoverPage } from './img-popover.page';
 
 @NgModule({
   imports: [
@@ -22,4 +19,4 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [ImgPopoverPage],
   entryComponents: [ImgPopoverPage],
 })
-export class ImgPopoverPageModule {}
+export class ImgPopoverPageModule { }
