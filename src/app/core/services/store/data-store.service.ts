@@ -42,8 +42,7 @@ export class DataStoreService {
     private readonly recordRepo: RecordRepositoryService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
-    this.initializeStore()
-      .subscribe(() => this.initialized.next(true));
+    this.initializeStore().subscribe();
   }
 
   pushRecord(record: Record): Observable<Record[]> {
@@ -78,7 +77,10 @@ export class DataStoreService {
       .pipe(
         tap(records => this.records.next(records))
       );
-    return forkJoin([initUserData$, initRecords$]).pipe(first());
+    return forkJoin([initUserData$, initRecords$]).pipe(
+      first(),
+      tap(() => this.initialized.next(true)),
+    );
   }
 
   private getRecordsByDate(records: Record[]): RecordsByDate {

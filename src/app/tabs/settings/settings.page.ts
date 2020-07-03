@@ -1,21 +1,19 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 import {
   buffer, debounceTime, filter, map, switchMap,
-  tap,
+  take, takeUntil, tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
-import { PresetService } from 'src/app/core/services/preset.service';
 import {
-  UserDataRepositoryService,
-} from 'src/app/core/services/repository/user-data-repository.service';
-import {
-  TranslateConfigService,
-} from 'src/app/core/services/translate-config.service';
+  PresetService, RecordPreset,
+} from 'src/app/core/services/preset.service';
 
 import { Plugins } from '@capacitor/core';
 import { FormService, UserDataFormField } from '@core/forms/form.service';
+import { LanguageService } from '@core/services/language.service';
+import { DataStoreService } from '@core/services/store/data-store.service';
 import { IonDatetime } from '@ionic/angular';
 import { PopoverService } from '@shared/services/popover.service';
 
@@ -31,15 +29,15 @@ const { Browser } = Plugins;
 export class SettingsPage implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject();
-  SymptomNameList: any;
+
   @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
-  languages = this.translateConfigService.langs;
-  recordPresets = this.presetService.presets;
 
-  private readonly userData = new BehaviorSubject<UserData>(this.userDataRepo.defaultUserData);
-  userData$: Observable<UserData> = this.userData;
+  readonly appVersion = version;
+  readonly languages = this.languageService.getAvailableLanguages();
+  readonly recordPresets = this.presetService.presets;
 
-  appVersion = version;
+  userData$: Observable<UserData> = this.dataStore.userData$;
+
   showDeveloperOptions = false;
   private readonly versionClick = new Subject<boolean>();
   versionClick$ = this.versionClick.pipe(
@@ -51,50 +49,49 @@ export class SettingsPage implements OnInit, OnDestroy {
     tap(() => this.showDeveloperOptions = true),
   );
 
-  private readonly edit = new Subject<UserDataFormField>();
-  edit$ = this.edit
+  private readonly updateFromPopover = new Subject<UserDataFormField>();
+  updateFromPopover$ = this.updateFromPopover
     .pipe(
-      switchMap(field => this.editField(field)),
+      switchMap(field => forkJoin([this.dataStore.userData$.pipe(take(1)), of(field)])),
+      switchMap(([userData, field]) => this.showPopoverToEditField(userData, field)),
+      switchMap(data => this.dataStore.updateUserData(data)),
+      takeUntil(this.destroy$),
+    );
+
+  private readonly updateFromPage = new Subject<UserDataPatch>();
+  updateFromPage$ = this.updateFromPage
+    .pipe(
+      switchMap(data => (data.language) ? this.languageService.set(data.language) : this.dataStore.updateUserData(data)),
+      takeUntil(this.destroy$),
     );
 
   constructor(
-    private readonly translateConfigService: TranslateConfigService,
+    private readonly languageService: LanguageService,
     private readonly popoverService: PopoverService,
     private readonly formService: FormService,
-    private readonly userDataRepo: UserDataRepositoryService,
+    private readonly dataStore: DataStoreService,
     private readonly presetService: PresetService,
   ) { }
 
   ngOnInit() {
-    this.userDataRepo.get()
-      .subscribe(userData => this.userData.next(userData));
-    this.userData$
-      .pipe(
-        switchMap(userData => this.userDataRepo.save(userData)),
-      ).subscribe();
-    this.edit$.subscribe();
+    this.updateFromPopover$.subscribe();
+    this.updateFromPage$.subscribe();
   }
 
   onClickNameItem(): void {
-    this.edit.next(UserDataFormField.NAME);
+    this.updateFromPopover.next(UserDataFormField.NAME);
   }
 
   onClickEmailItem(): void {
-    this.edit.next(UserDataFormField.EMAIL);
+    this.updateFromPopover.next(UserDataFormField.EMAIL);
   }
 
   onChangeDateOfBirthPicker(): void {
-    const userData = this.userData.getValue();
-    userData.dateOfBirth = this.dateOfBirthPicker.value;
-    this.userData.next(userData);
+    this.updateFromPage.next({ dateOfBirth: this.dateOfBirthPicker.value});
   }
 
   onChangeLanguage(event: CustomEvent): void {
-    const newLang = event.detail.value;
-    this.translateConfigService.setLanguage(newLang);
-    const userData = this.userData.getValue();
-    userData.language = newLang;
-    this.userData.next(userData);
+    this.updateFromPage.next({ language: event.detail.value });
   }
 
   onClickSharedLogboardLinkItem(): void {
@@ -110,13 +107,23 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   presetSelected(event: CustomEvent): void {
-    const userData = this.userData.getValue();
-    userData.recordPreset = event.detail.value;
-    this.userData.next(userData);
+    this.updateFromPage.next({ recordPreset: event.detail.value });
   }
 
-  // TODO: Revise this
   uploadHostSelected(event: CustomEvent): void {
+    this.updateFromPage.next({ uploadHost: event.detail.value });
+  }
+
+  private showPopoverToEditField(userData: UserData, field: UserDataFormField): Observable<UserData> {
+    return this.popoverService.showPopover({
+      i18nTitle: `title.edit${field}`,
+      formModel: Object.assign({}, userData),
+      formFields: this.formService.createFormFieldsByUserData(field),
+    })
+      .pipe(
+        map(result => result.data),
+        filter(data => (data)),
+      );
   }
 
   ngOnDestroy() {
@@ -124,17 +131,19 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private editField(field: UserDataFormField): Observable<any> {
-    return this.popoverService.showPopover({
-      i18nTitle: `title.edit${field}`,
-      formModel: Object.assign({}, this.userData.getValue()),
-      formFields: this.formService.createFormFieldsByUserData(field),
-    })
-      .pipe(
-        map(result => result.data),
-        filter(data => (data)),
-        tap(userData => this.userData.next(userData)),
-      );
-  }
+}
 
+export interface UserDataPatch {
+  firstName?: string;
+  lastName?: string;
+  recordPreset?: RecordPreset;
+  email?: string;
+  dateOfBirth?: string; // ISO 8601
+  userId?: string;
+  language?: string;
+  timezone?: string;
+  startDate?: string; // yyyy-MM-dd
+  endDate?: string; // yyyy-MM-dd
+  uploadHost?: string;
+  generatedUrl?: string;
 }

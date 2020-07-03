@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
+import { LanguageService } from '@core/services/language.service';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
@@ -14,9 +15,6 @@ import { RecordPreset } from '../core/services/preset.service';
 import {
   UserDataRepositoryService,
 } from '../core/services/repository/user-data-repository.service';
-import {
-  TranslateConfigService,
-} from '../core/services/translate-config.service';
 import { LoadingService } from '../shared/services/loading.service';
 
 @Component({
@@ -35,15 +33,17 @@ export class OnboardingPage implements OnDestroy {
 
   private readonly destroy$ = new Subject();
 
+  language$: Observable<string> = this.langaugeService.get();
+
   constructor(
-    public translateConfigService: TranslateConfigService,
-    private readonly translate: TranslateService,
     private readonly formBuilder: FormBuilder,
+    private readonly loadingService: LoadingService,
+    private readonly privateCouponService: PrivateCouponService,
     private readonly router: Router,
     private readonly toastController: ToastController,
-    private readonly privateCouponService: PrivateCouponService,
-    private readonly loadingService: LoadingService,
+    private readonly translate: TranslateService,
     private readonly userDataRepo: UserDataRepositoryService,
+    public readonly langaugeService: LanguageService,
   ) { }
 
   onSubmit() {

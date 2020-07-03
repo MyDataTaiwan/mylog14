@@ -1,10 +1,12 @@
-import { FileSystemService } from '../storage/file-system.service';
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '../storage/local-storage.service';
-import { Meta } from '../../interfaces/meta';
-import { Record } from '../../classes/record';
+
 import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { defaultIfEmpty, map, switchMap } from 'rxjs/operators';
+
+import { Record } from '../../classes/record';
+import { Meta } from '../../interfaces/meta';
+import { FileSystemService } from '../storage/file-system.service';
+import { LocalStorageService } from '../storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,8 @@ export class RecordRepositoryService {
   getAll(): Observable<Record[]> {
     return this.getMetas()
       .pipe(
-        switchMap(metas => forkJoin(metas.map(meta => this.get(meta))))
+        switchMap(metas => forkJoin(metas.map(meta => this.get(meta)))),
+        defaultIfEmpty([]),
       );
   }
 
