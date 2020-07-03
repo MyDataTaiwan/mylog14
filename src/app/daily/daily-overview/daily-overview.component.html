@@ -14,14 +14,14 @@
   </div>
   <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
   <ion-virtual-scroll [items]="cards$ | async" approxItemHeight="220px" height="100%">
-    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.day]"
+    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.date]"
       routerDirection="forward">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="5">
             <ion-card-header>
-              <ion-card-title class="ion-text-center">DAY {{ item.day }}</ion-card-title>
-              <ion-card-title class="ion-text-center">{{ item.month }}/{{ item.date }}</ion-card-title>
+              <ion-card-title class="ion-text-center">DAY {{ item.dayCount }}</ion-card-title>
+              <ion-card-title class="ion-text-center">{{ item.dateView }}</ion-card-title>
             </ion-card-header>
             <ion-card-content style="font-size: small;" class="ion-text-center">
               <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">
