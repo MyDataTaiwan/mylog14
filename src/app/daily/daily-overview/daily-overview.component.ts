@@ -5,6 +5,7 @@ import { AnimationOptions } from 'ngx-lottie';
 import { Subject, timer } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
+import { Record } from '@core/classes/record';
 import { RecordsByDate } from '@core/interfaces/records-by-date';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalService } from '@shared/services/modal.service';
@@ -100,6 +101,8 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
         date,
         dateView: this.getDateView(date),
         recordsCount: recordsByDate[date].length,
+        templateName: recordsByDate[date][0].templateName,
+        summary: this.getSummary(recordsByDate[date]),
         imgByteString: '',
       });
     });
@@ -120,6 +123,26 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     return Math.floor((toTimestamp(end) - toTimestamp(start)) / (1000 * 3600 * 24));
   }
 
+  private getSummary(records: Record[]) {
+    const summary = {};
+    records.forEach(record => {
+      record.fields.filter(field => field.dataClass.includes('summary')).forEach(field => {
+        if (!summary[field.name]) {
+          summary[field.name] = field;
+        } else if (field.dataClass.includes('showHighest')) {
+          if (summary[field.name].value < field.value) {
+            summary[field.name ] = field;
+          }
+        } else if (field.dataClass.includes('showLowest')) {
+          if (summary[field.name].value > field.value) {
+            summary[field.name] = field;
+          }
+        }
+      });
+    });
+    return summary;
+  }
+
 }
 
 export interface Card {
@@ -127,5 +150,7 @@ export interface Card {
   date: string;
   dateView: string;
   recordsCount: number;
+  templateName: string;
+  summary: {};
   imgByteString?: string;
 }

@@ -1,6 +1,6 @@
+import { RecordFieldType } from '../enums/record-field-type.enum';
 import { Proof } from '../interfaces/proof';
 import { RecordField, RecordFieldValue } from '../interfaces/record-field';
-import { RecordFieldType } from '../enums/record-field-type.enum';
 import { RecordFieldValueRange } from '../interfaces/record-field-value-range';
 
 export class Record {
@@ -19,6 +19,8 @@ export class Record {
     addField(
         name: string,
         type: RecordFieldType,
+        dataGroup: string,
+        dataClass: string[],
         defaultValue: RecordFieldValue,
         icon?: string,
         valueUnit?: string,
@@ -28,6 +30,8 @@ export class Record {
             name,
             icon,
             type,
+            dataGroup,
+            dataClass,
             defaultValue,
             value: defaultValue,
             valueUnit,

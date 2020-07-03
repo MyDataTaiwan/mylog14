@@ -101,6 +101,10 @@
   "preset": {
     "commonCold": {
       "presetName": "Common Cold",
+      "dataGroup": {
+        "symptoms": "Symptoms",
+        "note": "Note"
+      },
       "bodyTemperature": "Body Temperature",
       "coughing": "Cough",
       "runnyNose": "Runny Nose",
@@ -113,6 +117,10 @@
     },
     "heartFailure": {
       "presetName": "Heart Failure",
+      "dataGroup": {
+        "vitalSigns": "Vital Signs",
+        "note": "Note"
+      },
       "SBP": "Systolic Blood Pressure",
       "DBP": "Diastolic Blood Pressure",
       "heartbeat": "Heartbeat",

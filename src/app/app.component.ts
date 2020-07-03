@@ -1,13 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { defer, Observable, of } from 'rxjs';
+import { filter, first, switchMap } from 'rxjs/operators';
+
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
-import { TranslateConfigService } from './core/services/translate-config.service';
-import { switchMap, filter, first, tap } from 'rxjs/operators';
-import { DataStoreService } from './core/services/store/data-store.service';
-import { defer, of, Observable } from 'rxjs';
-import { UserData } from './core/interfaces/user-data';
 
+import { UserData } from './core/interfaces/user-data';
+import { DataStoreService } from './core/services/store/data-store.service';
+import {
+  TranslateConfigService,
+} from './core/services/translate-config.service';
 
 const { SplashScreen, StatusBar } = Plugins;
 

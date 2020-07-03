@@ -5,8 +5,8 @@
   /* border:1px solid #000; */
   ">
     <div class="TA-AE" style="height: 50vw;width: 50vw;margin: 10px; ">
-      <ng-lottie (click)="onClickAnimation()" [options]="options"
-        (animationCreated)="onAnimationCreated($event)" (configReady)="onConfigReady()"></ng-lottie>
+      <ng-lottie (click)="onClickAnimation()" [options]="options" (animationCreated)="onAnimationCreated($event)"
+        (configReady)="onConfigReady()"></ng-lottie>
     </div>
   </div>
   <div style="border-bottom: 2pt;"></div>
@@ -14,8 +14,8 @@
   </div>
   <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
   <ion-virtual-scroll [items]="cards$ | async" approxItemHeight="220px" height="100%">
-    <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.date]"
-      routerDirection="forward">
+    <ion-card *virtualItem="let item; let itemBounds = bounds;"
+      [routerLink]="['/tabs/tab-data/daily-detail', item.date]" routerDirection="forward">
       <ion-grid fixed>
         <ion-row>
           <ion-col size="5">
@@ -24,8 +24,16 @@
               <ion-card-title class="ion-text-center">{{ item.dateView }}</ion-card-title>
             </ion-card-header>
             <ion-card-content style="font-size: small;" class="ion-text-center">
-              <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">
-                {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</ion-label>
+              <div>
+                <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">
+                  {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</ion-label>
+              </div>
+              <div>
+                <ion-label *ngFor="let row of item.summary | keyvalue">
+                  {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
+                  {{ row.value.valueUnit}}
+                </ion-label>
+              </div>
             </ion-card-content>
           </ion-col>
           <ion-col size="7">

@@ -5,6 +5,8 @@
             "name": "SBP",
             "icon": "pulse-outline",
             "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": [],
             "defaultValue": null,
             "valueUnit": "mmHg",
             "valueRange": {
@@ -16,6 +18,10 @@
             "name": "DBP",
             "icon": "pulse-outline",
             "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": [
+                "summary"
+            ],
             "defaultValue": null,
             "valueUnit": "mmHg",
             "valueRange": {
@@ -27,6 +33,10 @@
             "name": "heartbeat",
             "icon": "heart-outline",
             "type": "integer",
+            "dataGroup": "vitalSigns",
+            "dataClass": [
+                "summary"
+            ],
             "defaultValue": null,
             "valueUnit": "bpm",
             "valueRange": {
@@ -38,6 +48,10 @@
             "name": "bloodSugar",
             "icon": "medkit-outline",
             "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": [
+                "summary"
+            ],
             "defaultValue": null,
             "valueUnit": "mg/dL",
             "valueRange": {
@@ -49,6 +63,8 @@
             "name": "weight",
             "icon": "body-outline",
             "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": [],
             "defaultValue": null,
             "valueUnit": "kg",
             "valueRange": {
@@ -60,6 +76,10 @@
             "name": "urineVolume",
             "icon": "water-outline",
             "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": [
+                "accumulation"
+            ],
             "defaultValue": 0,
             "valueUnit": "mL",
             "valueRange": {
@@ -71,6 +91,10 @@
             "name": "note",
             "icon": "pencil-outline",
             "type": "string",
+            "dataGroup": "note",
+            "dataClass": [
+                "note"
+            ],
             "defaultValue": ""
         }
     ]

@@ -93,25 +93,33 @@
   "preset": {
     "commonCold": {
       "presetName": "普通感冒",
+      "dataGroup": {
+        "symptoms": "症狀",
+        "note": "附註"
+      },
       "bodyTemperature": "體溫",
       "coughing": "咳嗽",
       "runnyNose": "流鼻水",
       "nasalCongestion": "鼻塞",
       "sneezing": "打噴嚏",
-      "note": "筆記",
+      "note": "附註",
       "unit": {
         "°C": "°C"
       }
     },
     "heartFailure": {
       "presetName": "心衰竭",
+      "dataGroup": {
+        "vitalSigns": "生理徵象",
+        "note": "附註"
+      },
       "SBP": "收縮壓",
       "DBP": "舒張壓",
       "heartbeat": "心跳",
       "bloodSugar": "血糖",
       "weight": "體重",
       "urineVolume": "尿量",
-      "note": "筆記",
+      "note": "附註",
       "unit": {
         "mmHg": "mmHg",
         "bpm": "bpm",

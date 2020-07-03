@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Record } from '../classes/record';
-import { RecordFieldType } from '../enums/record-field-type.enum';
 
 import * as CommonCold from 'src/app/core/presets/common-cold.json';
 import * as HeartFailure from 'src/app/core/presets/heart-failure.json';
 
+import { Record } from '../classes/record';
+import { RecordFieldType } from '../enums/record-field-type.enum';
 
 export const enum RecordPreset {
   COMMON_COLD = 'commonCold',
@@ -42,6 +42,8 @@ export class PresetService {
     CommonCold.fields.forEach(field => record.addField(
       field.name,
       RecordFieldType[field.type],
+      field.dataGroup,
+      field.dataClass,
       field.defaultValue,
       field.icon,
       field.valueUnit,
@@ -55,6 +57,8 @@ export class PresetService {
     HeartFailure.fields.forEach(field => record.addField(
       field.name,
       RecordFieldType[field.type],
+      field.dataGroup,
+      field.dataClass,
       field.defaultValue,
       field.icon,
       field.valueUnit,
