@@ -1,11 +1,20 @@
+import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
-import { map, switchMap, tap, first } from 'rxjs/operators';
-import { UserData } from '../../interfaces/user-data';
-import { RecordRepositoryService } from '../repository/record-repository.service';
-import { UserDataRepositoryService } from '../repository/user-data-repository.service';
+
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { first, map, switchMap, tap } from 'rxjs/operators';
+
+import { RecordsByDate } from '@core/interfaces/records-by-date';
+
 import { Record } from '../../classes/record';
+import { UserData } from '../../interfaces/user-data';
 import { RecordPreset } from '../preset.service';
+import {
+  RecordRepositoryService,
+} from '../repository/record-repository.service';
+import {
+  UserDataRepositoryService,
+} from '../repository/user-data-repository.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +31,11 @@ export class DataStoreService {
     firstName: '', lastName: '', recordPreset: RecordPreset.COMMON_COLD, newUser: true,
   });
   public userData$: Observable<UserData> = this.userData;
+
+  public recordsByDate$: Observable<RecordsByDate> = this.records$
+    .pipe(
+      map(records => this.getRecordsByDate(records)),
+    );
 
 
   constructor(
@@ -65,6 +79,18 @@ export class DataStoreService {
         tap(records => this.records.next(records))
       );
     return forkJoin([initUserData$, initRecords$]).pipe(first());
+  }
+
+  private getRecordsByDate(records: Record[]): RecordsByDate {
+    const initialDateGroups: RecordsByDate = {};
+    return records.reduce<{}>((dateGroups: RecordsByDate, record) => {
+      const date = formatDate(record.timestamp, 'yyyy-MM-dd', 'en-us');
+      if (!dateGroups[date]) {
+        dateGroups[date] = [];
+      }
+      dateGroups[date].push(record);
+      return dateGroups;
+    }, initialDateGroups);
   }
 
 }

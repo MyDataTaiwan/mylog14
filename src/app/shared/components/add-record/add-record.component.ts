@@ -14,6 +14,7 @@ import { RecordService } from '@core/services/record.service';
 import {
   UserDataRepositoryService,
 } from '@core/services/repository/user-data-repository.service';
+import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
 import { PopoverIcon, PopoverService } from '@shared/services/popover.service';
@@ -37,15 +38,17 @@ export class AddRecordComponent implements OnInit, OnDestroy {
       map(result => result.data),
       filter(data => (data)),
       tap(data => this.updateRecord(data)),
+      takeUntil(this.destroy$),
     );
 
   constructor(
+    private readonly dataStore: DataStoreService,
+    private readonly formService: FormService,
     private readonly loadingService: LoadingService,
-    private readonly userDataRepo: UserDataRepositoryService,
+    private readonly modalCtrl: ModalController,
     private readonly popoverService: PopoverService,
     private readonly recordService: RecordService,
-    private readonly formService: FormService,
-    private readonly modalCtrl: ModalController,
+    private readonly userDataRepo: UserDataRepositoryService,
   ) {
   }
 
@@ -91,7 +94,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   submitRecord(): Observable<any> {
     return forkJoin([
       this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
-      this.recordService.save(this.record.getValue()),
+      this.dataStore.pushRecord(this.record.getValue())
     ])
       .pipe(
         mergeMap(([loading, _]) => loading.dismiss()),

@@ -5,6 +5,7 @@ import { AnimationOptions } from 'ngx-lottie';
 import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
+import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalService } from '@shared/services/modal.service';
 
 @Component({
@@ -42,13 +43,15 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   item$ = new BehaviorSubject(this.emptyCardItem);
 
   constructor(
+    private readonly dataStore: DataStoreService,
     private readonly ngZone: NgZone,
     public modalService: ModalService,
   ) {
   }
 
   ngOnInit() {
-
+    // FIXME: debug line
+    this.dataStore.recordsByDate$.subscribe(e => console.log('RecordsByDate', e));
   }
 
   ngOnDestroy() {
