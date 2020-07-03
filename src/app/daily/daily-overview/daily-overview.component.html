@@ -13,7 +13,7 @@
   <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
   </div>
   <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
-  <ion-virtual-scroll [items]="items$ | async" approxItemHeight="220px" height="100%">
+  <ion-virtual-scroll [items]="cards$ | async" approxItemHeight="220px" height="100%">
     <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.day]"
       routerDirection="forward">
       <ion-grid fixed>
@@ -25,8 +25,7 @@
             </ion-card-header>
             <ion-card-content style="font-size: small;" class="ion-text-center">
               <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">
-                {{ "title.bodyTemperature" | translate }}</ion-label>
-              {{ item.bt }}
+                {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</ion-label>
             </ion-card-content>
           </ion-col>
           <ion-col size="7">

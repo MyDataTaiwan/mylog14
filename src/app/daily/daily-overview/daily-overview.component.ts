@@ -2,8 +2,8 @@ import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
-import { BehaviorSubject, Observable, Subject, timer } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { Subject, timer } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalService } from '@shared/services/modal.service';
@@ -16,10 +16,6 @@ import { ModalService } from '@shared/services/modal.service';
 
 export class DailyOverviewComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
-  items$ = new Observable<CardItem[]>();
-  cachedDateDiff = -10;
-
-  WhatIsItToday = 0;
 
   arry: [number, number][] = [[1, 3], [125, 184], [125, 246], [125, 306], [125, 365], [125, 420], [125, 490], [125, 548], [125, 611], [125, 670], [125, 734], [125, 792], [125, 850], [125, 902], [125, 922], [984, 1200], [35, 36]];
   STFarry: [number, number][] = [[1, 3], [245, 246], [305, 306], [364, 365], [419, 420], [489, 490], [547, 548], [610, 611], [669, 670], [733, 734], [791, 792], [849, 850], [901, 902], [921, 922], [984, 1200], [35, 36]];
@@ -30,17 +26,27 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   TEMPimg: '/assets/imgA.png';
   private animationItem: AnimationItem;
-  emptyCardItem = {
-    hasData: true,
-    day: '15',
-    month: 'Dec',
-    date: '12/15',
-    bt: '37.5',
-    imgSrc: null,
-    imgHeight: 400,
-  };
 
-  item$ = new BehaviorSubject(this.emptyCardItem);
+  cards$ = this.dataStore.recordsByDate$
+    .pipe(
+      map(recordsByDate => {
+        const cards: Card[] = [];
+        let dayOneDate: string;
+        Object.keys(recordsByDate).forEach(date => {
+          if (!dayOneDate) {
+            dayOneDate = date;
+          }
+          cards.push({
+            day: `${this.getDateDiff(dayOneDate, date) + 1}`,
+            month: date.split('-')[1],
+            date: date.split('-')[2],
+            recordsCount: `${recordsByDate[date].length}`,
+            imgByteString: '',
+          });
+        });
+        return cards.reverse();
+      }),
+    );
 
   constructor(
     private readonly dataStore: DataStoreService,
@@ -72,7 +78,6 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   private startCountdown(day: number) {
     const idx = (day > 14) ? 15 : day + 1; // The animation array has +1 offset
-    this.WhatIsItToday = idx;
     this.animationPlay(idx);
 
     if (idx !== 15) {
@@ -98,14 +103,17 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[idx], true));
   }
 
+  private getDateDiff(start: string, end: string): number {
+    const toTimestamp = (date: string) => (new Date(date)).getTime();
+    return Math.floor((toTimestamp(end) - toTimestamp(start)) / (1000 * 3600 * 24));
+  }
+
 }
 
-export interface CardItem {
-  hasData: boolean;
+export interface Card {
   day?: string;
   month?: string;
   date?: string;
-  bt?: string;
-  imgSrc?: string;
-  imgHeight?: number;
+  recordsCount?: string;
+  imgByteString?: string;
 }

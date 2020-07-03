@@ -71,7 +71,8 @@
     "canRedeem": "Available",
     "cannotRedeem": "Out of Stock",
     "redeeming": "Redeeming...",
-    "daysRecorded": "Days recorded"
+    "daysRecorded": "Days recorded",
+    "recordsCount": "Records"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
