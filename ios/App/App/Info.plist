@@ -41,9 +41,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>To Take Photos and Video</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>是否同意收集地理位置資訊用於「每日記錄表」&「地圖」使用？在你分享前我們不會主動上傳至任何平台及服務?</string>
+	<string>是否同意收集地理位置資訊用於「地圖」&「每日記錄表」使用？在你分享前我們不會主動上傳至任何平台及服務！</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>是否同意收集地理位置資訊用於「每日記錄表」&「地圖」使用？在你分享前我們不會主動上傳至任何平台及服務?</string>
+	<string>是否同意收集地理位置資訊用於「地圖」&「每日記錄表」使用？在你分享前我們不會主動上傳至任何平台及服務！</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>To Record Audio With Video</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
