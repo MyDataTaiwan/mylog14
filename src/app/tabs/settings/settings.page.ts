@@ -77,18 +77,22 @@ export class SettingsPage implements OnInit, OnDestroy {
     map(userData => userData.generatedUrl),
     map(generatedUrl => !!generatedUrl)
   );
+  dark = false;
 
   constructor(
     private readonly dataStoreService: DataStoreService,
     private readonly translateService: TranslateService,
     private readonly popoverController: PopoverController,
     private readonly translateConfigService: TranslateConfigService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.initNotSetTranslation();
   }
 
+  updateDarkMode() {
+    document.body.classList.toggle('dark', this.dark);
+  }
   private initNotSetTranslation() {
     this.translateService.onLangChange.subscribe((_: any) => {
       this.notSet = this.translateService.instant('title.notSet');

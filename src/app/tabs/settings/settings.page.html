@@ -61,10 +61,17 @@
       <ion-label>{{ 'title.version' | translate }}</ion-label>
       <ion-text>{{ appVersion }}</ion-text>
     </ion-item>
+ 
 
     <ion-list-header *ngIf="showDeveloperOptions === true">
       開發人員選項
     </ion-list-header>
+    <ion-item *ngIf="showDeveloperOptions === true" lines="inset"  >
+      <ion-icon name="toggle-outline" slot="start"></ion-icon>
+      <!-- <ion-label>{{ 'title.Darkmode' | translate }}</ion-label> -->
+      <ion-label>Dark mode</ion-label>
+      <ion-toggle [(ngModel)]="dark" (ionChange)="updateDarkMode()"></ion-toggle>
+    </ion-item>
     <ion-item *ngIf="showDeveloperOptions === true" lines="inset">
       <ion-icon name="hammer-outline" slot="start"></ion-icon>
       <ion-label>上傳測試設定</ion-label>
