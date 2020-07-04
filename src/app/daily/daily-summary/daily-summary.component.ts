@@ -22,6 +22,12 @@ export class DailySummaryComponent implements OnInit {
       map(recordsByDate => this.recordRenderService.createDailySummary(0, this.date, recordsByDate[this.date])),
     );
 
+  proofs$ = this.dataStore.recordsByDate$
+    .pipe(
+      map(recordsByDate => recordsByDate[this.date]),
+      map(records => records.map(record => record.proof)),
+    );
+
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly recordRenderService: RecordRenderService,

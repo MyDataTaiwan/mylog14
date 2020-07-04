@@ -11,9 +11,7 @@
       </div>
     </div>
     <div style="flex: 3;">
-      <ion-img *ngIf="!isShowMap" src="/assets/imgA.png" alt="No picture"></ion-img>
-      <iframe *ngIf="isShowMap" width="250" height="100" frameborder="0" style="border:0;" allowfullscreen=""
-        aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
+      <app-map [proofs]="proofs$ | async"></app-map>
       <div>
         <ion-label class="ion-text-center" style="font-size: 12px;">
           {{ 'title.bodyTemperature' | translate }}: bt

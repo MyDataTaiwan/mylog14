@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { RecordRenderService } from '@core/services/record-render.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
@@ -16,6 +16,7 @@ export class OverviewComponent implements OnInit {
   dailySummaries$ = this.dataStore.recordsByDate$
     .pipe(
       map(recordsByDate => this.recordRenderService.createDailySummaries(recordsByDate)),
+      tap(e => console.log(e)),
     );
 
   constructor(
