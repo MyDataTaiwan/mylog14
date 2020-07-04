@@ -16,34 +16,31 @@
         aria-hidden="false" scrolling="no" [src]="url | safeUrl"></iframe>
       <div>
         <ion-label class="ion-text-center" style="font-size: 12px;">
-          {{ 'title.bodyTemperature' | translate }}: {{ card.bt }}
+          {{ 'title.bodyTemperature' | translate }}: bt
         </ion-label>
-        <img *ngIf="parseFloat(card.bt.slice(0,card.bt.indexOf('°C'))) >= 37.5" src="../../assets/ui/Wr_icon.svg" />
-        <img *ngIf="card.bt.slice(0,card.bt.indexOf('°C')) =='N/'" src="../../assets/ui/Er_icon.svg" />
+        <img *ngIf="true" src="../../assets/ui/Wr_icon.svg" />
+        <img *ngIf="false" src="../../assets/ui/Er_icon.svg" />
       </div>
       <div style="align-items:center;">
         <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;">
           {{ 'title.symptoms' | translate }}:
           <ng-container (click)="selectedSymptoms=!selectedSymptoms"
-            *ngFor="let symptom of card.presentedSymptoms.slice(0,1) ; let isLast = last">
-            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('splitter' | translate) }} ...
+            *ngFor="let summary of dailySummary.summaries ; let isLast = last">
+            {{ summary }}{{isLast ? '' : ('splitter' | translate) }} ...
           </ng-container>
 
 
-          <img class="symptoms-popup" *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true"
+          <img class="presence-preview" *ngIf="!selectedSymptoms" (click)="selectedSymptoms=true"
             src="../../../../assets/ui/symptoms_on.svg">
-          <img class="symptoms-popup" *ngIf="selectedSymptoms" (click)="selectedSymptoms=false"
+          <img class="presence-preview" *ngIf="selectedSymptoms" (click)="selectedSymptoms=false"
             src="../../../../assets/ui/symptoms_off.svg" />
         </ion-label>
       </div>
 
-      <div class="symptoms-popup" appClickOutsideSameClass (clickOutside)="onClickOutside()" *ngIf="selectedSymptoms"
-        style="font-size: 12px; width: 45vw; position: absolute;z-index: 100; margin: 1vw;margin-left: 3vw;padding: 2vw; background-color: white;border-radius: 10px;-webkit-box-shadow: 0 0 5px 5px #ebebeb;
-      -moz-box-shadow: 0 0 5px 5px #ebebeb;
-      box-shadow: 0 0 5px 5px #ebebeb;">
+      <div class="presence-preview preview-popup" appClickOutsideSameClass (clickOutside)="onClickOutside()" *ngIf="selectedSymptoms">
         <ion-label class="ion-text-center" style="font-size: 12px;">
-          <ng-container *ngFor="let symptom of card.presentedSymptoms ; let isLast = last">
-            {{ 'title.' + symptom | translate }}{{isLast ? '' : ('splitter' | translate) }}
+          <ng-container *ngFor="let summary of dailySummary.summaries ; let isLast = last">
+            {{ summary }}{{isLast ? '' : ('splitter' | translate) }}
           </ng-container>
         </ion-label>
       </div>

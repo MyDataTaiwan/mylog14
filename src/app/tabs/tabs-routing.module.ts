@@ -19,7 +19,7 @@ const routes: Routes = [
           {
             path: 'daily-detail/:date',
             loadChildren: () =>
-              import('../daily/daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
+              import('../daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
           }
         ]
       },

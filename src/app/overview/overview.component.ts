@@ -13,7 +13,7 @@ import { DataStoreService } from '@core/services/store/data-store.service';
 
 export class OverviewComponent implements OnInit {
 
-  cards$ = this.dataStore.recordsByDate$
+  dailySummaries$ = this.dataStore.recordsByDate$
     .pipe(
       map(recordsByDate => this.recordRenderService.createDailySummaries(recordsByDate)),
     );

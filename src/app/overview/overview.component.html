@@ -1,50 +1,9 @@
 <ion-content>
   <app-animation></app-animation>
-  <!-- FIXME: The bottom of the last card will be cut by the virtual scroll container-->
-  <ion-virtual-scroll [items]="cards$ | async" approxItemHeight="220px" height="100%">
-    <ion-card *virtualItem="let item; let itemBounds = bounds;"
-      [routerLink]="['/tabs/tab-data/daily-detail', item.date]" routerDirection="forward">
-      <ion-grid fixed>
-        <ion-row>
-          <ion-col size="5">
-            <ion-card-header>
-              <ion-card-title class="ion-text-center">DAY {{ item.dayCount }}</ion-card-title>
-              <ion-card-title class="ion-text-center">{{ item.dateView }}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content style="font-size: small;" class="ion-text-center">
-              <div>
-                <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">
-                  {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</ion-label>
-              </div>
-              <div>
-                <ion-label *ngFor="let row of item.dataSummaries | keyvalue">
-                  {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
-                  {{ row.value.valueUnit}}
-                </ion-label>
-              </div>
-            </ion-card-content>
-          </ion-col>
-          <ion-col size="7">
-            <ion-thumbnail>
-              <ion-img *ngIf="!item.imgByteString" src="/assets/imgA.png" alt="No picture"></ion-img>
-              <ion-img *ngIf="item.imgByteString" [src]="'data:image/jpeg;base64,' + item.imgByteString"
-                alt="No picture"></ion-img>
-            </ion-thumbnail>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card>
-  </ion-virtual-scroll>
-  <ion-row class="ion-justify-content-center" style="padding: 10%;">
-    <ion-label>
-      {{ "description.clickTheButtonBelow" | translate }}
-    </ion-label>
-    <ion-img src="/assets/ui/add_icon.svg" style="height: 10%;" alt="No picture"></ion-img>
-    <ion-label>
-      {{ "description.toLogNewData" | translate }}
-    </ion-label>
-  </ion-row>
-
-  <div style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
-  </div>
+  <ng-container *ngIf="dailySummaries$ | async as dailySummaries; else addDataHint">
+    <app-summary-cards [dailySummaries]="dailySummaries"></app-summary-cards>
+  </ng-container>
+  <ng-template #addDataHint>
+    <app-add-data-hint></app-add-data-hint>
+  </ng-template>
 </ion-content>
