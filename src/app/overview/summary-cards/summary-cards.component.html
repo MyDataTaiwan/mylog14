@@ -1,5 +1,5 @@
 <ion-virtual-scroll [items]="dailySummaries" approxItemHeight="220px" height="100%">
-  <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily-detail', item.date]"
+  <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily', item.date]"
     routerDirection="forward">
     <ion-grid fixed>
       <ion-row>

@@ -3,16 +3,16 @@
   <ion-card>
     <ion-list>
       <ng-container *ngIf="date$ | async as date">
-        <app-daily-detail-upper [date]="date"></app-daily-detail-upper>
+        <app-daily-summary [date]="date"></app-daily-summary>
         <div class="border-line"></div>
         <div style=" display: flex;flex: 1;flex-direction:row-reverse;">
           <img (click)="toggle(1)" [src]="recordsIcons[selected]" />
           <img src="../../assets/ui/sort_2.svg" />
           <img (click)="toggle(0)" [src]="photosIcons[selected]" />
         </div>
-        <app-daily-detail-records *ngIf="selected === 0" [date]="date">
-        </app-daily-detail-records>
-        <app-daily-detail-photos *ngIf="selected === 1" [dayCount]="date"></app-daily-detail-photos>
+        <app-daily-records *ngIf="selected === 0" [date]="date">
+        </app-daily-records>
+        <app-daily-photos *ngIf="selected === 1" [dayCount]="date"></app-daily-photos>
       </ng-container>
     </ion-list>
   </ion-card>

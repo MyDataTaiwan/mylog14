@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
-import { DailyDetailPhotosComponent } from './daily-detail-photos.component';
+
+import { DailyPhotosComponent } from './daily-photos.component';
 
 @NgModule({
   imports: [
@@ -10,7 +12,7 @@ import { DailyDetailPhotosComponent } from './daily-detail-photos.component';
     FormsModule,
     IonicModule,
   ],
-  declarations: [DailyDetailPhotosComponent],
-  exports: [DailyDetailPhotosComponent],
+  declarations: [DailyPhotosComponent],
+  exports: [DailyPhotosComponent],
 })
-export class DailyDetailPhotosModule { }
+export class DailyPhotosModule { }

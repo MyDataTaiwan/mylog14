@@ -2,19 +2,22 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+import { CoreModule } from 'src/app/core/core.module';
+
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { DailyDetailRecordsComponent } from './daily-detail-records.component';
+import { DailySummaryComponent } from './daily-summary.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    CoreModule,
     TranslateModule,
   ],
-  declarations: [DailyDetailRecordsComponent],
-  exports: [DailyDetailRecordsComponent],
+  declarations: [DailySummaryComponent],
+  exports: [DailySummaryComponent],
 })
-export class DailyDetailRecordsModule { }
+export class DailySummaryModule { }

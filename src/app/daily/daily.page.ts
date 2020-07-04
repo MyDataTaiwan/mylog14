@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-daily-detail',
-  templateUrl: './daily-detail.page.html',
-  styleUrls: ['./daily-detail.page.scss'],
+  selector: 'app-daily',
+  templateUrl: './daily.page.html',
+  styleUrls: ['./daily.page.scss'],
 })
-export class DailyDetailPage implements OnInit {
+export class DailyPage implements OnInit {
   date$: Observable<string> = this.activatedRoute.paramMap
     .pipe(
       map(params => params.get('date')),

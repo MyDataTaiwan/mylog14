@@ -6,11 +6,11 @@ import { RecordRenderService } from '@core/services/record-render.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 
 @Component({
-  selector: 'app-daily-detail-upper',
-  templateUrl: './daily-detail-upper.component.html',
-  styleUrls: ['./daily-detail-upper.component.scss'],
+  selector: 'app-daily-summary',
+  templateUrl: './daily-summary.component.html',
+  styleUrls: ['./daily-summary.component.scss'],
 })
-export class DailyDetailUpperComponent implements OnInit {
+export class DailySummaryComponent implements OnInit {
   selectedSymptoms = false;
   @Input() date: string;
   tempLocation = '&q=25.035221,121.557612';

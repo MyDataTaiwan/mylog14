@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { IonicModule } from '@ionic/angular';
 
-import { DailyDetailPhotosComponent } from './daily-detail-photos.component';
+import { DailyRecordsComponent } from './daily-records.component';
 
-describe('DailyDetailPhotosComponent', () => {
-  let component: DailyDetailPhotosComponent;
-  let fixture: ComponentFixture<DailyDetailPhotosComponent>;
+describe('DailyRecordsComponent', () => {
+  let component: DailyRecordsComponent;
+  let fixture: ComponentFixture<DailyRecordsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DailyDetailPhotosComponent ],
+      declarations: [DailyRecordsComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DailyDetailPhotosComponent);
+    fixture = TestBed.createComponent(DailyRecordsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

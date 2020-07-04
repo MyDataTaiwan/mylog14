@@ -6,11 +6,11 @@ import { Record } from '@core/classes/record';
 import { DataStoreService } from '@core/services/store/data-store.service';
 
 @Component({
-  selector: 'app-daily-detail-records',
-  templateUrl: './daily-detail-records.component.html',
-  styleUrls: ['./daily-detail-records.component.scss'],
+  selector: 'app-daily-records',
+  templateUrl: './daily-records.component.html',
+  styleUrls: ['./daily-records.component.scss'],
 })
-export class DailyDetailRecordsComponent implements OnInit {
+export class DailyRecordsComponent implements OnInit {
   @Input() date: string;
   selected: number;
 

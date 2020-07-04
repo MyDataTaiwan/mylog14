@@ -22,11 +22,11 @@ export interface ModalAction {
 }
 
 @Component({
-  selector: 'app-daily-detail-photos',
-  templateUrl: './daily-detail-photos.component.html',
-  styleUrls: ['./daily-detail-photos.component.scss'],
+  selector: 'app-daily-photos',
+  templateUrl: './daily-photos.component.html',
+  styleUrls: ['./daily-photos.component.scss'],
 })
-export class DailyDetailPhotosComponent implements OnInit, OnDestroy {
+export class DailyPhotosComponent implements OnInit, OnDestroy {
   @Input() dayCount: number;
   photos$: Observable<Photo[]>;
   destroy$ = new Subject();
