@@ -17,6 +17,7 @@ import { Proof } from '@core/interfaces/proof';
 })
 export class MapComponent implements OnInit, OnDestroy {
   @Input() proofs: Proof[];
+  @Input() styles: any = {};
 
   destroy$ = new Subject();
 

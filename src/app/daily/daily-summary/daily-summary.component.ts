@@ -13,9 +13,9 @@ import { DataStoreService } from '@core/services/store/data-store.service';
 export class DailySummaryComponent implements OnInit {
   selectedSymptoms = false;
   @Input() date: string;
-  tempLocation = '&q=25.035221,121.557612';
-  baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
-  url = this.baseUrl + this.tempLocation;
+  mapStyles = {
+    height: '100px',
+  };
   isShowMap = false;
   dailySummary$ = this.dataStore.recordsByDate$
     .pipe(
@@ -42,18 +42,4 @@ export class DailySummaryComponent implements OnInit {
     }
   }
 
-  updateMapUrl(locations: any): void {
-    if (locations.length < 1) {
-      this.isShowMap = false;
-      return;
-    }
-    const lat = locations[locations.length - 1].latitude;
-    const lon = locations[locations.length - 1].longitude;
-    this.url = this.baseUrl + `${lat},${lon}`;
-    this.isShowMap = true;
-  }
-
-  parseFloat(string: string): number {
-    return parseFloat(string);
-  }
 }
