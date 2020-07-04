@@ -1,21 +1,18 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
-import { AnimationItem } from 'lottie-web';
-import { AnimationOptions } from 'ngx-lottie';
+import { AnimationItem, AnimationOptions } from 'ngx-lottie/src/symbols';
 import { Subject, timer } from 'rxjs';
-import { map, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 
-import { RecordRenderService } from '@core/services/record-render.service';
-import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalService } from '@shared/services/modal.service';
 
 @Component({
-  selector: 'app-daily-overview',
-  templateUrl: './daily-overview.component.html',
-  styleUrls: ['./daily-overview.component.scss'],
+  selector: 'app-animation',
+  templateUrl: './animation.component.html',
+  styleUrls: ['./animation.component.scss'],
 })
+export class AnimationComponent implements OnInit, OnDestroy {
 
-export class DailyOverviewComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   arry: [number, number][] = [[1, 3], [125, 184], [125, 246], [125, 306], [125, 365], [125, 420], [125, 490], [125, 548], [125, 611], [125, 670], [125, 734], [125, 792], [125, 850], [125, 902], [125, 922], [984, 1200], [35, 36]];
@@ -28,23 +25,12 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
   TEMPimg: '/assets/imgA.png';
   private animationItem: AnimationItem;
 
-  cards$ = this.dataStore.recordsByDate$
-    .pipe(
-      map(recordsByDate => this.recordRenderService.createDailySummaries(recordsByDate)),
-    );
-
   constructor(
-    private readonly dataStore: DataStoreService,
     private readonly ngZone: NgZone,
     public modalService: ModalService,
-    private readonly recordRenderService: RecordRenderService,
-  ) {
-  }
+  ) { }
 
-  ngOnInit() {
-    // FIXME: debug line
-    this.dataStore.recordsByDate$.subscribe(e => console.log('RecordsByDate', e));
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -57,7 +43,7 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   onConfigReady() {
     this.startCountdown(0)
-    .pipe(
+      .pipe(
         takeUntil(this.destroy$),
       ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
   }
@@ -80,9 +66,9 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   onClickAnimation() {
     this.modalService.showShopScannerModal()
-    .pipe(
-      takeUntil(this.destroy$),
-    ).subscribe();
+      .pipe(
+        takeUntil(this.destroy$),
+      ).subscribe();
   }
 
   private animationStopOnDay(idx: number) {

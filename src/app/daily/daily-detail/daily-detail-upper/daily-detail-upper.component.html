@@ -1,12 +1,12 @@
-<ng-container *ngIf="card$ | async as card">
+<ng-container *ngIf="dailySummary$ | async as dailySummary">
   <div style="display: flex;flex: 1;flex-direction: row;padding: 2vh; ">
     <div style="display: flex;flex: 1;flex-direction: column; justify-self:center; ">
       <div style="display: flex;flex: 1;flex-direction: column-reverse;">
 
-        <ion-label class="ion-text-center" style="color: #52C7F4;"> DAY{{ card.day }}</ion-label>
+        <ion-label class="ion-text-center" style="color: #52C7F4;"> DAY{{ dailySummary.dayCount }}</ion-label>
 
-        <ion-label style="font-size: 32px;color: #000;" class="ion-text-center">{{ card.date }}</ion-label>
-        <ion-label class="ion-text-center" style="color: #000;">{{ card.month }}</ion-label>
+        <ion-label style="font-size: 32px;color: #000;" class="ion-text-center">{{ dailySummary.date }}</ion-label>
+        <ion-label class="ion-text-center" style="color: #000;">{{ dailySummary.date }}</ion-label>
 
       </div>
     </div>

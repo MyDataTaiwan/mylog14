@@ -2,11 +2,14 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
+import { CoreModule } from 'src/app/core/core.module';
+
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { DailyOverviewModule } from '../../daily/daily-overview/daily-overview.module';
+
+import { OverviewModule } from '../../overview/overview.module';
 import { TabDataPage } from './tab-data.page';
-import { CoreModule } from 'src/app/core/core.module';
 
 @NgModule({
   imports: [
@@ -16,7 +19,7 @@ import { CoreModule } from 'src/app/core/core.module';
     RouterModule.forChild([{ path: '', component: TabDataPage }]),
     TranslateModule,
     CoreModule,
-    DailyOverviewModule,
+    OverviewModule,
   ],
   declarations: [
     TabDataPage,
