@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-
+import { Location } from '@angular/common';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -8,15 +8,22 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Input() headerTitle: string;
+  @Input() showBackButton?: boolean;
   @Input() showDismissButton?: boolean;
   @Output() dismissClicked = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(
+    private readonly location: Location,
+  ) { }
 
   ngOnInit() {
   }
 
-  onDismissClicked() {
+  onBackButtonClick() {
+    this.location.back();
+  }
+
+  onDismissButtonClick() {
     this.dismissClicked.emit(true);
   }
 

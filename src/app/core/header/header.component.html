@@ -1,9 +1,10 @@
 <ion-header>
   <ion-toolbar mode="ios">
     <ion-buttons slot="start">
-      <ion-back-button text="" icon="arrow-back-outline">
-      </ion-back-button>
-      <ion-button *ngIf="showDismissButton" (click)="onDismissClicked()">
+      <ion-button *ngIf="showBackButton" (click)="onBackButtonClick()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="showDismissButton" (click)="onDismissButtonClick()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
     </ion-buttons>  
