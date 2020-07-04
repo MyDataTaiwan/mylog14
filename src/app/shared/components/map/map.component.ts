@@ -7,7 +7,6 @@ import { latLng, Map, marker, tileLayer } from 'leaflet';
 import { Subject, timer } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
-import { LocationApiService } from '@core/http/location-api.service';
 import { Proof } from '@core/interfaces/proof';
 
 @Component({
@@ -24,9 +23,7 @@ export class MapComponent implements OnInit, OnDestroy {
   options = null;
   layers = [];
 
-  constructor(
-    private readonly locationApiService: LocationApiService,
-  ) { }
+  constructor() { }
 
   ngOnInit() {
     if (this.proofs.filter(proof => proof.location)) {

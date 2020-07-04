@@ -12,24 +12,11 @@ import { DataStoreService } from '@core/services/store/data-store.service';
 export class LocationApiService {
 
   baseUrl = 'https://nominatim.openstreetmap.org';
-  googleMapBaseUrl = 'https://maps.google.com.tw';
 
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly httpClient: HttpClient,
   ) { }
-
-  getMap(latitude: number, longitude: number): Observable<string> {
-    const endpoint = this.googleMapBaseUrl + '/maps';
-    const params = this.createMapParams(latitude, longitude);
-    return this.httpClient.get<string>(endpoint, { params })
-      .pipe(
-        catchError(error => {
-          console.error(error);
-          return of('');
-        })
-      );
-  }
 
   getReverseGeocoding(latitude: number, longitude: number): Observable<any> {
     const endpoint = this.baseUrl + '/reverse';
@@ -44,18 +31,6 @@ export class LocationApiService {
           return of('');
         })
       );
-  }
-
-  private createMapParams(latitude: number, longitude: number): HttpParams {
-    return new HttpParams({
-      fromObject: {
-        f: 'q',
-        hl: 'zh-TW',
-        z: '16',
-        output: 'embed',
-        q: `${latitude},${longitude}`
-      }
-    });
   }
 
   private createReverseGeocodingParams(latitude: number, longitude: number, language: string): HttpParams {
