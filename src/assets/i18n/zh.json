@@ -73,7 +73,9 @@
     "recordsCount": "筆紀錄",
     "fieldsCount": "項資料",
     "yes": "是",
-    "no": "否"
+    "no": "否",
+    "geolocationVerification": "地理位置資訊驗證",
+    "passed": "已完成"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

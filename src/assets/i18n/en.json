@@ -75,7 +75,9 @@
     "recordsCount": "Records",
     "fieldsCount": "Data fields",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "geolocationVerification": "Geolocation Verification",
+    "passed": "Passed"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

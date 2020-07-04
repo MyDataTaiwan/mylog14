@@ -9,7 +9,9 @@ import {
 import { Record } from '@core/classes/record';
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { FormService } from '@core/forms/form.service';
+import { Proof } from '@core/interfaces/proof';
 import { RecordField } from '@core/interfaces/record-field';
+import { ProofService } from '@core/services/proof.service';
 import { RecordService } from '@core/services/record.service';
 import {
   UserDataRepositoryService,
@@ -37,9 +39,11 @@ export class AddRecordComponent implements OnInit, OnDestroy {
       switchMap(([field, templateName]) => this.editField(field, templateName)),
       map(result => result.data),
       filter(data => (data)),
-      tap(data => this.updateRecord(data)),
+      tap(data => this.updateRecordFields(data)),
       takeUntil(this.destroy$),
     );
+
+  proofDisplay = this.getDefaultProofDisplay();
 
   constructor(
     private readonly dataStore: DataStoreService,
@@ -49,12 +53,14 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     private readonly popoverService: PopoverService,
     private readonly recordService: RecordService,
     private readonly userDataRepo: UserDataRepositoryService,
+    private readonly proofService: ProofService,
   ) {
   }
 
   ngOnInit() {
     this.loadEmptyRecord();
     this.edit$.subscribe();
+    this.createProof().subscribe();
   }
 
   ngOnDestroy() {
@@ -66,6 +72,15 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     if (field.type !== this.recordFieldType.boolean) {
       this.edit.next([field, templateName]);
     }
+  }
+
+  private createProof() {
+    return this.proofService.createProof()
+      .pipe(
+        tap(proof => this.updateRecordProof(proof)),
+        tap(() => this.proofDisplay = this.getCompleteProofDisplay()),
+        takeUntil(this.destroy$),
+      );
   }
 
   private editField(field: RecordField, templateName: string): Observable<any> {
@@ -114,11 +129,27 @@ export class AddRecordComponent implements OnInit, OnDestroy {
       ).subscribe();
   }
 
+  private getDefaultProofDisplay(): ProofDisplay {
+    return {
+      status: false,
+      icon: 'shield-outline',
+      color: 'black',
+    };
+  }
+
+  private getCompleteProofDisplay() {
+    return {
+      status: true,
+      icon: 'shield-checkmark-outline',
+      color: 'primary',
+    };
+  }
+
   private showRecordSavedPopover(): Observable<any> {
     return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500);
   }
 
-  private updateRecord(data: any) {
+  private updateRecordFields(data: any) {
     const record = this.record.getValue();
     for (const key of Object.keys(data)) {
       record.setFieldValue(key, data[key]);
@@ -126,5 +157,16 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.record.next(record);
   }
 
+  private updateRecordProof(proof: Proof) {
+    const record = this.record.getValue();
+    record.setProof(proof);
+    this.record.next(record);
+  }
+
 }
 
+interface ProofDisplay {
+  status: boolean;
+  icon: string;
+  color: string;
+}
