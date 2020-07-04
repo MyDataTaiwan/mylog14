@@ -72,7 +72,10 @@
     "cannotRedeem": "Out of Stock",
     "redeeming": "Redeeming...",
     "daysRecorded": "Days recorded",
-    "recordsCount": "Records"
+    "recordsCount": "Records",
+    "fieldsCount": "Data fields",
+    "yes": "Yes",
+    "no": "No"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

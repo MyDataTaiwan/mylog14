@@ -29,7 +29,7 @@
                   {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</ion-label>
               </div>
               <div>
-                <ion-label *ngFor="let row of item.summary | keyvalue">
+                <ion-label *ngFor="let row of item.dataSummaries | keyvalue">
                   {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
                   {{ row.value.valueUnit}}
                 </ion-label>

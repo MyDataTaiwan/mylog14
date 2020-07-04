@@ -37,3 +37,11 @@ p {
 p b {
   color: var(--ion-text-color, #000000);
 }
+
+.border-line {
+  border-width: 0.5px;
+  border-bottom-style: groove;
+  border-color: #555555;
+  margin-right: 25px;
+  margin-left: 25px;
+}

@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { map } from 'rxjs/operators';
+
+import { RecordRenderService } from '@core/services/record-render.service';
+import { DataStoreService } from '@core/services/store/data-store.service';
+
 @Component({
   selector: 'app-daily-detail-upper',
   templateUrl: './daily-detail-upper.component.html',
@@ -7,13 +12,19 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DailyDetailUpperComponent implements OnInit {
   selectedSymptoms = false;
-  @Input() dayCount: number;
+  @Input() date: string;
   tempLocation = '&q=25.035221,121.557612';
   baseUrl = 'https://maps.google.com.tw/maps?f=q&hl=zh-TW&geocode=&z=16&output=embed&t=&q=';
   url = this.baseUrl + this.tempLocation;
   isShowMap = false;
+  dailySummary$ = this.dataStore.recordsByDate$
+    .pipe(
+      map(recordsByDate => this.recordRenderService.createDailySummary(0, this.date, recordsByDate[this.date])),
+    );
 
   constructor(
+    private readonly dataStore: DataStoreService,
+    private readonly recordRenderService: RecordRenderService,
   ) { }
 
   ngOnInit() {

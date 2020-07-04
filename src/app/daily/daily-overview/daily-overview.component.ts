@@ -5,8 +5,7 @@ import { AnimationOptions } from 'ngx-lottie';
 import { Subject, timer } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 
-import { Record } from '@core/classes/record';
-import { RecordsByDate } from '@core/interfaces/records-by-date';
+import { RecordRenderService } from '@core/services/record-render.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalService } from '@shared/services/modal.service';
 
@@ -31,13 +30,14 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
 
   cards$ = this.dataStore.recordsByDate$
     .pipe(
-      map(recordsByDate => this.createCards(recordsByDate)),
+      map(recordsByDate => this.recordRenderService.createDailySummaries(recordsByDate)),
     );
 
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly ngZone: NgZone,
     public modalService: ModalService,
+    private readonly recordRenderService: RecordRenderService,
   ) {
   }
 
@@ -89,68 +89,4 @@ export class DailyOverviewComponent implements OnInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.animationItem.playSegments(this.STFarry[idx], true));
   }
 
-  private createCards(recordsByDate: RecordsByDate): Card[] {
-    const cards: Card[] = [];
-    let dayOneDate: string;
-    Object.keys(recordsByDate).forEach(date => {
-      if (!dayOneDate) {
-        dayOneDate = date;
-      }
-      cards.push({
-        dayCount: this.getDayCount(dayOneDate, date),
-        date,
-        dateView: this.getDateView(date),
-        recordsCount: recordsByDate[date].length,
-        templateName: recordsByDate[date][0].templateName,
-        summary: this.getSummary(recordsByDate[date]),
-        imgByteString: '',
-      });
-    });
-    return cards.reverse();
-  }
-
-  private getDateView(date: string): string {
-    // 'yyyy-MM-dd' to 'MM/dd'
-    return date.slice(5).replace('-', '/');
-  }
-
-  private getDayCount(startDate: string, currentDate: string): number {
-    return this.getDateDiff(startDate, currentDate) + 1;
-  }
-
-  private getDateDiff(start: string, end: string): number {
-    const toTimestamp = (date: string) => (new Date(date)).getTime();
-    return Math.floor((toTimestamp(end) - toTimestamp(start)) / (1000 * 3600 * 24));
-  }
-
-  private getSummary(records: Record[]) {
-    const summary = {};
-    records.forEach(record => {
-      record.fields.filter(field => field.dataClass.includes('summary')).forEach(field => {
-        if (!summary[field.name]) {
-          summary[field.name] = field;
-        } else if (field.dataClass.includes('showHighest')) {
-          if (summary[field.name].value < field.value) {
-            summary[field.name ] = field;
-          }
-        } else if (field.dataClass.includes('showLowest')) {
-          if (summary[field.name].value > field.value) {
-            summary[field.name] = field;
-          }
-        }
-      });
-    });
-    return summary;
-  }
-
-}
-
-export interface Card {
-  dayCount: number;
-  date: string;
-  dateView: string;
-  recordsCount: number;
-  templateName: string;
-  summary: {};
-  imgByteString?: string;
 }

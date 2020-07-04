@@ -70,7 +70,10 @@
     "cannotRedeem": "暫無名額",
     "redeeming": "正在兌換...",
     "daysRecorded": "已紀錄天數",
-    "recordsCount": "筆紀錄"
+    "recordsCount": "筆紀錄",
+    "fieldsCount": "項資料",
+    "yes": "是",
+    "no": "否"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

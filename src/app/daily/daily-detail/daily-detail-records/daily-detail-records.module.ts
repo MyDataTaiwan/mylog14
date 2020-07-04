@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
-import { DailyDetailSymptomsComponent } from './daily-detail-symptoms.component';
+
+import { DailyDetailRecordsComponent } from './daily-detail-records.component';
 
 @NgModule({
   imports: [
@@ -12,7 +14,7 @@ import { DailyDetailSymptomsComponent } from './daily-detail-symptoms.component'
     IonicModule,
     TranslateModule,
   ],
-  declarations: [DailyDetailSymptomsComponent],
-  exports: [DailyDetailSymptomsComponent],
+  declarations: [DailyDetailRecordsComponent],
+  exports: [DailyDetailRecordsComponent],
 })
-export class DailyDetailSymptomsModule { }
+export class DailyDetailRecordsModule { }

@@ -10,20 +10,22 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./daily-detail.page.scss'],
 })
 export class DailyDetailPage implements OnInit {
-  dayCount$: Observable<number>;
-  selectedSegment = true;
+  date$: Observable<string> = this.activatedRoute.paramMap
+    .pipe(
+      map(params => params.get('date')),
+    );
+  selected = 0;
+  recordsIcons = ['../../assets/ui/sort_3.svg', '../../assets/ui/sort_3_B.svg'];
+  photosIcons = ['../../assets/ui/sort_1.svg', '../../assets/ui/sort_1_B.svg'];
+
   constructor(
     private readonly activatedRoute: ActivatedRoute,
   ) { }
 
-  ngOnInit() {
-    this.dayCount$ = this.activatedRoute.paramMap.pipe(
-      map(params => +params.get('day')),
-    );
-  }
+  ngOnInit() { }
 
-  onSegmentChanged(data) {
-    this.selectedSegment = data;
+  toggle(value: number) {
+    this.selected = value;
   }
 
 }

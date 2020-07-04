@@ -1,36 +1,18 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      {{ 'title.myData' | translate }}
-    </ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button text="" icon="arrow-back-outline">
-      </ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-
+<app-header [headerTitle]="'title.myData' | translate"></app-header>
 <ion-content>
   <ion-card>
     <ion-list>
-      <ng-container *ngIf="dayCount$ | async as day">
-        <app-daily-detail-upper [dayCount]="day"></app-daily-detail-upper>
-        <div
-          style="border-width:0.5px;border-bottom-style:groove;border-color:#555555;margin-right: 25px;margin-left: 25px;">
-        </div>
-        <!-- FIXME:  button state -->
+      <ng-container *ngIf="date$ | async as date">
+        <app-daily-detail-upper [date]="date"></app-daily-detail-upper>
+        <div class="border-line"></div>
         <div style=" display: flex;flex: 1;flex-direction:row-reverse;">
-          <img *ngIf="selectedSegment" (click)="selectedSegment=false" src="../../assets/ui/sort_3.svg" />
-          <img *ngIf="!selectedSegment" (click)="selectedSegment=false" src="../../assets/ui/sort_3_B.svg" />
-
+          <img (click)="toggle(1)" [src]="recordsIcons[selected]" />
           <img src="../../assets/ui/sort_2.svg" />
-          <img *ngIf="selectedSegment" (click)="selectedSegment=true" src="../../assets/ui/sort_1.svg" />
-          <img *ngIf="!selectedSegment" (click)="selectedSegment=true" src="../../assets/ui/sort_1_B.svg" />
-
+          <img (click)="toggle(0)" [src]="photosIcons[selected]" />
         </div>
-        <app-daily-detail-symptoms *ngIf="selectedSegment" [dayCount]="day">
-        </app-daily-detail-symptoms>
-        <app-daily-detail-photos *ngIf="!selectedSegment" [dayCount]="day"></app-daily-detail-photos>
+        <app-daily-detail-records *ngIf="selected === 0" [date]="date">
+        </app-daily-detail-records>
+        <app-daily-detail-photos *ngIf="selected === 1" [dayCount]="date"></app-daily-detail-photos>
       </ng-container>
     </ion-list>
   </ion-card>

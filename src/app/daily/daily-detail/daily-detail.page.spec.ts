@@ -1,10 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+
+import {
+  TranslateTestingModule,
+} from 'src/app/core/tests/translate-testing/translate-testing.module';
+
 import { IonicModule } from '@ionic/angular';
-import { TranslateTestingModule } from 'src/app/core/tests/translate-testing/translate-testing.module';
-import { DailyDetailPhotosModule } from './daily-detail-photos/daily-detail-photos.module';
-import { DailyDetailSymptomsModule } from './daily-detail-symptoms/daily-detail-symptoms.module';
-import { DailyDetailUpperModule } from './daily-detail-upper/daily-detail-upper.module';
+
+import {
+  DailyDetailPhotosModule,
+} from './daily-detail-photos/daily-detail-photos.module';
+import {
+  DailyDetailRecordsModule,
+} from './daily-detail-records/daily-detail-records.module';
+import {
+  DailyDetailUpperModule,
+} from './daily-detail-upper/daily-detail-upper.module';
 import { DailyDetailPage } from './daily-detail.page';
 
 describe('DailyDetailPage', () => {
@@ -19,7 +30,7 @@ describe('DailyDetailPage', () => {
         RouterModule.forRoot([]),
         TranslateTestingModule,
         DailyDetailUpperModule,
-        DailyDetailSymptomsModule,
+        DailyDetailRecordsModule,
         DailyDetailPhotosModule,
       ]
     }).compileComponents();
