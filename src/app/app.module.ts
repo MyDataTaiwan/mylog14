@@ -17,12 +17,6 @@ import { SharedModule } from '@shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
-import {
-  ImgPopoverPageModule,
-} from './shared/components/img-popover/img-popover.module';
-import {
-  ImgViewerPageModule,
-} from './shared/components/img-viewer/img-viewer.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -54,8 +48,6 @@ export function playerFactory() {
     }),
     CoreModule,
     SharedModule,
-    ImgPopoverPageModule,
-    ImgViewerPageModule,
     LottieModule.forRoot({ player: playerFactory }),
     ReactiveFormsModule,
     FormlyModule.forRoot(),

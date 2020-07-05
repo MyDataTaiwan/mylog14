@@ -112,7 +112,7 @@ export class CouponService {
       i18nTitle: `${shopInfo.shopName}\n${shopInfo.shopBranch}`,
       i18nMessage: '是否兌換 20 元',
       buttonSet: PopoverButtonSet.CONFIRM,
-      onConfirm: this.confirmRedeem.bind(this),
+      // onConfirm: this.confirmRedeem.bind(this),
     });
   }
 

@@ -11,6 +11,10 @@
     <ion-title text-center slot="secondary">
       {{ headerTitle }}
     </ion-title>
-    <div slot="end" style="width: 15%;"></div>
+    <ion-buttons slot="end">
+      <ion-button *ngIf=showDeleteButton (click)="onDeleteButtonClick()">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

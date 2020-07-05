@@ -9,8 +9,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() headerTitle: string;
   @Input() showBackButton?: boolean;
+  @Input() showDeleteButton?: boolean;
   @Input() showDismissButton?: boolean;
   @Output() dismissClicked = new EventEmitter<boolean>();
+  @Output() deleteClicked = new EventEmitter<boolean>();
 
   constructor(
     private readonly location: Location,
@@ -21,6 +23,10 @@ export class HeaderComponent implements OnInit {
 
   onBackButtonClick() {
     this.location.back();
+  }
+
+  onDeleteButtonClick() {
+    this.deleteClicked.emit(true);
   }
 
   onDismissButtonClick() {

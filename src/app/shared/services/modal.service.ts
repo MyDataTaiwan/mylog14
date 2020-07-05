@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { defer, from, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
+import { Photo } from '@core/classes/photo';
 import { ModalController } from '@ionic/angular';
 import {
   AddPhotoComponent,
@@ -10,6 +11,9 @@ import {
 import {
   AddRecordComponent,
 } from '@shared/components/add-record/add-record.component';
+import {
+  PhotoViewerComponent,
+} from '@shared/components/photo-viewer/photo-viewer.component';
 import {
   ShopScannerComponent,
 } from '@shared/components/shop-scanner/shop-scanner.component';
@@ -38,6 +42,18 @@ export class ModalService {
   showAddRecordModal(): Observable<any> {
     return defer(() => this.modalCtrl.create({
       component: AddRecordComponent,
+      animated: true,
+      backdropDismiss: false,
+    }))
+      .pipe(
+        switchMap(modal => this.presentModal(modal)),
+      );
+  }
+
+  showPhotoViewerModal(photo: Photo): Observable<any> {
+    return defer(() => this.modalCtrl.create({
+      component: PhotoViewerComponent,
+      componentProps: { photo },
       animated: true,
       backdropDismiss: false,
     }))

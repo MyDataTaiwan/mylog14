@@ -25,7 +25,7 @@ export class LocationApiService {
         take(1),
         map(userData => this.createReverseGeocodingParams(latitude, longitude, userData.language)),
         switchMap(params => this.httpClient.get<ReverseGeocoderResponse>(endpoint, { params })),
-        map(response => response.display_name),
+        map(response => `${response.address.suburb}, ${response.address.state}`),
         catchError(error => {
           console.error(error);
           return of('');
@@ -39,8 +39,7 @@ export class LocationApiService {
         format: 'json',
         lat: `${latitude}`,
         lon: `${longitude}`,
-        addressdetails: `0`,
-        zoom: `14`,
+        zoom: `18`,
         language,
       }
     });
@@ -56,5 +55,17 @@ interface ReverseGeocoderResponse {
   lat: string;
   lon: string;
   display_name: string;
+  address: ReverseGeocoderAddress;
   boundingbox: string[];
+}
+
+interface ReverseGeocoderAddress {
+  road: string;
+  city_district: string;
+  village: string;
+  suburb: string;
+  state: string;
+  postcode: string;
+  country: string;
+  country_code: string;
 }

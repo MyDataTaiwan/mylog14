@@ -17,6 +17,9 @@ import {
   AddRecordComponent,
 } from './components/add-record/add-record.component';
 import { MapComponent } from './components/map/map.component';
+import {
+  PhotoViewerComponent,
+} from './components/photo-viewer/photo-viewer.component';
 import { PopoverComponent } from './components/popover/popover.component';
 import {
   QrScannerComponent,
@@ -29,6 +32,7 @@ import {
   entryComponents: [
     AddPhotoComponent,
     AddRecordComponent,
+    PhotoViewerComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,
@@ -37,6 +41,7 @@ import {
     AddPhotoComponent,
     AddRecordComponent,
     MapComponent,
+    PhotoViewerComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,
@@ -61,6 +66,7 @@ import {
     AddPhotoComponent,
     AddRecordComponent,
     MapComponent,
+    PhotoViewerComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,

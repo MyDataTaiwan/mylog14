@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { IonicModule } from '@ionic/angular';
 
-import { ImgViewerPage } from './img-viewer.page';
+import { PhotoViewerComponent } from './photo-viewer.component';
 
-describe('ImgViewerPage', () => {
-  let component: ImgViewerPage;
-  let fixture: ComponentFixture<ImgViewerPage>;
+describe('PhotoViewerComponent', () => {
+  let component: PhotoViewerComponent;
+  let fixture: ComponentFixture<PhotoViewerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImgViewerPage ],
+      declarations: [ PhotoViewerComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ImgViewerPage);
+    fixture = TestBed.createComponent(PhotoViewerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

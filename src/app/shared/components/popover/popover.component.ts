@@ -19,8 +19,8 @@ export class PopoverComponent implements OnInit {
   @Input() i18nMessage?: string;
   @Input() i18nExtraMessage?: string;
   @Input() buttonSet?: PopoverButtonSet;
-  @Input() onConfirm?: () => {};
-  @Input() onCancel?: () => {};
+  @Input() dataOnConfirm?: {};
+  @Input() dataOnCancel?: {};
   public iconPath: string;
   form = new FormGroup({});
   options: FormlyFormOptions = {};
@@ -36,17 +36,11 @@ export class PopoverComponent implements OnInit {
   }
 
   confirm(): void {
-    if (this.onConfirm) {
-      this.onConfirm();
-    }
-    this.popoverCtrl.dismiss();
+    this.popoverCtrl.dismiss(this.dataOnConfirm);
   }
 
   cancel(): void {
-    if (this.onCancel) {
-      this.onCancel();
-    }
-    this.popoverCtrl.dismiss();
+    this.popoverCtrl.dismiss(this.dataOnCancel);
   }
 
   submit(): void {

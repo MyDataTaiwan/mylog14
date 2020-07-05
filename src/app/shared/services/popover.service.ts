@@ -80,8 +80,8 @@ export interface PopoverProps {
   i18nMessage?: string;
   i18nExtraMessage?: string;
   buttonSet?: PopoverButtonSet;
-  onConfirm?: () => { };
-  onCancel?: () => { };
+  dataOnConfirm?: {};
+  dataOnCancel?: {};
   formModel?: {};
   formFields?: FormlyFieldConfig[];
 }

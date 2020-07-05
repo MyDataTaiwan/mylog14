@@ -78,7 +78,11 @@
     "passed": "已完成",
     "addPhotoTitle": "新增照片紀錄",
     "photoCaptionPlaceholder": "照片附註（選填）",
-    "retakePhoto": "重拍"
+    "retakePhoto": "重拍",
+    "photoViewer": "照片檢視",
+    "time": "時間",
+    "location": "地點",
+    "deletePhoto": "刪除照片"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -96,7 +100,9 @@
     "copyLinkToShare": "複製下列網址以分享資料",
     "shareToWhom": "紀錄要分享給誰？",
     "uploadingDataError": "上傳失敗，請稍後再試。",
-    "registeringUser": "使用者註冊中，請稍候..."
+    "registeringUser": "使用者註冊中，請稍候...",
+    "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
+    "deletingPhoto": "正在刪除照片..."
   },
   "preset": {
     "commonCold": {

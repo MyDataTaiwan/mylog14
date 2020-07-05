@@ -58,6 +58,14 @@ export class DataStoreService {
     this.initializeStore().subscribe();
   }
 
+  deletePhoto(photo: Photo): Observable<Photo[]> {
+    return this.photoRepo.delete(photo)
+      .pipe(
+        switchMap(() => this.photoRepo.getAll()),
+        tap(photos => this.photos.next(photos)),
+      );
+  }
+
   pushPhoto(photo: Photo): Observable<Photo[]> {
     return this.photoRepo.save(photo)
       .pipe(
