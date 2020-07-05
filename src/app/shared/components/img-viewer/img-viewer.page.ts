@@ -3,8 +3,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { defer, forkJoin, from, Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil } from 'rxjs/operators';
 
+import { Photo } from '@core/classes/photo';
 import { Record } from '@core/classes/record';
-import { Photo } from '@core/interfaces/photo';
 import { ModalController, PopoverController } from '@ionic/angular';
 import {
   ImgPopoverPage,

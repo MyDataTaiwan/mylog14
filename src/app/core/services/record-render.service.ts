@@ -53,19 +53,21 @@ export class RecordRenderService {
   private getDataSummaries(records: Record[]) {
     const summary = {};
     records.forEach(record => {
-      record.fields.filter(field => field.dataClass.includes('summary')).forEach(field => {
-        if (!summary[field.name]) {
-          summary[field.name] = field;
-        } else if (field.dataClass.includes('showHighest')) {
-          if (summary[field.name].value < field.value) {
+      record.fields.filter(field => field.dataClass.includes('summary'))
+        .filter(field => (field.value))
+        .forEach(field => {
+          if (!summary[field.name]) {
             summary[field.name] = field;
+          } else if (field.dataClass.includes('showHighest')) {
+            if (summary[field.name].value < field.value) {
+              summary[field.name] = field;
+            }
+          } else if (field.dataClass.includes('showLowest')) {
+            if (summary[field.name].value > field.value) {
+              summary[field.name] = field;
+            }
           }
-        } else if (field.dataClass.includes('showLowest')) {
-          if (summary[field.name].value > field.value) {
-            summary[field.name] = field;
-          }
-        }
-      });
+        });
     });
     return summary;
   }

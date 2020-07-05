@@ -12,6 +12,7 @@ import { FormlyIonicModule } from '@ngx-formly/ionic';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { CoreModule } from '../core/core.module';
+import { AddPhotoComponent } from './components/add-photo/add-photo.component';
 import {
   AddRecordComponent,
 } from './components/add-record/add-record.component';
@@ -26,12 +27,14 @@ import {
 
 @NgModule({
   entryComponents: [
+    AddPhotoComponent,
     AddRecordComponent,
     PopoverComponent,
     ShopScannerComponent,
     QrScannerComponent,
   ],
   declarations: [
+    AddPhotoComponent,
     AddRecordComponent,
     MapComponent,
     PopoverComponent,
@@ -55,6 +58,7 @@ import {
     LeafletModule,
   ],
   exports: [
+    AddPhotoComponent,
     AddRecordComponent,
     MapComponent,
     PopoverComponent,

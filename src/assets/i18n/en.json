@@ -77,7 +77,10 @@
     "yes": "Yes",
     "no": "No",
     "geolocationVerification": "Geolocation Verification",
-    "passed": "Passed"
+    "passed": "Passed",
+    "addPhotoTitle": "Create New Photo Record",
+    "photoCaptionPlaceholder": "caption(optional)",
+    "retakePhoto": "Retake"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

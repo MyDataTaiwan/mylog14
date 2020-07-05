@@ -5,6 +5,9 @@ import { switchMap } from 'rxjs/operators';
 
 import { ModalController } from '@ionic/angular';
 import {
+  AddPhotoComponent,
+} from '@shared/components/add-photo/add-photo.component';
+import {
   AddRecordComponent,
 } from '@shared/components/add-record/add-record.component';
 import {
@@ -19,6 +22,18 @@ export class ModalService {
   constructor(
     private readonly modalCtrl: ModalController,
   ) { }
+
+  showAddPhotoModal(): Observable<any> {
+    return defer(() => this.modalCtrl.create({
+      component: AddPhotoComponent,
+      animated: true,
+      backdropDismiss: false,
+    }))
+      .pipe(
+        switchMap(modal => this.presentModal(modal)),
+      );
+  }
+
 
   showAddRecordModal(): Observable<any> {
     return defer(() => this.modalCtrl.create({

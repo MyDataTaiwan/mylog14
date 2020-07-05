@@ -5,9 +5,10 @@ import {
   Subject,
 } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
+import { Photo } from 'src/app/core/classes/photo';
 import { Record } from 'src/app/core/classes/record';
-import { Photo } from 'src/app/core/interfaces/photo';
 
+import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ImgViewerPage } from '@shared/components/img-viewer/img-viewer.page';
@@ -28,10 +29,11 @@ export interface ModalAction {
 })
 export class DailyPhotosComponent implements OnInit, OnDestroy {
   @Input() dayCount: number;
-  photos$: Observable<Photo[]>;
+  photos$: Observable<Photo[]> = this.dataStore.photos$;
   destroy$ = new Subject();
 
   constructor(
+    private readonly dataStore: DataStoreService,
     private readonly loadingService: LoadingService,
     public modalController: ModalController,
     private readonly translate: TranslateService,

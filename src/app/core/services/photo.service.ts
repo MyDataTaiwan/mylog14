@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CameraPhoto, CameraResultType, CameraSource, Plugins, CameraOptions, PermissionsOptions, PermissionResult, PermissionType } from '@capacitor/core';
-import { defer, from, Observable, of, Subject, forkJoin } from 'rxjs';
-import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
-import { Photo } from '../interfaces/photo';
-import { FileSystemService } from './storage/file-system.service';
-import { Meta } from '../interfaces/meta';
-import { LocalStorageService } from './storage/local-storage.service';
+
+import { defer, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import {
+  CameraOptions, CameraPhoto, CameraResultType, CameraSource, PermissionResult,
+  PermissionsOptions, PermissionType, Plugins,
+} from '@capacitor/core';
+
+import { Photo } from '../classes/photo';
+import { ProofService } from './proof.service';
+import { PhotoRepositoryService } from './repository/photo-repository.service';
 
 const { Camera, Permissions } = Plugins;
 
@@ -14,37 +19,36 @@ const { Camera, Permissions } = Plugins;
 })
 export class PhotoService {
 
-  PHOTO_META_KEY = 'photos';
-
   constructor(
-    private readonly fileSystem: FileSystemService,
-    private readonly localStorage: LocalStorageService,
+    private readonly photoRepo: PhotoRepositoryService,
+    private readonly proofService: ProofService,
   ) {
   }
 
-  createPhotoByCamera(): Observable<Photo> {
-    return this.getCameraPhoto()
+  attachProof(photo: Photo): Observable<Photo> {
+    return this.proofService.createProof()
       .pipe(
-        map(cameraPhoto => ({ byteString: cameraPhoto.base64String })),
+        map(proof => {
+          photo.setProof(proof);
+          return photo;
+        }),
       );
   }
 
-  getPhoto(meta: Meta): Observable<Photo> {
-    return this.fileSystem.getJsonData(meta.path);
+
+  create(): Observable<Photo> {
+    return this.getCameraPhoto()
+      .pipe(
+        map(cameraPhoto => new Photo(Date.now(), cameraPhoto.base64String)),
+      );
   }
 
-  getPhotos(metas: Meta[]): Observable<Photo[]> {
-    return forkJoin(
-      metas.map(meta => this.getPhoto(meta)),
-    );
+  delete(photo: Photo): Observable<any> {
+    return this.photoRepo.delete(photo);
   }
 
-  getMetas(): Observable<Meta[]> {
-    return this.localStorage.getData(this.PHOTO_META_KEY, []);
-  }
-
-  saveMetas(metas: Meta[]): Observable<Meta[]> {
-    return this.localStorage.setData(metas, this.PHOTO_META_KEY);
+  save(record: Photo): Observable<Photo[]> {
+    return this.photoRepo.save(record);
   }
 
   private getCameraPhoto(): Observable<CameraPhoto> {

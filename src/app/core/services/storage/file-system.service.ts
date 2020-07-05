@@ -1,8 +1,12 @@
-import { FilesystemDirectory, FilesystemEncoding, Plugins } from '@capacitor/core';
 import { Injectable } from '@angular/core';
+
 import { crypto, util } from 'openpgp';
-import { defaultIfEmpty, filter, map, switchMap, take } from 'rxjs/operators';
 import { defer, from, Observable } from 'rxjs';
+import { defaultIfEmpty, filter, map, switchMap, take } from 'rxjs/operators';
+
+import {
+  FilesystemDirectory, FilesystemEncoding, Plugins,
+} from '@capacitor/core';
 
 const { Filesystem } = Plugins;
 
@@ -26,10 +30,17 @@ export class FileSystemService {
       );
   }
 
-  getJsonData(fileName: string, parse = true, dir = FilesystemDirectory.Data): Observable<any> {
+  deleteJsonData(filename: string, dir = FilesystemDirectory.Data): Observable<any> {
+    return defer(() => from(Filesystem.deleteFile({
+      path: filename,
+      directory: dir,
+    })));
+  }
+
+  getJsonData(filename: string, parse = true, dir = FilesystemDirectory.Data): Observable<any> {
     const readFile$ = defer(() => from(Filesystem.readFile({
       encoding: this.defaultEncoding,
-      path: fileName,
+      path: filename,
       directory: dir,
     })));
     return readFile$
@@ -42,14 +53,14 @@ export class FileSystemService {
   }
 
   saveJsonData<T extends Data>(data: T, dir = FilesystemDirectory.Data): Observable<string> {
-    const fileName = (data.timestamp) ? `${data.timestamp}.json` : `${Date.now()}.json`;
+    const filename = (data.timestamp) ? `${data.timestamp}.json` : `${Date.now()}.json`;
     const writeFile$ = defer(() => from(Filesystem.writeFile({
       encoding: this.defaultEncoding,
-      path: fileName,
+      path: filename,
       data: JSON.stringify(data),
       directory: dir,
     })));
-    return writeFile$.pipe(map(() => fileName));
+    return writeFile$.pipe(map(() => filename));
   }
 
 }

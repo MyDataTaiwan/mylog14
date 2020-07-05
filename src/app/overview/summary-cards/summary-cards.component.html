@@ -3,25 +3,27 @@
     routerDirection="forward">
     <ion-grid fixed>
       <ion-row>
-        <ion-col size="5">
+        <ion-col size="6">
           <ion-card-header>
             <ion-card-title class="ion-text-center">DAY {{ item.dayCount }}</ion-card-title>
             <ion-card-title class="ion-text-center">{{ item.dateView }}</ion-card-title>
           </ion-card-header>
-          <ion-card-content style="font-size: small;" class="ion-text-center">
+          <ion-card-content class="ion-text-center">
             <div>
-              <ion-label style="color: rgb(85, 84, 84);font-size:7pt !important ;">
-                {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</ion-label>
+              <ion-label color="dark"><small>
+                  {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</small></ion-label>
             </div>
-            <div>
-              <ion-label *ngFor="let row of item.dataSummaries | keyvalue">
-                {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
-                {{ row.value.valueUnit }}
+            <div *ngFor="let row of item.dataSummaries | keyvalue">
+              <ion-label color="dark">
+                <small>
+                  {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
+                  {{ row.value.valueUnit }}
+                </small>
               </ion-label>
             </div>
           </ion-card-content>
         </ion-col>
-        <ion-col size="7">
+        <ion-col size="6">
           <ion-thumbnail>
             <ion-img [src]="getImgSrc(item.imgByteString)" alt="No picture">
             </ion-img>

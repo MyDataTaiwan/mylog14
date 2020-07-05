@@ -4,11 +4,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { first, map, switchMap, tap } from 'rxjs/operators';
 
+import { Photo } from '@core/classes/photo';
+import { PhotosByDate } from '@core/interfaces/photos-by-date';
 import { RecordsByDate } from '@core/interfaces/records-by-date';
 
 import { Record } from '../../classes/record';
 import { UserData } from '../../interfaces/user-data';
 import { RecordPreset } from '../preset.service';
+import { PhotoRepositoryService } from '../repository/photo-repository.service';
 import {
   RecordRepositoryService,
 } from '../repository/record-repository.service';
@@ -22,33 +25,50 @@ import {
 export class DataStoreService {
 
   private readonly initialized = new BehaviorSubject<boolean>(false);
-  public initialized$: Observable<boolean> = this.initialized;
+  initialized$: Observable<boolean> = this.initialized;
 
   private readonly records = new BehaviorSubject<Record[]>([]);
-  public records$: Observable<Record[]> = this.records;
+  records$: Observable<Record[]> = this.records;
 
   private readonly userData = new BehaviorSubject<UserData>({
     firstName: '', lastName: '', recordPreset: RecordPreset.COMMON_COLD, newUser: true,
   });
-  public userData$: Observable<UserData> = this.userData;
+  userData$: Observable<UserData> = this.userData;
 
-  public recordsByDate$: Observable<RecordsByDate> = this.records$
+  recordsByDate$: Observable<RecordsByDate> = this.records$
     .pipe(
+      map(records => records.filter(record => record.templateName === this.userData.getValue().recordPreset)),
       map(records => this.getRecordsByDate(records)),
+    );
+
+  private readonly photos = new BehaviorSubject<Photo[]>([]);
+  photos$: Observable<Photo[]> = this.photos;
+
+  photosByDate$: Observable<PhotosByDate> = this.photos$
+    .pipe(
+      map(photos => this.getPhotosByDate(photos)),
     );
 
 
   constructor(
+    private readonly photoRepo: PhotoRepositoryService,
     private readonly recordRepo: RecordRepositoryService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
     this.initializeStore().subscribe();
   }
 
+  pushPhoto(photo: Photo): Observable<Photo[]> {
+    return this.photoRepo.save(photo)
+      .pipe(
+        tap(photos => this.photos.next(photos)),
+      );
+  }
+
   pushRecord(record: Record): Observable<Record[]> {
     return this.recordRepo.save(record)
       .pipe(
-        tap(newRecords => this.records.next(newRecords)),
+        tap(records => this.records.next(records)),
       );
   }
 
@@ -56,6 +76,13 @@ export class DataStoreService {
     return this.userDataRepo.save(userData)
       .pipe(
         tap(newUserData => this.userData.next(newUserData)),
+      );
+  }
+
+  flushRecord(): Observable<any> {
+    return this.recordRepo.getAll()
+      .pipe(
+        tap(records => this.records.next(records)),
       );
   }
 
@@ -68,19 +95,35 @@ export class DataStoreService {
       );
   }
 
-  private initializeStore(): Observable<[UserData, Record[]]> {
+  private initializeStore(): Observable<[UserData, Record[], Photo[]]> {
     const initUserData$ = this.userDataRepo.get()
       .pipe(
-        tap(userData => this.userData.next(userData))
+        tap(userData => this.userData.next(userData)),
       );
     const initRecords$ = this.recordRepo.getAll()
       .pipe(
-        tap(records => this.records.next(records))
+        tap(records => this.records.next(records)),
       );
-    return forkJoin([initUserData$, initRecords$]).pipe(
+    const initPhotos$ = this.photoRepo.getAll()
+      .pipe(
+        tap(photos => this.photos.next(photos)),
+      );
+    return forkJoin([initUserData$, initRecords$, initPhotos$]).pipe(
       first(),
       tap(() => this.initialized.next(true)),
     );
+  }
+
+  private getPhotosByDate(photos: Photo[]): PhotosByDate {
+    const initialDateGroups: PhotosByDate = {};
+    return photos.reduce<{}>((dateGroups: PhotosByDate, photo) => {
+      const date = formatDate(photo.timestamp, 'yyyy-MM-dd', 'en-us');
+      if (!dateGroups[date]) {
+        dateGroups[date] = [];
+      }
+      dateGroups[date].push(photo);
+      return dateGroups;
+    }, initialDateGroups);
   }
 
   private getRecordsByDate(records: Record[]): RecordsByDate {

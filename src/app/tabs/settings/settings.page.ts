@@ -62,14 +62,15 @@ export class SettingsPage implements OnInit, OnDestroy {
   updateFromPage$ = this.updateFromPage
     .pipe(
       switchMap(data => (data.language) ? this.languageService.set(data.language) : this.dataStore.updateUserData(data)),
+      switchMap(() => this.dataStore.flushRecord()),
       takeUntil(this.destroy$),
     );
 
   constructor(
+    private readonly dataStore: DataStoreService,
+    private readonly formService: FormService,
     private readonly languageService: LanguageService,
     private readonly popoverService: PopoverService,
-    private readonly formService: FormService,
-    private readonly dataStore: DataStoreService,
     private readonly presetService: PresetService,
   ) { }
 

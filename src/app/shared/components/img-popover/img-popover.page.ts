@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
+import { Photo } from '@core/classes/photo';
 import { Record } from '@core/classes/record';
-import { Photo } from '@core/interfaces/photo';
 import { GeolocationService } from '@core/services/geolocation.service';
 import { PopoverController } from '@ionic/angular';
 

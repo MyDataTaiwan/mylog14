@@ -13,7 +13,8 @@
       </div>
     </ion-item>
     <ion-list *ngIf="isSelected(record)">
-      <ion-item *ngFor="let field of record.fields">
+      <ng-container *ngFor="let field of record.fields">
+      <ion-item *ngIf="field.value !== null && field.value !== ''">
         <ion-label style="color: #F9AD35;">
           {{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
         <ion-label class="ion-text-center" style="color: #F9AD35;">
@@ -28,6 +29,7 @@
           </ng-container>
         </ion-label>
       </ion-item>
+      </ng-container>
     </ion-list>
   </div>
 </ion-list>

@@ -1,9 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 
 import { defer, Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { first, switchMap, takeUntil } from 'rxjs/operators';
 
-import { UserData } from '@core/interfaces/user-data';
 import { PopoverController } from '@ionic/angular';
 import {
   SharePopoverPage,
@@ -18,11 +17,9 @@ import { ModalService } from '@shared/services/modal.service';
 export class TabsPage implements OnDestroy {
   destroy$ = new Subject();
   selectedTab: string;
-  showDebugButton = false;
-  GuideLoader$: Observable<UserData>;
   constructor(
-    private popoverCtrl: PopoverController,
-    private modalService: ModalService,
+    private readonly popoverCtrl: PopoverController,
+    private readonly modalService: ModalService,
   ) { }
 
   ngOnDestroy() {
@@ -35,11 +32,17 @@ export class TabsPage implements OnDestroy {
   }
 
   onClickCameraButton() {
-    return 0;
+    this.modalService.showAddPhotoModal()
+      .pipe(
+        first(),
+      ).subscribe();
   }
 
   onClickRecordButton() {
-    this.modalService.showAddRecordModal().subscribe();
+    this.modalService.showAddRecordModal()
+      .pipe(
+        first(),
+      ).subscribe();
   }
 
   onClickShareButton() {

@@ -27,7 +27,7 @@ export class DailyRecordsComponent implements OnInit {
   }
 
   getFieldsCount(record: Record): number {
-    return record.fields.filter(field => (field.value)).length;
+    return record.fields.filter(field => (field.value !== null && field.value !== '')).length;
   }
 
   isSelected(record: Record): boolean {
