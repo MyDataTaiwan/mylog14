@@ -1,40 +1,50 @@
-<app-header [headerTitle]="'title.scanQrcode' | translate" showDismissButton="true" (dismissClicked)="cancel()">
+<app-header [headerTitle]="'title.redeemReward' | translate" showDismissButton="true" (dismissClicked)="cancel()">
 </app-header>
 <ion-content>
-  <ng-container
-    *ngIf="{ poolBalance: couponService.poolBalance$ | async, userBalance: couponService.userBalance$ | async, daysRecorded: couponService.daysRecorded$ | async } as data; else loading">
-    <ion-list>
-      <ion-item>
-        <ion-icon name="pencil-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.daysRecorded' | translate }}</ion-label>
-        <ion-text color="primary" *ngIf="data.daysRecorded >= 14">{{ data.daysRecorded }}</ion-text>
-        <ion-text color="secondary" *ngIf="data.daysRecorded < 14">{{ data.daysRecorded }}</ion-text>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="flash-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
-        <ion-text color="primary" *ngIf="data.poolBalance >= 20">{{ 'title.canRedeem' | translate }}</ion-text>
-        <ion-text color="secondary" *ngIf="data.poolBalance < 20">{{ 'title.cannotRedeem' | translate }}</ion-text>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="card-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.currentBalance' | translate }}</ion-label>
-        <ion-text color="primary" *ngIf="data.userBalance >= 20">{{ data.userBalance }}</ion-text>
-        <ion-text color="secondary" *ngIf="data.userBalance < 20">{{ data.userBalance }}</ion-text>
-      </ion-item>
-    </ion-list>
-    <app-qr-scanner *ngIf="data.poolBalance >= 20 && data.userBalance >= 20 && data.daysRecorded >= 14" [scanEnabled]="scanEnabled$"
-      (scanResult)="scanResultHandler($event)"></app-qr-scanner>
-  </ng-container>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="pencil-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.daysRecorded' | translate }}</ion-label>
+      <ng-container *ngIf="daysRecorded$ | async as daysRecorded; else daysRecordedLoading">
+        <ion-text color="primary" *ngIf="daysRecorded >= 14">{{ daysRecorded }}</ion-text>
+        <ion-text color="secondary" *ngIf="daysRecorded < 14">{{ daysRecorded }}</ion-text>
+      </ng-container>
+      <ng-template #daysRecordedLoading>
+        <ion-spinner></ion-spinner>
+      </ng-template>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="flash-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
+      <ng-container *ngIf="poolBalance$ | async as poolBalance; else poolBalanceLoading">
+        <ion-text color="primary" *ngIf="poolBalance >= 20">{{ 'title.canRedeem' | translate }}</ion-text>
+        <ion-text color="secondary" *ngIf="poolBalance < 20">{{ 'title.cannotRedeem' | translate }}</ion-text>
+      </ng-container>
+      <ng-template #poolBalanceLoading>
+        <ion-spinner></ion-spinner>
+      </ng-template>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="card-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.currentBalance' | translate }}</ion-label>
+      <ng-container *ngIf="userBalance$ | async as userBalance; else userBalanceLoading">
+        <ion-text color="primary" *ngIf="userBalance >= 20">{{ userBalance }}</ion-text>
+        <ion-text color="secondary" *ngIf="userBalance < 20">{{ userBalance }}</ion-text>
+      </ng-container>
+      <ng-template #userBalanceLoading>
+        <ion-spinner></ion-spinner>
+      </ng-template>
+    </ion-item>
+    <ng-container *ngIf="daysRecorded$ | async as daysRecorded">
+    <ion-item *ngIf="daysRecorded < 14" class="ion-text-center">
+      <ion-label>{{ 'description.logMoreDaysForReward' | translate: { days: 14 - daysRecorded } }}</ion-label>
+    </ion-item>
+    </ng-container>
+  </ion-list>
+  <app-qr-scanner *ngIf="false" [scanEnabled]="scanEnabled$" (scanResult)="scanResultHandler($event)"></app-qr-scanner>
   <ng-template #loading>
     <div class="ion-justify-content-between">
       <ion-spinner name="bubbles"></ion-spinner>
     </div>
   </ng-template>
 </ion-content>
-<ion-footer hidden>
-  <div class="ion-justify-content-between" hidden>
-    <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
-    <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
-  </div>
-</ion-footer>

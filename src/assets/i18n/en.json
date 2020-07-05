@@ -85,7 +85,8 @@
     "time": "Time",
     "location": "Location",
     "deletePhoto": "Delete Photo",
-    "shareDisabled": "Coming Soon"
+    "shareDisabled": "Coming Soon",
+    "redeemReward": "Redeem Reward"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -106,7 +107,8 @@
     "registeringUser": "Please wait for user registration...",
     "deletePhotoPopover": "This action cannot be undone. Are you sure you want to delete this photo?",
     "deletingPhoto": "Deleting the photo...",
-    "shareDisabled": "Sharing via LogBoard link is not avaiable in this version of App. Please update the App when a new version is available for the LogBoard link-sharing."
+    "shareDisabled": "Sharing via LogBoard link is not avaiable in this version of App. Please update the App when a new version is available for the LogBoard link-sharing.",
+    "logMoreDaysForReward": "Log {{days}} more days to earn a NTD $20 reward!"
   },
   "language": {
     "en": "English",

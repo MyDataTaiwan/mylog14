@@ -103,7 +103,9 @@ export class CouponService {
           userResult.response.user_id,
           userResult.response.token,
         )),
+        tap(c => console.log('user cuuu', c)),
         map((res: UserDetailResult) => res.response.current_balance),
+        tap(c => console.log('user mon', c)),
       );
   }
 

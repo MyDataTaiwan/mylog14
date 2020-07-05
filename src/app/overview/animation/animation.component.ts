@@ -42,10 +42,13 @@ export class AnimationComponent implements OnInit, OnDestroy {
   }
 
   onConfigReady() {
-    this.startCountdown(0)
+    this.animationStopOnDay(14);
+    /*
+    this.startCountdown(14)
       .pipe(
         takeUntil(this.destroy$),
       ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
+      */
   }
 
   private startCountdown(day: number) {
