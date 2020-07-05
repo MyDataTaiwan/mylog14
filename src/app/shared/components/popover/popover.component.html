@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="form-box ion-justify-content-between" *ngIf="formFields && formModel">
-      <form [formGroup]="form" (ngSubmit)="submit(formModel)">
+      <form [formGroup]="form" (ngSubmit)="submit()">
         <formly-form [form]="form" [fields]="formFields" [model]="formModel" [options]="options"></formly-form>
         <ion-button type="submit" [disabled]="!form.valid" class="ion-float-right">
           {{ 'title.confirm' | translate }}

@@ -38,6 +38,8 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   userData$: Observable<UserData> = this.dataStore.userData$;
 
+  hasGeneratedSharedLink$: Observable<boolean>;
+
   showDeveloperOptions = false;
   private readonly versionClick = new Subject<boolean>();
   versionClick$ = this.versionClick.pipe(
