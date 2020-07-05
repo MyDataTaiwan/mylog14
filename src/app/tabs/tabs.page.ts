@@ -1,13 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
 
 import { defer, Observable, Subject } from 'rxjs';
-import { first, switchMap, takeUntil } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 
 import { PopoverController } from '@ionic/angular';
 import {
   SharePopoverPage,
 } from '@shared/components/share-popover/share-popover.page';
 import { ModalService } from '@shared/services/modal.service';
+import { PopoverService } from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-tabs',
@@ -19,6 +20,7 @@ export class TabsPage implements OnDestroy {
   selectedTab: string;
   constructor(
     private readonly popoverCtrl: PopoverController,
+    private readonly popoverService: PopoverService,
     private readonly modalService: ModalService,
   ) { }
 
@@ -46,12 +48,17 @@ export class TabsPage implements OnDestroy {
   }
 
   onClickShareButton() {
-    this.createSharePopover()
+    this.showShareDisabledPopover()
       .pipe(
-        switchMap(popover => popover.present()),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => { }, e => console.log(e));
+        first(),
+      ).subscribe();
+  }
+
+  private showShareDisabledPopover() {
+    return this.popoverService.showPopover({
+      i18nTitle: 'title.shareDisabled',
+      i18nMessage: 'description.shareDisabled',
+    }, 2000, true);
   }
 
   private createSharePopover(): Observable<HTMLIonPopoverElement> {

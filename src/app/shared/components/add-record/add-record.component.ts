@@ -69,7 +69,9 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   onClickEdit(field: RecordField, templateName: string) {
-    if (field.type !== this.recordFieldType.boolean) {
+    if (field.type === this.recordFieldType.boolean) {
+      field.value = !field.value;
+    } else {
       this.edit.next([field, templateName]);
     }
   }
@@ -107,15 +109,21 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   submitRecord(): Observable<any> {
+    return this.saveRecordWithLoading()
+      .pipe(
+        mergeMap(() => this.showRecordSavedPopover()),
+        tap(() => this.modalCtrl.dismiss()),
+        takeUntil(this.destroy$),
+      );
+  }
+
+  private saveRecordWithLoading(): Observable<any> {
     return forkJoin([
       this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
       this.dataStore.pushRecord(this.record.getValue())
     ])
       .pipe(
         mergeMap(([loading, _]) => loading.dismiss()),
-        mergeMap(() => this.showRecordSavedPopover()),
-        tap(() => this.modalCtrl.dismiss()),
-        takeUntil(this.destroy$),
       );
   }
 

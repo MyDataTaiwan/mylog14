@@ -82,7 +82,8 @@
     "photoViewer": "照片檢視",
     "time": "時間",
     "location": "地點",
-    "deletePhoto": "刪除照片"
+    "deletePhoto": "刪除照片",
+    "shareDisabled": "敬請期待"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -102,7 +103,8 @@
     "uploadingDataError": "上傳失敗，請稍後再試。",
     "registeringUser": "使用者註冊中，請稍候...",
     "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
-    "deletingPhoto": "正在刪除照片..."
+    "deletingPhoto": "正在刪除照片...",
+    "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。"
   },
   "preset": {
     "commonCold": {
