@@ -10,8 +10,11 @@
           </ion-card-header>
           <ion-card-content class="ion-text-center">
             <div>
-              <ion-label color="dark"><small>
-                  {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}</small></ion-label>
+              <ion-label color="dark">
+                <small>
+                  {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}
+                </small>
+              </ion-label>
             </div>
             <div *ngFor="let row of item.dataSummaries | keyvalue">
               <ion-label color="dark">
