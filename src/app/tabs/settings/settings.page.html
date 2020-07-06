@@ -20,19 +20,21 @@
         <ion-text *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</ion-text>
       </ion-item>
 
-      <ion-item lines="inset" button>
+      <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
         <ion-icon name="calendar-outline" slot="start">
         </ion-icon>
         <ion-label>{{ 'title.dateOfBirth' | translate }}</ion-label>
         <ion-text *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</ion-text>
         <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
-          (ionChange)="onChangeDateOfBirthPicker()"></ion-datetime>
+          (ionChange)="onChangeDateOfBirthPicker()" [cancelText]="'title.cancel' | translate"
+          [doneText]="'title.confirm' | translate"></ion-datetime>
       </ion-item>
 
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.language' | translate }}</ion-label>
-        <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)">
+        <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)"
+          [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let language of languages" [value]="language">
             {{ 'language.' + language | translate }}
           </ion-select-option>
@@ -42,7 +44,10 @@
       <ion-item lines="inset">
         <ion-icon name="documents-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.selectRecordMode' | translate }}</ion-label>
-        <ion-select *ngIf="showSelects" [value]="(userDataView.recordPreset) ? userDataView.recordPreset : recordPresets[0]" (ionChange)="presetSelected($event)">
+        <ion-select *ngIf="showSelects"
+          [value]="(userDataView.recordPreset) ? userDataView.recordPreset : recordPresets[0]"
+          (ionChange)="presetSelected($event)" [cancelText]="'title.cancel' | translate"
+          [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let preset of recordPresets" [value]="preset">
             {{ 'preset.' + preset + '.presetName' | translate }}
           </ion-select-option>
