@@ -6,6 +6,7 @@ import { filter, first, switchMap, take } from 'rxjs/operators';
 
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { LanguageService } from '@core/services/language.service';
+import { RecordPreset } from '@core/services/preset.service';
 import { Platform } from '@ionic/angular';
 
 import { DataStoreService } from './core/services/store/data-store.service';
@@ -30,6 +31,9 @@ export class AppComponent {
       .pipe(
         switchMap(() => this.language.init()),
         switchMap(() => this.dataStore.userData$.pipe(take(1))),
+        switchMap(userData => {
+          return (userData.recordPreset) ? of(userData) : this.dataStore.updateUserData({ recordPreset: RecordPreset.COMMON_COLD });
+        })
       )
       .subscribe(userData => {
         if (userData.newUser) {
