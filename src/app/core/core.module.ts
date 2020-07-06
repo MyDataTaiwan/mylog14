@@ -14,9 +14,6 @@ import { HeaderComponent } from './header/header.component';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
-  entryComponents: [
-    HeaderComponent,
-  ],
   declarations: [
     SafeUrlPipe,
     ClickOutsideSameClassDirective,

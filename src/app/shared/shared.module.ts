@@ -29,14 +29,6 @@ import {
 } from './components/shop-scanner/shop-scanner.component';
 
 @NgModule({
-  entryComponents: [
-    AddPhotoComponent,
-    AddRecordComponent,
-    PhotoViewerComponent,
-    PopoverComponent,
-    ShopScannerComponent,
-    QrScannerComponent,
-  ],
   declarations: [
     AddPhotoComponent,
     AddRecordComponent,
