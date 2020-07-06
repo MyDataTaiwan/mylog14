@@ -6,6 +6,7 @@ import { defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 import { Photo } from '@core/classes/photo';
 import { Meta } from '@core/interfaces/meta';
 
+import { LedgerService } from '../ledger.service';
 import { FileSystemService } from '../storage/file-system.service';
 import { LocalStorageService } from '../storage/local-storage.service';
 
@@ -18,6 +19,7 @@ export class PhotoRepositoryService {
 
   constructor(
     private readonly fileSystem: FileSystemService,
+    private readonly ledger: LedgerService,
     private readonly localStorage: LocalStorageService,
   ) { }
 
@@ -43,10 +45,18 @@ export class PhotoRepositoryService {
   }
 
   save(photo: Photo): Observable<Photo[]> {
-    return forkJoin([this.getMetas(), this.savePhotoAndCreateMeta(photo)])
+    return this.savePhotoAndCreateMeta(photo)
       .pipe(
+        switchMap(meta => forkJoin([this.getMetas(), this.attachTransactionHash(meta)])),
         switchMap(([metas, meta]) => this.saveMetas([...metas, meta])),
         switchMap(() => this.getAll()),
+      );
+  }
+
+  private attachTransactionHash(meta: Meta): Observable<Meta> {
+    return this.ledger.createTransactionHash(meta.hash)
+      .pipe(
+        map(transactionHash => ({ ...meta, transactionHash })),
       );
   }
 

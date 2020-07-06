@@ -1,15 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import {
-  filter, first, map, switchMap, takeUntil,
-  tap,
+  filter, first, map, mergeMap, switchMap,
+  takeUntil, tap,
 } from 'rxjs/operators';
 
 import { Photo } from '@core/classes/photo';
 import { PhotoService } from '@core/services/photo.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
+import { LoadingService } from '@shared/services/loading.service';
+import { PopoverIcon, PopoverService } from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-add-photo',
@@ -32,7 +34,9 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly dataStore: DataStoreService,
+    private readonly loadingService: LoadingService,
     private readonly photoService: PhotoService,
+    private readonly popoverService: PopoverService,
     private readonly modalCtrl: ModalController,
   ) { }
 
@@ -63,11 +67,26 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
   }
 
   confirm() {
-    this.dataStore.pushPhoto(this.photo.getValue())
+    this.savePhotoWithLoading()
       .pipe(
         first(),
+        switchMap(() => this.showRecordSavedPopover()),
         switchMap(() => this.modalCtrl.dismiss()),
       ).subscribe();
+  }
+
+  private savePhotoWithLoading(): Observable<any> {
+    return forkJoin([
+      this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
+      this.dataStore.pushPhoto(this.photo.getValue())
+    ])
+      .pipe(
+        mergeMap(([loading, _]) => loading.dismiss()),
+      );
+  }
+
+  private showRecordSavedPopover(): Observable<any> {
+    return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500);
   }
 
   private getDefaultProofDisplay(): ProofDisplay {

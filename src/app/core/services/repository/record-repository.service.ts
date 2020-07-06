@@ -5,6 +5,7 @@ import { defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 
 import { Record } from '../../classes/record';
 import { Meta } from '../../interfaces/meta';
+import { LedgerService } from '../ledger.service';
 import { FileSystemService } from '../storage/file-system.service';
 import { LocalStorageService } from '../storage/local-storage.service';
 
@@ -16,6 +17,7 @@ export class RecordRepositoryService {
 
   constructor(
     private readonly fileSystem: FileSystemService,
+    private readonly ledger: LedgerService,
     private readonly localStorage: LocalStorageService,
   ) { }
 
@@ -43,10 +45,18 @@ export class RecordRepositoryService {
   }
 
   save(record: Record): Observable<Record[]> {
-    return forkJoin([this.getMetas(), this.saveRecordAndCreateMeta(record)])
+    return this.saveRecordAndCreateMeta(record)
       .pipe(
+        switchMap(meta => forkJoin([this.getMetas(), this.attachTransactionHash(meta)])),
         switchMap(([metas, meta]) => this.saveMetas([...metas, meta])),
         switchMap(() => this.getAll()),
+      );
+  }
+
+  private attachTransactionHash(meta: Meta): Observable<Meta> {
+    return this.ledger.createTransactionHash(meta.hash)
+      .pipe(
+        map(transactionHash => ({ ...meta, transactionHash })),
       );
   }
 
