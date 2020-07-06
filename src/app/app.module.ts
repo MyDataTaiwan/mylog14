@@ -33,7 +33,6 @@ export function playerFactory() {
   declarations: [
     AppComponent,
   ],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),

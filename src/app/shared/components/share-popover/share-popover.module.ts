@@ -15,6 +15,5 @@ import { SharePopoverPage } from './share-popover.page';
     TranslateModule,
   ],
   declarations: [SharePopoverPage],
-  entryComponents: [SharePopoverPage],
 })
 export class SharePopoverPageModule { }
