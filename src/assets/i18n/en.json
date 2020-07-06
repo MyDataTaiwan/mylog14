@@ -76,7 +76,7 @@
     "fieldsCount": "Data fields",
     "yes": "Yes",
     "no": "No",
-    "geolocationVerification": "Geolocation Verification",
+    "metadataCollection": "Metadata Collection",
     "passed": "Passed",
     "addPhotoTitle": "Create New Photo Record",
     "photoCaptionPlaceholder": "caption(optional)",

@@ -4,7 +4,7 @@
   <ion-list *ngIf="record$ | async as record">
     <ion-item>
       <ion-icon [name]="proofDisplay.icon" [color]="proofDisplay.color" slot="start"></ion-icon>
-      <ion-label [color]="proofDisplay.color">{{ 'title.geolocationVerification' | translate }}</ion-label>
+      <ion-label [color]="proofDisplay.color">{{ 'title.metadataCollection' | translate }}</ion-label>
       <ion-text *ngIf="proofDisplay.status" [color]="proofDisplay.color">{{ 'title.passed' | translate }}</ion-text>
       <ion-spinner *ngIf="!proofDisplay.status"></ion-spinner>
     </ion-item>
