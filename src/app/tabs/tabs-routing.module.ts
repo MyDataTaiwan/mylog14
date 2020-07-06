@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -16,9 +17,9 @@ const routes: Routes = [
               import('./tab-data/tab-data.module').then(m => m.TabDataPageModule)
           },
           {
-            path: 'daily-detail/:day',
+            path: 'daily/:date',
             loadChildren: () =>
-              import('../daily/daily-detail/daily-detail.module').then(m => m.DailyDetailPageModule)
+              import('../daily/daily.module').then(m => m.DailyPageModule)
           }
         ]
       },

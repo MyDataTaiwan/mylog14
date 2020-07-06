@@ -1,0 +1,29 @@
+<app-header [headerTitle]="'title.myData' | translate" showBackButton="true"></app-header>
+<ion-content>
+  <ion-card>
+    <ion-list>
+      <ng-container *ngIf="date$ | async as date">
+        <app-daily-summary [date]="date"></app-daily-summary>
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="7" class="center-me">
+              <div class="border-line"></div>
+            </ion-col>
+            <ion-col size="2" class="center-me">
+              <img (click)="toggle(0)" [src]="photosIcons[selected]" />
+            </ion-col>
+            <ion-col size="1" class="center-me">
+              <img src="../../assets/ui/sort_2.svg" />
+            </ion-col>
+            <ion-col size="2" class="center-me">
+              <img (click)="toggle(1)" [src]="recordsIcons[selected]" />
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <app-daily-records *ngIf="selected === 0" [date]="date">
+        </app-daily-records>
+        <app-daily-photos *ngIf="selected === 1" [dayCount]="date"></app-daily-photos>
+      </ng-container>
+    </ion-list>
+  </ion-card>
+</ion-content>

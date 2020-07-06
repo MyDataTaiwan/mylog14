@@ -1,81 +1,52 @@
 import { Injectable } from '@angular/core';
-import { FilesystemDirectory } from '@capacitor/core';
-import { forkJoin, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { Record } from '../interfaces/record';
-import { RecordMeta } from '../interfaces/record-meta';
-import { FileSystemService } from './file-system.service';
-import { LedgerService } from './ledger.service';
-import { LocalStorageService } from './local-storage.service';
+
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { Record } from '../classes/record';
+import { PresetService, RecordPreset } from './preset.service';
+import { ProofService } from './proof.service';
+import {
+  RecordRepositoryService,
+} from './repository/record-repository.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordService {
-  RECORD_META_REPOSITORY = 'records';
-  RECORD_DIRECTORY = FilesystemDirectory.Data;
 
   constructor(
-    private fileSystem: FileSystemService,
-    private ledger: LedgerService,
-    private localStorage: LocalStorageService,
+    private readonly presetService: PresetService,
+    private readonly proofService: ProofService,
+    private readonly recordRepo: RecordRepositoryService,
   ) { }
 
-  getRecord(recordMeta: RecordMeta): Observable<Record> {
-    return this.fileSystem.getJsonData(recordMeta.path, recordMeta.directory);
-  }
-
-  getRecords(recordMetas: RecordMeta[]): Observable<Record[]> {
-    return forkJoin(
-      recordMetas.map(recordMeta => this.getRecord(recordMeta)),
-    );
-  }
-
-  getRawRecords(recordMetas: RecordMeta[]): Observable<string[]> {
-    return forkJoin(
-      recordMetas.map(recordMeta => this.fileSystem.getJsonData(recordMeta.path, recordMeta.directory, false)),
-    );
-  }
-
-  saveRecord(record: Record, recordMetas: RecordMeta[]): Observable<RecordMeta[]> {
-    const fileSave$ = this.fileSystem.saveJsonData(record);
-    return fileSave$
+  attachProof(record: Record): Observable<Record> {
+    return this.proofService.createProof()
       .pipe(
-        switchMap(filename => this.fileSystem.getFileHash(filename)
-          .pipe(
-            map(fileHash => [filename, fileHash])),
-        ),
-        switchMap(([filename, fileHash]) => this.ledger.createTransactionHash(fileHash)
-          .pipe(
-            map(transactionHash => [filename, fileHash, transactionHash]),
-          )
-        ),
-        map(([filename, fileHash, transactionHash]) => {
-          return this.createRecordMeta(record.timestamp, filename, fileHash, transactionHash);
-        }),
-        map(recordMeta => {
-          recordMetas.push(recordMeta);
-          return recordMetas;
+        map(proof => {
+          record.setProof(proof);
+          return record;
         }),
       );
   }
 
-  getRecordMetas(): Observable<RecordMeta[]> {
-    return this.localStorage.getData(this.RECORD_META_REPOSITORY, []);
+  create(preset: RecordPreset): Observable<Record> {
+    const record = new Record(Date.now());
+    return of(this.presetService.initRecordWithPreset(record, preset));
   }
 
-  saveRecordMetas(recordMetas: RecordMeta[]): Observable<RecordMeta[]> {
-    return this.localStorage.setData(recordMetas, this.RECORD_META_REPOSITORY);
+  save(record: Record): Observable<Record[]> {
+    return this.recordRepo.save(record);
   }
 
-  private createRecordMeta(timestamp: number, filename: string, fileHash: string, transactionHash: string): RecordMeta {
-    return {
-      timestamp,
-      path: filename,
-      directory: this.RECORD_DIRECTORY,
-      hash: fileHash,
-      transactionHash,
-    };
-  }
 
+}
+
+export interface RecordQueryOptions {
+  timestampEqual?: number;
+  timestampMax?: number;
+  timestampMin?: number;
+  hash?: string;
+  transactionHash?: string;
 }

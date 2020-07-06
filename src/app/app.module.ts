@@ -1,20 +1,22 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
 import player from 'lottie-web';
 import { LottieModule } from 'ngx-lottie';
+
+import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyIonicModule } from '@ngx-formly/ionic';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { SharedModule } from '@shared/shared.module';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RecordFinishPageModule } from './core/components/record-finish/record-finish.module';
 import { CoreModule } from './core/core.module';
-import { AddRecordPageModule } from './core/pages/add-record/add-record.module';
-import { GuidePageModule } from './core/pages/guide/guide.module';
-import { ImgPopoverPageModule } from './core/pages/img-popover/img-popover.module';
-import { ImgViewerPageModule } from './core/pages/img-viewer/img-viewer.module';
 
 export function LanguageLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -37,7 +39,6 @@ export function playerFactory() {
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    RecordFinishPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -46,11 +47,11 @@ export function playerFactory() {
       }
     }),
     CoreModule,
-    AddRecordPageModule,
-    ImgPopoverPageModule,
-    GuidePageModule,
-    ImgViewerPageModule,
-    LottieModule.forRoot({ player: playerFactory })
+    SharedModule,
+    LottieModule.forRoot({ player: playerFactory }),
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyIonicModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }

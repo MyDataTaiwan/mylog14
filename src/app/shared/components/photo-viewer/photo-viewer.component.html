@@ -1,0 +1,26 @@
+<app-header [headerTitle]="'title.photoViewer' | translate" showDismissButton="true" (dismissClicked)="cancel()"
+  showDeleteButton="true" (deleteClicked)="delete()">
+</app-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="time-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.time' | translate }}</ion-label>
+      <div class="ion-text-center">
+        <ion-label>{{ photo.timestamp | date: 'yyyy/MM/dd' }} </ion-label>
+        <ion-label>{{ photo.timestamp | date: 'HH:mm:ss' }} </ion-label>
+      </div>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      <ion-label>{{ 'title.location' | translate }}</ion-label>
+      <ng-container *ngIf="address$ | async as address; else addressLoading">
+        <ion-text>{{ address }}</ion-text>
+      </ng-container>
+      <ng-template #addressLoading>
+        <ion-spinner></ion-spinner>
+      </ng-template>
+    </ion-item>
+  </ion-list>
+  <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString" style="width: 100%;"></ion-img>
+</ion-content>

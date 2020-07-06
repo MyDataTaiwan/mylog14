@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-button *ngIf="showBackButton" (click)="onBackButtonClick()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="showDismissButton" (click)="onDismissButtonClick()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>  
+    <ion-title text-center slot="secondary">
+      {{ headerTitle }}
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf=showDeleteButton (click)="onDeleteButtonClick()">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

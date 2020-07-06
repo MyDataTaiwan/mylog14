@@ -1,0 +1,7 @@
+<ion-content>
+  <app-animation></app-animation>
+  <ng-container *ngIf="dailySummaries$ | async as dailySummaries">
+    <app-summary-cards [dailySummaries]="dailySummaries"></app-summary-cards>
+    <app-add-data-hint *ngIf="dailySummaries.length === 0"></app-add-data-hint>
+  </ng-container>
+</ion-content>

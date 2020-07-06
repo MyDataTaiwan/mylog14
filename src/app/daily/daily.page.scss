@@ -1,0 +1,51 @@
+ion-card {
+  height: 90%;
+  margin: 3vh;
+}
+
+ion-list {
+  height: 100%;
+}
+
+:root {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 22px;
+}
+ion-slides {
+  height: 100%;
+}
+
+.swiper-slide {
+  display: block;
+}
+
+.swiper-slide h2 {
+  margin-top: 2.8rem;
+}
+
+b {
+  font-weight: 500;
+}
+
+p {
+  padding: 0 40px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ion-color-step-600, #60646b);
+}
+
+p b {
+  color: var(--ion-text-color, #000000);
+}
+
+.border-line {
+  border-width: 0.5px;
+  border-bottom-style: groove;
+  border-color: #555555;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.center-me {
+  margin: auto;
+}

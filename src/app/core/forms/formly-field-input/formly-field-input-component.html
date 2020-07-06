@@ -1,0 +1,7 @@
+<ion-item>
+    <ion-label position="floating">{{ to.label }}</ion-label>
+    <ion-input [type]="to.type" [formControl]="formControl" [formlyAttributes]="field" [placeholder]="to.placeholder"
+        [required]="to.required" [min]="to.min" [max]="to.max">
+    </ion-input>
+    <ion-label slot="end">{{ to.unit }}</ion-label>
+</ion-item>

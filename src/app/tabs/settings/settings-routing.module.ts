@@ -8,14 +8,6 @@ const routes: Routes = [
     component: SettingsPage
   },
   {
-    path: 'name-popover',
-    loadChildren: () => import('./name-popover/name-popover.module').then(m => m.NamePopoverPageModule)
-  },
-  {
-    path: 'email-popover',
-    loadChildren: () => import('./email-popover/email-popover.module').then(m => m.EmailPopoverPageModule)
-  },
-  {
     path: 'shared-link-popover',
     loadChildren: () => import('./shared-link-popover/shared-link-popover.module').then( m => m.SharedLinkPopoverPageModule)
   }

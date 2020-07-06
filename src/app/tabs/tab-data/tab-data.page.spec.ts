@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterModule } from '@angular/router';
+
+import { CoreModule } from 'src/app/core/core.module';
+import { OverviewModule } from 'src/app/overview/overview.module';
+
 import { IonicModule } from '@ionic/angular';
-import { MainHeaderModule } from 'src/app/core/components/main-header/main-header.module';
-import { DailyOverviewModule } from 'src/app/daily/daily-overview/daily-overview.module';
+
 import { TabDataPage } from './tab-data.page';
 
 describe('tabDataPage', () => {
@@ -17,8 +20,8 @@ describe('tabDataPage', () => {
       imports: [
         IonicModule.forRoot(),
         RouterModule.forRoot([]),
-        MainHeaderModule,
-        DailyOverviewModule
+        CoreModule,
+        OverviewModule
       ]
     }).compileComponents();
 

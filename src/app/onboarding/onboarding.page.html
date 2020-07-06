@@ -27,7 +27,7 @@
       </div>
     </ion-slide>
     <ion-slide>
-      <div *ngIf="translateConfigService.currentLanguage == 'zh'" class="terms-and-conditions ion-margin">
+      <div *ngIf="(language$ | async) === 'zh'" class="terms-and-conditions ion-margin">
         <h5 class="ion-text-center header">MyLog 使用者條款摘要</h5>
         <p class="sub-header">「自己的資料自己管 (own and control your data)」</p>
         <p>
@@ -212,7 +212,7 @@
               href="mailto: taiwan@mydata.org">taiwan@mydata.org</a>。</p>
         </ul>
       </div>
-      <div *ngIf="translateConfigService.currentLanguage != 'zh'" class="terms-and-conditions ion-margin">
+      <div *ngIf="(language$ | async) !== 'zh'" class="terms-and-conditions ion-margin">
         <h5 class="ion-text-center header">Terms & Conditions</h5>
         <p>
           By downloading or using the app, these terms will automatically apply to you – you should make sure

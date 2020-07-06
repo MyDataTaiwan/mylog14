@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GeolocationOptions, GeolocationPosition, Plugins } from '@capacitor/core';
-import { TranslateService } from '@ngx-translate/core';
+
 import { bindCallback, from, Observable, of } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
-import { TranslateConfigService } from './translate-config.service';
+import { map, take } from 'rxjs/operators';
+
+import {
+  GeolocationOptions, GeolocationPosition, Plugins,
+} from '@capacitor/core';
 
 const { Geolocation } = Plugins;
 
@@ -21,9 +22,6 @@ export class GeolocationService {
   cachedPositionTime: number;
   cacheTimeout = 60000; // ms
   constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService,
-    private translateConfigService: TranslateConfigService
   ) { }
 
   getPosition(useCache = true): Observable<GeolocationPosition> {
@@ -52,26 +50,4 @@ export class GeolocationService {
     return (cached && !isTimeout);
   }
 
-  getFromLocation(latitude: number, longitude: number): Observable<string> {
-    const currentLang = this.translateConfigService.currentLanguage;
-    return this.httpClient.get<ReverseGeocoderResponse>(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&addressdetails=0&zoom=14&accept-language=${currentLang}`)
-      .pipe(
-        map(response => response.display_name),
-        catchError(error => {
-          console.error(error);
-          return this.translateService.get('description.cannotGetLocation');
-        })
-      );
-  }
-}
-
-interface ReverseGeocoderResponse {
-  place_id: number;
-  licence: string;
-  osm_type: string;
-  osm_id: number;
-  lat: string;
-  lon: string;
-  display_name: string;
-  boundingbox: string[];
 }

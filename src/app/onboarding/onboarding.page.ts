@@ -2,13 +2,20 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController, LoadingController } from '@ionic/angular';
-import { PrivateCouponService } from '@numbersprotocol/private-coupon';
-import { Subject, forkJoin, defer, of, from, Observable } from 'rxjs';
-import { first, map, switchMap, tap, catchError } from 'rxjs/operators';
-import { DataStoreService } from '../core/services/data-store.service';
-import { TranslateConfigService } from '../core/services/translate-config.service';
+
+import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+
+import { LanguageService } from '@core/services/language.service';
+import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { PrivateCouponService } from '@numbersprotocol/private-coupon';
+
+import { RecordPreset } from '../core/services/preset.service';
+import {
+  UserDataRepositoryService,
+} from '../core/services/repository/user-data-repository.service';
+import { LoadingService } from '../shared/services/loading.service';
 
 @Component({
   selector: 'app-onboarding',
@@ -26,20 +33,22 @@ export class OnboardingPage implements OnDestroy {
 
   private readonly destroy$ = new Subject();
 
+  language$: Observable<string> = this.langaugeService.get();
+
   constructor(
-    public translateConfigService: TranslateConfigService,
-    private readonly translate: TranslateService,
     private readonly formBuilder: FormBuilder,
+    private readonly loadingService: LoadingService,
+    private readonly privateCouponService: PrivateCouponService,
     private readonly router: Router,
     private readonly toastController: ToastController,
-    private readonly dataStoreService: DataStoreService,
-    private readonly privateCouponService: PrivateCouponService,
-    private readonly loadingCtrl: LoadingController,
+    private readonly translate: TranslateService,
+    private readonly userDataRepo: UserDataRepositoryService,
+    public readonly langaugeService: LanguageService,
   ) { }
 
   onSubmit() {
     this.confirmButtonEnabled = false;
-    const loading$ = this.presentLoading();
+    const loading$ = this.showRegisteringUserLoading();
     const signup$ = this.privateCouponService.signup(this.onboardingForm.controls.email.value)
       .pipe(
         catchError((err: HttpErrorResponse) => {
@@ -52,15 +61,15 @@ export class OnboardingPage implements OnDestroy {
           this.presentToast(err.error.reason || err.statusText);
           throw (err);
         }),
-        switchMap((res: SignupResponse) => {
-          const userData = this.dataStoreService.getUserData();
-          userData.email = this.onboardingForm.controls.email.value;
-          userData.newUser = false;
-          if (res) {
-            userData.userId = res.response.user_id;
-          }
-          return this.dataStoreService.updateUserData(userData);
-        }),
+        switchMap((res: SignupResponse) => forkJoin([of(res), this.userDataRepo.get()])),
+        map(([res, userData]) => ({
+          ...userData,
+          email: this.onboardingForm.controls.email.value,
+          newUser: false,
+          recordPreset: RecordPreset.COMMON_COLD,
+          userId: (res) ? res.response.user_id : null,
+        })),
+        switchMap(userData => this.userDataRepo.save(userData)),
       );
 
     loading$
@@ -83,19 +92,10 @@ export class OnboardingPage implements OnDestroy {
     }).then(toast => toast.present());
   }
 
-  private presentLoading(): Observable<HTMLIonLoadingElement> {
+  showRegisteringUserLoading(): Observable<HTMLIonLoadingElement> {
     return this.translate.get('description.registeringUser')
       .pipe(
-        switchMap(msg => {
-          return defer(() => this.loadingCtrl.create({
-            message: msg,
-            duration: 10000,
-          }));
-        }),
-        switchMap(loading => from(loading.present())
-          .pipe(
-            map(() => loading),
-          )),
+        switchMap(msg => this.loadingService.showLoading(msg, 10000)),
       );
   }
 

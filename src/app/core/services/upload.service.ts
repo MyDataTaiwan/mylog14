@@ -4,50 +4,53 @@ import * as JSZip from 'jszip';
 import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { CachedFile } from '../interfaces/cached-file';
-import { DataStoreService } from './data-store.service';
-import { RecordService } from './record.service';
+import { RecordRepositoryService } from './repository/record-repository.service';
+import { UserDataRepositoryService } from './repository/user-data-repository.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private generatedUrl = new BehaviorSubject<string>('');
+  private readonly generatedUrl = new BehaviorSubject<string>('');
   public generatedUrl$ = this.generatedUrl.asObservable();
 
   constructor(
-    private dataStore: DataStoreService,
-    private http: HttpClient,
-    private recordService: RecordService,
+    private readonly http: HttpClient,
+    private readonly recordRepo: RecordRepositoryService,
+    private readonly userDataRepo: UserDataRepositoryService,
   ) { }
 
   private createCachedFiles() {
-    return this.dataStore.recordMetas$
+    return of([]);
+    /*
+    return this.dataStore.metas$
       .pipe(
         take(1),
-        map(recordMetas => {
+        map(metas => {
           const now = Date.now();
           const earliestTimeForUpload = now - 1000 * 86400 * 14; // Only upload  data in 14 Days
-          return recordMetas.filter(recordMeta => recordMeta.timestamp > earliestTimeForUpload);
+          return metas.filter(meta => meta.timestamp > earliestTimeForUpload);
         }),
-        switchMap(recordMetas => {
+        switchMap(metas => {
           return forkJoin([
-            of(recordMetas.map(recordMeta => recordMeta.path)),
-            this.recordService.getRawRecords(recordMetas),
-            of(recordMetas),
+            of(metas.map(meta => meta.path)),
+            this.recordRepo.getJsonAll(metas),
+            of(metas),
           ]);
         }),
-        map(([filenames, rawRecords, recordMetas]) => {
+        map(([filenames, rawRecords, metas]) => {
           const cachedFiles: CachedFile[] = [];
           filenames.map((filename, idx) => cachedFiles.push({
             filename,
             type: 'json',
             content: rawRecords[idx],
-            hash: recordMetas[idx].hash,
-            transactionHash: recordMetas[idx].transactionHash,
+            hash: metas[idx].hash,
+            transactionHash: metas[idx].transactionHash,
           }));
           return cachedFiles;
         })
       );
+      */
   }
 
   private createVerificationJson(cachedFiles: CachedFile[]): CachedFile {
@@ -82,7 +85,7 @@ export class UploadService {
     const endpoint = '/api/v1/archives/';
     const formData = new FormData();
     formData.append('file', blob, 'mylog.zip');
-    const hostType = (this.dataStore.getUserData().uploadHost) ? this.dataStore.getUserData().uploadHost : 'PROD';
+    const hostType = 'PROD';
     const url = hostUrl[hostType] + endpoint;
     return this.http.post(url, formData)
       .pipe(

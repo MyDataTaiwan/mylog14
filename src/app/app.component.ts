@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
-import { Platform } from '@ionic/angular';
-import { DataStoreService } from './core/services/data-store.service';
-import { GeolocationService } from './core/services/geolocation.service';
-import { TranslateConfigService } from './core/services/translate-config.service';
-import { first, tap } from 'rxjs/operators';
 
+import { defer, Observable, of } from 'rxjs';
+import { filter, first, switchMap, take } from 'rxjs/operators';
+
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { LanguageService } from '@core/services/language.service';
+import { Platform } from '@ionic/angular';
+
+import { DataStoreService } from './core/services/store/data-store.service';
 
 const { SplashScreen, StatusBar } = Plugins;
 
@@ -18,33 +20,34 @@ const { SplashScreen, StatusBar } = Plugins;
 export class AppComponent {
 
   constructor(
-    private dataStore: DataStoreService,
-    private geolocation: GeolocationService,
-    private platform: Platform,
-    private router: Router,
-    private translateConfigService: TranslateConfigService
+    private readonly dataStore: DataStoreService,
+    private readonly platform: Platform,
+    private readonly router: Router,
+    private readonly language: LanguageService
   ) {
-    this.translateConfigService.initialize();
-    this.initializeApp();
-  }
-  async initializeApp() {
-    if (this.platform.is('hybrid')) {
-      try {
-        await StatusBar.setStyle({ style: StatusBarStyle.Light });
-      } catch {
-        console.log('Status Bar is not implemented in web');
-      }
-    }
-    this.geolocation.getPosition().subscribe(); // Update location cache
-    this.dataStore.initialize()
+    this.setStatusBarStyle().subscribe();
+    this.dataInitialized()
       .pipe(
-        first(),
-        tap(() => {
-          if (this.dataStore.getUserData().newUser) {
-            this.router.navigate(['/onboarding']);
-          }
-        }),
-      ).subscribe(() => { }, err => console.log(err));
-    SplashScreen.hide();
+        switchMap(() => this.language.init()),
+        switchMap(() => this.dataStore.userData$.pipe(take(1))),
+      )
+      .subscribe(userData => {
+        if (userData.newUser) {
+          this.router.navigate(['/onboarding']);
+        }
+        SplashScreen.hide();
+      });
+  }
+
+  private setStatusBarStyle(): Observable<void> {
+    const setStyle$ = defer(() => StatusBar.setStyle({ style: StatusBarStyle.Light })).pipe(first());
+    return (this.platform.is('hybrid')) ? setStyle$ : of(null);
+  }
+
+  private dataInitialized(): Observable<any> {
+    return this.dataStore.initialized$
+      .pipe(
+        filter(isInitialized => isInitialized === true),
+      );
   }
 }

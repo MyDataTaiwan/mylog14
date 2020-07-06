@@ -1,0 +1,32 @@
+<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true"
+  (dismissClicked)="onClickCancel()"></app-header>
+<ion-content>
+  <ion-list *ngIf="record$ | async as record">
+    <ion-item>
+      <ion-icon [name]="proofDisplay.icon" [color]="proofDisplay.color" slot="start"></ion-icon>
+      <ion-label [color]="proofDisplay.color">{{ 'title.metadataCollection' | translate }}</ion-label>
+      <ion-text *ngIf="proofDisplay.status" [color]="proofDisplay.color">{{ 'title.passed' | translate }}</ion-text>
+      <ion-spinner *ngIf="!proofDisplay.status"></ion-spinner>
+    </ion-item>
+    <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">
+      <ion-icon [name]="field.icon" slot="start"></ion-icon>
+      <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
+      <ion-checkbox *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-checkbox>
+      <ion-text *ngIf="field.type !== recordFieldType.boolean">
+        {{ (field.value) ? field.value : 'title.noData' | translate }}
+        <ng-container *ngIf="field.value && field.valueUnit">
+          {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
+      </ion-text>
+    </ion-item>
+  </ion-list>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="3" class="ion-align-self-center">
+        <ion-button (click)="onClickClear()" fill="clear">{{ 'title.clear' | translate }}</ion-button>
+      </ion-col>
+      <ion-col size="3" class="ion-align-self-center">
+        <ion-button (click)="onClickSubmit()">{{ 'title.submit' | translate }}</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

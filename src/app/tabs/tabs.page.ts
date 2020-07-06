@@ -1,12 +1,14 @@
 import { Component, OnDestroy } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { defer, interval, Observable, Subject } from 'rxjs';
-import { debounce, switchMap, take, takeUntil } from 'rxjs/operators';
-import { UserData } from '../core/interfaces/user-data';
-import { AddRecordPage } from '../core/pages/add-record/add-record.page';
-import { GuidePage } from '../core/pages/guide/guide.page';
-import { SharePage } from '../core/pages/share/share.page';
-import { SnapshotService } from '../core/services/snapshot.service';
+
+import { defer, Observable, Subject } from 'rxjs';
+import { first } from 'rxjs/operators';
+
+import { PopoverController } from '@ionic/angular';
+import {
+  SharePopoverPage,
+} from '@shared/components/share-popover/share-popover.page';
+import { ModalService } from '@shared/services/modal.service';
+import { PopoverService } from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-tabs',
@@ -16,12 +18,10 @@ import { SnapshotService } from '../core/services/snapshot.service';
 export class TabsPage implements OnDestroy {
   destroy$ = new Subject();
   selectedTab: string;
-  showDebugButton = false;
-  GuideLoader$: Observable<UserData>;
   constructor(
-    private modalController: ModalController,
-    private popoverCtrl: PopoverController,
-    private snapshotService: SnapshotService
+    private readonly popoverCtrl: PopoverController,
+    private readonly popoverService: PopoverService,
+    private readonly modalService: ModalService,
   ) { }
 
   ngOnDestroy() {
@@ -33,53 +33,37 @@ export class TabsPage implements OnDestroy {
     this.selectedTab = event.tab;
   }
 
-  async presentGuideModal(userData: UserData) {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: GuidePage,
-      componentProps: { userData },
-      cssClass: 'Guide-modal',
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
-  }
-
-  async presentAddRecordModal() {
-    const modal = await this.modalController.create({
-      backdropDismiss: false,
-      component: AddRecordPage,
-    });
-    await modal.present();
-    const { data } = await modal.onWillDismiss();
-    return Promise.resolve(data);
-  }
-
   onClickCameraButton() {
-    this.snapshotService.snapCapture()
+    this.modalService.showAddPhotoModal()
       .pipe(
-        debounce((() => interval(1000))),
-        take(1),
-      )
-      .subscribe();
+        first(),
+      ).subscribe();
   }
 
-  async onClickRecordButton() {
-    await this.presentAddRecordModal();
+  onClickRecordButton() {
+    this.modalService.showAddRecordModal()
+      .pipe(
+        first(),
+      ).subscribe();
   }
 
   onClickShareButton() {
-    this.createSharePopover()
+    this.showShareDisabledPopover()
       .pipe(
-        switchMap(popover => popover.present()),
-        takeUntil(this.destroy$),
-      )
-      .subscribe(() => { }, e => console.log(e));
+        first(),
+      ).subscribe();
+  }
+
+  private showShareDisabledPopover() {
+    return this.popoverService.showPopover({
+      i18nTitle: 'title.shareDisabled',
+      i18nMessage: 'description.shareDisabled',
+    }, 2000, true);
   }
 
   private createSharePopover(): Observable<HTMLIonPopoverElement> {
     return defer(() => this.popoverCtrl.create({
-      component: SharePage,
+      component: SharePopoverPage,
     }));
   }
 

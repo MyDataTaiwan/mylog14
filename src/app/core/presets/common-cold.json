@@ -1,0 +1,71 @@
+{
+    "templateName": "commonCold",
+    "fields": [
+        {
+            "name": "bodyTemperature",
+            "icon": "thermometer-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": [
+                "summary",
+                "showHighest"
+            ],
+            "defaultValue": null,
+            "valueRange": {
+                "max": 41,
+                "min": 34
+            },
+            "valueUnit": "°C"
+        },
+        {
+            "name": "coughing",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": [
+                "presencePreview"
+            ],
+            "defaultValue": false
+        },
+        {
+            "name": "runnyNose",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": [
+                "presencePreview"
+            ],
+            "defaultValue": false
+        },
+        {
+            "name": "nasalCongestion",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": [
+                "presencePreview"
+            ],
+            "defaultValue": false
+        },
+        {
+            "name": "sneezing",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": [
+                "presencePreview"
+            ],
+            "defaultValue": false
+        },
+        {
+            "name": "note",
+            "icon": "pencil-outline",
+            "type": "string",
+            "dataGroup": "note",
+            "dataClass": [
+                "note"
+            ],
+            "defaultValue": ""
+        }
+    ]
+}

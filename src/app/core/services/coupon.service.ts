@@ -1,33 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject, forkJoin, of, BehaviorSubject } from 'rxjs';
-import { switchMap, tap, map, filter, first, take, defaultIfEmpty } from 'rxjs/operators';
+
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
+import {
+  filter, first, map, switchMap, take,
+  tap,
+} from 'rxjs/operators';
+
+import {
+  PrivateCouponService, UserDetailResult, UserResult,
+} from '@numbersprotocol/private-coupon';
+
+import {
+  PopoverButtonSet, PopoverIcon, PopoverService,
+} from '../../shared/services/popover.service';
 import { ShopInfo } from '../interfaces/shop-info';
-import { PopoverService, PopoverIcon, PopoverButtonSet } from './popover.service';
-import { PrivateCouponService, UserResult, UserDetailResult } from '@numbersprotocol/private-coupon';
-import { DataStoreService } from './data-store.service';
+import {
+  UserDataRepositoryService,
+} from './repository/user-data-repository.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CouponService {
 
-  public daysRecorded$ = this.dataStore.dailyRecords$
-    .pipe(
-      map(dailyRecords => {
-        if (!dailyRecords) {
-          return 0;
-        }
-        return dailyRecords.list.length;
-      }),
-    );
+  public daysRecorded$ = of(0);
   public poolBalance$ = new BehaviorSubject<number>(0);
   public userBalance$ = new BehaviorSubject<number>(0);
   redeemConfirmation = false;
 
   constructor(
-    private readonly dataStore: DataStoreService,
     private readonly popoverService: PopoverService,
     private readonly privateCouponService: PrivateCouponService,
+    private readonly userDataRepo: UserDataRepositoryService,
   ) {
     this.initRewardIfNoBalance()
       .pipe(
@@ -37,9 +41,10 @@ export class CouponService {
 
   // If daysRecords >= 14 && current_balance is not initialized, give 20 points
   initRewardIfNoBalance() {
-    const email = this.dataStore.getUserData().email;
-    const giveRewardIfNoBalance$ = this.privateCouponService.login(email)
+    const giveRewardIfNoBalance$ = this.userDataRepo.get()
       .pipe(
+        map(userData => userData.email),
+        switchMap(email => this.privateCouponService.login(email)),
         switchMap((userResult: UserResult) => this.privateCouponService.getUserDetail(
           userResult.response.user_id,
           userResult.response.token,
@@ -72,13 +77,11 @@ export class CouponService {
     const pool$ = this.getPoolCurrentBalance()
       .pipe(
         first(),
-        tap(b => console.log('ppp', b)),
         tap(balance => this.poolBalance$.next(balance)),
       );
     const user$ = this.getUserCurrentBalance()
       .pipe(
         first(),
-        tap(b => console.log('uuu', b)),
         tap(balance => this.userBalance$.next(balance)),
       );
     return forkJoin([pool$, user$]);
@@ -92,14 +95,17 @@ export class CouponService {
   }
 
   getUserCurrentBalance(): Observable<number> {
-    const email = this.dataStore.getUserData().email;
-    return this.privateCouponService.login(email)
+    return this.userDataRepo.get()
       .pipe(
+        map(userData => userData.email),
+        switchMap(email => this.privateCouponService.login(email)),
         switchMap((userResult: UserResult) => this.privateCouponService.getUserDetail(
           userResult.response.user_id,
           userResult.response.token,
         )),
+        tap(c => console.log('user cuuu', c)),
         map((res: UserDetailResult) => res.response.current_balance),
+        tap(c => console.log('user mon', c)),
       );
   }
 
@@ -108,7 +114,7 @@ export class CouponService {
       i18nTitle: `${shopInfo.shopName}\n${shopInfo.shopBranch}`,
       i18nMessage: '是否兌換 20 元',
       buttonSet: PopoverButtonSet.CONFIRM,
-      onConfirm: this.confirmRedeem.bind(this),
+      // onConfirm: this.confirmRedeem.bind(this),
     });
   }
 
@@ -126,10 +132,11 @@ export class CouponService {
   }
 
   redeem(shopInfo: ShopInfo) {
-    const email = this.dataStore.getUserData().email;
     this.redeemConfirmation = false;
-    const redeem$ = this.privateCouponService.login(email)
+    const redeem$ = this.userDataRepo.get()
       .pipe(
+        map(userData => userData.email),
+        switchMap(email => this.privateCouponService.login(email)),
         switchMap((userResult: UserResult) => this.privateCouponService.getUserDetail(
           userResult.response.user_id,
           userResult.response.token,

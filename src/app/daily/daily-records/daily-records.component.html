@@ -1,0 +1,35 @@
+<ion-list style="width:100%;height:50%;overflow:scroll;padding-bottom: 90px;">
+  <div *ngFor="let record of records$ | async">
+    <ion-item detail="false">
+      <ion-label>{{ record.timestamp | date: 'HH:mm aa' }}</ion-label>
+      <ion-label class="ion-text-start">
+        {{ getFieldsCount(record) }} {{ 'title.fieldsCount' | translate }}
+      </ion-label>
+      <div>
+        <ion-icon name="caret-forward-outline" *ngIf="!isSelected(record)" button (click)="selectRecord(record)">
+        </ion-icon>
+        <ion-icon name="caret-down-outline" *ngIf="isSelected(record)" button (click)="selectRecord()">
+        </ion-icon>
+      </div>
+    </ion-item>
+    <ion-list *ngIf="isSelected(record)">
+      <ng-container *ngFor="let field of record.fields">
+      <ion-item *ngIf="field.value !== null && field.value !== ''">
+        <ion-label style="color: #F9AD35;">
+          {{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
+        <ion-label class="ion-text-center" style="color: #F9AD35;">
+          <ng-container *ngIf="field.type !== 'boolean'">
+            {{ field.value }}
+          </ng-container>
+          <ng-container *ngIf="field.type === 'boolean'">
+            {{ ((field.value) ? 'title.yes' : 'title.no') | translate }}
+          </ng-container>
+          <ng-container *ngIf="field.valueUnit">
+            {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}
+          </ng-container>
+        </ion-label>
+      </ion-item>
+      </ng-container>
+    </ion-list>
+  </div>
+</ion-list>

@@ -1,12 +1,13 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, TestBed } from '@angular/core/testing';
+
 import { Platform } from '@ionic/angular';
+
 import { AppComponent } from './app.component';
-import { TranslateConfigService } from './core/services/translate-config.service';
 
 describe('AppComponent', () => {
 
-  let platformIsSpy, platformSpy, translateConfigSpy;
+  let platformIsSpy, platformSpy;
 
   beforeEach(async(() => {
     platformIsSpy = Promise.resolve();
@@ -18,7 +19,6 @@ describe('AppComponent', () => {
       imports: [],
       providers: [
         { provide: Platform, useValue: platformSpy },
-        { provide: TranslateConfigService, useValue: translateConfigSpy },
       ],
     }).compileComponents();
   }));

@@ -43,10 +43,11 @@
     "johnDoe": "小貓貓",
     "settings": "設定",
     "notSet": "尚未設定",
+    "noData": "暫無資料",
     "name": "姓名",
     "email": "電子信箱",
     "dateOfBirth": "出生日期",
-    "editUserName": "修改姓名",
+    "editName": "修改姓名",
     "firstName": "名",
     "lastName": "姓",
     "editEmail": "修改電子信箱",
@@ -68,7 +69,22 @@
     "canRedeem": "尚有名額",
     "cannotRedeem": "暫無名額",
     "redeeming": "正在兌換...",
-    "daysRecorded": "已紀錄天數"
+    "daysRecorded": "已紀錄天數",
+    "recordsCount": "筆紀錄",
+    "fieldsCount": "項資料",
+    "yes": "是",
+    "no": "否",
+    "metadataCollection": "資料輔助資訊收集",
+    "passed": "已完成",
+    "addPhotoTitle": "新增照片紀錄",
+    "photoCaptionPlaceholder": "照片附註（選填）",
+    "retakePhoto": "重拍",
+    "photoViewer": "照片檢視",
+    "time": "時間",
+    "location": "地點",
+    "deletePhoto": "刪除照片",
+    "shareDisabled": "敬請期待",
+    "redeemReward": "兌換獎勵"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -86,6 +102,50 @@
     "copyLinkToShare": "複製下列網址以分享資料",
     "shareToWhom": "紀錄要分享給誰？",
     "uploadingDataError": "上傳失敗，請稍後再試。",
-    "registeringUser": "使用者註冊中，請稍候..."
+    "registeringUser": "使用者註冊中，請稍候...",
+    "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
+    "deletingPhoto": "正在刪除照片...",
+    "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。",
+    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！"
+  },
+  "preset": {
+    "commonCold": {
+      "presetName": "普通感冒",
+      "dataGroup": {
+        "symptoms": "症狀",
+        "note": "附註"
+      },
+      "bodyTemperature": "體溫",
+      "coughing": "咳嗽",
+      "runnyNose": "流鼻水",
+      "nasalCongestion": "鼻塞",
+      "sneezing": "打噴嚏",
+      "note": "附註",
+      "unit": {
+        "°C": "°C"
+      }
+    },
+    "heartFailure": {
+      "presetName": "心衰竭",
+      "dataGroup": {
+        "vitalSigns": "生理徵象",
+        "note": "附註"
+      },
+      "SBP": "收縮壓",
+      "DBP": "舒張壓",
+      "heartbeat": "心跳",
+      "bloodSugar": "血糖",
+      "weight": "體重",
+      "urineVolume": "尿量",
+      "note": "附註",
+      "unit": {
+        "mmHg": "mmHg",
+        "bpm": "bpm",
+        "mg/dL": "mg/dL",
+        "kg": "公斤",
+        "cm": "公分",
+        "mL": "毫升"
+      }
+    }
   }
 }
