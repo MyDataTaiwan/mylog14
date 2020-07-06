@@ -26,6 +26,7 @@ export class MapComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+    this.proofs = this.proofs.filter(proof => proof);
     if (this.proofs.length > 0 && this.proofs[0]) {
       this.initMap();
     }

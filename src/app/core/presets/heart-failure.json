@@ -78,6 +78,7 @@
             "type": "number",
             "dataGroup": "vitalSigns",
             "dataClass": [
+                "summary",
                 "accumulation"
             ],
             "defaultValue": 0,

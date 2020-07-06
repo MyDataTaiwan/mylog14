@@ -40,7 +40,12 @@ export class Record {
     }
 
     setFieldValue(name: string, value: RecordFieldValue): void {
-        this.fields.find(el => el.name === name).value = value;
+        const field = this.fields.find(el => el.name === name);
+        if (field.type === 'number' || field.type === 'integer') {
+            field.value = +value;
+        } else {
+            field.value = value;
+        }
     }
 
     setProof(proof: Proof) {

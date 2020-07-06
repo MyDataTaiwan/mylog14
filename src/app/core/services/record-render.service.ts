@@ -69,6 +69,12 @@ export class RecordRenderService {
             if (summary[field.name].value > field.value) {
               summary[field.name] = field;
             }
+          } else if (field.dataClass.includes('accumulation')) {
+            if (!summary[field.name]) {
+              summary[field.name] = field;
+            } else {
+              summary[field.name].value += field.value;
+            }
           }
         });
     });
