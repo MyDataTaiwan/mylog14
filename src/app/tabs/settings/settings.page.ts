@@ -30,7 +30,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   private readonly destroy$ = new Subject();
 
-  @ViewChild('dateOfBirthPicker', { static: false }) dateOfBirthPicker: IonDatetime;
+  @ViewChild('dateOfBirthPicker') dateOfBirthPicker: IonDatetime;
 
   readonly appVersion = version;
   readonly languages = this.languageService.getAvailableLanguages();
