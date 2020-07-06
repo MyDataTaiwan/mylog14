@@ -26,15 +26,21 @@ export class MapComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
-    if (this.proofs.filter(proof => proof.location)) {
-      this.options = this.createMapOptions();
-      this.layers = this.createMapLayersWithLocationMarkers();
+    if (this.proofs.length > 0 && this.proofs[0]) {
+      this.initMap();
     }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  initMap() {
+    if (this.proofs.filter(proof => proof != null).filter(proof => proof.location)) {
+      this.options = this.createMapOptions();
+      this.layers = this.createMapLayersWithLocationMarkers();
+    }
   }
 
   onMapReady(map: Map) {

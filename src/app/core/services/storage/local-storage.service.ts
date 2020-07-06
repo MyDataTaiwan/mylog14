@@ -23,7 +23,7 @@ export class LocalStorageService {
   getData<T>(key: string, defaultData: T): Observable<T> {
     return defer(() => Storage.get({ key })).pipe(
       map(raw => raw.value),
-      map(value => (value) ? JSON.parse(value) : defaultData),
+      map(value => (value && value !== '[null]') ? JSON.parse(value) : defaultData),
     );
   }
 

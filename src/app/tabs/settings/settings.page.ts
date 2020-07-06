@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { forkJoin, Observable, of, Subject, timer } from 'rxjs';
 import {
-  buffer, debounceTime, filter, map, switchMap,
-  take, takeUntil, tap,
+  buffer, debounceTime, filter, first, map,
+  switchMap, take, takeUntil, tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
 import {
@@ -35,6 +35,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly appVersion = version;
   readonly languages = this.languageService.getAvailableLanguages();
   readonly recordPresets = this.presetService.presets;
+  showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;
 
@@ -90,11 +91,17 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onChangeDateOfBirthPicker(): void {
-    this.updateFromPage.next({ dateOfBirth: this.dateOfBirthPicker.value});
+    this.updateFromPage.next({ dateOfBirth: this.dateOfBirthPicker.value });
   }
 
   onChangeLanguage(event: CustomEvent): void {
     this.updateFromPage.next({ language: event.detail.value });
+    this.showSelects = false;
+    timer(50).
+      pipe(
+        first(),
+        tap(() => this.showSelects = true)
+      ).subscribe();
   }
 
   onClickSharedLogboardLinkItem(): void {

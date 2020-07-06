@@ -28,7 +28,10 @@ export class DataStoreService {
   initialized$: Observable<boolean> = this.initialized;
 
   private readonly records = new BehaviorSubject<Record[]>([]);
-  records$: Observable<Record[]> = this.records;
+  records$: Observable<Record[]> = this.records
+    .pipe(
+      map(records => records.filter(record => (record.templateName))),
+    );
 
   private readonly userData = new BehaviorSubject<UserData>({
     firstName: '', lastName: '', recordPreset: RecordPreset.COMMON_COLD, newUser: true,
