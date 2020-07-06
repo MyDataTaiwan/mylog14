@@ -42,7 +42,7 @@ export class AnimationComponent implements OnInit, OnDestroy {
   }
 
   onConfigReady() {
-    this.animationStopOnDay(14);
+    this.animationStopOnDay(0);
     /*
     this.startCountdown(14)
       .pipe(

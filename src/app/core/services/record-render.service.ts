@@ -53,6 +53,9 @@ export class RecordRenderService {
   private getDataSummaries(records: Record[]) {
     const summary = {};
     records.forEach(record => {
+      if (!record.fields) {
+        return;
+      }
       record.fields.filter(field => field.dataClass.includes('summary'))
         .filter(field => (field.value))
         .forEach(field => {
