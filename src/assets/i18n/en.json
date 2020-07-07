@@ -119,7 +119,8 @@
     "logMoreDaysForReward": "Log {{days}} more days to earn a NTD $20 reward!",
     "notInputYet": "Empty input value",
     "mustBeNoSmallerThan": "Value must be no smaller than {{min}}",
-    "mustBeNoLargerThan": "Value must be no larger than {{max}}"
+    "mustBeNoLargerThan": "Value must be no larger than {{max}}",
+    "couponDisabled": "Reward redeeming coming soon"
   },
   "language": {
     "en": "English",

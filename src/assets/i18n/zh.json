@@ -114,10 +114,11 @@
     "deletePhotoPopover": "此照片和對應的單筆紀錄將會被刪除。此動作無法復原。你確定你要刪除這張照片嗎？",
     "deletingPhoto": "正在刪除照片...",
     "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。",
-    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！",
+    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以獲得 $20 獎勵囉！",
     "notInputYet": "沒有輸入值",
     "mustBeNoSmallerThan": "輸入值不可小於 {{min}}",
-    "mustBeNoLargerThan": "輸入值不可大於 {{max}}"
+    "mustBeNoLargerThan": "輸入值不可大於 {{max}}",
+    "couponDisabled": "敬請期待兌換獎勵功能"
   },
   "preset": {
     "commonCold": {

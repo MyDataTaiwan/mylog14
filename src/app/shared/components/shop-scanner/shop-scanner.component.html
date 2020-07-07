@@ -31,8 +31,11 @@
       </ng-container>
     </ion-item>
     <ng-container *ngIf="daysRecorded$ | async as daysRecorded">
-      <ion-item *ngIf="daysRecorded < 14" class="ion-text-center">
+      <ion-item *ngIf="false" class="ion-text-center">
         <ion-label>{{ 'description.logMoreDaysForReward' | translate: { days: 14 - daysRecorded } }}</ion-label>
+      </ion-item>
+      <ion-item *ngIf="true" class="ion-text-center">
+        <ion-label>{{ 'description.couponDisabled' | translate }}</ion-label>
       </ion-item>
     </ng-container>
   </ion-list>
