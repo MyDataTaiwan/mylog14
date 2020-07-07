@@ -56,7 +56,8 @@ export class RecordRepositoryService {
     return this.saveRecordAndCreateMeta(record)
       .pipe(
         switchMap(meta => forkJoin([this.getMetas(), this.attachTransactionHash(meta)])),
-        switchMap(([metas, meta]) => this.saveMetas([...metas, meta])),
+        map(([metas, meta]) => [...metas, meta].sort((a, b) => a.timestamp - b.timestamp)),
+        switchMap(metas => this.saveMetas(metas)),
         switchMap(() => this.getAll()),
       );
   }

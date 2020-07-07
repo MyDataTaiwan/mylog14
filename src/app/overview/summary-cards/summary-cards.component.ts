@@ -1,4 +1,3 @@
-import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
 import { map } from 'rxjs/operators';
@@ -21,12 +20,9 @@ export class SummaryCardsComponent implements OnInit {
         });
         arr = arr.sort((a, b) => +a.value.dayCount - +b.value.dayCount);
         return arr;
-      })
+      }),
+      map(arr => arr.reverse()),
     );
-
-  keyDescOrder = (a: KeyValue<string, string>, b: KeyValue<string, string>): number => {
-    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
-  }
 
   constructor(
     private readonly dataStore: DataStoreService,
