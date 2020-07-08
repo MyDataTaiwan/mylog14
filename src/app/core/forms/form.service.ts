@@ -21,26 +21,42 @@ export class FormService {
   ) { }
 
   createFormFieldsByRecordField(field: RecordField, templateName: string): FormlyFieldConfig[] {
-    const name = this.translate.instant('preset.' + templateName + '.' + field.name);
     const unit = (field.valueUnit) ? this.translate.instant('preset.' + templateName + '.unit.' + field.valueUnit) : '';
-    const numberOnly = (field.type === RecordFieldType.number || field.type === RecordFieldType.integer);
-    const min = (field.valueRange) ? field.valueRange.min : null;
-    const max = (field.valueRange) ? field.valueRange.max : null;
     const formFields: FormlyFieldConfig[] = [
       {
         key: field.name,
-        type: 'customInput',
+        type: 'input',
+        focus: true,
         templateOptions: {
-          label: name,
-          type: (numberOnly) ? 'number' : 'text',
-          placeholder: this.translate.instant('title.noData'),
-          required: true,
-          min,
-          max,
-          unit,
-        }
+          placeholder: `${unit}`,
+          type: this.getFormlyFieldType(field.type),
+        },
+        modelOptions: {
+          updateOn: 'blur',
+        },
+        validators: {
+          required: {
+            expression: (c) => c.value != null,
+            message: (error, currentField: FormlyFieldConfig) =>
+              this.translate.instant('description.notInputYet'),
+          },
+        },
       }
     ];
+    if (field.valueRange) {
+      formFields[0].validators.min = {
+        expression: (c) => c.value >= field.valueRange.min,
+        message: (error, currentField: FormlyFieldConfig) =>
+          this.translate.instant('description.mustBeNoSmallerThan', { min: field.valueRange.min }
+          ),
+      };
+      formFields[0].validators.max = {
+        expression: (c) => c.value <= field.valueRange.max,
+        message: (error, currentField: FormlyFieldConfig) =>
+          this.translate.instant('description.mustBeNoLargerThan', { max: field.valueRange.max }
+          ),
+      };
+    }
     return formFields;
   }
 
@@ -102,6 +118,14 @@ export class FormService {
       },
     ];
     return formFields;
+  }
+
+  private getFormlyFieldType(type: RecordFieldType) {
+    if (type === RecordFieldType.integer || type === RecordFieldType.number) {
+      return 'number';
+    } else if (type === RecordFieldType.string) {
+      return 'text';
+    }
   }
 }
 

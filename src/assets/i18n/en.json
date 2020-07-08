@@ -57,7 +57,7 @@
     "about": "About",
     "version": "Version",
     "language": "Language",
-    "selectRecordMode": "Select Record Mode",
+    "selectRecordMode": "Mode",
     "simple": "Simple",
     "advanced": "Advanced",
     "agreeTheTermsAndConditions": "Agree the Terms and Conditions",
@@ -108,7 +108,10 @@
     "deletePhotoPopover": "This action cannot be undone. Are you sure you want to delete this photo?",
     "deletingPhoto": "Deleting the photo...",
     "shareDisabled": "Sharing via LogBoard link is not avaiable in this version of App. Please update the App when a new version is available for the LogBoard link-sharing.",
-    "logMoreDaysForReward": "Log {{days}} more days to earn a NTD $20 reward!"
+    "logMoreDaysForReward": "Log {{days}} more days to earn a NTD $20 reward!",
+    "notInputYet": "Empty input value",
+    "mustBeNoSmallerThan": "Value must be no smaller than {{min}}",
+    "mustBeNoLargerThan": "Value must be no larger than {{max}}"
   },
   "language": {
     "en": "English",
