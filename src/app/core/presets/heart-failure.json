@@ -19,9 +19,7 @@
             "icon": "pulse-outline",
             "type": "number",
             "dataGroup": "vitalSigns",
-            "dataClass": [
-                "summary"
-            ],
+            "dataClass": [],
             "defaultValue": null,
             "valueUnit": "mmHg",
             "valueRange": {
@@ -34,9 +32,7 @@
             "icon": "heart-outline",
             "type": "integer",
             "dataGroup": "vitalSigns",
-            "dataClass": [
-                "summary"
-            ],
+            "dataClass": [],
             "defaultValue": null,
             "valueUnit": "bpm",
             "valueRange": {
@@ -49,9 +45,7 @@
             "icon": "medkit-outline",
             "type": "number",
             "dataGroup": "vitalSigns",
-            "dataClass": [
-                "summary"
-            ],
+            "dataClass": [],
             "defaultValue": null,
             "valueUnit": "mg/dL",
             "valueRange": {
