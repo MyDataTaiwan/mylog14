@@ -41,6 +41,7 @@ export class AppComponent {
         }
         SplashScreen.hide();
       });
+    this.dataStore.initializeStore().subscribe();
   }
 
   private setStatusBarStyle(): Observable<void> {

@@ -58,7 +58,6 @@ export class DataStoreService {
     private readonly recordRepo: RecordRepositoryService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
-    this.initializeStore().subscribe();
   }
 
   deletePhoto(photo: Photo): Observable<Photo[]> {
@@ -106,7 +105,7 @@ export class DataStoreService {
       );
   }
 
-  private initializeStore(): Observable<[UserData, Record[], Photo[]]> {
+  initializeStore(): Observable<[UserData, Record[], Photo[]]> {
     const initUserData$ = this.userDataRepo.get()
       .pipe(
         tap(userData => this.userData.next(userData)),
