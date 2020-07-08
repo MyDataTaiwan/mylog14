@@ -55,7 +55,7 @@
     "about": "關於我們",
     "version": "版本",
     "language": "語言",
-    "selectRecordMode": "選擇紀錄模式",
+    "selectRecordMode": "紀錄模式",
     "simple": "簡易",
     "advanced": "進階",
     "agreeTheTermsAndConditions": "同意 MyLog 使用者條款摘要",
@@ -106,7 +106,10 @@
     "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
     "deletingPhoto": "正在刪除照片...",
     "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。",
-    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！"
+    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！",
+    "notInputYet": "沒有輸入值",
+    "mustBeNoSmallerThan": "輸入值不可小於 {{min}}",
+    "mustBeNoLargerThan": "輸入值不可大於 {{max}}"
   },
   "preset": {
     "commonCold": {
