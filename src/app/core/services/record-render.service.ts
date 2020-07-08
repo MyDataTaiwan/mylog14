@@ -24,6 +24,7 @@ export class RecordRenderService {
   }
 
   createDailySummaries(recordsByDate: RecordsByDate): DailySummary[] {
+    console.log('recordsByDate', recordsByDate);
     const dailySummaries: DailySummary[] = [];
     let dayOneDate: string;
     Object.keys(recordsByDate).forEach(date => {
@@ -57,24 +58,21 @@ export class RecordRenderService {
         return;
       }
       record.fields.filter(field => field.dataClass.includes('summary'))
-        .filter(field => (field.value))
+        .filter(field => field.value != null)
         .forEach(field => {
           if (!summary[field.name]) {
-            summary[field.name] = field;
+            summary[field.name] = {};
+            Object.assign(summary[field.name], field);
           } else if (field.dataClass.includes('showHighest')) {
             if (summary[field.name].value < field.value) {
-              summary[field.name] = field;
+              Object.assign(summary[field.name], field);
             }
           } else if (field.dataClass.includes('showLowest')) {
             if (summary[field.name].value > field.value) {
-              summary[field.name] = field;
+              Object.assign(summary[field.name], field);
             }
           } else if (field.dataClass.includes('accumulation')) {
-            if (!summary[field.name]) {
-              summary[field.name] = field;
-            } else {
-              summary[field.name].value += field.value;
-            }
+            summary[field.name].value += field.value;
           }
         });
     });

@@ -86,7 +86,10 @@
     "location": "Location",
     "deletePhoto": "Delete Photo",
     "shareDisabled": "Coming Soon",
-    "redeemReward": "Redeem Reward"
+    "redeemReward": "Redeem Reward",
+    "recordNotTaken": "N/A",
+    "emptyRecord": "Blank",
+    "noFieldsSelected": "No fields filled"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

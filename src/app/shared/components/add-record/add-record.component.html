@@ -11,7 +11,7 @@
     <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">
       <ion-icon [name]="field.icon" slot="start"></ion-icon>
       <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
-      <ion-checkbox *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-checkbox>
+      <ion-toggle *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-toggle>
       <ion-text *ngIf="field.type !== recordFieldType.boolean">
         {{ (field.value) ? field.value : 'title.noData' | translate }}
         <ng-container *ngIf="field.value && field.valueUnit">

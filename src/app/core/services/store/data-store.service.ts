@@ -11,6 +11,7 @@ import { RecordsByDate } from '@core/interfaces/records-by-date';
 import { Record } from '../../classes/record';
 import { UserData } from '../../interfaces/user-data';
 import { RecordPreset } from '../preset.service';
+import { RecordRenderService } from '../record-render.service';
 import { PhotoRepositoryService } from '../repository/photo-repository.service';
 import {
   RecordRepositoryService,
@@ -44,6 +45,11 @@ export class DataStoreService {
       map(records => this.getRecordsByDate(records)),
     );
 
+  dailySummaries$ = this.recordsByDate$
+    .pipe(
+      map(recordsByDate => this.recordRenderService.createDailySummaries(recordsByDate)),
+    );
+
   private readonly photos = new BehaviorSubject<Photo[]>([]);
   photos$: Observable<Photo[]> = this.photos;
 
@@ -56,6 +62,7 @@ export class DataStoreService {
   constructor(
     private readonly photoRepo: PhotoRepositoryService,
     private readonly recordRepo: RecordRepositoryService,
+    private readonly recordRenderService: RecordRenderService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
   }

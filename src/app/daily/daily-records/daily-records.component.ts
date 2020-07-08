@@ -30,6 +30,14 @@ export class DailyRecordsComponent implements OnInit {
     return record.fields.filter(field => (field.value !== null && field.value !== '')).length;
   }
 
+  getFirstSummaryField(record: Record) {
+    return record.fields.find(field => field.dataClass.includes('summary'));
+  }
+
+  getAvailableFields(record: Record) {
+    return record.fields.filter(field => field.value != null && field.value !== '' && field.value !== false);
+  }
+
   isSelected(record: Record): boolean {
     return (record.timestamp === this.selected);
   }
