@@ -21,7 +21,6 @@ export class FormService {
   ) { }
 
   createFormFieldsByRecordField(field: RecordField, templateName: string): FormlyFieldConfig[] {
-    const name = this.translate.instant('preset.' + templateName + '.' + field.name);
     const unit = (field.valueUnit) ? this.translate.instant('preset.' + templateName + '.unit.' + field.valueUnit) : '';
     const formFields: FormlyFieldConfig[] = [
       {
@@ -32,12 +31,14 @@ export class FormService {
           placeholder: `${unit}`,
           type: this.getFormlyFieldType(field.type),
         },
+        modelOptions: {
+          updateOn: 'blur',
+        },
         validators: {
           required: {
             expression: (c) => c.value != null,
             message: (error, currentField: FormlyFieldConfig) =>
-              this.translate.instant('description.mustBeNoSmallerThan', { min: field.valueRange.min }
-              ),
+              this.translate.instant('description.notInputYet'),
           },
         },
       }

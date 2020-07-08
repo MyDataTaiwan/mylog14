@@ -109,7 +109,7 @@
     "deletingPhoto": "Deleting the photo...",
     "shareDisabled": "Sharing via LogBoard link is not avaiable in this version of App. Please update the App when a new version is available for the LogBoard link-sharing.",
     "logMoreDaysForReward": "Log {{days}} more days to earn a NTD $20 reward!",
-    "notInputYet": "Value not available",
+    "notInputYet": "Empty input value",
     "mustBeNoSmallerThan": "Value must be no smaller than {{min}}",
     "mustBeNoLargerThan": "Value must be no larger than {{max}}"
   },
