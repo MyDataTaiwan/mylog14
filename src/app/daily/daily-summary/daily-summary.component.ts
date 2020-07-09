@@ -42,4 +42,10 @@ export class DailySummaryComponent implements OnInit {
     }
   }
 
+  getSummaryTranslation(summary) {
+    console.log(summary);
+    return summary;
+
+  }
+
 }

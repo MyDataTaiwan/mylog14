@@ -87,7 +87,10 @@
     "redeemReward": "兌換獎勵",
     "recordNotTaken": "未紀錄",
     "emptyRecord": "空白紀錄",
-    "noFieldsSelected": "無項目"
+    "noFieldsSelected": "無項目",
+    "accumulated": "累積",
+    "highest": "最高",
+    "lowest": "最低"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

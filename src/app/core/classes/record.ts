@@ -19,8 +19,9 @@ export class Record {
     addField(
         name: string,
         type: RecordFieldType,
+        isKeyField: boolean,
         dataGroup: string,
-        dataClass: string[],
+        dataClass: string,
         defaultValue: RecordFieldValue,
         icon?: string,
         valueUnit?: string,
@@ -30,6 +31,7 @@ export class Record {
             name,
             icon,
             type,
+            isKeyField,
             dataGroup,
             dataClass,
             defaultValue,

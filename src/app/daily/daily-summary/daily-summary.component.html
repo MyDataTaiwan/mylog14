@@ -11,12 +11,13 @@
         <ion-row class="ion-justify-content-center">
           <ion-label color="primary"> DAY {{ dailySummary.dayCount }}</ion-label>
         </ion-row>
-        <ion-row *ngFor="let summary of dailySummary.dataSummaries | keyvalue" class="ion-justify-content-center">
+        <ion-row *ngIf="dailySummary.keyData" class="ion-justify-content-center">
           <div>
             <ion-label class="ion-text-center" style="font-size: 12px;">
-              {{ 'preset.' + dailySummary.templateName + '.' + summary.key | translate }}: 
-              {{ summary.value.value }}
-              {{ 'preset.' + dailySummary.templateName + '.unit.' + summary.value.valueUnit | translate }}
+              {{ 'title.' + dailySummary.keyData.dataClass | translate }}
+              {{ 'preset.' + dailySummary.templateName + '.' + dailySummary.keyData.name | translate }}:
+              {{ dailySummary.keyData.value }}
+              {{ 'preset.' + dailySummary.templateName + '.unit.' + dailySummary.keyData.unit | translate }}
             </ion-label>
           </div>
         </ion-row>

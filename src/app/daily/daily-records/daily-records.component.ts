@@ -31,7 +31,7 @@ export class DailyRecordsComponent implements OnInit {
   }
 
   getFirstSummaryField(record: Record) {
-    return record.fields.find(field => field.dataClass.includes('summary'));
+    return record.fields.find(field => field.isKeyField);
   }
 
   getAvailableFields(record: Record) {
