@@ -5,8 +5,9 @@
             "name": "SBP",
             "icon": "pulse-outline",
             "type": "number",
+            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": [],
+            "dataClass": "",
             "defaultValue": null,
             "valueUnit": "mmHg",
             "valueRange": {
@@ -18,8 +19,9 @@
             "name": "DBP",
             "icon": "pulse-outline",
             "type": "number",
+            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": [],
+            "dataClass": "",
             "defaultValue": null,
             "valueUnit": "mmHg",
             "valueRange": {
@@ -31,8 +33,9 @@
             "name": "heartbeat",
             "icon": "heart-outline",
             "type": "integer",
+            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": [],
+            "dataClass": "",
             "defaultValue": null,
             "valueUnit": "bpm",
             "valueRange": {
@@ -44,8 +47,9 @@
             "name": "bloodSugar",
             "icon": "medkit-outline",
             "type": "number",
+            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": [],
+            "dataClass": "",
             "defaultValue": null,
             "valueUnit": "mg/dL",
             "valueRange": {
@@ -57,8 +61,9 @@
             "name": "weight",
             "icon": "body-outline",
             "type": "number",
+            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": [],
+            "dataClass": "",
             "defaultValue": null,
             "valueUnit": "kg",
             "valueRange": {
@@ -70,11 +75,9 @@
             "name": "urineVolume",
             "icon": "water-outline",
             "type": "number",
+            "isKeyField": true,
             "dataGroup": "vitalSigns",
-            "dataClass": [
-                "summary",
-                "accumulation"
-            ],
+            "dataClass": "accumulated",
             "defaultValue": 0,
             "valueUnit": "mL",
             "valueRange": {
@@ -86,10 +89,9 @@
             "name": "note",
             "icon": "pencil-outline",
             "type": "string",
+            "isKeyField": false,
             "dataGroup": "note",
-            "dataClass": [
-                "note"
-            ],
+            "dataClass": "note",
             "defaultValue": ""
         }
     ]

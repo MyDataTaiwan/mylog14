@@ -89,7 +89,10 @@
     "redeemReward": "Redeem Reward",
     "recordNotTaken": "N/A",
     "emptyRecord": "Blank",
-    "noFieldsSelected": "No fields filled"
+    "noFieldsSelected": "No fields filled",
+    "accumulated": "Accumulated ",
+    "highest": "Highest ",
+    "lowest": "Lowest "
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

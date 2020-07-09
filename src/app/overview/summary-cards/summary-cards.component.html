@@ -16,11 +16,13 @@
                 </small>
               </ion-label>
             </div>
-            <div *ngFor="let row of item.dataSummaries | keyvalue">
+            <div *ngIf="item.keyData">
               <ion-label color="dark">
                 <small>
-                  {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
-                  {{ row.value.valueUnit }}
+                  {{ 'title.' + item.keyData.dataClass | translate }}
+                  {{ 'preset.' + item.templateName + '.' + item.keyData.name | translate }}:
+                  {{ item.keyData.value }}
+                  {{ 'preset.' + item.templateName + '.unit.' + item.keyData.unit | translate }}
                 </small>
               </ion-label>
             </div>

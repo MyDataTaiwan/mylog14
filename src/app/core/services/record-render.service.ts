@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 
 import { Record } from '@core/classes/record';
 import { DailySummary } from '@core/interfaces/daily-summary';
+import { KeyData } from '@core/interfaces/key-data';
 import { RecordsByDate } from '@core/interfaces/records-by-date';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordRenderService {
 
-  constructor() { }
+  constructor(
+    private readonly translate: TranslateService,
+  ) { }
 
   createDailySummary(dayCount: number, date: string, records: Record[]): DailySummary {
     return {
@@ -18,7 +22,7 @@ export class RecordRenderService {
       dateView: this.getDateView(date),
       recordsCount: records.length,
       templateName: records[0].templateName,
-      dataSummaries: this.getDataSummaries(records),
+      keyData: this.getKeyData(records),
       imgByteString: '',
     };
   }
@@ -51,31 +55,39 @@ export class RecordRenderService {
     return Math.floor((toTimestamp(end) - toTimestamp(start)) / (1000 * 3600 * 24));
   }
 
-  private getDataSummaries(records: Record[]) {
-    const summary = {};
+  private getKeyData(records: Record[]): KeyData {
+    if (!records) {
+      return;
+    }
+
+    // Assert that there is only one field with 'summary' dataClass
+    const keyDataField = records[0].fields.find(field => field.isKeyField);
+    const dataClass = keyDataField.dataClass;
+    const name = keyDataField.name;
+    const unit = keyDataField.valueUnit;
+    let value = null;
+
     records.forEach(record => {
-      if (!record.fields) {
-        return;
-      }
-      record.fields.filter(field => field.dataClass.includes('summary'))
-        .filter(field => field.value != null)
-        .forEach(field => {
-          if (!summary[field.name]) {
-            summary[field.name] = {};
-            Object.assign(summary[field.name], field);
-          } else if (field.dataClass.includes('showHighest')) {
-            if (summary[field.name].value < field.value) {
-              Object.assign(summary[field.name], field);
-            }
-          } else if (field.dataClass.includes('showLowest')) {
-            if (summary[field.name].value > field.value) {
-              Object.assign(summary[field.name], field);
-            }
-          } else if (field.dataClass.includes('accumulation')) {
-            summary[field.name].value += field.value;
-          }
-        });
+      record.fields
+      .filter(field => field.isKeyField)
+      .filter(field => field.value != null)
+      .forEach(field => {
+        if (!value) {
+          value = field.value;
+        } else if (keyDataField.dataClass === 'highest' && field.value > value) {
+          value = +field.value;
+        } else if (keyDataField.dataClass === 'lowest' && field.value < value) {
+          value = +field.value;
+        } else if (keyDataField.dataClass === 'accumulated') {
+          value += +field.value;
+        }
+      });
     });
-    return summary;
+
+    if (value == null) {
+      return null;
+    }
+
+    return { dataClass, name, value, unit };
   }
 }

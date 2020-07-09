@@ -10,8 +10,9 @@ export interface RecordField {
     readonly name: string;
     readonly icon: string;
     readonly type: RecordFieldType;
+    readonly isKeyField?: boolean;
     readonly dataGroup: string;
-    readonly dataClass: string[];
+    readonly dataClass: string;
     readonly defaultValue: RecordFieldValue;
     value: RecordFieldValue;
     readonly valueUnit?: string;
