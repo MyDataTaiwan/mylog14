@@ -30,8 +30,18 @@
         </ion-col>
         <ion-col size="6">
           <ion-thumbnail>
-            <ion-img [src]="getImgSrc(item.imgByteString)" alt="No picture">
-            </ion-img>
+            <ng-container *ngIf="photosByDate$ | async as photosByDate">
+              <ng-container *ngIf="photosByDate[item.date]">
+                <ion-img *ngIf="photosByDate[item.date][0]"
+                  [src]="'data:image/jpeg;base64,' + photosByDate[item.date][0].byteString" alt="No picture">
+                </ion-img>
+                <ion-img *ngIf="!photosByDate[item.date][0]" src="/assets/imgA.png" alt="No picture">
+                </ion-img>
+              </ng-container>
+              <ion-img *ngIf="!photosByDate[item.date]" src="/assets/imgA.png" alt="No picture">
+              </ion-img>
+            </ng-container>
+
           </ion-thumbnail>
         </ion-col>
       </ion-row>
