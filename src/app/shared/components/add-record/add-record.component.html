@@ -1,5 +1,5 @@
-<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true"
-  (dismissClicked)="onClickCancel()"></app-header>
+<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="onClickCancel()">
+</app-header>
 <ion-content>
   <ion-list *ngIf="record$ | async as record">
     <app-proof-item [status]="proofStatus"></app-proof-item>

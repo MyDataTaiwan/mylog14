@@ -111,7 +111,7 @@
     "shareToWhom": "紀錄要分享給誰？",
     "uploadingDataError": "上傳失敗，請稍後再試。",
     "registeringUser": "使用者註冊中，請稍候...",
-    "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
+    "deletePhotoPopover": "此照片和對應的單筆紀錄將會被刪除。此動作無法復原。你確定你要刪除這張照片嗎？",
     "deletingPhoto": "正在刪除照片...",
     "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。",
     "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！",
