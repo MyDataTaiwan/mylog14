@@ -2,21 +2,22 @@
   (dismissClicked)="onClickCancel()"></app-header>
 <ion-content>
   <ion-list *ngIf="record$ | async as record">
-    <ion-item>
-      <ion-icon [name]="proofDisplay.icon" [color]="proofDisplay.color" slot="start"></ion-icon>
-      <ion-label [color]="proofDisplay.color">{{ 'title.metadataCollection' | translate }}</ion-label>
-      <ion-text *ngIf="proofDisplay.status" [color]="proofDisplay.color">{{ 'title.passed' | translate }}</ion-text>
-      <ion-spinner *ngIf="!proofDisplay.status"></ion-spinner>
-    </ion-item>
+    <app-proof-item [status]="proofStatus"></app-proof-item>
     <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">
       <ion-icon [name]="field.icon" slot="start"></ion-icon>
       <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
       <ion-toggle *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-toggle>
-      <ion-text *ngIf="field.type !== recordFieldType.boolean">
+      <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
         {{ (field.value) ? field.value : 'title.noData' | translate }}
         <ng-container *ngIf="field.value && field.valueUnit">
           {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
       </ion-text>
+      <ng-container *ngIf="field.type === recordFieldType.photo">
+        <ion-thumbnail *ngIf="field.value">
+          <ion-img [src]="'data:image/jpeg;base64,' + field.value"></ion-img>
+        </ion-thumbnail>
+        <ion-text *ngIf="!field.value">{{ 'title.takePhoto' | translate }}</ion-text>
+      </ng-container>
     </ion-item>
   </ion-list>
   <ion-grid>

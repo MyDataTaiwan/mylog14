@@ -90,7 +90,9 @@
     "noFieldsSelected": "無項目",
     "accumulated": "累積",
     "highest": "最高",
-    "lowest": "最低"
+    "lowest": "最低",
+    "takePhoto": "拍一張照片",
+    "noLocationData": "未紀錄位置資訊"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -130,6 +132,7 @@
       "nasalCongestion": "鼻塞",
       "sneezing": "打噴嚏",
       "note": "附註",
+      "photo": "照片",
       "unit": {
         "°C": "°C"
       }
@@ -147,6 +150,7 @@
       "weight": "體重",
       "urineVolume": "尿量",
       "note": "附註",
+      "photo": "照片",
       "unit": {
         "mmHg": "mmHg",
         "bpm": "bpm",

@@ -92,7 +92,9 @@
     "noFieldsSelected": "No fields filled",
     "accumulated": "Accumulated ",
     "highest": "Highest ",
-    "lowest": "Lowest "
+    "lowest": "Lowest ",
+    "takePhoto": "Take A Photo",
+    "noLocationData": "No Location Data"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -138,6 +140,7 @@
       "nasalCongestion": "Nasal Congestion",
       "sneezing": "Sneezing",
       "note": "Note",
+      "photo": "Photo",
       "unit": {
         "°C": "°C"
       }
@@ -155,6 +158,7 @@
       "weight": "Weight",
       "urineVolume": "Urine Volume",
       "note": "Note",
+      "photo": "Photo",
       "unit": {
         "mmHg": "mmHg",
         "bpm": "bpm",

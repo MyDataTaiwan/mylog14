@@ -43,7 +43,7 @@ export class Record {
 
     setFieldValue(name: string, value: RecordFieldValue): void {
         const field = this.fields.find(el => el.name === name);
-        if (field.type === 'number' || field.type === 'integer') {
+        if (field.type === 'number') {
             field.value = +value;
         } else {
             field.value = value;

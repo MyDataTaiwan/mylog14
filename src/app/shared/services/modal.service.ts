@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { defer, from, Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import { Photo } from '@core/classes/photo';
+import { Record } from '@core/classes/record';
 import { ModalController } from '@ionic/angular';
 import {
   AddPhotoComponent,
@@ -50,10 +50,10 @@ export class ModalService {
       );
   }
 
-  showPhotoViewerModal(photo: Photo): Observable<any> {
+  showPhotoViewerModal(record: Record): Observable<any> {
     return defer(() => this.modalCtrl.create({
       component: PhotoViewerComponent,
-      componentProps: { photo },
+      componentProps: { record },
       animated: true,
       backdropDismiss: false,
     }))

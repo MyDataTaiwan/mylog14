@@ -2,12 +2,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import {
-  filter, first, map, mergeMap, switchMap,
-  takeUntil, tap,
+  map, mergeMap, switchMap, take, takeUntil,
+  tap,
 } from 'rxjs/operators';
 
-import { Photo } from '@core/classes/photo';
+import { Record } from '@core/classes/record';
+import { ProofStatus } from '@core/enums/proof-status.enum';
+import { RecordFieldType } from '@core/enums/record-field-type.enum';
+import { Proof } from '@core/interfaces/proof';
 import { PhotoService } from '@core/services/photo.service';
+import { ProofService } from '@core/services/proof.service';
+import { RecordService } from '@core/services/record.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
@@ -22,25 +27,23 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
 
-  private readonly photo = new BehaviorSubject<Photo>(null);
-  photo$: Observable<Photo> = this.photo;
-  photoUri$ = this.photo$
-    .pipe(
-      filter(photo => photo != null),
-      map(photo => photo.getUri()),
-    );
+  private readonly record = new BehaviorSubject<Record>(new Record(Date.now()));
+  record$: Observable<Record> = this.record;
 
-  proofDisplay = this.getDefaultProofDisplay();
+  proofStatus = ProofStatus.LOADING;
 
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly loadingService: LoadingService,
     private readonly photoService: PhotoService,
+    private readonly recordService: RecordService,
     private readonly popoverService: PopoverService,
     private readonly modalCtrl: ModalController,
+    private readonly proofService: ProofService,
   ) { }
 
   ngOnInit() {
+    this.createProof().subscribe();
     this.takePhoto();
   }
 
@@ -54,61 +57,63 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
   }
 
   takePhoto() {
-    this.proofDisplay = this.getDefaultProofDisplay();
-    this.photoService.create()
+    forkJoin([this.createEmptyRecord(), this.photoService.create()])
       .pipe(
-        first(),
-        tap(photo => this.photo.next(photo)),
-        switchMap(photo => this.photoService.attachProof(photo)),
-        tap(photo => this.photo.next(photo)),
-        tap(() => this.proofDisplay = this.getCompleteProofDisplay()),
+        map(([record, byteString]) => {
+          record.fields.find(field => field.type === RecordFieldType.photo).value = byteString;
+          return record;
+        }),
+        tap(record => this.record.next(record)),
         takeUntil(this.destroy$),
       ).subscribe();
   }
 
   confirm() {
-    this.savePhotoWithLoading()
+    this.saveRecordWithLoading()
       .pipe(
-        first(),
-        switchMap(() => this.showRecordSavedPopover()),
-        switchMap(() => this.modalCtrl.dismiss()),
+        mergeMap(() => this.showRecordSavedPopover()),
+        mergeMap(() => this.modalCtrl.dismiss()),
+        takeUntil(this.destroy$),
       ).subscribe();
-  }
-
-  private savePhotoWithLoading(): Observable<any> {
-    return forkJoin([
-      this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
-      this.dataStore.pushPhoto(this.photo.getValue())
-    ])
-      .pipe(
-        mergeMap(([loading, _]) => loading.dismiss()),
-      );
   }
 
   private showRecordSavedPopover(): Observable<any> {
     return this.popoverService.showPopover({ i18nTitle: 'title.recordSaved', icon: PopoverIcon.CONFIRM }, 500);
   }
 
-  private getDefaultProofDisplay(): ProofDisplay {
-    return {
-      status: false,
-      icon: 'shield-outline',
-      color: 'black',
-    };
+  private saveRecordWithLoading(): Observable<any> {
+    return forkJoin([
+      this.loadingService.showLoading('description.addingDataAndVerifiableInformation', 10000),
+      this.dataStore.pushRecord(this.record.getValue())
+    ])
+      .pipe(
+        mergeMap(([loading, _]) => loading.dismiss()),
+      );
   }
 
-  private getCompleteProofDisplay() {
-    return {
-      status: true,
-      icon: 'shield-checkmark-outline',
-      color: 'primary',
-    };
+  private createEmptyRecord(): Observable<Record> {
+    return this.dataStore.userData$
+      .pipe(
+        take(1),
+        switchMap(userData => this.recordService.create(userData.recordPreset)),
+        tap(record => this.record.next(record)),
+      );
+  }
+
+  private createProof() {
+    return this.proofService.createProof()
+      .pipe(
+        tap(proof => this.updateRecordProof(proof)),
+        tap(() => this.proofStatus = ProofStatus.COMPLETE),
+        takeUntil(this.destroy$),
+      );
+  }
+
+  private updateRecordProof(proof: Proof) {
+    const record = this.record.getValue();
+    record.setProof(proof);
+    this.record.next(record);
   }
 
 }
 
-interface ProofDisplay {
-  status: boolean;
-  icon: string;
-  color: string;
-}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 
 import { Record } from '../../classes/record';
@@ -44,6 +44,14 @@ export class RecordRepositoryService {
       );
   }
 
+  delete(record: Record): Observable<Record[]> {
+    return this.getMetas()
+      .pipe(
+        switchMap(metas => this.deleteRecordAndDeleteMeta(metas, record.timestamp)),
+        switchMap(() => this.getAll()),
+      );
+  }
+
   save(record: Record): Observable<Record[]> {
     return this.saveRecordAndCreateMeta(record)
       .pipe(
@@ -64,6 +72,19 @@ export class RecordRepositoryService {
     return this.fileSystem.getFileHash(path)
       .pipe(
         map(hash => ({ timestamp, path, hash }) as Meta),
+      );
+  }
+
+  private deleteRecordAndDeleteMeta(metas: Meta[], timestamp: number): Observable<Meta[]> {
+    const meta = metas.find(el => el.timestamp === timestamp);
+    const deleteRecord$ = (meta) ? this.fileSystem.deleteJsonData(meta.path) : of();
+    const metaIdx = metas.findIndex(el => el.timestamp === timestamp);
+    if (metaIdx) {
+      metas.splice(metaIdx, 1);
+    }
+    return deleteRecord$
+      .pipe(
+        switchMap(() => this.saveMetas(metas)),
       );
   }
 

@@ -32,7 +32,7 @@
         {
             "name": "heartbeat",
             "icon": "heart-outline",
-            "type": "integer",
+            "type": "number",
             "isKeyField": false,
             "dataGroup": "vitalSigns",
             "dataClass": "",
@@ -78,7 +78,7 @@
             "isKeyField": true,
             "dataGroup": "vitalSigns",
             "dataClass": "accumulated",
-            "defaultValue": 0,
+            "defaultValue": null,
             "valueUnit": "mL",
             "valueRange": {
                 "max": 3000,
@@ -92,7 +92,16 @@
             "isKeyField": false,
             "dataGroup": "note",
             "dataClass": "note",
-            "defaultValue": ""
+            "defaultValue": null
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "isKeyField": false,
+            "dataGroup": "photo",
+            "dataClass": "photo",
+            "defaultValue": null
         }
     ]
 }

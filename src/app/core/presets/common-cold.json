@@ -58,7 +58,16 @@
             "isKeyField": false,
             "dataGroup": "note",
             "dataClass": "note",
-            "defaultValue": ""
+            "defaultValue": null
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "isKeyField": false,
+            "dataGroup": "photo",
+            "dataClass": "photo",
+            "defaultValue": null
         }
     ]
 }

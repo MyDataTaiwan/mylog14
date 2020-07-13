@@ -22,7 +22,7 @@
         </ion-grid>
         <app-daily-records *ngIf="selected === 0" [date]="date">
         </app-daily-records>
-        <app-daily-photos *ngIf="selected === 1" [dayCount]="date"></app-daily-photos>
+        <app-daily-photos *ngIf="selected === 1" [date]="date"></app-daily-photos>
       </ng-container>
     </ion-list>
   </ion-card>
