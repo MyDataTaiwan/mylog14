@@ -5,43 +5,41 @@
     <ion-item>
       <ion-icon name="pencil-outline" slot="start"></ion-icon>
       <ion-label>{{ 'title.daysRecorded' | translate }}</ion-label>
-      <ng-container *ngIf="daysRecorded$ | async as daysRecorded; else daysRecordedLoading">
-        <ion-text color="primary" *ngIf="daysRecorded >= 14">{{ daysRecorded }}</ion-text>
-        <ion-text color="secondary" *ngIf="daysRecorded < 14">{{ daysRecorded }}</ion-text>
+      <ng-container *ngIf="daysRecordedStatus$ | async as daysRecordedStatus">
+        <ion-text color="primary" *ngIf="daysRecordedStatus === 'valid'">{{ daysRecorded$ | async }}</ion-text>
+        <ion-text color="secondary" *ngIf="daysRecordedStatus === 'invalid'">{{ daysRecorded$ | async }}</ion-text>
+        <ion-spinner *ngIf="!daysRecordedStatus"></ion-spinner>
       </ng-container>
-      <ng-template #daysRecordedLoading>
-        <ion-spinner></ion-spinner>
-      </ng-template>
     </ion-item>
     <ion-item>
       <ion-icon name="flash-outline" slot="start"></ion-icon>
       <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
-      <ng-container *ngIf="poolBalance$ | async as poolBalance; else poolBalanceLoading">
-        <ion-text color="primary" *ngIf="poolBalance >= 20">{{ 'title.canRedeem' | translate }}</ion-text>
-        <ion-text color="secondary" *ngIf="poolBalance < 20">{{ 'title.cannotRedeem' | translate }}</ion-text>
+      <ng-container *ngIf="poolBalanceStatus$ | async as poolBalanceStatus">
+        <ion-text color="primary" *ngIf="poolBalanceStatus === 'valid'">{{ 'title.canRedeem' | translate }}</ion-text>
+        <ion-text color="secondary" *ngIf="poolBalanceStatus === 'invalid'">{{ 'title.cannotRedeem' | translate }}
+        </ion-text>
+        <ion-spinner *ngIf="!poolBalanceStatus"></ion-spinner>
       </ng-container>
-      <ng-template #poolBalanceLoading>
-        <ion-spinner></ion-spinner>
-      </ng-template>
     </ion-item>
     <ion-item>
       <ion-icon name="card-outline" slot="start"></ion-icon>
       <ion-label>{{ 'title.currentBalance' | translate }}</ion-label>
-      <ng-container *ngIf="userBalance$ | async as userBalance; else userBalanceLoading">
-        <ion-text color="primary" *ngIf="userBalance >= 20">{{ userBalance }}</ion-text>
-        <ion-text color="secondary" *ngIf="userBalance < 20">{{ userBalance }}</ion-text>
+      <ng-container *ngIf="userBalanceStatus$ | async as userBalanceStatus">
+        <ion-text color="primary" *ngIf="userBalanceStatus === 'valid'">{{ userBalance$ | async }}</ion-text>
+        <ion-text color="secondary" *ngIf="userBalanceStatus === 'invalid'">{{ userBalance$ | async }}</ion-text>
+        <ion-spinner *ngIf="!userBalanceStatus"></ion-spinner>
       </ng-container>
-      <ng-template #userBalanceLoading>
-        <ion-spinner></ion-spinner>
-      </ng-template>
     </ion-item>
     <ng-container *ngIf="daysRecorded$ | async as daysRecorded">
-    <ion-item *ngIf="daysRecorded < 14" class="ion-text-center">
-      <ion-label>{{ 'description.logMoreDaysForReward' | translate: { days: 14 - daysRecorded } }}</ion-label>
-    </ion-item>
+      <ion-item *ngIf="daysRecorded < 14" class="ion-text-center">
+        <ion-label>{{ 'description.logMoreDaysForReward' | translate: { days: 14 - daysRecorded } }}</ion-label>
+      </ion-item>
     </ng-container>
   </ion-list>
-  <app-qr-scanner *ngIf="false" [scanEnabled]="scanEnabled$" (scanResult)="scanResultHandler($event)"></app-qr-scanner>
+  <ng-container *ngIf="redeemStatus$ | async as redeemStatus">
+    <app-qr-scanner *ngIf="redeemStatus === 'valid'" [scanEnabled]="scanEnabled$ | async"
+      (scanResult)="scanResultHandler($event)"></app-qr-scanner>
+  </ng-container>
   <ng-template #loading>
     <div class="ion-justify-content-between">
       <ion-spinner name="bubbles"></ion-spinner>

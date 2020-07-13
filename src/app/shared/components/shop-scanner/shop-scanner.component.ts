@@ -2,13 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { BehaviorSubject, Subject } from 'rxjs';
 import {
-  distinctUntilChanged, filter, map, switchMap, takeUntil,
-  tap,
+  distinctUntilChanged, filter, switchMap, takeUntil, tap,
 } from 'rxjs/operators';
 
 import { ShopInfo } from '@core/interfaces/shop-info';
 import { CouponService } from '@core/services/coupon.service';
-import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -18,40 +16,34 @@ import { ModalController } from '@ionic/angular';
 })
 export class ShopScannerComponent implements OnInit, OnDestroy {
 
-  private readonly defaultShopInfo = {UUID: '', shopName: '', shopBranch: ''};
+  private readonly defaultShopInfo = { UUID: '', shopName: '', shopBranch: '' };
   private readonly destory$ = new Subject();
   public scanEnabled$ = new BehaviorSubject<boolean>(true);
   public shopInfo$ = new BehaviorSubject<ShopInfo>(this.defaultShopInfo);
 
+  daysRecorded$ = this.couponService.daysRecorded$;
+  daysRecordedStatus$ = this.couponService.daysRecordedStatus$;
+  poolBalance$ = this.couponService.poolBalance$;
+  poolBalanceStatus$ = this.couponService.poolBalanceStatus$;
+  userBalance$ = this.couponService.userBalance$;
+  userBalanceStatus$ = this.couponService.userBalanceStatus$;
+  redeemStatus$ = this.couponService.redeemStatus$;
+
   constructor(
-    private readonly dataStore: DataStoreService,
     private readonly modalCtrl: ModalController,
     public couponService: CouponService,
   ) { }
 
-  daysRecorded$ = this.dataStore.recordsByDate$
-    .pipe(
-      map(recordsByDate => Object.keys(recordsByDate).length),
-      map(num => `${num}`),
-    );
-
-  poolBalance$ = this.couponService.getPoolCurrentBalance()
-    .pipe(
-      map(num => `${num}`),
-    );
-
-  userBalance$ = this.couponService.getUserCurrentBalance()
-    .pipe(
-      map(num => `${num}`),
-    );
-
   ngOnInit() {
-      this.shopInfo$
+    this.couponService.reload();
+    this.shopInfo$
       .pipe(
         filter(shopInfo => shopInfo.UUID !== ''),
         distinctUntilChanged((prev, curr) => prev.UUID === curr.UUID),
         tap(() => this.scanEnabled$.next(false)),
         switchMap(shopInfo => this.couponService.startRedeem(shopInfo)),
+        tap(() => this.shopInfo$.next(this.defaultShopInfo)),
+        tap(() => this.scanEnabled$.next(true)),
         takeUntil(this.destory$),
       ).subscribe();
   }
@@ -81,4 +73,3 @@ export class ShopScannerComponent implements OnInit, OnDestroy {
   }
 
 }
-
