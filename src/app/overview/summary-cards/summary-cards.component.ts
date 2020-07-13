@@ -1,9 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { KeyValue } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
-import { map } from 'rxjs/operators';
-
-import { DailySummary } from '@core/interfaces/daily-summary';
-import { PhotosByDate } from '@core/interfaces/photos-by-date';
 import { DataStoreService } from '@core/services/store/data-store.service';
 
 @Component({
@@ -12,26 +9,16 @@ import { DataStoreService } from '@core/services/store/data-store.service';
   styleUrls: ['./summary-cards.component.scss'],
 })
 export class SummaryCardsComponent implements OnInit {
-  @Input() dailySummaries: DailySummary[];
+  summaryByDate$ = this.dataStore.summaryByDate$;
 
-  photosByDate$ = this.dataStore.photosByDate$
-    .pipe(
-      map((photosByDate: PhotosByDate) => {
-        Object.keys(photosByDate).forEach(key => {
-          photosByDate[key] = photosByDate[key].reverse();
-        });
-        return photosByDate;
-      })
-    );
+  keyDescOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+    return a.key > b.key ? -1 : (b.key > a.key ? 1 : 0);
+  }
 
   constructor(
     private readonly dataStore: DataStoreService,
   ) { }
 
   ngOnInit() {}
-
-  getImgSrc(imgByteString?: string): string {
-    return (imgByteString) ? 'data:image/jpeg;base64,' + imgByteString : '/assets/imgA.png';
-  }
 
 }

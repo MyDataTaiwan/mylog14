@@ -1,0 +1,6 @@
+<ion-item *ngIf="display$ | async as display">
+  <ion-icon [name]="display.icon" [color]="display.color" slot="start"></ion-icon>
+  <ion-label [color]="display.color">{{ 'title.metadataCollection' | translate }}</ion-label>
+  <ion-text *ngIf="status === proofStatus.COMPLETE" [color]="display.color">{{ 'title.passed' | translate }}</ion-text>
+  <ion-spinner *ngIf="status === proofStatus.LOADING"></ion-spinner>
+</ion-item>

@@ -121,7 +121,7 @@ export class FormService {
   }
 
   private getFormlyFieldType(type: RecordFieldType) {
-    if (type === RecordFieldType.integer || type === RecordFieldType.number) {
+    if (type === RecordFieldType.number) {
       return 'number';
     } else if (type === RecordFieldType.string) {
       return 'text';

@@ -90,7 +90,9 @@
     "noFieldsSelected": "無項目",
     "accumulated": "累積",
     "highest": "最高",
-    "lowest": "最低"
+    "lowest": "最低",
+    "takePhoto": "拍一張照片",
+    "noLocationData": "未紀錄位置資訊"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -109,7 +111,7 @@
     "shareToWhom": "紀錄要分享給誰？",
     "uploadingDataError": "上傳失敗，請稍後再試。",
     "registeringUser": "使用者註冊中，請稍候...",
-    "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
+    "deletePhotoPopover": "此照片和對應的單筆紀錄將會被刪除。此動作無法復原。你確定你要刪除這張照片嗎？",
     "deletingPhoto": "正在刪除照片...",
     "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。",
     "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！",
@@ -130,6 +132,7 @@
       "nasalCongestion": "鼻塞",
       "sneezing": "打噴嚏",
       "note": "附註",
+      "photo": "照片",
       "unit": {
         "°C": "°C"
       }
@@ -147,6 +150,7 @@
       "weight": "體重",
       "urineVolume": "尿量",
       "note": "附註",
+      "photo": "照片",
       "unit": {
         "mmHg": "mmHg",
         "bpm": "bpm",

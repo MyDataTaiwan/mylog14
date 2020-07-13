@@ -1,6 +1,6 @@
 <ion-list style="width:100%;height:50%;overflow:scroll;padding-bottom: 90px;">
   <div *ngFor="let record of records$ | async">
-    <ion-item detail="false">
+    <ion-item detail="false" *ngIf="getAvailableFields(record).length > 0">
       <ion-label>{{ record.timestamp | date: 'HH:mm aa' }}</ion-label>
       <ng-container *ngIf="getFirstSummaryField(record) as summary">
         <ion-icon [name]="summary.icon"></ion-icon>
