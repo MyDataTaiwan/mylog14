@@ -1,6 +1,7 @@
 import {
   AfterViewInit, Component, ElementRef, EventEmitter, Input,
-  OnDestroy, OnInit, Output, SimpleChanges, ViewChild,
+  OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 
 import jsQR from 'jsqr';
