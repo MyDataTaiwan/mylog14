@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import {
-  filter, first, map, switchMap, take,
+  BehaviorSubject, combineLatest, forkJoin, Observable, of,
+  Subject,
+} from 'rxjs';
+import {
+  first, map, retry, switchMap, take,
   tap,
 } from 'rxjs/operators';
 
@@ -14,37 +17,62 @@ import {
   PopoverButtonSet, PopoverIcon, PopoverService,
 } from '../../shared/services/popover.service';
 import { ShopInfo } from '../interfaces/shop-info';
-import {
-  UserDataRepositoryService,
-} from './repository/user-data-repository.service';
+import { DataStoreService } from './store/data-store.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CouponService {
 
-  public daysRecorded$ = of(0);
-  public poolBalance$ = new BehaviorSubject<number>(0);
-  public userBalance$ = new BehaviorSubject<number>(0);
-  redeemConfirmation = false;
+  daysRecorded$ = this.dataStore.recordsByDate$
+    .pipe(
+      map(recordsByDate => Object.keys(recordsByDate).length),
+    );
+  daysRecordedStatus$: Observable<string> = this.daysRecorded$
+    .pipe(
+      map(daysRecorded => (daysRecorded != null && daysRecorded >= 0) ? 'valid' : 'invalid'),
+    );
+  poolBalance$ = new BehaviorSubject<number>(null);
+  poolBalanceStatus$: Observable<string> = this.poolBalance$
+    .pipe(
+      map(poolBalance => (poolBalance != null && poolBalance >= 20) ? 'valid' : 'invalid'),
+    );
+  userBalance$ = new BehaviorSubject<number>(null);
+  userBalanceStatus$: Observable<string> = this.userBalance$
+    .pipe(
+      map(userBalance => (userBalance != null && userBalance >= 20) ? 'valid' : 'invalid'),
+    );
+
+  redeemStatus$: Observable<string> = combineLatest([
+    this.daysRecordedStatus$, this.poolBalanceStatus$, this.userBalanceStatus$
+  ])
+    .pipe(
+      map(([a, b, c]) => (a === 'valid' && b === 'valid' && c === 'valid') ? 'valid' : 'invalid'),
+    );
+
+  private readonly reloadCouponInfo = new Subject();
+  reloadCouponInfo$: Observable<any> = this.reloadCouponInfo
+    .pipe(
+      switchMap(() => this.initRewardIfNoBalance()),
+      switchMap(() => this.getLatestBalance()),
+    );
 
   constructor(
+    private readonly dataStore: DataStoreService,
     private readonly popoverService: PopoverService,
     private readonly privateCouponService: PrivateCouponService,
-    private readonly userDataRepo: UserDataRepositoryService,
   ) {
-    this.initRewardIfNoBalance()
-      .pipe(
-        switchMap(_ => this.getLatestBalance())
-      ).subscribe();
+    this.reloadCouponInfo$.subscribe();
+  }
+
+  reload() {
+    this.reloadCouponInfo.next();
   }
 
   // If daysRecords >= 14 && current_balance is not initialized, give 20 points
   initRewardIfNoBalance() {
-    const giveRewardIfNoBalance$ = this.userDataRepo.get()
+    const giveRewardIfNoBalance$ = this.login()
       .pipe(
-        map(userData => userData.email),
-        switchMap(email => this.privateCouponService.login(email)),
         switchMap((userResult: UserResult) => this.privateCouponService.getUserDetail(
           userResult.response.user_id,
           userResult.response.token,
@@ -90,57 +118,41 @@ export class CouponService {
   getPoolCurrentBalance(): Observable<number> {
     return this.privateCouponService.poolBalance()
       .pipe(
+        retry(5),
         map((res: PoolBalanceResult) => res.response.current_balance),
       );
   }
 
   getUserCurrentBalance(): Observable<number> {
-    return this.userDataRepo.get()
+    return this.login()
       .pipe(
-        map(userData => userData.email),
-        switchMap(email => this.privateCouponService.login(email)),
-        switchMap((userResult: UserResult) => this.privateCouponService.getUserDetail(
-          userResult.response.user_id,
-          userResult.response.token,
-        )),
-        tap(c => console.log('user cuuu', c)),
+        switchMap(userResult => this.getUserDetail(userResult)),
         map((res: UserDetailResult) => res.response.current_balance),
-        tap(c => console.log('user mon', c)),
       );
   }
 
-  showShopInfo(shopInfo: ShopInfo): Observable<HTMLIonPopoverElement> {
+  showShopInfo(shopInfo: ShopInfo): Observable<any> {
     return this.popoverService.showPopover({
       i18nTitle: `${shopInfo.shopName}\n${shopInfo.shopBranch}`,
       i18nMessage: '是否兌換 20 元',
       buttonSet: PopoverButtonSet.CONFIRM,
-      // onConfirm: this.confirmRedeem.bind(this),
+      dataOnConfirm: { redeem: true },
+      dataOnCancel: { redeem: false },
     });
-  }
-
-  confirmRedeem() {
-    this.redeemConfirmation = true;
   }
 
   startRedeem(shopInfo: ShopInfo) {
     return this.showShopInfo(shopInfo)
       .pipe(
-        filter(_ => this.redeemConfirmation),
-        switchMap(_ => this.redeem(shopInfo)),
-        switchMap(_ => this.getLatestBalance()),
+        switchMap(res => (res.data.redeem) ? this.redeem(shopInfo) : of([])),
+        switchMap(() => this.getLatestBalance()),
       );
   }
 
   redeem(shopInfo: ShopInfo) {
-    this.redeemConfirmation = false;
-    const redeem$ = this.userDataRepo.get()
+    const redeem$ = this.login()
       .pipe(
-        map(userData => userData.email),
-        switchMap(email => this.privateCouponService.login(email)),
-        switchMap((userResult: UserResult) => this.privateCouponService.getUserDetail(
-          userResult.response.user_id,
-          userResult.response.token,
-        )
+        switchMap(userResult => this.getUserDetail(userResult)
           .pipe(
             map(userDetailResult => [userResult.response.token, userDetailResult.response.wallet_address]),
           )),
@@ -171,6 +183,25 @@ export class CouponService {
       i18nMessage: `${shopInfo.shopName}\n${shopInfo.shopBranch} 折扣 20 元`,
       icon: PopoverIcon.CHECK,
     });
+  }
+
+  private login(): Observable<UserResult> {
+    return this.dataStore.userData$
+      .pipe(
+        take(1),
+        map(userData => userData.email),
+        switchMap(email => this.privateCouponService.login(email)),
+        retry(5),
+      );
+  }
+
+  private getUserDetail(userResult: UserResult): Observable<UserDetailResult> {
+    return this.privateCouponService.getUserDetail(
+      userResult.response.user_id,
+      userResult.response.token,
+    ).pipe(
+      retry(5),
+    );
   }
 }
 
