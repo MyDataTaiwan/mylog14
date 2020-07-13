@@ -3,18 +3,16 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { LanguageService } from '@core/services/language.service';
+import { DataStoreService } from '@core/services/store/data-store.service';
 import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
 
 import { RecordPreset } from '../core/services/preset.service';
-import {
-  UserDataRepositoryService,
-} from '../core/services/repository/user-data-repository.service';
 import { LoadingService } from '../shared/services/loading.service';
 
 @Component({
@@ -42,7 +40,7 @@ export class OnboardingPage implements OnDestroy {
     private readonly router: Router,
     private readonly toastController: ToastController,
     private readonly translate: TranslateService,
-    private readonly userDataRepo: UserDataRepositoryService,
+    private readonly dataStore: DataStoreService,
     public readonly langaugeService: LanguageService,
   ) { }
 
@@ -61,15 +59,13 @@ export class OnboardingPage implements OnDestroy {
           this.presentToast(err.error.reason || err.statusText);
           throw (err);
         }),
-        switchMap((res: SignupResponse) => forkJoin([of(res), this.userDataRepo.get()])),
-        map(([res, userData]) => ({
-          ...userData,
+        map((res: SignupResponse) => ({
           email: this.onboardingForm.controls.email.value,
           newUser: false,
           recordPreset: RecordPreset.COMMON_COLD,
           userId: (res) ? res.response.user_id : null,
         })),
-        switchMap(userData => this.userDataRepo.save(userData)),
+        switchMap(userDataPatch => this.dataStore.updateUserData(userDataPatch)),
       );
 
     loading$
