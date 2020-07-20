@@ -2,6 +2,6 @@ import { Photo } from './photo';
 
 describe('Photo', () => {
   it('should create an instance', () => {
-    expect(new Photo()).toBeTruthy();
+    expect(new Photo(1, 'string')).toBeTruthy();
   });
 });

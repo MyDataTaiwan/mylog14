@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { TranslateTestingModule } from '../../tests/translate-testing/translate-testing.module';
+import {TranslateTestingModule} from 'src/app/core/tests/translate-testing/translate-testing.module';
 import { AddRecordComponent } from './add-record.component';
 
 describe('AddRecordComponent', () => {

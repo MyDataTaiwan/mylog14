@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { LocalStorageService } from './local-storage.service';
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
 
 describe('LocalStorageService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -9,3 +12,46 @@ describe('LocalStorageService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+fdescribe('getData', () => {
+  beforeEach(() => TestBed.configureTestingModule({}));
+  afterEach(async() => await Storage.clear());
+
+  it('should get data', async () => {
+    const service: LocalStorageService = TestBed.get(LocalStorageService);
+
+    await Storage.set({
+      key: 'user',
+      value: JSON.stringify({
+        id: 1,
+        name: 'Max'
+      })
+    });
+
+    const expectedData = Object({ id: 1, name: 'Max' });
+    console.log('expectedData', expectedData);
+    service.getData('user', '').subscribe({next(x) {
+      console.log('getData',x);
+      expect(x).toEqual(expectedData);}})
+  });
+});
+
+fdescribe('setData', () => {
+  beforeEach(() => TestBed.configureTestingModule({}));
+  afterEach(async() => await Storage.clear());
+
+  it('should set data', async () => {
+    const service : LocalStorageService = TestBed.get(LocalStorageService);
+
+    let data = {key: 'red', value: '#f00'};
+
+    service.setData(data, 'string').subscribe({async next(x) {
+      const {value} = await Storage.get({key: 'string'});
+      console.log('expected', value);
+      expect(value).toEqual(JSON.stringify(x));
+      console.log('actual', JSON.stringify(x));
+    }})
+  });
+});
+
+
