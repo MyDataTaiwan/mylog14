@@ -8,9 +8,9 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { LanguageService } from '@core/services/language.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
-import { ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { PrivateCouponService } from '@numbersprotocol/private-coupon';
+import { ToastService } from '@shared/services/toast.service';
 
 import { RecordPreset } from '../core/services/preset.service';
 import { LoadingService } from '../shared/services/loading.service';
@@ -38,7 +38,7 @@ export class OnboardingPage implements OnDestroy {
     private readonly loadingService: LoadingService,
     private readonly privateCouponService: PrivateCouponService,
     private readonly router: Router,
-    private readonly toastController: ToastController,
+    private readonly toastService: ToastService,
     private readonly translate: TranslateService,
     private readonly dataStore: DataStoreService,
     public readonly langaugeService: LanguageService,
@@ -56,7 +56,7 @@ export class OnboardingPage implements OnDestroy {
           }
           console.error(err);
           this.confirmButtonEnabled = true;
-          this.presentToast(err.error.reason || err.statusText);
+          this.toastService.showToast(err.error.reason || err.statusText, 3000);
           throw (err);
         }),
         map((res: SignupResponse) => ({
@@ -79,13 +79,6 @@ export class OnboardingPage implements OnDestroy {
       }, () => {
         this.loadingElement.dismiss();
       });
-  }
-
-  private presentToast(message: string) {
-    this.toastController.create({
-      message,
-      duration: 3000
-    }).then(toast => toast.present());
   }
 
   showRegisteringUserLoading(): Observable<HTMLIonLoadingElement> {
