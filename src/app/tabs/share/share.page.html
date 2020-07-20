@@ -1,0 +1,22 @@
+<app-header [headerTitle]="'title.shareData' | translate"></app-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item [disabled]="true" button>
+            <ion-icon name="link-outline" slot="start"></ion-icon>
+            <ion-label>{{ 'title.sharedLogboardLink' | translate }}</ion-label>
+            <ion-text>
+                {{ ('title.notGenerated' | translate) }}
+            </ion-text>
+        </ion-item>
+    </ion-list>
+
+</ion-content>
+<ion-footer>
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-button fill="solid" size="large">上傳並產生新分享連結</ion-button>
+        </ion-row>
+    </ion-grid>
+
+</ion-footer>
