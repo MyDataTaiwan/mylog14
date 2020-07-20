@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { UploadService } from '@core/services/upload.service';
+
 @Component({
   selector: 'app-share',
   templateUrl: './share.page.html',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SharePage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly uploadService: UploadService,
+  ) { }
 
   ngOnInit() {
+  }
+
+  onUploadButtonClicked() {
+    this.uploadService.upload().subscribe();
   }
 
 }
