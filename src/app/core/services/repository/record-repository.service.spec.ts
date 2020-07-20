@@ -2,6 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { RecordRepositoryService } from './record-repository.service';
 import { Record } from '@core/classes/record';
 import { Meta } from '../../interfaces/meta';
+import { Plugins } from '@capacitor/core';
+
+
+const { Storage } = Plugins;
 
 
 describe('RecordRepositoryService', () => {
@@ -14,27 +18,63 @@ describe('RecordRepositoryService', () => {
 });
 
 fdescribe('save()', () => {
+  var originalTimeOut;
+
+  beforeEach(function() {
+    originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+  })
+  
+  beforeEach(() => TestBed.configureTestingModule({}));
+
+  afterEach(async () => await Storage.clear());
+
+
+  it('should save record', async (done) => {
+    const service: RecordRepositoryService = TestBed.get(RecordRepositoryService);
+
+    const record = new Record(20191208);
+
+    const recordOutput = JSON.stringify(record);
+    
+    service.save(record).subscribe({ next(x) {
+      console.log(x);
+      expect(JSON.stringify(x[x.length - 1])).toEqual(recordOutput);
+      done();
+    }})
+    await Storage.clear();
+  })
+})
+
+fdescribe('save()', () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
-  it('should save record', async () => {
+  it('should save record', () => {
     const service: RecordRepositoryService = TestBed.get(RecordRepositoryService);
 
     expect(service.save).toBeDefined();
   })
 });
 
+
 fdescribe('getJsonAll()', () => {
+  var originalTimeOut;
+
+  beforeEach(function() {
+    originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+  })
+
   beforeEach(() => TestBed.configureTestingModule({}));
+  afterEach(async() => await Storage.clear());
 
   it('should get string JSON', async (done) => {
     const service: RecordRepositoryService = TestBed.get(RecordRepositoryService);
 
     const newRecord = new Record(321);
     service.save(newRecord).subscribe({ next(x) {
-      console.log('getJsonAll x', JSON.stringify(x));  
       service.getJsonAll().subscribe({ next(y) {
-        console.log('y', y);
         expect(JSON.stringify(x)).toEqual(JSON.stringify(y));
         done();
       }})
@@ -43,7 +83,16 @@ fdescribe('getJsonAll()', () => {
 });
 
 fdescribe('getAll()', () => {
+  var originalTimeOut;
+
+  beforeEach(function() {
+    originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000000;
+  })
+
   beforeEach(() => TestBed.configureTestingModule({}));
+  afterEach(async() => await Storage.clear());
+
   it('should get all records', async (done) => {
     const service: RecordRepositoryService = TestBed.get(RecordRepositoryService);
 
@@ -61,6 +110,9 @@ fdescribe('getAll()', () => {
 
 fdescribe('get()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
+
+  afterEach(async() => await Storage.clear());
+
   it('should get specified record', async (done) => {
     const service: RecordRepositoryService = TestBed.get(RecordRepositoryService);
     
@@ -85,6 +137,9 @@ fdescribe('get()', () => {
 
 fdescribe('getJson()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
+
+  afterEach(async() => await Storage.clear());
+
   it('should get specified record', async (done) => {
     const service: RecordRepositoryService = TestBed.get(RecordRepositoryService);
 

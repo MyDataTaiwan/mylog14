@@ -138,7 +138,6 @@ fdescribe('updateUserData() with nothing', () => {
     service.createOrReplaceUserData(existUserData).subscribe({ next(x) {
       service.updateUserData({ }).subscribe({ next(y) {
         expect(y).toEqual(x);
-
         done();
       }});
     }});

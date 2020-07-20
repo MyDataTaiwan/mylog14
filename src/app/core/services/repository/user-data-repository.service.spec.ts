@@ -4,6 +4,10 @@ import { UserDataRepositoryService } from './user-data-repository.service';
 import { UserData } from '../../interfaces/user-data';
 import { RecordPreset } from '../preset.service';
 
+import { Plugins } from '@capacitor/core';
+
+const { Storage } = Plugins;
+
 
 describe('UserDataRepositoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -29,13 +33,14 @@ fdescribe('get() if no previous saved data', () => {
 
     const expectedOutput = JSON.stringify(user);
 
-    service.get().subscribe({next(x) { expect(JSON.stringify(x)).toEqual(expectedOutput); }});
+    service.get().subscribe({next(x) { expect(JSON.stringify(x)).not.toEqual(expectedOutput); }});
     done();
   });
 });
 
 fdescribe('save()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
+  afterEach(() => Storage.clear());
   
   it('should save user data', (done) => {
     const service: UserDataRepositoryService = TestBed.get(UserDataRepositoryService);
@@ -48,9 +53,11 @@ fdescribe('save()', () => {
     };
 
     const expectedOutput = JSON.stringify(user);
-    console.log('expected', expectedOutput);
+    // console.log('expected', expectedOutput);
 
-    service.save(user).subscribe( {next(x) {expect(JSON.stringify(x)).toEqual(expectedOutput)}});
+    service.save(user).subscribe( {next(x) {
+      // console.log(x);
+      expect(JSON.stringify(x)).toEqual(expectedOutput)}});
 
     service.get().subscribe( {next(x) { console.log(x) }});
 
@@ -60,6 +67,7 @@ fdescribe('save()', () => {
 
 fdescribe('get() if there is saved data', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
+  afterEach(() => Storage.clear());
 
   it('should get user data', (done) => {
     const service: UserDataRepositoryService = TestBed.get(UserDataRepositoryService);
@@ -74,9 +82,11 @@ fdescribe('get() if there is saved data', () => {
     const expectedOutput = JSON.stringify(user);
     console.log('expected', expectedOutput);
 
-    service.get().subscribe({next(x) { 
-      console.log('result', JSON.stringify(x));
-      expect(JSON.stringify(x)).toEqual(expectedOutput); }});
+    service.save(user).subscribe({ next(x) {
+      service.get().subscribe({ next(y) {
+        expect(JSON.stringify(y)).toEqual(JSON.stringify(x));
+      }})
+    }})
     done();
   });
 });
