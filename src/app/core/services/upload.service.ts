@@ -4,15 +4,13 @@ import {
 import { Injectable } from '@angular/core';
 
 import {
-  BehaviorSubject, combineLatest, forkJoin, from, Observable,
-  throwError,
+  BehaviorSubject, combineLatest, forkJoin, from, merge,
+  Observable, Subject,
 } from 'rxjs';
-import {
-  catchError, filter, map, switchMap, take,
-  tap,
-} from 'rxjs/operators';
+import { map, scan, switchMap, tap } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
+import { SharedLink } from '@core/interfaces/shared-link';
 
 import {
   RecordRepositoryService,
@@ -28,6 +26,17 @@ export class UploadService {
 
   private readonly userCredential = new BehaviorSubject<UserCredential>(null);
   userCredential$: Observable<UserCredential> = this.userCredential;
+
+  private isUploading = false;
+  private readonly uploadTrigger = new Subject();
+
+  private readonly uploadStatusUpdater = new Subject<number>();
+  private readonly uploadStatus = new BehaviorSubject<UploadStatus>(null);
+  uploadStatus$: Observable<UploadStatus> = this.uploadStatus;
+
+  token: string;
+  newSharedLink: SharedLink;
+  cachedPayloads: FormData[];
   private readonly generatedUrl = new BehaviorSubject<string>('');
   public generatedUrl$ = this.generatedUrl.asObservable();
   private readonly ApiUrl = 'https://logboard-dev.numbersprotocol.io';
@@ -37,32 +46,66 @@ export class UploadService {
     private readonly dataStore: DataStoreService,
   ) {
     this.getUserCredential().subscribe(userCredential => this.userCredential.next(userCredential));
+    this.uploadHandler().subscribe();
+    this.uploadStatusHandler().subscribe();
   }
 
-  upload() {
-    return forkJoin([this.getToken(), this.createRecordPayloads()])
+  startUpload(): boolean {
+    if (this.isUploading) {
+      return false;
+    }
+    this.uploadTrigger.next(0);
+    return true;
+  }
+
+  private uploadHandler() {
+    return this.uploadTrigger
       .pipe(
-        switchMap(([token, payloads]) =>
-          forkJoin(payloads.map(payload => this.postRecord(payload, token)))
+        tap(() => this.cleanupPreviousUpload()),
+        switchMap(() =>
+          forkJoin([this.createNewUserAndSharedLink(), this.createRecordPayloads()])
         ),
+        tap(() => {
+          this.newSharedLink.recordCount = this.cachedPayloads.length;
+          this.uploadStatus.next({ totalRecords: this.newSharedLink.recordCount, uploadedRecords: 0 });
+        }),
+        switchMap(() => this.login(this.newSharedLink.uid)),
+        switchMap(() =>
+          merge(...this.cachedPayloads.map(payload => this.postRecord(payload, this.token)))
+        ),
+        scan((arr, value) => arr + value),
+        tap(uploadedRecords => this.uploadStatusUpdater.next(uploadedRecords)),
+        switchMap(() => this.dataStore.pushSharedLink(this.newSharedLink)),
+        tap(() => this.isUploading = false),
       );
   }
 
-  private getToken(): Observable<string> {
-    return this.userCredential$
+  private uploadStatusHandler() {
+    return this.uploadStatusUpdater
       .pipe(
-        tap(e => console.log('userC', e)),
-        filter(userCredential => userCredential != null),
-        take(1),
-        switchMap(userCredential => {
-          return this.createNewUID(userCredential)
-            .pipe(
-              tap(e => console.log('uid', e)),
-              switchMap(uid => this.login(uid, userCredential)),
-            );
-        }),
-        tap(e => console.log('token', e)),
+        tap(e => console.log('upload status', e)),
+        map(uploadedRecords => ({
+          totalRecords: this.uploadStatus.getValue().totalRecords,
+          uploadedRecords,
+        })),
+        tap(newStatus => this.uploadStatus.next(newStatus)),
       );
+
+  }
+
+  private cleanupPreviousUpload() {
+    this.isUploading = true;
+    this.token = null;
+    this.newSharedLink = null;
+    this.cachedPayloads = null;
+    this.uploadStatus.next(null);
+  }
+
+  private createSharedLink(uid: string, url: string, recordCount?: number): SharedLink {
+    const createTime = Date.now();
+    const expireDays = 3;
+    const expireTime = createTime + 86400 * 1000 * expireDays;
+    return { uid, url, createTime, expireTime, recordCount, };
   }
 
   private getUserCredential(): Observable<UserCredential> {
@@ -80,34 +123,39 @@ export class UploadService {
     );
   }
 
-  private createNewUID(userCredential: UserCredential): Observable<string> {
+  private createNewUserAndSharedLink(): Observable<SharedLink> {
     const endpoint = this.ApiUrl + '/api/v1/users/';
     const formData = new FormData();
-    formData.append('email', userCredential.email);
-    formData.append('password', userCredential.password);
+    formData.append('email', this.userCredential.getValue().email);
+    formData.append('password', this.userCredential.getValue().password);
     return this.http.post<CreateUserResponse>(endpoint, formData)
       .pipe(
-        map(createUserResponse => createUserResponse.id),
+        map(createUserResponse => this.createSharedLink(createUserResponse.id, createUserResponse.href)),
+        tap(link => this.newSharedLink = link),
       );
   }
 
-  private login(uid: string, userCredential: UserCredential): Observable<string> {
+  private login(uid: string): Observable<string> {
     const endpoint = this.ApiUrl + '/api/v1/auth/token/login/';
     const formData = new FormData();
     formData.append('id', uid);
-    formData.append('password', userCredential.password);
+    formData.append('password', this.userCredential.getValue().password);
     return this.http.post<LoginResponse>(endpoint, formData)
       .pipe(
         map(loginResponse => loginResponse.auth_token),
+        tap(token => this.token = token),
       );
   }
 
-  private postRecord(payload: FormData, token: string) {
+  private postRecord(payload: FormData, token: string): Observable<number> {
     const endpoint = this.ApiUrl + '/api/v1/records/';
     const headers = new HttpHeaders({
       authorization: `token ${token}`,
     });
-    return this.http.post<CreateRecordResponse>(endpoint, payload, { headers });
+    return this.http.post<CreateRecordResponse>(endpoint, payload, { headers })
+      .pipe(
+        map(() => 1),
+      );
   }
 
   private createRecordPayloads(): Observable<FormData[]> {
@@ -122,7 +170,7 @@ export class UploadService {
           formData.append('transaction_hash', hash);
           return formData;
         })),
-        tap(e => console.log('payloads', e)),
+        tap(payloads => this.cachedPayloads = payloads),
       );
   }
 
@@ -162,6 +210,7 @@ interface CreateUserResponse {
   id: string;
   username: string;
   email: string;
+  href: string;
 }
 
 interface LoginResponse {
@@ -171,4 +220,9 @@ interface LoginResponse {
 interface UserCredential {
   email: string;
   password: string;
+}
+
+interface UploadStatus {
+  totalRecords: number;
+  uploadedRecords: number;
 }

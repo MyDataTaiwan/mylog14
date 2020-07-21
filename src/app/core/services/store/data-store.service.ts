@@ -7,6 +7,7 @@ import { first, map, switchMap, tap } from 'rxjs/operators';
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { DailySummary } from '@core/interfaces/daily-summary';
 import { RecordsByDate } from '@core/interfaces/records-by-date';
+import { SharedLink } from '@core/interfaces/shared-link';
 import { SummaryByDate } from '@core/interfaces/summary-by-date';
 
 import { Record } from '../../classes/record';
@@ -67,6 +68,21 @@ export class DataStoreService {
     return this.recordRepo.save(record)
       .pipe(
         tap(records => this.records.next(records)),
+      );
+  }
+
+  pushSharedLink(sharedLink: SharedLink): Observable<UserData> {
+    return this.userDataRepo.get()
+      .pipe(
+        map(userData => {
+          if (!userData.sharedLinks) {
+            userData.sharedLinks = [];
+          }
+          userData.sharedLinks.push(sharedLink);
+          return userData;
+        }),
+        switchMap(newUserData => this.userDataRepo.save(newUserData)),
+        tap(newUserData => this.userData.next(newUserData)),
       );
   }
 

@@ -17,7 +17,7 @@ export class SharePage implements OnInit {
   }
 
   onUploadButtonClicked() {
-    this.uploadService.upload().subscribe();
+    this.uploadService.startUpload();
   }
 
 }
