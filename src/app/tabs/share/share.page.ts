@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
 import { DataStoreService } from '@core/services/store/data-store.service';
@@ -24,6 +24,7 @@ export class SharePage implements OnInit, OnDestroy {
   sharedLinks$ = this.dataStore.userData$
     .pipe(
       map(userData => userData.sharedLinks),
+      filter(sharedLinks => sharedLinks != null),
       map(sharedLinks => sharedLinks.filter(link => link != null).reverse()),
     );
   uploadStatus$ = this.uploadService.uploadStatus$;

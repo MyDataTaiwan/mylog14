@@ -6,8 +6,8 @@ import {
   Observable, of, Subject,
 } from 'rxjs';
 import {
-  catchError, filter, map, mergeScan, switchMap,
-  take, tap,
+  catchError, filter, map, mergeScan, retry,
+  switchMap, take, tap,
 } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
@@ -183,6 +183,7 @@ export class UploadService {
     });
     return this.http.post<CreateRecordResponse>(endpoint, payload, { headers })
       .pipe(
+        retry(5),
         map(() => 1),
       );
   }
