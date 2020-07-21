@@ -36,7 +36,7 @@ export class UploadService {
   token: string;
   newSharedLink: SharedLink;
   cachedPayloads: FormData[];
-  private readonly ApiUrl = 'https://logboard-dev.numbersprotocol.io';
+  private ApiUrl = 'https://mylog14.numbersprotocol.io';
   constructor(
     private readonly http: HttpClient,
     private readonly recordRepo: RecordRepositoryService,
@@ -45,6 +45,7 @@ export class UploadService {
     this.getUserCredential().subscribe(userCredential => this.userCredential.next(userCredential));
     this.uploadHandler().subscribe();
     this.uploadStatusHandler().subscribe();
+    this.uploadHostHandler().subscribe();
   }
 
   // FIXME: states and functions are messy, need refactoring & cleanup
@@ -55,6 +56,16 @@ export class UploadService {
     }
     this.uploadTrigger.next(0);
     return true;
+  }
+
+  private uploadHostHandler() {
+    return this.dataStore.userData$
+      .pipe(
+        map(userData => userData.uploadHost),
+        filter(uploadHost => uploadHost != null),
+        tap(uploadHost => this.ApiUrl = `https://${uploadHost}.numbersprotocol.io`),
+        tap(() => console.log('Set upload host to', this.ApiUrl))
+      );
   }
 
   private uploadHandler() {
