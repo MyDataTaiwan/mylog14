@@ -121,7 +121,8 @@
     "mustBeNoSmallerThan": "輸入值不可小於 {{min}}",
     "mustBeNoLargerThan": "輸入值不可大於 {{max}}",
     "couponDisabled": "敬請期待兌換獎勵功能",
-    "linkCopied": "連結已複製到剪貼簿"
+    "linkCopied": "連結已複製到剪貼簿",
+    "uploadFailed": "上傳失敗。請稍後再試。"
   },
   "preset": {
     "commonCold": {

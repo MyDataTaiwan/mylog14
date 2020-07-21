@@ -5,10 +5,15 @@ import {
   BehaviorSubject, combineLatest, forkJoin, from, merge,
   Observable, of, Subject,
 } from 'rxjs';
-import { filter, map, mergeScan, switchMap, tap } from 'rxjs/operators';
+import {
+  catchError, filter, map, mergeScan, switchMap,
+  take, tap,
+} from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
 import { SharedLink } from '@core/interfaces/shared-link';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastService } from '@shared/services/toast.service';
 
 import {
   RecordRepositoryService,
@@ -41,9 +46,10 @@ export class UploadService {
     private readonly http: HttpClient,
     private readonly recordRepo: RecordRepositoryService,
     private readonly dataStore: DataStoreService,
+    private readonly toastService: ToastService,
+    private readonly translateService: TranslateService,
   ) {
     this.getUserCredential().subscribe(userCredential => this.userCredential.next(userCredential));
-    this.uploadHandler().subscribe();
     this.uploadStatusHandler().subscribe();
     this.uploadHostHandler().subscribe();
   }
@@ -54,7 +60,18 @@ export class UploadService {
     if (this.isUploading) {
       return false;
     }
-    this.uploadTrigger.next(0);
+    this.upload()
+      .pipe(
+        catchError(err => {
+          console.log(err);
+          this.isUploading = false;
+          this.resetUploadStatus();
+          return this.translateService.get('description.uploadFailed')
+            .pipe(
+              switchMap(message => this.toastService.showToast(message, 2000)),
+            );
+        })
+      ).subscribe();
     return true;
   }
 
@@ -68,15 +85,14 @@ export class UploadService {
       );
   }
 
-  private uploadHandler() {
-    return this.uploadTrigger
+  private upload() {
+    return forkJoin([this.createNewUserAndSharedLink(), this.createRecordPayloads()])
       .pipe(
-        switchMap(() =>
-          forkJoin([this.createNewUserAndSharedLink(), this.createRecordPayloads()])
-        ),
+        take(1),
         tap(() => {
+          this.isUploading = true;
           this.newSharedLink.recordCount = this.cachedPayloads.length;
-          this.cleanupPreviousUpload();
+          this.resetUploadStatus();
         }),
         switchMap(() => this.login(this.newSharedLink.uid)),
         switchMap(() =>
@@ -109,9 +125,8 @@ export class UploadService {
 
   }
 
-  private cleanupPreviousUpload() {
-    this.isUploading = true;
-    this.uploadStatus.next({ total: this.newSharedLink.recordCount, done: 0 });
+  private resetUploadStatus() {
+    this.uploadStatus.next({ total: this.newSharedLink?.recordCount, done: 0 });
     this.doneRecordResetter.next(0);
   }
 

@@ -123,7 +123,8 @@
     "mustBeNoSmallerThan": "Value must be no smaller than {{min}}",
     "mustBeNoLargerThan": "Value must be no larger than {{max}}",
     "couponDisabled": "Reward redeeming coming soon",
-    "linkCopied": "Link copied to clipboard"
+    "linkCopied": "Link copied to clipboard",
+    "uploadFailed": "Upload failed. Please try again later."
   },
   "language": {
     "en": "English",
