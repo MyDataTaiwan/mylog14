@@ -64,8 +64,8 @@ export class DataStoreService {
       );
   }
 
-  pushRecord(record: Record): Observable<Record[]> {
-    return this.recordRepo.save(record)
+  pushRecord(record: Record, register = true): Observable<Record[]> {
+    return this.recordRepo.save(record, register)
       .pipe(
         tap(records => this.records.next(records)),
       );

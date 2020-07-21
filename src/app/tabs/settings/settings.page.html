@@ -65,17 +65,25 @@
         <ion-text>{{ appVersion }}</ion-text>
       </ion-item>
 
-      <ion-list-header *ngIf="showDeveloperOptions === true">
-        開發人員選項
-      </ion-list-header>
-      <ion-item *ngIf="showDeveloperOptions === true" lines="inset">
-        <ion-icon name="hammer-outline" slot="start"></ion-icon>
-        <ion-label>上傳測試設定</ion-label>
-        <ion-select value="PROD" okText="確定" cancelText="取消" (ionChange)="uploadHostSelected($event)">
-          <ion-select-option value="mylog14">Production</ion-select-option>
-          <ion-select-option value="logboard-dev">Dev</ion-select-option>
-        </ion-select>
-      </ion-item>
+      <ng-container *ngIf="showDeveloperOptions === true">
+        <ion-list-header>
+          開發人員選項
+        </ion-list-header>
+        <ion-item lines="inset">
+          <ion-icon name="hammer-outline" slot="start"></ion-icon>
+          <ion-label>上傳測試設定</ion-label>
+          <ion-select value="PROD" okText="確定" cancelText="取消" (ionChange)="uploadHostSelected($event)">
+            <ion-select-option value="mylog14">Production</ion-select-option>
+            <ion-select-option value="logboard-dev">Dev</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-icon name="hammer-outline" slot="start"></ion-icon>
+          <ion-note>產生{{ fakeDataDays }}天隨機資料</ion-note>
+          <ion-range min="1" max="30" [(ngModel)]="fakeDataDays" step="1"></ion-range>
+          <ion-button (click)="onMagicButtonClicked(fakeDataDays)">Magic</ion-button>
+        </ion-item>
+      </ng-container>
     </ion-list>
   </ng-container>
 </ion-content>

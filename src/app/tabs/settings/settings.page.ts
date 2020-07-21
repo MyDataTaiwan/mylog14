@@ -14,8 +14,10 @@ import { Plugins } from '@capacitor/core';
 import { FormService, UserDataFormField } from '@core/forms/form.service';
 import { LanguageService } from '@core/services/language.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
+import { UtilityService } from '@core/services/utility.service';
 import { IonDatetime } from '@ionic/angular';
 import { PopoverService } from '@shared/services/popover.service';
+import { ToastService } from '@shared/services/toast.service';
 
 import { version } from '../../../../package.json';
 
@@ -28,6 +30,7 @@ const { Browser } = Plugins;
 })
 export class SettingsPage implements OnInit, OnDestroy {
 
+  fakeDataDays = 1;
   private readonly destroy$ = new Subject();
 
   @ViewChild('dateOfBirthPicker') dateOfBirthPicker: IonDatetime;
@@ -73,6 +76,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly languageService: LanguageService,
     private readonly popoverService: PopoverService,
     private readonly presetService: PresetService,
+    private readonly toastService: ToastService,
+    private readonly utilityService: UtilityService,
   ) { }
 
   ngOnInit() {
@@ -116,6 +121,20 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   uploadHostSelected(event: CustomEvent): void {
     this.updateFromPage.next({ uploadHost: event.detail.value });
+  }
+
+  // Dirty nested subscription since finalize operator unable to work in thi case.
+  onMagicButtonClicked(days: number): void {
+    const count = days * 10;
+    this.utilityService.gen(days)
+      .subscribe(
+        () => { },
+        () => { },
+        () => this.toastService.showToast(`已產生 ${count} 筆資料`, 3000)
+          .pipe(
+            takeUntil(this.destroy$),
+          ).subscribe()
+      );
   }
 
   private showPopoverToEditField(userData: UserData, field: UserDataFormField): Observable<UserData> {

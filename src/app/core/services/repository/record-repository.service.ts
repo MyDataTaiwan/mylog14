@@ -59,10 +59,13 @@ export class RecordRepositoryService {
       );
   }
 
-  save(record: Record): Observable<Record[]> {
+  save(record: Record, register = true): Observable<Record[]> {
     return this.saveRecordAndCreateMeta(record)
       .pipe(
-        switchMap(meta => forkJoin([this.getMetas(), this.attachTransactionHash(meta)])),
+        switchMap(meta => forkJoin([
+          this.getMetas(),
+          (register) ? this.attachTransactionHash(meta) : of(meta),
+        ])),
         map(([metas, meta]) => [...metas, meta].sort((a, b) => a.timestamp - b.timestamp)),
         switchMap(metas => this.saveMetas(metas)),
         switchMap(() => this.getAll()),
