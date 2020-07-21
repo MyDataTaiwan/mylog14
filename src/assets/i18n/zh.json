@@ -92,7 +92,9 @@
     "highest": "最高",
     "lowest": "最低",
     "takePhoto": "拍一張照片",
-    "noLocationData": "未紀錄位置資訊"
+    "noLocationData": "未紀錄位置資訊",
+    "uploadAndCreateSharedLink": "上傳 & 產生分享連結",
+    "expireAt": "於 {{time}} 失效"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -118,7 +120,8 @@
     "notInputYet": "沒有輸入值",
     "mustBeNoSmallerThan": "輸入值不可小於 {{min}}",
     "mustBeNoLargerThan": "輸入值不可大於 {{max}}",
-    "couponDisabled": "敬請期待兌換獎勵功能"
+    "couponDisabled": "敬請期待兌換獎勵功能",
+    "linkCopied": "連結已複製到剪貼簿"
   },
   "preset": {
     "commonCold": {

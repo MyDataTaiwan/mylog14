@@ -2,20 +2,46 @@
 
 <ion-content>
     <ion-list>
-        <ion-item [disabled]="true" button>
-            <ion-icon name="link-outline" slot="start"></ion-icon>
-            <ion-label>{{ 'title.sharedLogboardLink' | translate }}</ion-label>
-            <ion-text>
-                {{ ('title.notGenerated' | translate) }}
-            </ion-text>
+        <ion-item *ngIf="uploadStatus$ | async as uploadStatus">
+            <ion-grid>
+                <ion-row>
+                    <ion-progress-bar color="primary" [value]="uploadStatus.done / uploadStatus.total">
+                    </ion-progress-bar>
+                </ion-row>
+                <ion-row>
+                    <ion-text class=ion-text-center>
+                        {{ uploadStatus.done }} / {{ uploadStatus.total }}
+                    </ion-text>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item *ngFor="let link of sharedLinks$ | async" button>
+            <ion-grid>
+                <ion-row>
+                    <ion-note>
+                        {{ 'title.expireAt' | translate: { time: link.expireTime | date: 'yyyy-MM-ddTHH:mm:ssz' } }}
+                    </ion-note>
+                </ion-row>
+                <ion-row class="ion-justify-content-center">
+                    <div class="link">
+                        <input type="text" readonly [value]="link.uid">
+                    </div>
+                    <div class="paperclip" (click)="onCopyClicked(link.url)">
+                        <div>
+                            <img src="../../../assets/ui/link.svg">
+                        </div>
+                    </div>
+                </ion-row>
+            </ion-grid>
         </ion-item>
     </ion-list>
-
 </ion-content>
 <ion-footer>
     <ion-grid>
         <ion-row class="ion-justify-content-center">
-            <ion-button (click)="onUploadButtonClicked()" fill="solid" size="large">上傳並產生新分享連結</ion-button>
+            <ion-button class="upload-button" (click)="onUploadButtonClicked()" fill="solid" size="large">
+                {{ 'title.uploadAndCreateSharedLink' | translate }}
+            </ion-button>
         </ion-row>
     </ion-grid>
 

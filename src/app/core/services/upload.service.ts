@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 
 import {
   BehaviorSubject, combineLatest, forkJoin, from, merge,
-  Observable, Subject,
+  Observable, of, Subject,
 } from 'rxjs';
-import { map, scan, switchMap, tap } from 'rxjs/operators';
+import { filter, map, mergeScan, switchMap, tap } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
 import { SharedLink } from '@core/interfaces/shared-link';
@@ -30,6 +30,7 @@ export class UploadService {
   private isUploading = false;
   private readonly uploadTrigger = new Subject();
 
+  doneRecordResetter = new Subject<number>();
   private readonly uploadStatusUpdater = new Subject<number>();
   private readonly uploadStatus = new BehaviorSubject<UploadStatus>(null);
   uploadStatus$: Observable<UploadStatus> = this.uploadStatus;
@@ -61,32 +62,38 @@ export class UploadService {
   private uploadHandler() {
     return this.uploadTrigger
       .pipe(
-        tap(() => this.cleanupPreviousUpload()),
         switchMap(() =>
           forkJoin([this.createNewUserAndSharedLink(), this.createRecordPayloads()])
         ),
         tap(() => {
           this.newSharedLink.recordCount = this.cachedPayloads.length;
-          this.uploadStatus.next({ totalRecords: this.newSharedLink.recordCount, uploadedRecords: 0 });
+          this.cleanupPreviousUpload();
         }),
         switchMap(() => this.login(this.newSharedLink.uid)),
         switchMap(() =>
-          merge(...this.cachedPayloads.map(payload => this.postRecord(payload, this.token)))
+          merge(
+            ...this.cachedPayloads.map(payload => this.postRecord(payload, this.token)),
+            this.doneRecordResetter
+          )
         ),
-        scan((arr, value) => arr + value),
-        tap(uploadedRecords => this.uploadStatusUpdater.next(uploadedRecords)),
+        mergeScan((arr, value) => {
+          return (value === 0) ? of(0) : of(arr + value);
+        }, 0),
+        tap(done => this.uploadStatusUpdater.next(done)),
+        filter(done => done === this.newSharedLink.recordCount),
         switchMap(() => this.dataStore.pushSharedLink(this.newSharedLink)),
-        tap(() => this.isUploading = false),
+        tap(() => {
+          this.isUploading = false;
+        }),
       );
   }
 
   private uploadStatusHandler() {
     return this.uploadStatusUpdater
       .pipe(
-        tap(e => console.log('upload status', e)),
-        map(uploadedRecords => ({
-          totalRecords: this.uploadStatus.getValue().totalRecords,
-          uploadedRecords,
+        map(done => ({
+          total: this.uploadStatus.getValue().total,
+          done,
         })),
         tap(newStatus => this.uploadStatus.next(newStatus)),
       );
@@ -95,10 +102,8 @@ export class UploadService {
 
   private cleanupPreviousUpload() {
     this.isUploading = true;
-    this.token = null;
-    this.newSharedLink = null;
-    this.cachedPayloads = null;
-    this.uploadStatus.next(null);
+    this.uploadStatus.next({ total: this.newSharedLink.recordCount, done: 0 });
+    this.doneRecordResetter.next(0);
   }
 
   private createSharedLink(uid: string, url: string, recordCount?: number): SharedLink {
@@ -223,6 +228,6 @@ interface UserCredential {
 }
 
 interface UploadStatus {
-  totalRecords: number;
-  uploadedRecords: number;
+  total: number;
+  done: number;
 }
