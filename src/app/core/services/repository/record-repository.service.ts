@@ -44,6 +44,13 @@ export class RecordRepositoryService {
       );
   }
 
+  getTransactionHashes(): Observable<string[]> {
+    return this.getMetas()
+      .pipe(
+        map(metas => metas.map(meta => meta.transactionHash)),
+      );
+  }
+
   delete(record: Record): Observable<Record[]> {
     return this.getMetas()
       .pipe(

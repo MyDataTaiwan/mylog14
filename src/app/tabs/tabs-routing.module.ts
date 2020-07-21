@@ -24,6 +24,10 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'share',
+        loadChildren: () => import('./share/share.module').then(m => m.SharePageModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('./settings/settings.module').then(m => m.SettingsPageModule)
       },
@@ -38,6 +42,10 @@ const routes: Routes = [
     path: '',
     redirectTo: '/tabs/tab-data',
     pathMatch: 'full'
+  },
+  {
+    path: 'share',
+    loadChildren: () => import('./share/share.module').then(m => m.SharePageModule)
   }
 ];
 

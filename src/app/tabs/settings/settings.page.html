@@ -54,14 +54,6 @@
         </ion-select>
       </ion-item>
 
-      <ion-item (click)="onClickSharedLogboardLinkItem()" [disabled]="!(hasGeneratedSharedLink$ | async)" button>
-        <ion-icon name="link-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.sharedLogboardLink' | translate }}</ion-label>
-        <ion-text>
-          {{ (hasGeneratedSharedLink$ | async) ? ('title.generated' | translate) : ('title.notGenerated' | translate) }}
-        </ion-text>
-      </ion-item>
-
       <ion-item (click)="onClickAboutItem()" button>
         <ion-icon name="information-circle-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.about' | translate }}</ion-label>
@@ -80,9 +72,8 @@
         <ion-icon name="hammer-outline" slot="start"></ion-icon>
         <ion-label>上傳測試設定</ion-label>
         <ion-select value="PROD" okText="確定" cancelText="取消" (ionChange)="uploadHostSelected($event)">
-          <ion-select-option value="PROD">Production</ion-select-option>
-          <ion-select-option value="DEV">Dev</ion-select-option>
-          <ion-select-option value="LOCAL">Localhost</ion-select-option>
+          <ion-select-option value="mylog14">Production</ion-select-option>
+          <ion-select-option value="logboard-dev">Dev</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

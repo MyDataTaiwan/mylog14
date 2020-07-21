@@ -94,7 +94,9 @@
     "highest": "Highest ",
     "lowest": "Lowest ",
     "takePhoto": "Take A Photo",
-    "noLocationData": "No Location Data"
+    "noLocationData": "No Location Data",
+    "uploadAndCreateSharedLink": "Upload & Create Link",
+    "expireAt": "Expire at {{time}}"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -120,7 +122,9 @@
     "notInputYet": "Empty input value",
     "mustBeNoSmallerThan": "Value must be no smaller than {{min}}",
     "mustBeNoLargerThan": "Value must be no larger than {{max}}",
-    "couponDisabled": "Reward redeeming coming soon"
+    "couponDisabled": "Reward redeeming coming soon",
+    "linkCopied": "Link copied to clipboard",
+    "uploadFailed": "Upload failed. Please try again later."
   },
   "language": {
     "en": "English",
