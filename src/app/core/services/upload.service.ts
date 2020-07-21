@@ -1,6 +1,4 @@
-import {
-  HttpClient, HttpErrorResponse, HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
@@ -38,8 +36,6 @@ export class UploadService {
   token: string;
   newSharedLink: SharedLink;
   cachedPayloads: FormData[];
-  private readonly generatedUrl = new BehaviorSubject<string>('');
-  public generatedUrl$ = this.generatedUrl.asObservable();
   private readonly ApiUrl = 'https://logboard-dev.numbersprotocol.io';
   constructor(
     private readonly http: HttpClient,
@@ -50,6 +46,8 @@ export class UploadService {
     this.uploadHandler().subscribe();
     this.uploadStatusHandler().subscribe();
   }
+
+  // FIXME: states and functions are messy, need refactoring & cleanup
 
   startUpload(): boolean {
     if (this.isUploading) {
@@ -177,29 +175,6 @@ export class UploadService {
         })),
         tap(payloads => this.cachedPayloads = payloads),
       );
-  }
-
-  private postArchive(blob: Blob) {
-    const hostUrl = {
-      LOCAL: 'http://127.0.0.1:8000',
-      DEV: 'https://logboard-dev.numbersprotocol.io',
-      PROD: 'https://mylog14.numbersprotocol.io',
-    };
-    const endpoint = '/api/v1/archives/';
-    const formData = new FormData();
-    formData.append('file', blob, 'mylog.zip');
-    const hostType = 'PROD';
-    const url = hostUrl[hostType] + endpoint;
-    return this.http.post(url, formData)
-      .pipe(
-        map((res: string) => res.replace(hostUrl.PROD, hostUrl[hostType])),
-        tap(logboardUrl => this.generatedUrl.next(logboardUrl)),
-        catchError(err => this.httpErrorHandler(err)),
-      );
-  }
-
-  private httpErrorHandler(err: HttpErrorResponse) {
-    return throwError(err.message || 'server error');
   }
 
 }

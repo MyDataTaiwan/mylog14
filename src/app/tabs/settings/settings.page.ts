@@ -39,8 +39,6 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   userData$: Observable<UserData> = this.dataStore.userData$;
 
-  hasGeneratedSharedLink$: Observable<boolean>;
-
   showDeveloperOptions = false;
   private readonly versionClick = new Subject<boolean>();
   versionClick$ = this.versionClick.pipe(
@@ -104,10 +102,6 @@ export class SettingsPage implements OnInit, OnDestroy {
       ).subscribe();
   }
 
-  onClickSharedLogboardLinkItem(): void {
-    // this.showPopover(SharedLinkPopoverPage);
-  }
-
   onClickAboutItem(): void {
     Browser.open({ url: 'https://mydata.org.tw/' });
   }
@@ -155,5 +149,4 @@ export interface UserDataPatch {
   startDate?: string; // yyyy-MM-dd
   endDate?: string; // yyyy-MM-dd
   uploadHost?: string;
-  generatedUrl?: string;
 }

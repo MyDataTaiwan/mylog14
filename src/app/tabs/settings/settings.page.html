@@ -54,14 +54,6 @@
         </ion-select>
       </ion-item>
 
-      <ion-item (click)="onClickSharedLogboardLinkItem()" [disabled]="!(hasGeneratedSharedLink$ | async)" button>
-        <ion-icon name="link-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.sharedLogboardLink' | translate }}</ion-label>
-        <ion-text>
-          {{ (hasGeneratedSharedLink$ | async) ? ('title.generated' | translate) : ('title.notGenerated' | translate) }}
-        </ion-text>
-      </ion-item>
-
       <ion-item (click)="onClickAboutItem()" button>
         <ion-icon name="information-circle-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.about' | translate }}</ion-label>
