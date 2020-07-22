@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { empty } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import { map, mergeMap, repeat, take, tap } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
@@ -23,14 +23,13 @@ export class UtilityService {
     return this.dataStore.userData$
       .pipe(
         take(1),
-        tap(() => console.log('Upstream')),
         map(userData => userData.recordPreset),
         mergeMap(preset => this.recordService.create(preset)),
-        repeat(daysBackward * 10),
         map(record => this.randomizeRecordData(record, daysBackward)),
         mergeMap(record => this.dataStore.pushRecord(record, false)),
+        repeat(daysBackward * 10),
         tap(() => console.log('Fake data created')),
-        mergeMap(() => empty()),
+        mergeMap(() => EMPTY),
       );
   }
 
