@@ -22,6 +22,9 @@ import {
 } from './components/photo-viewer/photo-viewer.component';
 import { PopoverComponent } from './components/popover/popover.component';
 import {
+  ProofItemComponent,
+} from './components/proof-item/proof-item.component';
+import {
   QrScannerComponent,
 } from './components/qr-scanner/qr-scanner.component';
 import {
@@ -29,20 +32,13 @@ import {
 } from './components/shop-scanner/shop-scanner.component';
 
 @NgModule({
-  entryComponents: [
-    AddPhotoComponent,
-    AddRecordComponent,
-    PhotoViewerComponent,
-    PopoverComponent,
-    ShopScannerComponent,
-    QrScannerComponent,
-  ],
   declarations: [
     AddPhotoComponent,
     AddRecordComponent,
     MapComponent,
     PhotoViewerComponent,
     PopoverComponent,
+    ProofItemComponent,
     ShopScannerComponent,
     QrScannerComponent,
     FormlyFieldInputComponent,
@@ -68,6 +64,7 @@ import {
     MapComponent,
     PhotoViewerComponent,
     PopoverComponent,
+    ProofItemComponent,
     ShopScannerComponent,
     QrScannerComponent,
   ]

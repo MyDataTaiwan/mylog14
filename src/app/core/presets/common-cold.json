@@ -5,11 +5,9 @@
             "name": "bodyTemperature",
             "icon": "thermometer-outline",
             "type": "number",
+            "isKeyField": true,
             "dataGroup": "vitalSigns",
-            "dataClass": [
-                "summary",
-                "showHighest"
-            ],
+            "dataClass": "highest",
             "defaultValue": null,
             "valueRange": {
                 "max": 41,
@@ -21,51 +19,55 @@
             "name": "coughing",
             "icon": "medkit-outline",
             "type": "boolean",
+            "isKeyField": false,
             "dataGroup": "symptoms",
-            "dataClass": [
-                "presencePreview"
-            ],
+            "dataClass": "booleanPreview",
             "defaultValue": false
         },
         {
             "name": "runnyNose",
             "icon": "medkit-outline",
             "type": "boolean",
+            "isKeyField": false,
             "dataGroup": "symptoms",
-            "dataClass": [
-                "presencePreview"
-            ],
+            "dataClass": "booleanPreview",
             "defaultValue": false
         },
         {
             "name": "nasalCongestion",
             "icon": "medkit-outline",
             "type": "boolean",
+            "isKeyField": false,
             "dataGroup": "symptoms",
-            "dataClass": [
-                "presencePreview"
-            ],
+            "dataClass": "booleanPreview",
             "defaultValue": false
         },
         {
             "name": "sneezing",
             "icon": "medkit-outline",
             "type": "boolean",
+            "isKeyField": false,
             "dataGroup": "symptoms",
-            "dataClass": [
-                "presencePreview"
-            ],
+            "dataClass": "booleanPreview",
             "defaultValue": false
         },
         {
             "name": "note",
             "icon": "pencil-outline",
             "type": "string",
+            "isKeyField": false,
             "dataGroup": "note",
-            "dataClass": [
-                "note"
-            ],
-            "defaultValue": ""
+            "dataClass": "note",
+            "defaultValue": null
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "isKeyField": false,
+            "dataGroup": "photo",
+            "dataClass": "photo",
+            "defaultValue": null
         }
     ]
 }

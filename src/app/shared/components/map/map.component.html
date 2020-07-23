@@ -1,5 +1,6 @@
 <div class="map-container" *ngIf="options && layers">
-  <div class="map" [ngStyle]="styles" leaflet [leafletOptions]="options" [leafletLayers]="layers" (leafletMapReady)="onMapReady($event)">
+  <div class="map" [ngStyle]="styles" leaflet [leafletOptions]="options" [leafletLayers]="layers"
+    (leafletMapReady)="onMapReady($event)">
   </div>
 </div>
 <ion-img *ngIf="!options" [ngStyle]="styles" src="/assets/imgA.png" alt="No picture"></ion-img>

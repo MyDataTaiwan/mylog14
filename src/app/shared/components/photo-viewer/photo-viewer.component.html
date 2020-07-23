@@ -7,8 +7,8 @@
       <ion-icon name="time-outline" slot="start"></ion-icon>
       <ion-label>{{ 'title.time' | translate }}</ion-label>
       <div class="ion-text-center">
-        <ion-label>{{ photo.timestamp | date: 'yyyy/MM/dd' }} </ion-label>
-        <ion-label>{{ photo.timestamp | date: 'HH:mm:ss' }} </ion-label>
+        <ion-label>{{ record.timestamp | date: 'yyyy/MM/dd' }} </ion-label>
+        <ion-label>{{ record.timestamp | date: 'HH:mm:ss' }} </ion-label>
       </div>
     </ion-item>
     <ion-item>
@@ -22,5 +22,9 @@
       </ng-template>
     </ion-item>
   </ion-list>
-  <ion-img [src]="'data:image/jpeg;base64,' + photo.byteString" style="width: 100%;"></ion-img>
+  <ng-container *ngFor="let field of record.fields">
+    <ng-container *ngIf="field.type === 'photo' && field.value">
+      <ion-img [src]="'data:image/jpeg;base64,' + field.value" style="width: 100%;"></ion-img>
+    </ng-container>
+  </ng-container>
 </ion-content>

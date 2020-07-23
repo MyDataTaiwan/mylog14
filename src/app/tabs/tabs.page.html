@@ -5,8 +5,9 @@
         <img *ngIf="selectedTab !== 'tab-data'" src="../../assets/ui/nav_icon_A.svg" />
         <img *ngIf="selectedTab === 'tab-data'" src="../../assets/ui/nav_icon_1.svg" />
       </ion-tab-button>
-      <ion-tab-button (click)="onClickShareButton()">
-        <img src="../../assets/ui/nav_icon_C.svg" />
+      <ion-tab-button tab="share">
+        <img *ngIf="selectedTab !== 'share'" src="../../assets/ui/nav_icon_C.svg" />
+        <img *ngIf="selectedTab === 'share'" src="../../assets/ui/nav_icon_3.svg" />
       </ion-tab-button>
       <ion-tab-button tab="settings">
         <img *ngIf="selectedTab !== 'settings'" src="../../assets/ui/nav_icon_D.svg" />

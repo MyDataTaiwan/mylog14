@@ -1,26 +1,28 @@
-<ion-virtual-scroll [items]="dailySummaries" approxItemHeight="220px" height="100%">
-  <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily', item.date]"
+<ion-virtual-scroll [items]="summaryByDateArray$ | async" approxItemHeight="220px" height="100%">
+  <ion-card *virtualItem="let item; let itemBounds = bounds;" [routerLink]="['/tabs/tab-data/daily', item.key]"
     routerDirection="forward">
     <ion-grid fixed>
       <ion-row>
         <ion-col size="6">
           <ion-card-header>
-            <ion-card-title class="ion-text-center">DAY {{ item.dayCount }}</ion-card-title>
-            <ion-card-title class="ion-text-center">{{ item.dateView }}</ion-card-title>
+            <ion-card-title class="ion-text-center">DAY {{ item.value.dayCount }}</ion-card-title>
+            <ion-card-title class="ion-text-center">{{ item.key | date: 'MM/dd' }}</ion-card-title>
           </ion-card-header>
           <ion-card-content class="ion-text-center">
             <div>
               <ion-label color="dark">
                 <small>
-                  {{ item.recordsCount }} {{ 'title.recordsCount' | translate }}
+                  {{ item.value.recordsCount }} {{ 'title.recordsCount' | translate }}
                 </small>
               </ion-label>
             </div>
-            <div *ngFor="let row of item.dataSummaries | keyvalue">
+            <div *ngIf="item.value.keyData.value">
               <ion-label color="dark">
                 <small>
-                  {{ 'preset.' + item.templateName + '.' + row.key | translate }}: {{ row.value.value }}
-                  {{ row.value.valueUnit }}
+                  {{ 'title.' + item.value.keyData.dataClass | translate }}
+                  {{ 'preset.' + item.value.templateName + '.' + item.value.keyData.name | translate }}:
+                  {{ item.value.keyData.value }}
+                  {{ 'preset.' + item.value.templateName + '.unit.' + item.value.keyData.unit | translate }}
                 </small>
               </ion-label>
             </div>
@@ -28,7 +30,10 @@
         </ion-col>
         <ion-col size="6">
           <ion-thumbnail>
-            <ion-img [src]="getImgSrc(item.imgByteString)" alt="No picture">
+            <ion-img *ngIf="item.value.imgByteString" [src]="'data:image/jpeg;base64,' + item.value.imgByteString"
+              alt="No picture">
+            </ion-img>
+            <ion-img *ngIf="!item.value.imgByteString" src="/assets/imgA.png" alt="No picture">
             </ion-img>
           </ion-thumbnail>
         </ion-col>

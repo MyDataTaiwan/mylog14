@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { crypto, util } from 'openpgp';
-import { defer, from, Observable } from 'rxjs';
-import { defaultIfEmpty, filter, map, switchMap, take } from 'rxjs/operators';
+import { defer, from, Observable, of } from 'rxjs';
+import {
+  catchError, defaultIfEmpty, filter, map, switchMap,
+} from 'rxjs/operators';
 
 import {
   FilesystemDirectory, FilesystemEncoding, Plugins,
@@ -23,7 +25,7 @@ export class FileSystemService {
       directory: dir,
     }))
       .pipe(
-        take(1),
+
         map(result => (util.encode_utf8(result.data))),
         switchMap(ab => crypto.hash.sha256(ab)),
         map((intArr: Uint8Array) => util.Uint8Array_to_hex(intArr)),
@@ -45,6 +47,7 @@ export class FileSystemService {
     })));
     return readFile$
       .pipe(
+        catchError(() => of({ data: null })),
         map(readResult => readResult.data),
         filter(data => data != null),
         defaultIfEmpty('{}'),

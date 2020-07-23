@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { SharedLinkPopoverPage } from './shared-link-popover.page';
+import { SharePage } from './share.page';
 
-describe('SharedLinkPopoverPage', () => {
-  let component: SharedLinkPopoverPage;
-  let fixture: ComponentFixture<SharedLinkPopoverPage>;
+describe('SharePage', () => {
+  let component: SharePage;
+  let fixture: ComponentFixture<SharePage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SharedLinkPopoverPage ],
+      declarations: [ SharePage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SharedLinkPopoverPage);
+    fixture = TestBed.createComponent(SharePage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

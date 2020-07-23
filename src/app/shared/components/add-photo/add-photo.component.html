@@ -1,19 +1,12 @@
 <app-header [headerTitle]="'title.addPhotoTitle' | translate" showDismissButton="true" (dismissClicked)="cancel()">
 </app-header>
-<ion-content>
-  <ion-item>
-    <ion-icon [name]="proofDisplay.icon" [color]="proofDisplay.color" slot="start"></ion-icon>
-    <ion-label [color]="proofDisplay.color">{{ 'title.metadataCollection' | translate }}</ion-label>
-    <ion-text *ngIf="proofDisplay.status" [color]="proofDisplay.color">{{ 'title.passed' | translate }}</ion-text>
-    <ion-spinner *ngIf="!proofDisplay.status"></ion-spinner>
-  </ion-item>
-  <img [src]="photoUri$ | async">
+<ion-content *ngIf="record$ | async as record">
+  <app-proof-item [status]="proofStatus"></app-proof-item>
+  <ng-container *ngFor="let field of record.fields">
+    <img *ngIf="field.type === 'photo' && field.value" [src]="'data:image/jpeg;base64,' + field.value">
+  </ng-container>
 </ion-content>
 <ion-footer>
-  <ion-item>
-    <ion-icon name="pencil-outline"></ion-icon>
-    <ion-input [placeholder]=" 'title.photoCaptionPlaceholder' | translate"></ion-input>
-  </ion-item>
   <ion-buttons class="ion-justify-content-evenly">
     <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
     <ion-button (click)="takePhoto()">{{ 'title.retakePhoto' | translate }}</ion-button>

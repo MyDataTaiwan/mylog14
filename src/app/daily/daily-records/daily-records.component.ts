@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
+import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { DataStoreService } from '@core/services/store/data-store.service';
 
 @Component({
@@ -28,6 +29,16 @@ export class DailyRecordsComponent implements OnInit {
 
   getFieldsCount(record: Record): number {
     return record.fields.filter(field => (field.value !== null && field.value !== '')).length;
+  }
+
+  getFirstSummaryField(record: Record) {
+    return record.fields.find(field => field.isKeyField);
+  }
+
+  getAvailableFields(record: Record) {
+    return record.fields.filter(field =>
+      field.type !== RecordFieldType.photo && field.value != null && field.value !== '' && field.value !== false
+    );
   }
 
   isSelected(record: Record): boolean {

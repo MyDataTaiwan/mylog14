@@ -20,19 +20,21 @@
         <ion-text *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</ion-text>
       </ion-item>
 
-      <ion-item lines="inset" button>
+      <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
         <ion-icon name="calendar-outline" slot="start">
         </ion-icon>
         <ion-label>{{ 'title.dateOfBirth' | translate }}</ion-label>
         <ion-text *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</ion-text>
         <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
-          (ionChange)="onChangeDateOfBirthPicker()"></ion-datetime>
+          (ionChange)="onChangeDateOfBirthPicker()" [cancelText]="'title.cancel' | translate"
+          [doneText]="'title.confirm' | translate"></ion-datetime>
       </ion-item>
 
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.language' | translate }}</ion-label>
-        <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)">
+        <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)"
+          [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let language of languages" [value]="language">
             {{ 'language.' + language | translate }}
           </ion-select-option>
@@ -42,19 +44,14 @@
       <ion-item lines="inset">
         <ion-icon name="documents-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.selectRecordMode' | translate }}</ion-label>
-        <ion-select *ngIf="showSelects" [value]="(userDataView.recordPreset) ? userDataView.recordPreset : recordPresets[0]" (ionChange)="presetSelected($event)">
+        <ion-select *ngIf="showSelects"
+          [value]="(userDataView.recordPreset) ? userDataView.recordPreset : recordPresets[0]"
+          (ionChange)="presetSelected($event)" [cancelText]="'title.cancel' | translate"
+          [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let preset of recordPresets" [value]="preset">
             {{ 'preset.' + preset + '.presetName' | translate }}
           </ion-select-option>
         </ion-select>
-      </ion-item>
-
-      <ion-item (click)="onClickSharedLogboardLinkItem()" [disabled]="!(hasGeneratedSharedLink$ | async)" button>
-        <ion-icon name="link-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.sharedLogboardLink' | translate }}</ion-label>
-        <ion-text>
-          {{ (hasGeneratedSharedLink$ | async) ? ('title.generated' | translate) : ('title.notGenerated' | translate) }}
-        </ion-text>
       </ion-item>
 
       <ion-item (click)="onClickAboutItem()" button>
@@ -68,18 +65,25 @@
         <ion-text>{{ appVersion }}</ion-text>
       </ion-item>
 
-      <ion-list-header *ngIf="showDeveloperOptions === true">
-        開發人員選項
-      </ion-list-header>
-      <ion-item *ngIf="showDeveloperOptions === true" lines="inset">
-        <ion-icon name="hammer-outline" slot="start"></ion-icon>
-        <ion-label>上傳測試設定</ion-label>
-        <ion-select value="PROD" okText="確定" cancelText="取消" (ionChange)="uploadHostSelected($event)">
-          <ion-select-option value="PROD">Production</ion-select-option>
-          <ion-select-option value="DEV">Dev</ion-select-option>
-          <ion-select-option value="LOCAL">Localhost</ion-select-option>
-        </ion-select>
-      </ion-item>
+      <ng-container *ngIf="showDeveloperOptions === true">
+        <ion-list-header>
+          開發人員選項
+        </ion-list-header>
+        <ion-item lines="inset">
+          <ion-icon name="hammer-outline" slot="start"></ion-icon>
+          <ion-label>上傳測試設定</ion-label>
+          <ion-select value="PROD" okText="確定" cancelText="取消" (ionChange)="uploadHostSelected($event)">
+            <ion-select-option value="mylog14">Production</ion-select-option>
+            <ion-select-option value="logboard-dev">Dev</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item lines="inset">
+          <ion-icon name="hammer-outline" slot="start"></ion-icon>
+          <ion-note>產生{{ fakeDataDays }}天隨機資料</ion-note>
+          <ion-range min="1" max="30" [(ngModel)]="fakeDataDays" step="1"></ion-range>
+          <ion-button (click)="onMagicButtonClicked(fakeDataDays)">Magic</ion-button>
+        </ion-item>
+      </ng-container>
     </ion-list>
   </ng-container>
 </ion-content>

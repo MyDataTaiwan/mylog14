@@ -55,7 +55,7 @@
     "about": "關於我們",
     "version": "版本",
     "language": "語言",
-    "selectRecordMode": "選擇紀錄模式",
+    "selectRecordMode": "紀錄模式",
     "simple": "簡易",
     "advanced": "進階",
     "agreeTheTermsAndConditions": "同意 MyLog 使用者條款摘要",
@@ -84,7 +84,17 @@
     "location": "地點",
     "deletePhoto": "刪除照片",
     "shareDisabled": "敬請期待",
-    "redeemReward": "兌換獎勵"
+    "redeemReward": "兌換獎勵",
+    "recordNotTaken": "未紀錄",
+    "emptyRecord": "空白紀錄",
+    "noFieldsSelected": "無項目",
+    "accumulated": "累積",
+    "highest": "最高",
+    "lowest": "最低",
+    "takePhoto": "拍一張照片",
+    "noLocationData": "未紀錄位置資訊",
+    "uploadAndCreateSharedLink": "上傳 & 產生分享連結",
+    "expireAt": "於 {{time}} 失效"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -103,10 +113,16 @@
     "shareToWhom": "紀錄要分享給誰？",
     "uploadingDataError": "上傳失敗，請稍後再試。",
     "registeringUser": "使用者註冊中，請稍候...",
-    "deletePhotoPopover": "此動作無法復原。你確定你要刪除這張照片嗎？",
+    "deletePhotoPopover": "此照片和對應的單筆紀錄將會被刪除。此動作無法復原。你確定你要刪除這張照片嗎？",
     "deletingPhoto": "正在刪除照片...",
     "shareDisabled": "此版本暫時無法透過 LogBoard 分享資料。下一個版本推出時請更新 App 以使用 LogBoard 分享功能。",
-    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以兌換 $20 獎勵囉！"
+    "logMoreDaysForReward": "再紀錄 {{days}} 天就可以獲得 $20 獎勵囉！",
+    "notInputYet": "沒有輸入值",
+    "mustBeNoSmallerThan": "輸入值不可小於 {{min}}",
+    "mustBeNoLargerThan": "輸入值不可大於 {{max}}",
+    "couponDisabled": "敬請期待兌換獎勵功能",
+    "linkCopied": "連結已複製到剪貼簿",
+    "uploadFailed": "上傳失敗。請稍後再試。"
   },
   "preset": {
     "commonCold": {
@@ -121,6 +137,7 @@
       "nasalCongestion": "鼻塞",
       "sneezing": "打噴嚏",
       "note": "附註",
+      "photo": "照片",
       "unit": {
         "°C": "°C"
       }
@@ -138,6 +155,7 @@
       "weight": "體重",
       "urineVolume": "尿量",
       "note": "附註",
+      "photo": "照片",
       "unit": {
         "mmHg": "mmHg",
         "bpm": "bpm",
