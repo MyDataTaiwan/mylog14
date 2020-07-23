@@ -2,20 +2,19 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import {
-  filter, first, map, mergeMap, switchMap,
+  filter, map, mergeMap, switchMap, take,
   takeUntil, tap,
 } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
+import { ProofStatus } from '@core/enums/proof-status.enum';
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { FormService } from '@core/forms/form.service';
 import { Proof } from '@core/interfaces/proof';
 import { RecordField } from '@core/interfaces/record-field';
+import { PhotoService } from '@core/services/photo.service';
 import { ProofService } from '@core/services/proof.service';
 import { RecordService } from '@core/services/record.service';
-import {
-  UserDataRepositoryService,
-} from '@core/services/repository/user-data-repository.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
@@ -36,14 +35,25 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   private readonly edit = new Subject<[RecordField, string]>();
   edit$ = this.edit
     .pipe(
-      switchMap(([field, templateName]) => this.editField(field, templateName)),
-      map(result => result.data),
+      switchMap(([field, templateName]) => {
+        if (field.type === RecordFieldType.photo) {
+          return this.photoService.create()
+            .pipe(
+              map(byteString => ({ [field.name]: byteString })),
+            );
+        } else {
+          return this.editField(field, templateName)
+            .pipe(
+              map(result => result.data),
+            );
+        }
+      }),
       filter(data => (data)),
       tap(data => this.updateRecordFields(data)),
       takeUntil(this.destroy$),
     );
 
-  proofDisplay = this.getDefaultProofDisplay();
+  proofStatus = ProofStatus.LOADING;
 
   constructor(
     private readonly dataStore: DataStoreService,
@@ -52,7 +62,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     private readonly modalCtrl: ModalController,
     private readonly popoverService: PopoverService,
     private readonly recordService: RecordService,
-    private readonly userDataRepo: UserDataRepositoryService,
+    private readonly photoService: PhotoService,
     private readonly proofService: ProofService,
   ) {
   }
@@ -80,7 +90,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     return this.proofService.createProof()
       .pipe(
         tap(proof => this.updateRecordProof(proof)),
-        tap(() => this.proofDisplay = this.getCompleteProofDisplay()),
+        tap(() => this.proofStatus = ProofStatus.COMPLETE),
         takeUntil(this.destroy$),
       );
   }
@@ -112,7 +122,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     return this.saveRecordWithLoading()
       .pipe(
         mergeMap(() => this.showRecordSavedPopover()),
-        tap(() => this.modalCtrl.dismiss()),
+        mergeMap(() => this.modalCtrl.dismiss()),
         takeUntil(this.destroy$),
       );
   }
@@ -128,29 +138,13 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private loadEmptyRecord() {
-    this.userDataRepo.get()
+    this.dataStore.userData$
       .pipe(
-        first(),
+        take(1),
         switchMap(userData => this.recordService.create(userData.recordPreset)),
         tap(record => this.record.next(record)),
         takeUntil(this.destroy$),
       ).subscribe();
-  }
-
-  private getDefaultProofDisplay(): ProofDisplay {
-    return {
-      status: false,
-      icon: 'shield-outline',
-      color: 'black',
-    };
-  }
-
-  private getCompleteProofDisplay() {
-    return {
-      status: true,
-      icon: 'shield-checkmark-outline',
-      color: 'primary',
-    };
   }
 
   private showRecordSavedPopover(): Observable<any> {
@@ -171,10 +165,4 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.record.next(record);
   }
 
-}
-
-interface ProofDisplay {
-  status: boolean;
-  icon: string;
-  color: string;
 }

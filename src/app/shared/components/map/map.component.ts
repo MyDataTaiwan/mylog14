@@ -26,6 +26,7 @@ export class MapComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit() {
+    this.proofs = this.proofs.filter(proof => proof);
     if (this.proofs.length > 0 && this.proofs[0]) {
       this.initMap();
     }
@@ -37,10 +38,17 @@ export class MapComponent implements OnInit, OnDestroy {
   }
 
   initMap() {
-    if (this.proofs.filter(proof => proof != null).filter(proof => proof.location)) {
-      this.options = this.createMapOptions();
-      this.layers = this.createMapLayersWithLocationMarkers();
+    if (!this.proofs) {
+      return;
     }
+    this.proofs = this.proofs
+      .filter(proof => proof != null)
+      .filter(proof => proof.location != null);
+    if (!this.proofs[0]) {
+      return;
+    }
+    this.options = this.createMapOptions(this.proofs[0].location.latitude, this.proofs[0].location.longitude);
+    this.layers = this.createMapLayersWithLocationMarkers(this.proofs);
   }
 
   onMapReady(map: Map) {
@@ -50,19 +58,19 @@ export class MapComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  private createMapOptions() {
+  private createMapOptions(latitude: number, longitude: number) {
     return {
       layers: [
         tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 })
       ],
       zoom: 15,
-      center: latLng(this.proofs[0].location.latitude, this.proofs[0].location.longitude),
+      center: latLng(latitude, longitude),
       attributionControl: false,
     };
   }
 
-  private createMapLayersWithLocationMarkers() {
-    return this.proofs
+  private createMapLayersWithLocationMarkers(proofs: Proof[]) {
+    return proofs
       .filter(proof => (proof.location.latitude && proof.location.longitude))
       .map(proof => marker([proof.location.latitude, proof.location.longitude]));
   }

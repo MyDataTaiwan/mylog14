@@ -42,6 +42,7 @@ export class PresetService {
     CommonCold.fields.forEach(field => record.addField(
       field.name,
       RecordFieldType[field.type],
+      field.isKeyField,
       field.dataGroup,
       field.dataClass,
       field.defaultValue,
@@ -57,6 +58,7 @@ export class PresetService {
     HeartFailure.fields.forEach(field => record.addField(
       field.name,
       RecordFieldType[field.type],
+      field.isKeyField,
       field.dataGroup,
       field.dataClass,
       field.defaultValue,

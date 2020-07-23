@@ -8,10 +8,6 @@ import {
   PermissionsOptions, PermissionType, Plugins,
 } from '@capacitor/core';
 
-import { Photo } from '../classes/photo';
-import { ProofService } from './proof.service';
-import { PhotoRepositoryService } from './repository/photo-repository.service';
-
 const { Camera, Permissions } = Plugins;
 
 @Injectable({
@@ -19,36 +15,13 @@ const { Camera, Permissions } = Plugins;
 })
 export class PhotoService {
 
-  constructor(
-    private readonly photoRepo: PhotoRepositoryService,
-    private readonly proofService: ProofService,
-  ) {
-  }
+  constructor() { }
 
-  attachProof(photo: Photo): Observable<Photo> {
-    return this.proofService.createProof()
-      .pipe(
-        map(proof => {
-          photo.setProof(proof);
-          return photo;
-        }),
-      );
-  }
-
-
-  create(): Observable<Photo> {
+  create(): Observable<string> {
     return this.getCameraPhoto()
       .pipe(
-        map(cameraPhoto => new Photo(Date.now(), cameraPhoto.base64String)),
+        map(cameraPhoto => cameraPhoto.base64String),
       );
-  }
-
-  delete(photo: Photo): Observable<any> {
-    return this.photoRepo.delete(photo);
-  }
-
-  save(record: Photo): Observable<Photo[]> {
-    return this.photoRepo.save(record);
   }
 
   private getCameraPhoto(): Observable<CameraPhoto> {

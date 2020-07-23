@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 
 import { Record } from '../../classes/record';
@@ -44,11 +44,30 @@ export class RecordRepositoryService {
       );
   }
 
-  save(record: Record): Observable<Record[]> {
+  getTransactionHashes(): Observable<string[]> {
+    return this.getMetas()
+      .pipe(
+        map(metas => metas.map(meta => meta.transactionHash)),
+      );
+  }
+
+  delete(record: Record): Observable<Record[]> {
+    return this.getMetas()
+      .pipe(
+        switchMap(metas => this.deleteRecordAndDeleteMeta(metas, record.timestamp)),
+        switchMap(() => this.getAll()),
+      );
+  }
+
+  save(record: Record, register = true): Observable<Record[]> {
     return this.saveRecordAndCreateMeta(record)
       .pipe(
-        switchMap(meta => forkJoin([this.getMetas(), this.attachTransactionHash(meta)])),
-        switchMap(([metas, meta]) => this.saveMetas([...metas, meta])),
+        switchMap(meta => forkJoin([
+          this.getMetas(),
+          (register) ? this.attachTransactionHash(meta) : of(meta),
+        ])),
+        map(([metas, meta]) => [...metas, meta].sort((a, b) => a.timestamp - b.timestamp)),
+        switchMap(metas => this.saveMetas(metas)),
         switchMap(() => this.getAll()),
       );
   }
@@ -64,6 +83,19 @@ export class RecordRepositoryService {
     return this.fileSystem.getFileHash(path)
       .pipe(
         map(hash => ({ timestamp, path, hash }) as Meta),
+      );
+  }
+
+  private deleteRecordAndDeleteMeta(metas: Meta[], timestamp: number): Observable<Meta[]> {
+    const meta = metas.find(el => el.timestamp === timestamp);
+    const deleteRecord$ = (meta) ? this.fileSystem.deleteJsonData(meta.path) : of();
+    const metaIdx = metas.findIndex(el => el.timestamp === timestamp);
+    if (metaIdx) {
+      metas.splice(metaIdx, 1);
+    }
+    return deleteRecord$
+      .pipe(
+        switchMap(() => this.saveMetas(metas)),
       );
   }
 

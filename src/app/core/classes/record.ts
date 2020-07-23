@@ -19,8 +19,9 @@ export class Record {
     addField(
         name: string,
         type: RecordFieldType,
+        isKeyField: boolean,
         dataGroup: string,
-        dataClass: string[],
+        dataClass: string,
         defaultValue: RecordFieldValue,
         icon?: string,
         valueUnit?: string,
@@ -30,6 +31,7 @@ export class Record {
             name,
             icon,
             type,
+            isKeyField,
             dataGroup,
             dataClass,
             defaultValue,
@@ -40,7 +42,12 @@ export class Record {
     }
 
     setFieldValue(name: string, value: RecordFieldValue): void {
-        this.fields.find(el => el.name === name).value = value;
+        const field = this.fields.find(el => el.name === name);
+        if (field.type === 'number') {
+            field.value = +value;
+        } else {
+            field.value = value;
+        }
     }
 
     setProof(proof: Proof) {

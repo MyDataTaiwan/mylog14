@@ -1,21 +1,27 @@
+import {
+  AfterViewInit, Component, ElementRef, EventEmitter, Input,
+  OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+
 import jsQR from 'jsqr';
-import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
+import { defer, Subject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+
 import { Platform } from '@ionic/angular';
-import { defer, Subject, Observable } from 'rxjs';
-import { tap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-qr-scanner',
   templateUrl: './qr-scanner.component.html',
   styleUrls: ['./qr-scanner.component.scss'],
 })
-export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
+export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
 
-  @Input() scanEnabled: Observable<boolean>;
+  @Input() scanEnabled: boolean;
   @Output() scanResult = new EventEmitter<string>();
-  @ViewChild('video', { static: false }) video: ElementRef;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef;
-  @ViewChild('fileinput', { static: false }) fileinput: ElementRef;
+  @ViewChild('video') video: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('fileinput') fileinput: ElementRef;
 
   cameraStreamReady = false;
   canvasContext: any;
@@ -26,7 +32,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
   destroy$ = new Subject();
 
   constructor(
-    private platform: Platform
+    private readonly platform: Platform
   ) {
     const isInStandaloneMode = () =>
       'standalone' in window.navigator && window.navigator['standalone'];
@@ -48,16 +54,17 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
-    this.scanEnabled
-      .pipe(
-        tap(scanEnabled => {
-          this.scanOn = scanEnabled;
-          if (this.scanOn) {
-            this.startScan();
-          }
-        }),
-        takeUntil(this.destroy$),
-      ).subscribe();
+    this.scanOn = this.scanEnabled;
+    if (this.scanOn) {
+      this.startScan();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.scanOn = changes.scanEnabled.currentValue;
+    if (changes.scanEnabled.previousValue === false && this.scanOn === true) {
+      this.startScan();
+    }
   }
 
   startScan() {
