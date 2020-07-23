@@ -78,7 +78,6 @@ fdescribe('getJsonData', () => {
           });
 
     const expectedJsonData = '{"color":"red","value":"#f00"}';
-    console.log(expectedJsonData);
     service.getJsonData('file.txt', true, FilesystemDirectory.Documents).subscribe(x => {
       expect(JSON.stringify(x)).toBe(expectedJsonData);
     });

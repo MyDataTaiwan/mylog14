@@ -29,7 +29,6 @@ fdescribe('getData', () => {
     });
 
     const expectedData = Object({ id: 1, name: 'Max' });
-    console.log('expectedData', expectedData);
     service.getData('user', '').subscribe(x => {
       expect(x).toEqual(expectedData);
     });

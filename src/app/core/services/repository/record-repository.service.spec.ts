@@ -22,7 +22,7 @@ fdescribe('save()', () => {
 
   beforeEach(() => {
     originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
   });
 
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -66,7 +66,7 @@ fdescribe('getJsonAll()', () => {
 
   beforeEach(() => {
     originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
   });
 
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -94,7 +94,7 @@ fdescribe('getAll()', () => {
 
   beforeEach(() => {
     originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
   });
 
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -119,12 +119,18 @@ fdescribe('getAll()', () => {
 });
 
 fdescribe('get()', () => {
+  let originalTimeOut;
+
+  beforeEach(() => {
+    originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = 100000;
+  });
   beforeEach(() => TestBed.configureTestingModule({}));
 
   afterEach(async () => await Storage.clear());
 
   it('should get specified record', async (done) => {
-    const service: RecordRepositoryService = TestBed.(RecordRepositoryService);
+    const service: RecordRepositoryService = TestBed.inject(RecordRepositoryService);
 
     const newRecord = new Record(20200722);
     const meta: Meta = {
@@ -141,6 +147,9 @@ fdescribe('get()', () => {
         done();
       });
     });
+  });
+  afterEach(() => {
+    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeOut;
   });
 });
 
