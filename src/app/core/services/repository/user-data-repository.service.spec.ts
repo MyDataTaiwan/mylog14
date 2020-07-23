@@ -13,7 +13,7 @@ describe('UserDataRepositoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: UserDataRepositoryService = TestBed.get(UserDataRepositoryService);
+    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
     expect(service).toBeTruthy();
   });
 });
@@ -22,9 +22,9 @@ fdescribe('get() if no previous saved data', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should fail', (done) => {
-    const service: UserDataRepositoryService = TestBed.get(UserDataRepositoryService);
+    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
 
-    const user : UserData = {
+    const user: UserData = {
       newUser: true,
       firstName: 'john',
       lastName: 'smith',
@@ -33,7 +33,9 @@ fdescribe('get() if no previous saved data', () => {
 
     const expectedOutput = JSON.stringify(user);
 
-    service.get().subscribe({next(x) { expect(JSON.stringify(x)).not.toEqual(expectedOutput); }});
+    service.get().subscribe(x => {
+      expect(JSON.stringify(x)).not.toEqual(expectedOutput);
+    });
     done();
   });
 });
@@ -41,11 +43,11 @@ fdescribe('get() if no previous saved data', () => {
 fdescribe('save()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(() => Storage.clear());
-  
+
   it('should save user data', (done) => {
-    const service: UserDataRepositoryService = TestBed.get(UserDataRepositoryService);
-    
-    const user : UserData = {
+    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
+
+    const user: UserData = {
       newUser: true,
       firstName: 'john',
       lastName: 'smith',
@@ -53,16 +55,12 @@ fdescribe('save()', () => {
     };
 
     const expectedOutput = JSON.stringify(user);
-    // console.log('expected', expectedOutput);
 
-    service.save(user).subscribe( {next(x) {
-      // console.log(x);
-      expect(JSON.stringify(x)).toEqual(expectedOutput)}});
-
-    service.get().subscribe( {next(x) { console.log(x) }});
-
+    service.save(user).subscribe(x => {
+      expect(JSON.stringify(x)).toEqual(expectedOutput);
+    });
     done();
-  })
+  });
 });
 
 fdescribe('get() if there is saved data', () => {
@@ -70,23 +68,20 @@ fdescribe('get() if there is saved data', () => {
   afterEach(() => Storage.clear());
 
   it('should get user data', (done) => {
-    const service: UserDataRepositoryService = TestBed.get(UserDataRepositoryService);
+    const service: UserDataRepositoryService = TestBed.inject(UserDataRepositoryService);
 
-    const user : UserData = {
+    const user: UserData = {
       newUser: true,
       firstName: 'john',
       lastName: 'smith',
       recordPreset: RecordPreset.COMMON_COLD
     };
 
-    const expectedOutput = JSON.stringify(user);
-    console.log('expected', expectedOutput);
-
-    service.save(user).subscribe({ next(x) {
-      service.get().subscribe({ next(y) {
+    service.save(user).subscribe(x => {
+      service.get().subscribe(y => {
         expect(JSON.stringify(y)).toEqual(JSON.stringify(x));
-      }})
-    }})
+      });
+    });
     done();
   });
 });
