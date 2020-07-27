@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-
+import { PrivateCouponService, UserDetailResult, UserResult } from '@numbersprotocol/private-coupon';
 import {
   BehaviorSubject, combineLatest, forkJoin, Observable, of,
-  Subject,
+  Subject
 } from 'rxjs';
 import {
   first, map, retry, switchMap, take,
-  tap,
+  tap
 } from 'rxjs/operators';
-
-import {
-  PrivateCouponService, UserDetailResult, UserResult,
-} from '@numbersprotocol/private-coupon';
-
-import {
-  PopoverButtonSet, PopoverIcon, PopoverService,
-} from '../../shared/services/popover.service';
+import { PopoverButtonSet, PopoverIcon, PopoverService } from '../../shared/services/popover.service';
 import { ShopInfo } from '../interfaces/shop-info';
 import { DataStoreService } from './store/data-store.service';
+
+
+
 
 @Injectable({
   providedIn: 'root'

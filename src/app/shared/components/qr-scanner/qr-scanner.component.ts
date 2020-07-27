@@ -1,14 +1,14 @@
 import {
   AfterViewInit, Component, ElementRef, EventEmitter, Input,
   OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
-
+import { Platform } from '@ionic/angular';
 import jsQR from 'jsqr';
 import { defer, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
-import { Platform } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-qr-scanner',
@@ -35,6 +35,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     private readonly platform: Platform
   ) {
     const isInStandaloneMode = () =>
+      // tslint:disable-next-line: no-string-literal
       'standalone' in window.navigator && window.navigator['standalone'];
     if (this.platform.is('ios') && isInStandaloneMode()) {
       console.log('I am a an iOS PWA!');

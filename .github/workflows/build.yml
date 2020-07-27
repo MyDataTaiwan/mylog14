@@ -1,0 +1,41 @@
+name: build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10
+    
+    - name: Install Angular CLI
+      run: npm install -g @angular/cli
+
+    - name: Install Ionic CLI
+      run: npm install -g @ionic/cli
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Lint
+      run: npm run lint
+
+    - name: Test
+      run: npm run test-ci
+
+    - name: Build Ionic
+      run: ionic build
+
+    - name: Build Android
+      run: |
+        npx cap sync
+        cd android/
+        ./gradlew assembleDebug

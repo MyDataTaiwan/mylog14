@@ -5,7 +5,7 @@ describe('GeolocationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: GeolocationService = TestBed.get(GeolocationService);
+    const service: GeolocationService = TestBed.inject(GeolocationService);
     expect(service).toBeTruthy();
   });
 });

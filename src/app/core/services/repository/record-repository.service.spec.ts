@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-import { RecordRepositoryService } from './record-repository.service';
-import { Record } from '@core/classes/record';
-import { Meta } from '../../interfaces/meta';
 import { Plugins } from '@capacitor/core';
+import { Record } from '@core/classes/record';
+import { zip } from 'rxjs';
+import { Meta } from '../../interfaces/meta';
+import { RecordRepositoryService } from './record-repository.service';
 
 
 const { Storage } = Plugins;
@@ -17,7 +18,7 @@ describe('RecordRepositoryService', () => {
   });
 });
 
-fdescribe('save()', () => {
+describe('save()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -49,7 +50,7 @@ fdescribe('save()', () => {
   });
 });
 
-fdescribe('save()', () => {
+describe('save()', () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
@@ -61,7 +62,7 @@ fdescribe('save()', () => {
 });
 
 
-fdescribe('getJsonAll()', () => {
+describe('getJsonAll()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -72,15 +73,15 @@ fdescribe('getJsonAll()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(async () => await Storage.clear());
 
-  it('should get string JSON', async (done) => {
+  it('should get string JSON', async (done: DoneFn) => {
     const service: RecordRepositoryService = TestBed.inject(RecordRepositoryService);
-
     const newRecord = new Record(321);
-    service.save(newRecord).subscribe(x => {
-      service.getJsonAll().subscribe(y => {
-        expect(JSON.stringify(x)).toEqual(JSON.stringify(y));
-        done();
+
+    zip(service.save(newRecord), service.getJsonAll()).subscribe(([x, y]) => {
+      x.forEach((record, index) => {
+        expect(JSON.stringify(record)).toEqual(y[index]);
       });
+      done();
     });
   });
 
@@ -89,7 +90,7 @@ fdescribe('getJsonAll()', () => {
   });
 });
 
-fdescribe('getAll()', () => {
+describe('getAll()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -118,7 +119,7 @@ fdescribe('getAll()', () => {
   });
 });
 
-fdescribe('get()', () => {
+describe('get()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -153,7 +154,7 @@ fdescribe('get()', () => {
   });
 });
 
-fdescribe('getJson()', () => {
+describe('getJson()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   afterEach(async () => await Storage.clear());

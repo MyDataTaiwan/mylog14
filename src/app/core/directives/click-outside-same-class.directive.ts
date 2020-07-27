@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Output, HostListener, EventEmitter } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
 
 @Directive({
   selector: '[appClickOutsideSameClass]'
@@ -6,7 +6,7 @@ import { Directive, ElementRef, Output, HostListener, EventEmitter } from '@angu
 export class ClickOutsideSameClassDirective {
   @Output() clickOutside = new EventEmitter<MouseEvent>();
 
-  constructor(private elementRef: ElementRef) { }
+  constructor(private readonly elementRef: ElementRef) { }
 
   @HostListener('document:click', ['$event'])
   public onDocumentClick(event: MouseEvent): void {
