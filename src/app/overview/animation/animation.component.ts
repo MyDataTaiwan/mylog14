@@ -30,7 +30,7 @@ export class AnimationComponent implements OnInit, OnDestroy {
     public modalService: ModalService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -68,7 +68,7 @@ export class AnimationComponent implements OnInit, OnDestroy {
   }
 
   onClickAnimation() {
-    this.modalService.showShopScannerModal()
+    this.modalService.showRewardModal()
       .pipe(
         takeUntil(this.destroy$),
       ).subscribe();

@@ -14,9 +14,7 @@ import {
 import {
   PhotoViewerComponent,
 } from '@shared/components/photo-viewer/photo-viewer.component';
-import {
-  ShopScannerComponent,
-} from '@shared/components/shop-scanner/shop-scanner.component';
+import { RewardComponent } from '@shared/components/reward/reward.component';
 
 @Injectable({
   providedIn: 'root'
@@ -62,9 +60,9 @@ export class ModalService {
       );
   }
 
-  showShopScannerModal(): Observable<any> {
+  showRewardModal(): Observable<any> {
     return defer(() => this.modalCtrl.create({
-      component: ShopScannerComponent,
+      component: RewardComponent,
       animated: true,
       backdropDismiss: false,
     }))

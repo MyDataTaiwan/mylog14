@@ -27,9 +27,7 @@ import {
 import {
   QrScannerComponent,
 } from './components/qr-scanner/qr-scanner.component';
-import {
-  ShopScannerComponent,
-} from './components/shop-scanner/shop-scanner.component';
+import { RewardComponent } from './components/reward/reward.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +37,7 @@ import {
     PhotoViewerComponent,
     PopoverComponent,
     ProofItemComponent,
-    ShopScannerComponent,
+    RewardComponent,
     QrScannerComponent,
     FormlyFieldInputComponent,
   ],
@@ -65,7 +63,7 @@ import {
     PhotoViewerComponent,
     PopoverComponent,
     ProofItemComponent,
-    ShopScannerComponent,
+    RewardComponent,
     QrScannerComponent,
   ]
 })
