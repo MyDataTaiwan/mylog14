@@ -56,7 +56,7 @@ export class AnimationComponent implements OnInit, OnDestroy {
   }
 
   onClickAnimation() {
-    this.modalService.showShopScannerModal()
+    this.modalService.showRewardModal()
       .pipe(
         takeUntil(this.destroy$),
       ).subscribe();
