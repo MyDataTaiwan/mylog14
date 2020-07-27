@@ -16,10 +16,10 @@ export class AnimationComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
 
   arry: [number, number][] = [[1, 3], [125, 184], [125, 246], [125, 306], [125, 365], [125, 420], [125, 490], [125, 548], [125, 611], [125, 670], [125, 734], [125, 792], [125, 850], [125, 902], [125, 922], [984, 1200], [35, 36]];
-  STFarry: [number, number][] = [[1, 3], [245, 246], [305, 306], [364, 365], [419, 420], [489, 490], [547, 548], [610, 611], [669, 670], [733, 734], [791, 792], [849, 850], [901, 902], [921, 922], [984, 1200], [35, 36]];
+  STFarry: [number, number][] = [[1, 2],[170, 255],[265, 344],[359, 429],[441, 506],[519, 586],[600, 683], [758, 961]];
 
   options: AnimationOptions = {
-    path: '/assets/MyLogBBTfix.json',
+    path: '/assets/MyLogHeartLoop.json',
   };
 
   TEMPimg: '/assets/imgA.png';
@@ -43,12 +43,12 @@ export class AnimationComponent implements OnInit, OnDestroy {
 
   onConfigReady() {
     this.animationStopOnDay(0);
-    /*
-    this.startCountdown(14)
-      .pipe(
-        takeUntil(this.destroy$),
-      ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
-      */
+    
+    // this.startCountdown(1)
+    //   .pipe(
+    //     takeUntil(this.destroy$),
+    //   ).subscribe(() => console.log('Animation stopped'), err => console.log(err));
+      
   }
 
   private startCountdown(day: number) {
