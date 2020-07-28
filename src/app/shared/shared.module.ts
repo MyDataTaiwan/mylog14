@@ -6,6 +6,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {
   FormlyFieldInputComponent,
 } from '@core/forms/formly-field-input/formly-field-input-component';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { IonicModule } from '@ionic/angular';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
@@ -65,6 +66,7 @@ import { RewardComponent } from './components/reward/reward.component';
     ProofItemComponent,
     RewardComponent,
     QrScannerComponent,
-  ]
+  ],
+  providers: [BarcodeScanner],
 })
 export class SharedModule { }
