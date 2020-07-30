@@ -17,7 +17,6 @@ import {
 import {
   QrScannerComponent,
 } from '@shared/components/qr-scanner/qr-scanner.component';
-import { RewardComponent } from '@shared/components/reward/reward.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +26,6 @@ export class ModalService {
   constructor(
     private readonly modalCtrl: ModalController,
   ) { }
-
-  popModal(data?: any) {
-    return this.modalCtrl.dismiss(data);
-  }
 
   showAddPhotoModal(): Observable<any> {
     return defer(() => this.modalCtrl.create({
@@ -78,15 +73,22 @@ export class ModalService {
       );
   }
 
-  showRewardModal(): Observable<any> {
-    return defer(() => this.modalCtrl.create({
-      component: RewardComponent,
-      animated: true,
-      backdropDismiss: false,
-    }))
+  // FIXME: component & componentProps typing
+  showModal(component: any, componentProps?: any): Observable<any> {
+    return this.createModal(component, componentProps)
       .pipe(
         switchMap(modal => this.presentModal(modal)),
       );
+  }
+
+  // FIXME: component & componentProps typing
+  private createModal(component: any, componentProps?: any): Observable<HTMLIonModalElement> {
+    return defer(() => this.modalCtrl.create({
+      component,
+      componentProps,
+      animated: true,
+      backdropDismiss: false,
+    }));
   }
 
   private presentModal(modal: HTMLIonModalElement): Observable<any> {

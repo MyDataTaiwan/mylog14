@@ -20,6 +20,8 @@ import {
   PopoverButtonSet, PopoverIcon, PopoverService,
 } from '@shared/services/popover.service';
 
+import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
+
 @Component({
   selector: 'app-reward',
   templateUrl: './reward.component.html',
@@ -71,7 +73,7 @@ export class RewardComponent implements OnInit, OnDestroy {
         filter(shopInfo => shopInfo.UUID !== ''),
         distinctUntilChanged((prev, curr) => prev.UUID === curr.UUID),
         tap(() => this.scanEnabled$.next(false)),
-        switchMap(shopInfo => this.startRedeemProcess(shopInfo)),
+        switchMap(shopInfo => this.startRedeemWithLoadingPopover(shopInfo)),
         tap(() => this.shopInfo$.next(this.defaultShopInfo)),
         tap(() => this.scanEnabled$.next(true)),
         takeUntil(this.destory$),
@@ -91,13 +93,33 @@ export class RewardComponent implements OnInit, OnDestroy {
       ).subscribe();
   }
 
-  startRedeemProcess(shopInfo: ShopInfo) {
-    return combineLatest([this.showRedeeming(), this.rewardService.redeem(shopInfo.UUID)])
+  scan() {
+    const getQRText$ = (this.platform.is('cordova')) ? this.getQRTextForCordova() : this.getQRTextForWeb();
+    getQRText$
       .pipe(
-        tap(() => console.log('forkjoin emit')),
-        switchMap(([popover, _]) => popover.dismiss()),
-        switchMap(() => this.showRedeemSuccess(shopInfo)),
+        this.parseAndFilterInvalidQRText(),
+        this.showShopInfoAndFilterCancel(),
+        switchMap(shopInfo => this.startRedeemWithLoadingPopover(shopInfo)),
+        switchMap(() => this.rewardService.getBalance()),
+      ).subscribe();
+  }
+
+  cancel() {
+    this.modalCtrl.dismiss();
+  }
+
+  confirm() {
+    this.modalCtrl.dismiss();
+  }
+
+  private showShopInfoAndFilterCancel() {
+    return (source: Observable<ShopInfo>) => {
+      return source.pipe(
+        switchMap(shopInfo => forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])),
+        filter(([data, _]) => data?.data?.redeem),
+        map(([_, shopInfo]) => shopInfo),
       );
+    };
   }
 
   private parseAndFilterInvalidQRText() {
@@ -108,12 +130,13 @@ export class RewardComponent implements OnInit, OnDestroy {
           let shopInfo: ShopInfo;
           try {
             shopInfo = JSON.parse(data);
-          } catch {
-            console.warn('QR Code ERROR: is not valid JSON format');
+          } catch (err) {
+            console.warn(err);
+            console.warn('QR Code ERROR: is not valid JSON format', data);
             return null;
           }
           if (!(shopInfo?.UUID && shopInfo?.shopName && shopInfo?.shopBranch)) {
-            console.warn('QR Code ERROR: is not valid shopInfo');
+            console.warn('QR Code ERROR: is not valid shopInfo', data);
             return null;
           }
           return shopInfo;
@@ -123,51 +146,32 @@ export class RewardComponent implements OnInit, OnDestroy {
     };
   }
 
-  scan() {
-    if (this.platform.is('cordova')) {
-      const options: BarcodeScannerOptions = {
-        formats: 'QR_CODE',
-        disableSuccessBeep: true,
-      };
-      defer(() => this.barcodeScanner.scan(options))
-        .pipe(
-          map(barcodeData => barcodeData.text),
-          map(text => text.replace('\\', '')),
-          this.parseAndFilterInvalidQRText(),
-          switchMap((shopInfo: ShopInfo) => forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])),
-          tap(e => console.log(e)),
-          filter(([data, shopInfo]) => data?.data?.redeem),
-          switchMap(([data, shopInfo]) => this.startRedeemProcess(shopInfo)),
-          switchMap(() => this.rewardService.getBalance()),
-        ).subscribe();
-    } else {
-      this.modalService.showQRScannerModal()
-        .pipe(
-          map(data => data?.data),
-          this.parseAndFilterInvalidQRText(),
-          switchMap((shopInfo: ShopInfo) => this.startRedeemProcess(shopInfo)),
-          switchMap(() => this.rewardService.getBalance()),
-        ).subscribe();
-    }
+  private getQRTextForCordova(): Observable<string> {
+    const options: BarcodeScannerOptions = {
+      formats: 'QR_CODE',
+      disableSuccessBeep: true,
+    };
+    return defer(() => this.barcodeScanner.scan(options))
+      .pipe(
+        map(barcodeData => barcodeData?.text),
+        filter(text => text != null),
+        map(text => text.replace('\\', '')),
+      );
   }
 
-  scanResultHandler(scanResult: string) {
-    let shopInfo: ShopInfo;
-    try {
-      shopInfo = JSON.parse(scanResult);
-    } catch {
-      console.log('Failed to parse QRCode');
-      shopInfo = this.defaultShopInfo;
-    }
-    this.shopInfo$.next(shopInfo);
+  private getQRTextForWeb(): Observable<string> {
+    return this.modalService.showModal(QrScannerComponent)
+      .pipe(
+        map(data => data?.data),
+      );
   }
 
-  cancel() {
-    this.modalCtrl.dismiss();
-  }
-
-  confirm() {
-    this.modalCtrl.dismiss();
+  private startRedeemWithLoadingPopover(shopInfo: ShopInfo) {
+    return combineLatest([this.showRedeeming(), this.rewardService.redeem(shopInfo.UUID)])
+      .pipe(
+        switchMap(([popover, _]) => popover.dismiss()),
+        switchMap(() => this.showRedeemSuccess(shopInfo)),
+      );
   }
 
   private showShopInfo(shopInfo: ShopInfo): Observable<any> {

@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
 import { DataStoreService } from '@core/services/store/data-store.service';
+import { RewardComponent } from '@shared/components/reward/reward.component';
 import { ModalService } from '@shared/services/modal.service';
 
 @Component({
@@ -56,7 +57,7 @@ export class AnimationComponent implements OnInit, OnDestroy {
   }
 
   onClickAnimation() {
-    this.modalService.showRewardModal()
+    this.modalService.showModal(RewardComponent)
       .pipe(
         takeUntil(this.destroy$),
       ).subscribe();
