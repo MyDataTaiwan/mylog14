@@ -96,7 +96,11 @@
     "noLocationData": "未紀錄位置資訊",
     "uploadAndCreateSharedLink": "上傳 & 產生分享連結",
     "expireAt": "於 {{time}} 失效",
-    "QRScanner": "掃描 QR 條碼"
+    "QRScanner": "掃描 QR 條碼",
+    "keepRecordReward": "紀錄獎勵",
+    "redeemInfo": "兌換資訊",
+    "redeemSuccess": "兌換成功",
+    "redeem20Confirm": "在此特約店面兌換 20 元折扣？"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -125,8 +129,10 @@
     "couponDisabled": "敬請期待兌換獎勵功能",
     "linkCopied": "連結已複製到剪貼簿",
     "uploadFailed": "上傳失敗。請稍後再試。",
-    "clickToGetInitialBalance": "點此領取 {{ amount }} 點獎勵",
-    "alreadyGotInitialBalance": "已領取 {{ amount }} 點獎勵"
+    "clickToGetInitialBalance": "點此領取 {{ point }} 點獎勵",
+    "alreadyGotInitialBalance": "已領取 {{ point }} 點獎勵",
+    "rewardEvent": "累積紀錄滿 {{ day }} 天，即可獲得 {{ point }} 點獎勵點數！",
+    "redeemInfo": "{{ point }} 點獎勵點數可用於特約商家兌換 {{ point }} 元折扣。掃描商家 QR 條碼進行兌換。"
   },
   "preset": {
     "commonCold": {

@@ -4,9 +4,9 @@
   <ion-list>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>紀錄獎勵</ion-card-title>
+        <ion-card-title>{{ 'title.keepRecordReward' | translate }}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>累積紀錄滿 7 天，即可獲得 20 點獎勵點數，可用於合作商家兌換新台幣 $20 折扣！</ion-card-content>
+      <ion-card-content>{{ 'description.rewardEvent' | translate: { day: 7, point: 20 } }}</ion-card-content>
       <ion-item>
         <ion-icon name="flash-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
@@ -37,12 +37,12 @@
             {{ 'description.logMoreDaysForReward' | translate: { days: 7 - daysRecorded } }}</ion-label>
         </ion-item>
         <app-ion-center-item *ngIf="initReward === 'available'" button (click)="getInitialReward()">
-          <ion-button fill="outline">{{ 'description.clickToGetInitialBalance' | translate: { amount: 20 } }}
+          <ion-button fill="outline">{{ 'description.clickToGetInitialBalance' | translate: { point: 20 } }}
           </ion-button>
         </app-ion-center-item>
         <ion-item *ngIf="initReward === 'done'" class="ion-text-center">
           <ion-icon name="checkmark-outline" color="success" slot="start"></ion-icon>
-          <ion-label color="success">{{ 'description.alreadyGotInitialBalance' | translate: { amount: 20 } }}
+          <ion-label color="success">{{ 'description.alreadyGotInitialBalance' | translate: { point: 20 } }}
           </ion-label>
         </ion-item>
       </ng-container>
@@ -54,9 +54,9 @@
     </ion-card>
     <ion-card>
       <ion-card-header>
-        <ion-card-title>兌換資訊</ion-card-title>
+        <ion-card-title>{{ 'title.redeemInfo' | translate }}</ion-card-title>
       </ion-card-header>
-      <ion-card-content>20 點獎勵點數可用於合作商家兌換 $20 折扣。掃描商家 QR Code 以進行兌換。</ion-card-content>
+      <ion-card-content>{{ 'description.redeemInfo' | translate: { point: 20 } }}</ion-card-content>
       <ion-item>
         <ion-icon name="card-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.currentBalance' | translate }}</ion-label>
@@ -83,12 +83,4 @@
       </ion-button>
     </ion-row>
   </ion-grid>
-  <ng-container *ngIf="false">
-    <app-qr-scanner [scanEnabled]="scanEnabled$ | async" (scanResult)="scanResultHandler($event)"></app-qr-scanner>
-  </ng-container>
-  <ng-template #loading>
-    <div class="ion-justify-content-between">
-      <ion-spinner name="bubbles"></ion-spinner>
-    </div>
-  </ng-template>
 </ion-content>

@@ -67,7 +67,7 @@
     "copied": "Copied",
     "scanQrcode": "Scan QR Code",
     "currentBalance": "Current Balance",
-    "canItBeRedeemed": "Redeem Quota",
+    "canItBeRedeemed": "Quota",
     "canRedeem": "Remaining quota: {{ pool }}",
     "cannotRedeem": "Out of Stock",
     "redeeming": "Redeeming...",
@@ -98,7 +98,11 @@
     "noLocationData": "No Location Data",
     "uploadAndCreateSharedLink": "Upload & Create Link",
     "expireAt": "Expire at {{time}}",
-    "QRScanner": "Scan QR Code"
+    "QRScanner": "Scan QR Code",
+    "keepRecordReward": "Keep Records for Reward",
+    "redeemInfo": "Redeem Info",
+    "redeemSuccess": "Redeem Success",
+    "redeem20Confirm": "Redeem $20 NTD discount for this shop?"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -127,8 +131,10 @@
     "couponDisabled": "Reward redeeming coming soon",
     "linkCopied": "Link copied to clipboard",
     "uploadFailed": "Upload failed. Please try again later.",
-    "clickToGetInitialBalance": "Click to get {{ amount }} points reward",
-    "alreadyGotInitialBalance": "{{ amount }} points reward received"
+    "clickToGetInitialBalance": "Click to get {{ point }} points reward",
+    "alreadyGotInitialBalance": "{{ point }} points reward received",
+    "rewardEvent": "Keep records for {{ day }} days to earn {{ point }} reward points!",
+    "redeemInfo": "{{ point }} reward points could be used for redeeming a ${{ point }} NTD discount coupon for affiliated stores. Scan the QR code of the affilated store to redeem the coupon."
   },
   "language": {
     "en": "English",

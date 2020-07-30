@@ -177,7 +177,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   private showShopInfo(shopInfo: ShopInfo): Observable<any> {
     return this.popoverService.showPopover({
       i18nTitle: `${shopInfo.shopName}\n${shopInfo.shopBranch}`,
-      i18nMessage: '是否兌換 20 元',
+      i18nMessage: 'title.redeem20Confirm',
       buttonSet: PopoverButtonSet.CONFIRM,
       dataOnConfirm: { redeem: true },
       dataOnCancel: { redeem: false },
@@ -194,7 +194,7 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   private showRedeemSuccess(shopInfo: ShopInfo): Observable<HTMLIonPopoverElement> {
     return this.popoverService.showPopover({
-      i18nTitle: '兌換成功',
+      i18nTitle: 'title.redeemSuccess',
       i18nMessage: `${shopInfo.shopName}\n${shopInfo.shopBranch} 折扣 20 元`,
       icon: PopoverIcon.CHECK,
     });
