@@ -1,6 +1,5 @@
 import {
-  AfterViewInit, Component, ElementRef, EventEmitter, Input,
-  OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
+  AfterViewInit, Component, ElementRef, OnDestroy, OnInit,
   ViewChild,
 } from '@angular/core';
 
@@ -8,18 +7,15 @@ import jsQR from 'jsqr';
 import { defer, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
-import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-qr-scanner',
   templateUrl: './qr-scanner.component.html',
   styleUrls: ['./qr-scanner.component.scss'],
 })
-export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() scanEnabled: boolean;
-  @Output() scanResult = new EventEmitter<string>();
   @ViewChild('video') video: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('fileinput') fileinput: ElementRef;
@@ -29,16 +25,12 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   canvasElement: any;
   videoElement: any;
   scanOn = true;
-  isCordova: boolean;
 
   destroy$ = new Subject();
 
   constructor(
-    private readonly platform: Platform,
-    private readonly barcodeScanner: BarcodeScanner
-  ) {
-    this.isCordova = this.platform.is('cordova');
-  }
+    private readonly modalCtrl: ModalController,
+  ) { }
 
   ngOnInit() { }
 
@@ -52,22 +44,14 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
-    this.scanOn = this.scanEnabled;
+    this.scanOn = true;
     if (this.scanOn) {
       this.startScan();
     }
-    this.barcodeScanner.scan().then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-    }).catch(err => {
-      console.log('Error', err);
-    });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.scanOn = changes.scanEnabled.currentValue;
-    if (changes.scanEnabled.previousValue === false && this.scanOn === true) {
-      this.startScan();
-    }
+  cancel() {
+    this.modalCtrl.dismiss();
   }
 
   startScan() {
@@ -114,7 +98,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
       });
 
       if (code) {
-        this.scanResult.emit(code.data);
+        this.modalCtrl.dismiss(code.data);
       }
     }
     if (this.scanOn) {

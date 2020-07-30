@@ -1,6 +1,10 @@
-<div>
-  <ion-spinner *ngIf="!cameraStreamReady"></ion-spinner>
-  <video #video [hidden]="!cameraStreamReady" width="100%"></video>
-  <!-- Used to render the camera stream images -->
-  <canvas #canvas hidden></canvas>
-</div>
+<app-header [headerTitle]="'title.QRScanner' | translate" showDismissButton="true" (dismissClicked)="cancel()">
+</app-header>
+<ion-content>
+  <div>
+    <ion-spinner *ngIf="!cameraStreamReady"></ion-spinner>
+    <video #video [hidden]="!cameraStreamReady" width="100%"></video>
+    <!-- Used to render the camera stream images -->
+    <canvas #canvas hidden></canvas>
+  </div>
+</ion-content>

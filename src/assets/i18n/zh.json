@@ -95,7 +95,8 @@
     "takePhoto": "拍一張照片",
     "noLocationData": "未紀錄位置資訊",
     "uploadAndCreateSharedLink": "上傳 & 產生分享連結",
-    "expireAt": "於 {{time}} 失效"
+    "expireAt": "於 {{time}} 失效",
+    "QRScanner": "掃描 QR 條碼"
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",

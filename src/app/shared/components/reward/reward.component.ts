@@ -14,7 +14,8 @@ import { RewardService } from '@core/services/reward.service';
 import {
   BarcodeScanner, BarcodeScannerOptions,
 } from '@ionic-native/barcode-scanner/ngx';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
+import { ModalService } from '@shared/services/modal.service';
 import {
   PopoverButtonSet, PopoverIcon, PopoverService,
 } from '@shared/services/popover.service';
@@ -57,7 +58,9 @@ export class RewardComponent implements OnInit, OnDestroy {
   constructor(
     private readonly barcodeScanner: BarcodeScanner,
     private readonly modalCtrl: ModalController,
-    public rewardService: RewardService,
+    private readonly modalService: ModalService,
+    private readonly platform: Platform,
+    private readonly rewardService: RewardService,
     private readonly popoverService: PopoverService,
   ) { }
 
@@ -97,22 +100,55 @@ export class RewardComponent implements OnInit, OnDestroy {
       );
   }
 
-  scan() {
-    const options: BarcodeScannerOptions = {
-      formats: 'QR_CODE',
-      disableSuccessBeep: true,
+  private parseAndFilterInvalidQRText() {
+    return (source: Observable<string>) => {
+      return source.pipe(
+        filter(data => data != null),
+        map((data: string) => {
+          let shopInfo: ShopInfo;
+          try {
+            shopInfo = JSON.parse(data);
+          } catch {
+            console.warn('QR Code ERROR: is not valid JSON format');
+            return null;
+          }
+          if (!(shopInfo?.UUID && shopInfo?.shopName && shopInfo?.shopBranch)) {
+            console.warn('QR Code ERROR: is not valid shopInfo');
+            return null;
+          }
+          return shopInfo;
+        }),
+        filter(data => data != null),
+      );
     };
-    defer(() => this.barcodeScanner.scan(options))
-      .pipe(
-        map(barcodeData => barcodeData.text),
-        map(text => text.replace('\\', '')),
-        map(text => JSON.parse(text)),
-        switchMap((shopInfo: ShopInfo) => forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])),
-        tap(e => console.log(e)),
-        filter(([data, shopInfo]) => data?.data?.redeem),
-        switchMap(([data, shopInfo]) => this.startRedeemProcess(shopInfo)),
-        switchMap(() => this.rewardService.getBalance()),
-      ).subscribe();
+  }
+
+  scan() {
+    if (this.platform.is('cordova')) {
+      const options: BarcodeScannerOptions = {
+        formats: 'QR_CODE',
+        disableSuccessBeep: true,
+      };
+      defer(() => this.barcodeScanner.scan(options))
+        .pipe(
+          map(barcodeData => barcodeData.text),
+          map(text => text.replace('\\', '')),
+          this.parseAndFilterInvalidQRText(),
+          switchMap((shopInfo: ShopInfo) => forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])),
+          tap(e => console.log(e)),
+          filter(([data, shopInfo]) => data?.data?.redeem),
+          switchMap(([data, shopInfo]) => this.startRedeemProcess(shopInfo)),
+          switchMap(() => this.rewardService.getBalance()),
+        ).subscribe();
+    } else {
+      this.modalService.showQRScannerModal()
+        .pipe(
+          map(data => data?.data),
+          this.parseAndFilterInvalidQRText(),
+          switchMap((shopInfo: ShopInfo) => this.startRedeemProcess(shopInfo)),
+          switchMap(() => this.rewardService.getBalance()),
+        ).subscribe();
+    }
   }
 
   scanResultHandler(scanResult: string) {

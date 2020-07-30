@@ -97,7 +97,8 @@
     "takePhoto": "Take A Photo",
     "noLocationData": "No Location Data",
     "uploadAndCreateSharedLink": "Upload & Create Link",
-    "expireAt": "Expire at {{time}}"
+    "expireAt": "Expire at {{time}}",
+    "QRScanner": "Scan QR Code"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",

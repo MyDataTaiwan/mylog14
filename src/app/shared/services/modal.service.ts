@@ -14,6 +14,9 @@ import {
 import {
   PhotoViewerComponent,
 } from '@shared/components/photo-viewer/photo-viewer.component';
+import {
+  QrScannerComponent,
+} from '@shared/components/qr-scanner/qr-scanner.component';
 import { RewardComponent } from '@shared/components/reward/reward.component';
 
 @Injectable({
@@ -24,6 +27,10 @@ export class ModalService {
   constructor(
     private readonly modalCtrl: ModalController,
   ) { }
+
+  popModal(data?: any) {
+    return this.modalCtrl.dismiss(data);
+  }
 
   showAddPhotoModal(): Observable<any> {
     return defer(() => this.modalCtrl.create({
@@ -40,6 +47,17 @@ export class ModalService {
   showAddRecordModal(): Observable<any> {
     return defer(() => this.modalCtrl.create({
       component: AddRecordComponent,
+      animated: true,
+      backdropDismiss: false,
+    }))
+      .pipe(
+        switchMap(modal => this.presentModal(modal)),
+      );
+  }
+
+  showQRScannerModal(): Observable<any> {
+    return defer(() => this.modalCtrl.create({
+      component: QrScannerComponent,
       animated: true,
       backdropDismiss: false,
     }))
