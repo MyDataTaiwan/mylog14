@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import {
+  BehaviorSubject, combineLatest, defer, forkJoin, Observable,
+  of, Subject,
+} from 'rxjs';
 import {
   distinctUntilChanged, filter, map, switchMap, takeUntil,
   tap,
@@ -8,6 +11,9 @@ import {
 
 import { ShopInfo } from '@core/interfaces/shop-info';
 import { RewardService } from '@core/services/reward.service';
+import {
+  BarcodeScanner, BarcodeScannerOptions,
+} from '@ionic-native/barcode-scanner/ngx';
 import { ModalController } from '@ionic/angular';
 import {
   PopoverButtonSet, PopoverIcon, PopoverService,
@@ -24,15 +30,18 @@ export class RewardComponent implements OnInit, OnDestroy {
   private readonly destory$ = new Subject();
   public scanEnabled$ = new BehaviorSubject<boolean>(true);
   public shopInfo$ = new BehaviorSubject<ShopInfo>(this.defaultShopInfo);
+  canRedeem = false;
 
+  initRewardStatus$ = this.rewardService.initRewardStatus$;
   daysRecorded$ = this.rewardService.daysRecorded$
     .pipe(
       filter(value => value != null),
       map(value => `${value}`),
     );
-  poolBalance$ = this.rewardService.poolBalance$
+  pool$ = this.rewardService.poolBalance$
     .pipe(
       filter(value => value != null),
+      map(value => Math.floor(value / 20)),
       map(value => `${value}`),
     );
   userBalance$ = this.rewardService.userBalance$
@@ -40,8 +49,13 @@ export class RewardComponent implements OnInit, OnDestroy {
       filter(value => value != null),
       map(value => `${value}`),
     );
+  canRedeem$ = combineLatest([this.pool$, this.userBalance$])
+    .pipe(
+      map(([pool, userBalance]) => (+pool >= 1 && +userBalance >= 20)),
+    );
 
   constructor(
+    private readonly barcodeScanner: BarcodeScanner,
     private readonly modalCtrl: ModalController,
     public rewardService: RewardService,
     private readonly popoverService: PopoverService,
@@ -66,12 +80,39 @@ export class RewardComponent implements OnInit, OnDestroy {
     this.destory$.complete();
   }
 
-  startRedeemProcess(shopInfo: ShopInfo) {
-    return forkJoin([this.showRedeeming(), this.rewardService.redeem(shopInfo.UUID)])
+  getInitialReward() {
+    this.rewardService.getInitReward()
       .pipe(
-        switchMap(([popover, _]) => popover.dismiss),
+        tap(() => this.rewardService.refreshInitRewardStatus()),
+        switchMap(() => this.rewardService.getBalance()),
+      ).subscribe();
+  }
+
+  startRedeemProcess(shopInfo: ShopInfo) {
+    return combineLatest([this.showRedeeming(), this.rewardService.redeem(shopInfo.UUID)])
+      .pipe(
+        tap(() => console.log('forkjoin emit')),
+        switchMap(([popover, _]) => popover.dismiss()),
         switchMap(() => this.showRedeemSuccess(shopInfo)),
       );
+  }
+
+  scan() {
+    const options: BarcodeScannerOptions = {
+      formats: 'QR_CODE',
+      disableSuccessBeep: true,
+    };
+    defer(() => this.barcodeScanner.scan(options))
+      .pipe(
+        map(barcodeData => barcodeData.text),
+        map(text => text.replace('\\', '')),
+        map(text => JSON.parse(text)),
+        switchMap((shopInfo: ShopInfo) => forkJoin([this.showShopInfo(shopInfo), of(shopInfo)])),
+        tap(e => console.log(e)),
+        filter(([data, shopInfo]) => data?.data?.redeem),
+        switchMap(([data, shopInfo]) => this.startRedeemProcess(shopInfo)),
+        switchMap(() => this.rewardService.getBalance()),
+      ).subscribe();
   }
 
   scanResultHandler(scanResult: string) {

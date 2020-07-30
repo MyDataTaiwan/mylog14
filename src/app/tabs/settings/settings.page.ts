@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 
-import { forkJoin, Observable, of, Subject, timer } from 'rxjs';
+import {
+  forkJoin, iif, Observable, of, Subject,
+  timer,
+} from 'rxjs';
 import {
   buffer, debounceTime, filter, first, map,
   switchMap, take, takeUntil, tap,
@@ -13,6 +16,7 @@ import {
 import { Plugins } from '@capacitor/core';
 import { FormService, UserDataFormField } from '@core/forms/form.service';
 import { LanguageService } from '@core/services/language.service';
+import { RewardService } from '@core/services/reward.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { UtilityService } from '@core/services/utility.service';
 import { IonDatetime } from '@ionic/angular';
@@ -58,7 +62,11 @@ export class SettingsPage implements OnInit, OnDestroy {
     .pipe(
       switchMap(field => forkJoin([this.dataStore.userData$.pipe(take(1)), of(field)])),
       switchMap(([userData, field]) => this.showPopoverToEditField(userData, field)),
-      switchMap(data => this.dataStore.updateUserData(data)),
+      switchMap(data => this.dataStore.updateUserData(data)
+        .pipe(
+          map(() => data),
+          switchMap(() => iif(() => data.email != null, this.rewwardService.signup(), of()))
+        )),
       takeUntil(this.destroy$),
     );
 
@@ -76,6 +84,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly languageService: LanguageService,
     private readonly popoverService: PopoverService,
     private readonly presetService: PresetService,
+    private readonly rewwardService: RewardService,
     private readonly toastService: ToastService,
     private readonly utilityService: UtilityService,
   ) { }

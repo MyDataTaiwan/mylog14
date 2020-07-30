@@ -8,6 +8,7 @@ import jsQR from 'jsqr';
 import { defer, Subject } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Platform } from '@ionic/angular';
 
 @Component({
@@ -28,24 +29,21 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   canvasElement: any;
   videoElement: any;
   scanOn = true;
+  isCordova: boolean;
 
   destroy$ = new Subject();
 
   constructor(
-    private readonly platform: Platform
+    private readonly platform: Platform,
+    private readonly barcodeScanner: BarcodeScanner
   ) {
-    const isInStandaloneMode = () =>
-      'standalone' in window.navigator && window.navigator['standalone'];
-    if (this.platform.is('ios') && isInStandaloneMode()) {
-      console.log('I am a an iOS PWA!');
-      // TODO (If we will release the App as PWA) ? Implement alternative for iOS PWA : Remove this platform check
-    }
+    this.isCordova = this.platform.is('cordova');
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   ngOnDestroy() {
+    this.scanOn = false;
     this.destroy$.next(true);
     this.destroy$.complete();
   }
@@ -58,6 +56,11 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     if (this.scanOn) {
       this.startScan();
     }
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('Barcode data', barcodeData);
+    }).catch(err => {
+      console.log('Error', err);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

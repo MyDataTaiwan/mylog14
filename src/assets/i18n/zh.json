@@ -64,12 +64,12 @@
     "copy": "複製",
     "copied": "已複製",
     "scanQrcode": "掃描 QR Code",
-    "currentBalance": "目前可兌換金額",
+    "currentBalance": "目前持有點數",
     "canItBeRedeemed": "剩餘兌換名額",
-    "canRedeem": "尚有名額",
+    "canRedeem": "尚有 {{ pool }} 個名額",
     "cannotRedeem": "暫無名額",
     "redeeming": "正在兌換...",
-    "daysRecorded": "已紀錄天數",
+    "daysRecorded": "累積紀錄天數",
     "recordsCount": "筆紀錄",
     "fieldsCount": "項資料",
     "yes": "是",
@@ -84,6 +84,7 @@
     "location": "地點",
     "deletePhoto": "刪除照片",
     "shareDisabled": "敬請期待",
+    "redeem": "兌換",
     "redeemReward": "兌換獎勵",
     "recordNotTaken": "未紀錄",
     "emptyRecord": "空白紀錄",
@@ -122,7 +123,9 @@
     "mustBeNoLargerThan": "輸入值不可大於 {{max}}",
     "couponDisabled": "敬請期待兌換獎勵功能",
     "linkCopied": "連結已複製到剪貼簿",
-    "uploadFailed": "上傳失敗。請稍後再試。"
+    "uploadFailed": "上傳失敗。請稍後再試。",
+    "clickToGetInitialBalance": "點此領取 {{ amount }} 點獎勵",
+    "alreadyGotInitialBalance": "已領取 {{ amount }} 點獎勵"
   },
   "preset": {
     "commonCold": {

@@ -68,7 +68,7 @@
     "scanQrcode": "Scan QR Code",
     "currentBalance": "Current Balance",
     "canItBeRedeemed": "Redeem Quota",
-    "canRedeem": "Available",
+    "canRedeem": "Remaining quota: {{ pool }}",
     "cannotRedeem": "Out of Stock",
     "redeeming": "Redeeming...",
     "daysRecorded": "Days recorded",
@@ -86,6 +86,7 @@
     "location": "Location",
     "deletePhoto": "Delete Photo",
     "shareDisabled": "Coming Soon",
+    "redeem": "Redeem",
     "redeemReward": "Redeem Reward",
     "recordNotTaken": "N/A",
     "emptyRecord": "Blank",
@@ -124,7 +125,9 @@
     "mustBeNoLargerThan": "Value must be no larger than {{max}}",
     "couponDisabled": "Reward redeeming coming soon",
     "linkCopied": "Link copied to clipboard",
-    "uploadFailed": "Upload failed. Please try again later."
+    "uploadFailed": "Upload failed. Please try again later.",
+    "clickToGetInitialBalance": "Click to get {{ amount }} points reward",
+    "alreadyGotInitialBalance": "{{ amount }} points reward received"
   },
   "language": {
     "en": "English",

@@ -17,6 +17,9 @@ import { AddPhotoComponent } from './components/add-photo/add-photo.component';
 import {
   AddRecordComponent,
 } from './components/add-record/add-record.component';
+import {
+  IonCenterItemComponent,
+} from './components/ion-center-item/ion-center-item.component';
 import { MapComponent } from './components/map/map.component';
 import {
   PhotoViewerComponent,
@@ -34,6 +37,7 @@ import { RewardComponent } from './components/reward/reward.component';
   declarations: [
     AddPhotoComponent,
     AddRecordComponent,
+    IonCenterItemComponent,
     MapComponent,
     PhotoViewerComponent,
     PopoverComponent,
@@ -60,6 +64,7 @@ import { RewardComponent } from './components/reward/reward.component';
   exports: [
     AddPhotoComponent,
     AddRecordComponent,
+    IonCenterItemComponent,
     MapComponent,
     PhotoViewerComponent,
     PopoverComponent,

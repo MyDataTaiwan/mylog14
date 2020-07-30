@@ -2,48 +2,89 @@
 </app-header>
 <ion-content>
   <ion-list>
-    <ion-item>
-      <ion-icon name="pencil-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'title.daysRecorded' | translate }}</ion-label>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>紀錄獎勵</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>累積紀錄滿 7 天，即可獲得 20 點獎勵點數，可用於合作商家兌換新台幣 $20 折扣！</ion-card-content>
+      <ion-item>
+        <ion-icon name="flash-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
+        <ng-container *ngIf="pool$ | async as pool; else poolLoading">
+          <ion-text [color]="(+pool >= 1) ? 'primary' : 'secondary'">
+            {{ 'title.canRedeem' | translate: { pool: pool } }}</ion-text>
+        </ng-container>
+        <ng-template #poolLoading>
+          <ion-spinner></ion-spinner>
+        </ng-template>
+      </ion-item>
       <ng-container *ngIf="daysRecorded$ | async as daysRecorded; else daysRecordedLoading">
-        <ion-text [color]="(daysRecorded >= 7) ? 'primary' : 'secondary'">
-          {{ daysRecorded$ | async }}</ion-text>
+        <ion-item>
+          <ion-icon name="pencil-outline" slot="start"></ion-icon>
+          <ion-label>{{ 'title.daysRecorded' | translate }}</ion-label>
+          <ion-text [color]="(daysRecorded >= 7) ? 'primary' : 'secondary'">
+            {{ daysRecorded$ | async }} / 7
+          </ion-text>
+        </ion-item>
       </ng-container>
       <ng-template #daysRecordedLoading>
         <ion-spinner></ion-spinner>
       </ng-template>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="flash-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
-      <ng-container *ngIf="poolBalance$ | async as poolBalance; else poolBalanceLoading">
-        <ion-text [color]="(poolBalance >= 20) ? 'primary' : 'secondary'">
-          {{ 'title.canRedeem' | translate }}</ion-text>
+      <ng-container *ngIf="initRewardStatus$ | async as initReward; else initRewardLoading">
+        <ion-item *ngIf="initReward === 'pending'" class="ion-text-center">
+          <ion-icon name="calendar-outline" color="secondary" slot="start"></ion-icon>
+          <ion-label color="secondary" *ngIf="daysRecorded$ | async as daysRecorded">
+            {{ 'description.logMoreDaysForReward' | translate: { days: 7 - daysRecorded } }}</ion-label>
+        </ion-item>
+        <app-ion-center-item *ngIf="initReward === 'available'" button (click)="getInitialReward()">
+          <ion-button fill="outline">{{ 'description.clickToGetInitialBalance' | translate: { amount: 20 } }}
+          </ion-button>
+        </app-ion-center-item>
+        <ion-item *ngIf="initReward === 'done'" class="ion-text-center">
+          <ion-icon name="checkmark-outline" color="success" slot="start"></ion-icon>
+          <ion-label color="success">{{ 'description.alreadyGotInitialBalance' | translate: { amount: 20 } }}
+          </ion-label>
+        </ion-item>
       </ng-container>
-      <ng-template #poolBalanceLoading>
-        <ion-spinner></ion-spinner>
+      <ng-template #initRewardLoading>
+        <app-ion-center-item>
+          <ion-spinner></ion-spinner>
+        </app-ion-center-item>
       </ng-template>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="card-outline" slot="start"></ion-icon>
-      <ion-label>{{ 'title.currentBalance' | translate }}</ion-label>
-      <ng-container *ngIf="userBalance$ | async as userBalance; else userBalanceLoading">
-        <ion-text [color]="(userbalance >= 20) ? 'primary' : 'secondary'">
-          {{ userBalance$ | async }}</ion-text>
-      </ng-container>
-      <ng-template #userBalanceLoading>
-        <ion-spinner></ion-spinner>
-      </ng-template>
-    </ion-item>
-    <ng-container *ngIf="daysRecorded$ | async as daysRecorded">
-      <ion-item *ngIf="false" class="ion-text-center">
-        <ion-label>{{ 'description.logMoreDaysForReward' | translate: { days: 14 - daysRecorded } }}</ion-label>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>兌換資訊</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>20 點獎勵點數可用於合作商家兌換 $20 折扣。掃描商家 QR Code 以進行兌換。</ion-card-content>
+      <ion-item>
+        <ion-icon name="card-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'title.currentBalance' | translate }}</ion-label>
+        <ng-container *ngIf="userBalance$ | async as userBalance; else userBalanceLoading">
+          <ion-text [color]="(userBalance >= 20) ? 'primary' : 'secondary'">
+            {{ userBalance$ | async }}</ion-text>
+        </ng-container>
+        <ng-template #userBalanceLoading>
+          <ion-spinner></ion-spinner>
+        </ng-template>
       </ion-item>
-    </ng-container>
+    </ion-card>
   </ion-list>
-  <ng-container *ngIf="redeemStatus$ | async as redeemStatus">
-    <app-qr-scanner *ngIf="redeemStatus === 'valid'" [scanEnabled]="scanEnabled$ | async"
-      (scanResult)="scanResultHandler($event)"></app-qr-scanner>
+  <ion-grid fixed>
+    <ion-row class="ion-justify-content-center">
+      <ion-button size="large" [color]="(canRedeem$ | async) ? 'primary' : 'light'" class="redeem-button"
+        [disabled]="!(canRedeem$ | async)" (click)="scan()">
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-icon name="qr-code-outline" size="large"></ion-icon>
+            <ion-label>{{ 'title.redeem' | translate }}</ion-label>
+          </ion-row>
+        </ion-grid>
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+  <ng-container *ngIf="false">
+    <app-qr-scanner [scanEnabled]="scanEnabled$ | async" (scanResult)="scanResultHandler($event)"></app-qr-scanner>
   </ng-container>
   <ng-template #loading>
     <div class="ion-justify-content-between">

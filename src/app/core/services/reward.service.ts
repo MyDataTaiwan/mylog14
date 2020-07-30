@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, forkJoin, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 import {
@@ -18,6 +18,24 @@ export class RewardService {
     .pipe(
       map(recordsByDate => Object.keys(recordsByDate).length),
     );
+  private readonly initRewardStatusRefresher$ = new BehaviorSubject(0);
+  initRewardStatus$ = combineLatest([this.daysRecorded$, this.initRewardStatusRefresher$])
+    .pipe(
+      switchMap(([days, _]) => this.canGetInitialBalance()
+        .pipe(
+          map(canGet => [days, canGet]),
+        )
+      ),
+      map(([days, canGet]) => {
+        if (days < 7) {
+          return 'pending';
+        } else if (canGet) {
+          return 'available';
+        } else {
+          return 'done';
+        }
+      })
+    );
   private readonly poolBalance = new BehaviorSubject<number>(null);
   poolBalance$: Observable<number> = this.poolBalance;
   private readonly userBalance = new BehaviorSubject<number>(null);
@@ -26,18 +44,28 @@ export class RewardService {
   constructor(
     private readonly dataStore: DataStoreService,
     private readonly privateCouponService: PrivateCouponService,
-  ) {
+  ) { }
+
+  canGetInitialBalance(): Observable<boolean> {
+    return this.login()
+      .pipe(
+        switchMap(userAuth => this.privateCouponService.canGetInitialBalance(userAuth)),
+      );
   }
 
-  getBalance() {
+  getBalance(): Observable<[number, number]> {
     return forkJoin([this.updatePoolBalance(), this.updateUserBalance()]);
   }
 
-  checkInitialReward(): Observable<any> {
+  getInitReward(): Observable<any> {
     return this.login()
       .pipe(
         switchMap(userAuth => this.privateCouponService.giveInitialBalanceIfAvailable(userAuth)),
       );
+  }
+
+  refreshInitRewardStatus(): void {
+    this.initRewardStatusRefresher$.next(0);
   }
 
   signup(): Observable<UserAuth> {
@@ -50,7 +78,9 @@ export class RewardService {
   redeem(shopId: string): Observable<any> {
     return this.login()
       .pipe(
+        tap(e => console.log('Login successful')),
         switchMap(userAuth => this.privateCouponService.redeem(userAuth, shopId)),
+        tap(e => console.log('Emit redeem')),
       );
   }
 
