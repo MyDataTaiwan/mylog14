@@ -109,7 +109,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     }).pipe(
       filter(data => data?.data?.reset),
       mergeMap(() => this.eraseAccountWithLoading()),
-      mergeMap(() => this.router.navigate(['/onboarding'])),
+      mergeMap(() => this.router.navigate(['/onboarding'], { replaceUrl: true })),
       takeUntil(this.destroy$),
     ).subscribe();
   }

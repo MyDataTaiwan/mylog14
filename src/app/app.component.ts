@@ -37,7 +37,7 @@ export class AppComponent {
       )
       .subscribe(userData => {
         if (userData.newUser) {
-          this.router.navigate(['/onboarding']);
+          this.router.navigate(['/onboarding'], { replaceUrl: true });
         }
         SplashScreen.hide();
       });

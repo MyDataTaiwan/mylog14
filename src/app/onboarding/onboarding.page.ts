@@ -77,7 +77,7 @@ export class OnboardingPage implements OnDestroy {
         switchMap(loadingElement => loadingElement.dismiss()),
       )
       .subscribe(() => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/'], { replaceUrl: true });
       }, err => {
         console.log(err);
         this.loadingElement.dismiss();
