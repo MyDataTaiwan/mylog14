@@ -74,12 +74,8 @@
     <ion-row class="ion-justify-content-center">
       <ion-button size="large" [color]="(canRedeem$ | async) ? 'primary' : 'light'" class="redeem-button"
         [disabled]="!(canRedeem$ | async)" (click)="scan()">
-        <ion-grid>
-          <ion-row class="ion-justify-content-center">
-            <ion-icon name="qr-code-outline" size="large"></ion-icon>
-            <ion-label>{{ 'title.redeem' | translate }}</ion-label>
-          </ion-row>
-        </ion-grid>
+        <ion-icon name="qr-code-outline" size="large" slot="start"></ion-icon>
+        <ion-label>{{ 'title.redeem' | translate }}</ion-label>
       </ion-button>
     </ion-row>
   </ion-grid>
