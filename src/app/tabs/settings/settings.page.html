@@ -4,20 +4,38 @@
   <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
     <ion-list>
+      <ion-item-divider>
+        <ion-label>
+          {{ 'title.accountInfo' | translate }}
+        </ion-label>
+      </ion-item-divider>
+
+      <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'title.email' | translate }}</ion-label>
+        <ion-text *ngIf="userDataView.email">{{ userDataView.email }}</ion-text>
+        <ion-text *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</ion-text>
+      </ion-item>
+
+      <ion-item (click)="onResetAccountClicked()" button>
+        <ion-icon name="refresh-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'title.resetAccount' | translate }}</ion-label>
+      </ion-item>
+
+      <ion-item-divider>
+        <ion-label>
+          {{ 'title.profile' | translate }}
+        </ion-label>
+      </ion-item-divider>
+
       <ion-item (click)="onClickNameItem()" button>
         <ion-icon name="person-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.name' | translate }}</ion-label>
         <ion-text *ngIf="userDataView.firstName || userDataView.lastName">
           {{ userDataView.firstName + ' ' + userDataView.lastName }}
         </ion-text>
-        <ion-text *ngIf="!userDataView.firstName && !userDataView.lastName">{{ 'title.notSet' | translate }}</ion-text>
-      </ion-item>
-
-      <ion-item (click)="onClickEmailItem()" button>
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.email' | translate }}</ion-label>
-        <ion-text *ngIf="userDataView.email">{{ userDataView.email }}</ion-text>
-        <ion-text *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</ion-text>
+        <ion-text *ngIf="!userDataView.firstName && !userDataView.lastName">{{ 'title.notSet' | translate }}
+        </ion-text>
       </ion-item>
 
       <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
@@ -29,6 +47,12 @@
           (ionChange)="onChangeDateOfBirthPicker()" [cancelText]="'title.cancel' | translate"
           [doneText]="'title.confirm' | translate"></ion-datetime>
       </ion-item>
+
+      <ion-item-divider>
+        <ion-label>
+          {{ 'title.userSettings' | translate }}
+        </ion-label>
+      </ion-item-divider>
 
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
@@ -54,6 +78,12 @@
         </ion-select>
       </ion-item>
 
+      <ion-item-divider>
+        <ion-label>
+          {{ 'title.otherInfo' | translate }}
+        </ion-label>
+      </ion-item-divider>
+
       <ion-item (click)="onClickAboutItem()" button>
         <ion-icon name="information-circle-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.about' | translate }}</ion-label>
@@ -66,9 +96,11 @@
       </ion-item>
 
       <ng-container *ngIf="showDeveloperOptions === true">
-        <ion-list-header>
-          開發人員選項
-        </ion-list-header>
+        <ion-item-divider>
+          <ion-label>
+            開發人員選項（一般使用者請勿使用）
+          </ion-label>
+        </ion-item-divider>
         <ion-item lines="inset">
           <ion-icon name="hammer-outline" slot="start"></ion-icon>
           <ion-label>上傳測試設定</ion-label>

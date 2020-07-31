@@ -1,8 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
-import { first, map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, forkJoin, Observable } from 'rxjs';
+import { first, map, switchMap, tap, toArray } from 'rxjs/operators';
 
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { DailySummary } from '@core/interfaces/daily-summary';
@@ -64,6 +64,16 @@ export class DataStoreService {
       );
   }
 
+  deleteAllRecords(): Observable<any> {
+    const deleteRecord$ = this.records.getValue().map(record => this.recordRepo.delete(record));
+    return concat(...deleteRecord$)
+      .pipe(
+        toArray(),
+        tap(e => console.log('emit', e)),
+        tap(() => this.records.next([])),
+      );
+  }
+
   pushRecord(record: Record, register = true): Observable<Record[]> {
     return this.recordRepo.save(record, register)
       .pipe(
@@ -97,6 +107,13 @@ export class DataStoreService {
     return this.recordRepo.getAll()
       .pipe(
         tap(records => this.records.next(records)),
+      );
+  }
+
+  deleteUserData(): Observable<UserData> {
+    return this.userDataRepo.resetToDefault()
+      .pipe(
+        tap(newUserData => this.userData.next(newUserData)),
       );
   }
 

@@ -90,7 +90,7 @@ export class RecordRepositoryService {
     const meta = metas.find(el => el.timestamp === timestamp);
     const deleteRecord$ = (meta) ? this.fileSystem.deleteJsonData(meta.path) : of();
     const metaIdx = metas.findIndex(el => el.timestamp === timestamp);
-    if (metaIdx) {
+    if (metaIdx !== -1) {
       metas.splice(metaIdx, 1);
     }
     return deleteRecord$

@@ -100,7 +100,13 @@
     "keepRecordReward": "紀錄獎勵",
     "redeemInfo": "兌換資訊",
     "redeemSuccess": "兌換成功",
-    "redeem20Confirm": "在此特約店面兌換 20 元折扣？"
+    "redeem20Confirm": "在此特約店面兌換 20 元折扣？",
+    "accountInfo": "帳號資訊",
+    "profile": "個人檔案",
+    "userSettings": "使用者設定",
+    "otherInfo": "其他資訊",
+    "resetAccount": "重設帳號",
+    "erasingAccount": "正在清除帳號資料..."
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -132,7 +138,9 @@
     "clickToGetInitialBalance": "點此領取 {{ point }} 點獎勵",
     "alreadyGotInitialBalance": "已領取 {{ point }} 點獎勵",
     "rewardEvent": "累積紀錄滿 {{ day }} 天，即可獲得 {{ point }} 點獎勵點數！",
-    "redeemInfo": "{{ point }} 點獎勵點數可用於特約商家兌換 {{ point }} 元折扣。掃描商家 QR 條碼進行兌換。"
+    "redeemInfo": "{{ point }} 點獎勵點數可用於特約商家兌換 {{ point }} 元折扣。掃描商家 QR 條碼進行兌換。",
+    "resetAccount": "你確定要重設帳號嗎？",
+    "resetAccountEraseWarning": "（所有的資料都將被清除！）"
   },
   "preset": {
     "commonCold": {

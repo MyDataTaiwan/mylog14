@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
-  forkJoin, iif, Observable, of, Subject,
-  timer,
+  combineLatest, concat, forkJoin, Observable, of,
+  Subject, timer,
 } from 'rxjs';
 import {
   buffer, debounceTime, filter, first, map,
-  switchMap, take, takeUntil, tap,
+  mergeMap, switchMap, take, takeUntil, tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
 import {
@@ -16,11 +17,13 @@ import {
 import { Plugins } from '@capacitor/core';
 import { FormService, UserDataFormField } from '@core/forms/form.service';
 import { LanguageService } from '@core/services/language.service';
-import { RewardService } from '@core/services/reward.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { UtilityService } from '@core/services/utility.service';
 import { IonDatetime } from '@ionic/angular';
-import { PopoverService } from '@shared/services/popover.service';
+import { LoadingService } from '@shared/services/loading.service';
+import {
+  PopoverButtonSet, PopoverService,
+} from '@shared/services/popover.service';
 import { ToastService } from '@shared/services/toast.service';
 
 import { version } from '../../../../package.json';
@@ -62,11 +65,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     .pipe(
       switchMap(field => forkJoin([this.dataStore.userData$.pipe(take(1)), of(field)])),
       switchMap(([userData, field]) => this.showPopoverToEditField(userData, field)),
-      switchMap(data => this.dataStore.updateUserData(data)
-        .pipe(
-          map(() => data),
-          switchMap(() => iif(() => data.email != null, this.rewwardService.signup(), of()))
-        )),
+      switchMap(data => this.dataStore.updateUserData(data)),
       takeUntil(this.destroy$),
     );
 
@@ -82,9 +81,10 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly dataStore: DataStoreService,
     private readonly formService: FormService,
     private readonly languageService: LanguageService,
+    private readonly loadingService: LoadingService,
     private readonly popoverService: PopoverService,
     private readonly presetService: PresetService,
-    private readonly rewwardService: RewardService,
+    private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly utilityService: UtilityService,
   ) { }
@@ -98,8 +98,20 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.updateFromPopover.next(UserDataFormField.NAME);
   }
 
-  onClickEmailItem(): void {
-    this.updateFromPopover.next(UserDataFormField.EMAIL);
+  onResetAccountClicked(): void {
+    this.popoverService.showPopover({
+      i18nTitle: 'title.resetAccount',
+      i18nMessage: 'description.resetAccount',
+      i18nExtraMessage: 'description.resetAccountEraseWarning',
+      buttonSet: PopoverButtonSet.CONFIRM,
+      dataOnConfirm: { reset: true },
+      dataOnCancel: { reset: false },
+    }).pipe(
+      filter(data => data?.data?.reset),
+      mergeMap(() => this.eraseAccountWithLoading()),
+      mergeMap(() => this.router.navigate(['/onboarding'])),
+      takeUntil(this.destroy$),
+    ).subscribe();
   }
 
   onChangeDateOfBirthPicker(): void {
@@ -144,6 +156,20 @@ export class SettingsPage implements OnInit, OnDestroy {
             takeUntil(this.destroy$),
           ).subscribe()
       );
+  }
+
+  private eraseAccountWithLoading() {
+    return combineLatest([
+      this.showEraseAccountLoading(),
+      concat(this.dataStore.deleteAllRecords(), this.dataStore.deleteUserData()),
+    ])
+      .pipe(
+        mergeMap(([loading, _]) => loading.dismiss()),
+      );
+  }
+
+  private showEraseAccountLoading(): Observable<HTMLIonLoadingElement> {
+    return this.loadingService.showLoading('title.erasingAccount');
   }
 
   private showPopoverToEditField(userData: UserData, field: UserDataFormField): Observable<UserData> {
