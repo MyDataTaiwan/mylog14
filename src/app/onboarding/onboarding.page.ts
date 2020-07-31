@@ -32,7 +32,7 @@ export class OnboardingPage implements OnDestroy {
 
   private readonly destroy$ = new Subject();
 
-  language$: Observable<string> = this.langaugeService.get();
+  language$: Observable<string> = this.languageService.language$;
 
   constructor(
     private readonly formBuilder: FormBuilder,
@@ -42,7 +42,7 @@ export class OnboardingPage implements OnDestroy {
     private readonly toastService: ToastService,
     private readonly translate: TranslateService,
     private readonly dataStore: DataStoreService,
-    public readonly langaugeService: LanguageService,
+    public readonly languageService: LanguageService,
   ) { }
 
   onSubmit() {
