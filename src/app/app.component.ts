@@ -24,12 +24,12 @@ export class AppComponent {
     private readonly dataStore: DataStoreService,
     private readonly platform: Platform,
     private readonly router: Router,
-    private readonly language: LanguageService
+    private readonly languageService: LanguageService
   ) {
     this.setStatusBarStyle().subscribe();
     this.dataInitialized()
       .pipe(
-        switchMap(() => this.language.init()),
+        switchMap(() => this.languageService.init()),
         switchMap(() => this.dataStore.userData$.pipe(take(1))),
         switchMap(userData => {
           return (userData.recordPreset) ? of(userData) : this.dataStore.updateUserData({ recordPreset: RecordPreset.COMMON_COLD });
@@ -37,7 +37,7 @@ export class AppComponent {
       )
       .subscribe(userData => {
         if (userData.newUser) {
-          this.router.navigate(['/onboarding']);
+          this.router.navigate(['/onboarding'], { replaceUrl: true });
         }
         SplashScreen.hide();
       });

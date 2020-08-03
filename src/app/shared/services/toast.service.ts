@@ -9,16 +9,20 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class ToastService {
-  constructor(private readonly toastCtrl: ToastController) { }
+  constructor(
+    private readonly toastCtrl: ToastController,
+  ) { }
 
-  showToast(message: string, duration = 0): Observable<HTMLIonPopoverElement> {
-    return this.createToast(message, duration).pipe(
+  showToast(message: string, color: string, duration = 0): Observable<HTMLIonPopoverElement> {
+    return this.createToast(message, color, duration).pipe(
       switchMap((toast) => this.presentToast(toast))
     );
   }
 
-  private createToast(message: string, duration: number): Observable<HTMLIonToastElement> {
-    return defer(() => this.toastCtrl.create({ message, duration }));
+  private createToast(message: string, color: string, duration: number): Observable<HTMLIonToastElement> {
+    const buttons = [{ icon: 'close', role: 'cancel' }];
+    const toastOptions = (duration === 0) ? { message, color, duration, buttons } : { message, color, duration };
+    return defer(() => this.toastCtrl.create(toastOptions));
   }
 
   private presentToast(toast: HTMLIonToastElement): Observable<any> {
