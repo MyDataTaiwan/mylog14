@@ -15,8 +15,8 @@ import {
   PhotoViewerComponent,
 } from '@shared/components/photo-viewer/photo-viewer.component';
 import {
-  ShopScannerComponent,
-} from '@shared/components/shop-scanner/shop-scanner.component';
+  QrScannerComponent,
+} from '@shared/components/qr-scanner/qr-scanner.component';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +50,17 @@ export class ModalService {
       );
   }
 
+  showQRScannerModal(): Observable<any> {
+    return defer(() => this.modalCtrl.create({
+      component: QrScannerComponent,
+      animated: true,
+      backdropDismiss: false,
+    }))
+      .pipe(
+        switchMap(modal => this.presentModal(modal)),
+      );
+  }
+
   showPhotoViewerModal(record: Record): Observable<any> {
     return defer(() => this.modalCtrl.create({
       component: PhotoViewerComponent,
@@ -62,15 +73,22 @@ export class ModalService {
       );
   }
 
-  showShopScannerModal(): Observable<any> {
-    return defer(() => this.modalCtrl.create({
-      component: ShopScannerComponent,
-      animated: true,
-      backdropDismiss: false,
-    }))
+  // FIXME: component & componentProps typing
+  showModal(component: any, componentProps?: any): Observable<any> {
+    return this.createModal(component, componentProps)
       .pipe(
         switchMap(modal => this.presentModal(modal)),
       );
+  }
+
+  // FIXME: component & componentProps typing
+  private createModal(component: any, componentProps?: any): Observable<HTMLIonModalElement> {
+    return defer(() => this.modalCtrl.create({
+      component,
+      componentProps,
+      animated: true,
+      backdropDismiss: false,
+    }));
   }
 
   private presentModal(modal: HTMLIonModalElement): Observable<any> {

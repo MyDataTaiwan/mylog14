@@ -65,7 +65,7 @@ export class SharePage implements OnInit, OnDestroy {
   showLinkCopiedToast() {
     return this.translateService.get('description.linkCopied')
       .pipe(
-        switchMap(message => this.toastService.showToast(message, 3000)),
+        switchMap(message => this.toastService.showToast(message, 'primary', 3000)),
       );
   }
 

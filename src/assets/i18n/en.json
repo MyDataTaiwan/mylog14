@@ -67,8 +67,8 @@
     "copied": "Copied",
     "scanQrcode": "Scan QR Code",
     "currentBalance": "Current Balance",
-    "canItBeRedeemed": "Redeem Quota",
-    "canRedeem": "Available",
+    "canItBeRedeemed": "Quota",
+    "canRedeem": "Remaining quota: {{ pool }}",
     "cannotRedeem": "Out of Stock",
     "redeeming": "Redeeming...",
     "daysRecorded": "Days recorded",
@@ -86,6 +86,7 @@
     "location": "Location",
     "deletePhoto": "Delete Photo",
     "shareDisabled": "Coming Soon",
+    "redeem": "Redeem",
     "redeemReward": "Redeem Reward",
     "recordNotTaken": "N/A",
     "emptyRecord": "Blank",
@@ -96,7 +97,18 @@
     "takePhoto": "Take A Photo",
     "noLocationData": "No Location Data",
     "uploadAndCreateSharedLink": "Upload & Create Link",
-    "expireAt": "Expire at {{time}}"
+    "expireAt": "Expire at {{time}}",
+    "QRScanner": "Scan QR Code",
+    "keepRecordReward": "Keep Records for Reward",
+    "redeemInfo": "Redeem Info",
+    "redeemSuccess": "Redeem Success",
+    "redeem20Confirm": "Redeem $20 NTD discount for this shop?",
+    "accountInfo": "Account Info",
+    "profile": "Profile",
+    "userSettings": "User Settings",
+    "otherInfo": "Other Info",
+    "resetAccount": "Reset Account",
+    "erasingAccount": "Erasing Account Data..."
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -124,7 +136,13 @@
     "mustBeNoLargerThan": "Value must be no larger than {{max}}",
     "couponDisabled": "Reward redeeming coming soon",
     "linkCopied": "Link copied to clipboard",
-    "uploadFailed": "Upload failed. Please try again later."
+    "uploadFailed": "Upload failed. Please try again later.",
+    "clickToGetInitialBalance": "Click to get {{ point }} points reward",
+    "alreadyGotInitialBalance": "{{ point }} points reward received",
+    "rewardEvent": "Keep records for {{ day }} days to earn {{ point }} reward points!",
+    "redeemInfo": "{{ point }} reward points could be used for redeeming a ${{ point }} NTD discount coupon for affiliated stores. Scan the QR code of the affilated store to redeem the coupon.",
+    "resetAccount": "Are you sure you want to reset the account?",
+    "resetAccountEraseWarning": "(All data will be erased!)"
   },
   "language": {
     "en": "English",

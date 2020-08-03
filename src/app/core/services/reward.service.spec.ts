@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { CouponService } from './coupon.service';
 
-describe('CouponService', () => {
+import { RewardService } from './reward.service';
+
+describe('RewardService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CouponService = TestBed.inject(CouponService);
+    const service: RewardService = TestBed.inject(RewardService);
     expect(service).toBeTruthy();
   });
 });

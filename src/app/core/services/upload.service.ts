@@ -54,8 +54,6 @@ export class UploadService {
     this.uploadHostHandler().subscribe();
   }
 
-  // FIXME: states and functions are messy, need refactoring & cleanup
-
   startUpload(): boolean {
     if (this.isUploading) {
       return false;
@@ -63,13 +61,11 @@ export class UploadService {
     this.upload()
       .pipe(
         catchError(err => {
-          console.log(err);
           this.isUploading = false;
           this.resetUploadStatus();
-          return this.translateService.get('description.uploadFailed')
-            .pipe(
-              switchMap(message => this.toastService.showToast(message, 2000)),
-            );
+          throw new ErrorEvent('http', {
+            message: this.translateService.instant('description.uploadFailed'),
+          });
         })
       ).subscribe();
     return true;

@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { IonicModule } from '@ionic/angular';
 
-import { ShopScannerComponent } from './shop-scanner.component';
+import { RewardComponent } from './reward.component';
 
-describe('ShopScannerComponent', () => {
-  let component: ShopScannerComponent;
-  let fixture: ComponentFixture<ShopScannerComponent>;
+describe('RewardComponent', () => {
+  let component: RewardComponent;
+  let fixture: ComponentFixture<RewardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShopScannerComponent ],
+      declarations: [RewardComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ShopScannerComponent);
+    fixture = TestBed.createComponent(RewardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

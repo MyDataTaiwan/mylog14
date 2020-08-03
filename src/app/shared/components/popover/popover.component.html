@@ -5,6 +5,7 @@
       <h4>{{ i18nTitle | translate }}</h4>
       <div class="message-content">
         <h6>{{ i18nMessage | translate }}</h6>
+        <h6>{{ i18nExtraMessage | translate }}</h6>
       </div>
     </div>
     <div class="form-box ion-justify-content-between" *ngIf="formFields && formModel">
@@ -19,7 +20,6 @@
       </form>
     </div>
     <div>
-      <h6>{{ i18nExtraMessage | translate }}</h6>
       <ion-row *ngIf="buttonSet === 'confirm'" class="ion-justify-content-between">
         <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
         <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>

@@ -6,6 +6,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import {
   FormlyFieldInputComponent,
 } from '@core/forms/formly-field-input/formly-field-input-component';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { IonicModule } from '@ionic/angular';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
@@ -16,6 +17,9 @@ import { AddPhotoComponent } from './components/add-photo/add-photo.component';
 import {
   AddRecordComponent,
 } from './components/add-record/add-record.component';
+import {
+  IonCenterItemComponent,
+} from './components/ion-center-item/ion-center-item.component';
 import { MapComponent } from './components/map/map.component';
 import {
   PhotoViewerComponent,
@@ -27,19 +31,18 @@ import {
 import {
   QrScannerComponent,
 } from './components/qr-scanner/qr-scanner.component';
-import {
-  ShopScannerComponent,
-} from './components/shop-scanner/shop-scanner.component';
+import { RewardComponent } from './components/reward/reward.component';
 
 @NgModule({
   declarations: [
     AddPhotoComponent,
     AddRecordComponent,
+    IonCenterItemComponent,
     MapComponent,
     PhotoViewerComponent,
     PopoverComponent,
     ProofItemComponent,
-    ShopScannerComponent,
+    RewardComponent,
     QrScannerComponent,
     FormlyFieldInputComponent,
   ],
@@ -61,12 +64,14 @@ import {
   exports: [
     AddPhotoComponent,
     AddRecordComponent,
+    IonCenterItemComponent,
     MapComponent,
     PhotoViewerComponent,
     PopoverComponent,
     ProofItemComponent,
-    ShopScannerComponent,
+    RewardComponent,
     QrScannerComponent,
-  ]
+  ],
+  providers: [BarcodeScanner],
 })
 export class SharedModule { }
