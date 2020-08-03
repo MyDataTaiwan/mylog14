@@ -100,7 +100,6 @@ export class RewardComponent implements OnInit, OnDestroy {
         this.parseAndFilterInvalidQRText(),
         this.showShopInfoAndFilterCancel(),
         switchMap(shopInfo => this.startRedeemWithLoadingPopover(shopInfo)),
-        switchMap(() => this.rewardService.getBalance()),
       ).subscribe();
   }
 
@@ -170,7 +169,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     return combineLatest([this.showRedeeming(), this.rewardService.redeem(shopInfo.UUID)])
       .pipe(
         switchMap(([popover, _]) => popover.dismiss()),
-        switchMap(() => this.showRedeemSuccess(shopInfo)),
+        switchMap(() => forkJoin([this.showRedeemSuccess(shopInfo), this.rewardService.getBalance()])),
       );
   }
 
