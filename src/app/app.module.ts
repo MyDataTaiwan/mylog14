@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -7,6 +7,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import player from 'lottie-web';
 import { LottieModule } from 'ngx-lottie';
 
+import { ErrorHandlerService } from '@core/error-handler/error-handler.service';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyIonicModule } from '@ngx-formly/ionic';
@@ -53,7 +54,8 @@ export function playerFactory() {
     FormlyIonicModule
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: ErrorHandler, useClass: ErrorHandlerService },
   ],
   bootstrap: [AppComponent]
 })

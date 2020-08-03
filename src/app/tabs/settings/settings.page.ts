@@ -152,7 +152,7 @@ export class SettingsPage implements OnInit, OnDestroy {
       .subscribe(
         () => { },
         () => { },
-        () => this.toastService.showToast(`已產生 ${count} 筆資料`, 3000)
+        () => this.toastService.showToast(`已產生 ${count} 筆資料`, 'primary')
           .pipe(
             takeUntil(this.destroy$),
           ).subscribe()

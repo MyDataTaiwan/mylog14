@@ -11,7 +11,6 @@ import { RewardService } from '@core/services/reward.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { TranslateService } from '@ngx-translate/core';
 import { UserAuth } from '@numbersprotocol/private-coupon';
-import { ToastService } from '@shared/services/toast.service';
 
 import { RecordPreset } from '../core/services/preset.service';
 import { LoadingService } from '../shared/services/loading.service';
@@ -39,7 +38,6 @@ export class OnboardingPage implements OnDestroy {
     private readonly loadingService: LoadingService,
     private readonly rewardService: RewardService,
     private readonly router: Router,
-    private readonly toastService: ToastService,
     private readonly translate: TranslateService,
     private readonly dataStore: DataStoreService,
     public readonly languageService: LanguageService,
@@ -58,7 +56,6 @@ export class OnboardingPage implements OnDestroy {
           }
           console.error(err);
           this.confirmButtonEnabled = true;
-          this.toastService.showToast(err.error.reason || err.statusText, 3000);
           throw (err);
         }),
         map((userAuth: UserAuth) => ({
