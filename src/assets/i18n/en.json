@@ -112,6 +112,11 @@
     "resetAccount": "Are you sure you want to reset the account?",
     "resetAccountEraseWarning": "(All data will be erased!)"
   },
+  "error": {
+    "error": "Error",
+    "QRInvalidJSON": "Scanned Text is not the correct format",
+    "QRInvalidShop": "No valid shop info"
+  },
   "language": {
     "en": "English",
     "fr": "French",

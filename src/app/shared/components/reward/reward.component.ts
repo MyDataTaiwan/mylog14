@@ -15,10 +15,12 @@ import {
   BarcodeScanner, BarcodeScannerOptions,
 } from '@ionic-native/barcode-scanner/ngx';
 import { ModalController, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { ModalService } from '@shared/services/modal.service';
 import {
   PopoverButtonSet, PopoverIcon, PopoverService,
 } from '@shared/services/popover.service';
+import { ToastService } from '@shared/services/toast.service';
 
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 
@@ -64,6 +66,8 @@ export class RewardComponent implements OnInit, OnDestroy {
     private readonly platform: Platform,
     private readonly rewardService: RewardService,
     private readonly popoverService: PopoverService,
+    private readonly toastService: ToastService,
+    private readonly translateService: TranslateService,
   ) { }
 
   ngOnInit() {
@@ -130,12 +134,17 @@ export class RewardComponent implements OnInit, OnDestroy {
           try {
             shopInfo = JSON.parse(data);
           } catch (err) {
-            console.warn(err);
-            console.warn('QR Code ERROR: is not valid JSON format', data);
+            const errorMessage = (
+              this.translateService.instant('error.error') + ': ' + this.translateService.instant('error.QRInvalidJSON')
+            );
+            this.toastService.showToast(errorMessage, 'danger', 3000).subscribe();
             return null;
           }
           if (!(shopInfo?.UUID && shopInfo?.shopName && shopInfo?.shopBranch)) {
-            console.warn('QR Code ERROR: is not valid shopInfo', data);
+            const errorMessage = (
+              this.translateService.instant('error.error') + ': ' + this.translateService.instant('error.QRInvalidShop')
+            );
+            this.toastService.showToast(errorMessage, 'danger', 3000).subscribe();
             return null;
           }
           return shopInfo;

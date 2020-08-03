@@ -5,7 +5,7 @@ import {
 
 import jsQR from 'jsqr';
 import { defer, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 
 import { ModalController } from '@ionic/angular';
 
@@ -26,13 +26,20 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
   videoElement: any;
   scanOn = true;
 
+  dismissHandler$ = new Subject<string>();
   destroy$ = new Subject();
 
   constructor(
     private readonly modalCtrl: ModalController,
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.dismissHandler$
+      .pipe(
+        debounceTime(50),
+        takeUntil(this.destroy$),
+      ).subscribe(data => this.modalCtrl.dismiss(data));
+  }
 
   ngOnDestroy() {
     this.scanOn = false;
@@ -98,7 +105,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       if (code) {
-        this.modalCtrl.dismiss(code.data);
+        this.dismissHandler$.next(code.data);
       }
     }
     if (this.scanOn) {

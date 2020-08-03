@@ -111,6 +111,11 @@
     "resetAccount": "你確定要重設帳號嗎？",
     "resetAccountEraseWarning": "（所有的資料都將被清除！）"
   },
+  "error": {
+    "error": "錯誤",
+    "QRInvalidJSON": "掃描文字格式錯誤",
+    "QRInvalidShop": "查無特約商店資訊"
+  },
   "preset": {
     "commonCold": {
       "presetName": "普通感冒",

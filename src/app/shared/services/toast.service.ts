@@ -21,7 +21,7 @@ export class ToastService {
 
   private createToast(message: string, color: string, duration: number): Observable<HTMLIonToastElement> {
     const buttons = [{ icon: 'close', role: 'cancel' }];
-    const toastOptions = (duration === 0) ? { message, color, duration, buttons } : { message, color, duration };
+    const toastOptions = { message, color, duration, buttons };
     return defer(() => this.toastCtrl.create(toastOptions));
   }
 
