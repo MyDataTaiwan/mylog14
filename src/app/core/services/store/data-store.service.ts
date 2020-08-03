@@ -69,7 +69,6 @@ export class DataStoreService {
     return concat(...deleteRecord$)
       .pipe(
         toArray(),
-        tap(e => console.log('emit', e)),
         tap(() => this.records.next([])),
       );
   }

@@ -54,7 +54,6 @@ export class OnboardingPage implements OnDestroy {
             console.log('The API returns USED_EMAIL error.');
             return of(null);
           }
-          console.error(err);
           this.confirmButtonEnabled = true;
           throw (err);
         }),

@@ -78,9 +78,7 @@ export class RewardService {
   redeem(shopId: string): Observable<any> {
     return this.login()
       .pipe(
-        tap(e => console.log('Login successful')),
         switchMap(userAuth => this.privateCouponService.redeem(userAuth, shopId)),
-        tap(e => console.log('Emit redeem')),
       );
   }
 
