@@ -28,6 +28,15 @@ export class SharePage implements OnInit, OnDestroy {
       map(sharedLinks => sharedLinks.filter(link => link != null).reverse()),
     );
   uploadStatus$ = this.uploadService.uploadStatus$;
+  progress$ = this.uploadStatus$
+    .pipe(
+      filter(uploadStatus => uploadStatus?.done != null && uploadStatus?.total != null),
+      map(uploadStatus => uploadStatus.done / uploadStatus.total),
+    );
+  progressPercentage$ = this.progress$
+    .pipe(
+      map(progress => Math.floor(progress * 100)),
+    );
 
   constructor(
     private readonly dataStore: DataStoreService,
@@ -65,7 +74,7 @@ export class SharePage implements OnInit, OnDestroy {
   showLinkCopiedToast() {
     return this.translateService.get('description.linkCopied')
       .pipe(
-        switchMap(message => this.toastService.showToast(message, 'primary', 3000)),
+        switchMap(message => this.toastService.showToast(message, 'secondary', 3000)),
       );
   }
 

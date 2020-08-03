@@ -65,7 +65,6 @@
     "takePhoto": "Take A Photo",
     "noLocationData": "No Location Data",
     "uploadAndCreateSharedLink": "Upload & Create Link",
-    "expireAt": "Expire at {{time}}",
     "QRScanner": "Scan QR Code",
     "keepRecordReward": "Keep Records for Reward",
     "redeemInfo": "Redeem Info",
@@ -76,7 +75,8 @@
     "userSettings": "User Settings",
     "otherInfo": "Other Info",
     "resetAccount": "Reset Account",
-    "erasingAccount": "Erasing Account Data..."
+    "erasingAccount": "Erasing Account Data...",
+    "uploadProgress": "Upload Progress"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -110,7 +110,8 @@
     "rewardEvent": "Keep records for {{ day }} days to earn {{ point }} reward points!",
     "redeemInfo": "{{ point }} reward points could be used for redeeming a ${{ point }} NTD discount coupon for affiliated stores. Scan the QR code of the affilated store to redeem the coupon.",
     "resetAccount": "Are you sure you want to reset the account?",
-    "resetAccountEraseWarning": "(All data will be erased!)"
+    "resetAccountEraseWarning": "(All data will be erased!)",
+    "shareAt": "Shared at {{ time }}"
   },
   "error": {
     "error": "Error",

@@ -2,24 +2,30 @@
 
 <ion-content>
     <ion-list>
-        <ion-item *ngIf="uploadStatus$ | async as uploadStatus">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>{{ 'title.shareData' | translate }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>{{ 'description.shareOnCloudTemporarily' | translate }}</ion-card-content>
+        </ion-card>
+        <ion-item *ngIf="progress$ | async as progress">
             <ion-grid>
                 <ion-row>
-                    <ion-progress-bar color="primary" [value]="uploadStatus.done / uploadStatus.total">
+                    <ion-progress-bar color="primary" [value]="progress">
                     </ion-progress-bar>
                 </ion-row>
-                <ion-row>
-                    <ion-text class=ion-text-center>
-                        {{ uploadStatus.done }} / {{ uploadStatus.total }}
+                <ion-row class="ion-justify-content-center">
+                    <ion-text>
+                        {{ 'title.uploadProgress' | translate }}: {{ progressPercentage$ | async }} %
                     </ion-text>
                 </ion-row>
             </ion-grid>
         </ion-item>
-        <ion-item *ngFor="let link of sharedLinks$ | async" button>
+        <ion-item *ngFor="let link of sharedLinks$ | async">
             <ion-grid>
                 <ion-row>
                     <ion-note>
-                        {{ 'title.expireAt' | translate: { time: link.expireTime | date: 'yyyy-MM-ddTHH:mm:ssz' } }}
+                        {{ 'description.shareAt' | translate: { time: link.createTime | date: 'yyyy-MM-dd HH:mm:ssz' } }}
                     </ion-note>
                 </ion-row>
                 <ion-row class="ion-justify-content-center">
