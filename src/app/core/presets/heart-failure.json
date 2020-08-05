@@ -9,11 +9,7 @@
             "dataGroup": "vitalSigns",
             "dataClass": "",
             "defaultValue": null,
-            "valueUnit": "mmHg",
-            "valueRange": {
-                "max": 200,
-                "min": 60
-            }
+            "valueUnit": "mmHg"
         },
         {
             "name": "DBP",
@@ -23,11 +19,7 @@
             "dataGroup": "vitalSigns",
             "dataClass": "",
             "defaultValue": null,
-            "valueUnit": "mmHg",
-            "valueRange": {
-                "max": 110,
-                "min": 10
-            }
+            "valueUnit": "mmHg"
         },
         {
             "name": "heartbeat",
@@ -37,11 +29,7 @@
             "dataGroup": "vitalSigns",
             "dataClass": "",
             "defaultValue": null,
-            "valueUnit": "bpm",
-            "valueRange": {
-                "max": 300,
-                "min": 30
-            }
+            "valueUnit": "bpm"
         },
         {
             "name": "bloodSugar",
@@ -51,11 +39,7 @@
             "dataGroup": "vitalSigns",
             "dataClass": "",
             "defaultValue": null,
-            "valueUnit": "mg/dL",
-            "valueRange": {
-                "max": 1000,
-                "min": 0
-            }
+            "valueUnit": "mg/dL"
         },
         {
             "name": "weight",
@@ -65,11 +49,7 @@
             "dataGroup": "vitalSigns",
             "dataClass": "",
             "defaultValue": null,
-            "valueUnit": "kg",
-            "valueRange": {
-                "max": 300,
-                "min": 1
-            }
+            "valueUnit": "kg"
         },
         {
             "name": "urineVolume",
@@ -79,11 +59,7 @@
             "dataGroup": "vitalSigns",
             "dataClass": "accumulated",
             "defaultValue": null,
-            "valueUnit": "mL",
-            "valueRange": {
-                "max": 3000,
-                "min": 0
-            }
+            "valueUnit": "mL"
         },
         {
             "name": "note",

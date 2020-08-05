@@ -59,7 +59,11 @@ export class UtilityService {
       let value = null;
       switch (field.type) {
         case 'number':
-          value = this.generateRandomFloat(field.valueRange.min, field.valueRange.max);
+          if (field?.valueRange?.min && field?.valueRange?.max) {
+            value = this.generateRandomFloat(field.valueRange.min, field.valueRange.max);
+          } else {
+            value = this.generateRandomInt(0, 200);
+          }
           break;
         case 'string':
           value = 'This is a fake data';
