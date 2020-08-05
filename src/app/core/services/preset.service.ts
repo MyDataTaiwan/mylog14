@@ -25,7 +25,7 @@ export class PresetService {
 
   initRecordWithPreset(record: Record, preset: RecordPreset) {
     if (record.fields.length > 0) {
-      throw(new Error('Record is already initiated.'));
+      throw (new Error('Record is already initiated.'));
     }
     switch (preset) {
       case RecordPreset.COMMON_COLD:
@@ -49,7 +49,7 @@ export class PresetService {
       field.icon,
       field.valueUnit,
       field.valueRange,
-      ));
+    ));
     return record;
   }
 
@@ -64,7 +64,6 @@ export class PresetService {
       field.defaultValue,
       field.icon,
       field.valueUnit,
-      field.valueRange,
     ));
     return record;
   }
