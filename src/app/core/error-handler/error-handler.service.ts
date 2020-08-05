@@ -3,6 +3,7 @@ import { ErrorHandler, Injectable } from '@angular/core';
 
 import { throwError } from 'rxjs';
 
+import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '@shared/services/toast.service';
 
 @Injectable({
@@ -12,21 +13,23 @@ export class ErrorHandlerService implements ErrorHandler {
 
   constructor(
     private readonly toastService: ToastService,
+    private readonly translateService: TranslateService,
   ) { }
 
   handleError(error: any) {
     let debugMessage = '';
     let userMessage = '';
+    const i18nError = this.translateService.instant('error.error');
     if (error?.status) {
       debugMessage += `Error code: ${error.status}\n`;
       userMessage += `${error.status}: `;
     }
     if (error?.error?.message) {
       debugMessage += `Error message: ${error.error.message}\n`;
-      userMessage += `Error: ${error.error.message}\n`;
+      userMessage += `${i18nError}: ${error.error.message}\n`;
     } else {
       debugMessage += `Error message: ${error.message}\n`;
-      userMessage += `Error: ${error.message}\n`;
+      userMessage += `${i18nError}: ${error.message}\n`;
     }
     debugMessage += `Stack: ${error.stack}`;
     console.error(debugMessage);

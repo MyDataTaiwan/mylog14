@@ -33,7 +33,7 @@ export class AppComponent {
         switchMap(() => this.dataStore.userData$.pipe(take(1))),
         switchMap(userData => {
           return (userData.recordPreset) ? of(userData) : this.dataStore.updateUserData({ recordPreset: RecordPreset.COMMON_COLD });
-        })
+        }),
       )
       .subscribe(userData => {
         if (userData.newUser) {

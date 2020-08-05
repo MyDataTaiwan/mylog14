@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { iif, Observable, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -51,8 +51,7 @@ export class LanguageService {
     return this.dataStore.userData$
       .pipe(
         take(1),
-        filter(userData => userData.language !== language),
-        switchMap(() => this.dataStore.updateUserData({ language })),
+        switchMap(userData => iif(() => userData.language !== language, this.dataStore.updateUserData({ language }), of([]))),
       );
   }
 

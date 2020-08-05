@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, combineLatest, forkJoin, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 
 import {
   PrivateCouponService, UserAuth, UserCredential,
@@ -53,6 +53,22 @@ export class RewardService {
       );
   }
 
+  createUserCredential(email: string): Observable<UserCredential> {
+    return this.dataStore.userData$
+      .pipe(
+        take(1),
+        switchMap(userData => this.privateCouponService.createUserCredential(email, userData.uuid)),
+      );
+  }
+
+  getUserCredential(): Observable<UserCredential> {
+    return this.dataStore.userData$
+      .pipe(
+        take(1),
+        switchMap(userData => this.privateCouponService.createUserCredential(userData.email, userData.uuid)),
+      );
+  }
+
   getBalance(): Observable<[number, number]> {
     return forkJoin([this.updatePoolBalance(), this.updateUserBalance()]);
   }
@@ -64,12 +80,20 @@ export class RewardService {
       );
   }
 
+  login(): Observable<UserAuth> {
+    return this.getUserCredential()
+      .pipe(
+        tap(e => console.log('userCredential', e)),
+        switchMap(userCredential => this.privateCouponService.login(userCredential)),
+      );
+  }
+
   refreshInitRewardStatus(): void {
     this.initRewardStatusRefresher$.next(0);
   }
 
   signup(): Observable<UserAuth> {
-    return this.createUserCredential()
+    return this.getUserCredential()
       .pipe(
         switchMap(userCredential => this.privateCouponService.signup(userCredential)),
       );
@@ -79,14 +103,6 @@ export class RewardService {
     return this.login()
       .pipe(
         switchMap(userAuth => this.privateCouponService.redeem(userAuth, shopId)),
-      );
-  }
-
-  private createUserCredential(): Observable<UserCredential> {
-    return this.dataStore.userData$
-      .pipe(
-        map(userData => userData.email),
-        switchMap(email => this.privateCouponService.createUserCredential(email)),
       );
   }
 
@@ -104,14 +120,5 @@ export class RewardService {
         tap(value => this.userBalance.next(value)),
       );
   }
-
-  private login(): Observable<UserAuth> {
-    return this.createUserCredential()
-      .pipe(
-        switchMap(userCredential => this.privateCouponService.login(userCredential)),
-      );
-  }
-
-
 
 }

@@ -115,6 +115,7 @@
   },
   "error": {
     "error": "Error",
+    "emailUsed": "This email have been registered on another device. Please try another email.",
     "QRInvalidJSON": "Scanned Text is not the correct format",
     "QRInvalidShop": "No valid shop info"
   },

@@ -7,6 +7,7 @@ export interface UserData {
     recordPreset: RecordPreset;
     newUser: boolean;
     email?: string;
+    uuid?: string;
     dateOfBirth?: string; // ISO 8601
     userId?: string;
     language?: string;

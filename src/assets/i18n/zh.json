@@ -114,6 +114,7 @@
   },
   "error": {
     "error": "錯誤",
+    "emailUsed": "此信箱已於其他裝置被註冊，請使用其他的信箱。",
     "QRInvalidJSON": "掃描文字格式錯誤",
     "QRInvalidShop": "查無特約商店資訊"
   },

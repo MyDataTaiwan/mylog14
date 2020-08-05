@@ -3,7 +3,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { LanguageService } from '@core/services/language.service';
@@ -46,19 +46,22 @@ export class OnboardingPage implements OnDestroy {
   onSubmit() {
     this.confirmButtonEnabled = false;
     const loading$ = this.showRegisteringUserLoading();
-    const signup$ = this.dataStore.updateUserData({ email: this.onboardingForm.controls.email.value })
+    const signup$ = this.rewardService.createUserCredential(this.onboardingForm.controls.email.value)
       .pipe(
+        switchMap(userCredential => this.dataStore.updateUserData({
+          email: userCredential.email,
+          uuid: userCredential.password,
+        })),
         switchMap(() => this.rewardService.signup()),
         catchError((err: HttpErrorResponse) => {
           if (err.error.reason === 'USED_EMAIL') {
             console.log('The API returns USED_EMAIL error.');
-            return of(null);
+            return this.rewardService.login();
           }
           this.confirmButtonEnabled = true;
-          throw (err);
+          throw err;
         }),
         map((userAuth: UserAuth) => ({
-          email: this.onboardingForm.controls.email.value,
           newUser: false,
           recordPreset: RecordPreset.COMMON_COLD,
           userId: (userAuth) ? userAuth.userId : null,
@@ -75,8 +78,13 @@ export class OnboardingPage implements OnDestroy {
       .subscribe(() => {
         this.router.navigate(['/'], { replaceUrl: true });
       }, err => {
-        console.log(err);
+        this.confirmButtonEnabled = true;
         this.loadingElement.dismiss();
+        if (err?.error?.reason === 'WRONG_PASSWORD') {
+          const errorMessage = this.translate.instant('error.emailUsed');
+          throw new Error(errorMessage);
+        }
+        throw err;
       });
   }
 
