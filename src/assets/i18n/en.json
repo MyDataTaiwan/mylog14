@@ -115,7 +115,8 @@
     "resetAccountEraseWarning": "(All data will be erased!)",
     "shareAt": "Shared at {{ time }}",
     "pleaseResetEmail": "The email address previously entered is currently unavailable. Please enter another email address.",
-    "canAccessRewardAfterResetEmail": "You could access the reward page after resetting the email address."
+    "canAccessRewardAfterResetEmail": "You could access the reward page after resetting the email address.",
+    "totalData": "Total Data Entries: {{ count }}"
   },
   "error": {
     "error": "Error",

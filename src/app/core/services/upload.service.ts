@@ -113,7 +113,7 @@ export class UploadService {
     return this.uploadStatusUpdater
       .pipe(
         map(done => ({
-          total: this.uploadStatus.getValue().total,
+          total: this.uploadStatus.getValue()?.total,
           done,
         })),
         tap(newStatus => this.uploadStatus.next(newStatus)),

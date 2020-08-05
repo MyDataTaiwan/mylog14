@@ -20,7 +20,10 @@ export class SharePage implements OnInit, OnDestroy {
 
   destroy$ = new Subject();
   copyTrigger$ = new Subject<string>();
-
+  recordCount$ = this.dataStore.records$
+    .pipe(
+      map(records => records.length),
+    );
   sharedLinks$ = this.dataStore.userData$
     .pipe(
       map(userData => userData.sharedLinks),

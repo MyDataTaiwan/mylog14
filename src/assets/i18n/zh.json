@@ -114,7 +114,8 @@
     "resetAccountEraseWarning": "（所有的資料都將被清除！）",
     "shareAt": "分享於 {{ time }}",
     "pleaseResetEmail": "很抱歉，先前註冊的電子郵件地址目前無法使用。請重新輸入一個新的電子郵件地址。",
-    "canAccessRewardAfterResetEmail": "在重設電子郵件地址之後，您可以正常使用兌換功能。"
+    "canAccessRewardAfterResetEmail": "在重設電子郵件地址之後，您可以正常使用兌換功能。",
+    "totalData": "目前總共 {{ count }} 筆資料"
   },
   "error": {
     "error": "錯誤",

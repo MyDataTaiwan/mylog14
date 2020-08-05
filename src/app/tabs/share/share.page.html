@@ -5,6 +5,9 @@
         <ion-card>
             <ion-card-header>
                 <ion-card-title>{{ 'title.shareData' | translate }}</ion-card-title>
+                <ion-card-subtitle *ngIf="recordCount$ | async as recordCount">
+                    {{ 'description.totalData' | translate: { count: recordCount } }}
+                </ion-card-subtitle>
             </ion-card-header>
             <ion-card-content>{{ 'description.shareOnCloudTemporarily' | translate }}</ion-card-content>
         </ion-card>
@@ -45,7 +48,8 @@
 <ion-footer>
     <ion-grid>
         <ion-row class="ion-justify-content-center">
-            <ion-button class="upload-button" (click)="onUploadButtonClicked()" fill="solid" size="large">
+            <ion-button class="upload-button" (click)="onUploadButtonClicked()" fill="solid" size="large"
+                [disabled]="!(recordCount$ | async)">
                 {{ 'title.uploadAndCreateSharedLink' | translate }}
             </ion-button>
         </ion-row>
