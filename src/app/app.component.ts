@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { defer, Observable, of } from 'rxjs';
-import { filter, first, switchMap, take } from 'rxjs/operators';
+import { filter, first, map, switchMap, take } from 'rxjs/operators';
 
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { LanguageService } from '@core/services/language.service';
@@ -30,10 +30,7 @@ export class AppComponent {
     this.dataInitialized()
       .pipe(
         switchMap(() => this.languageService.init()),
-        switchMap(() => this.dataStore.userData$.pipe(take(1))),
-        switchMap(userData => {
-          return (userData.recordPreset) ? of(userData) : this.dataStore.updateUserData({ recordPreset: RecordPreset.COMMON_COLD });
-        }),
+        switchMap(() => this.migrateUserData()),
       )
       .subscribe(userData => {
         if (userData.newUser) {
@@ -55,4 +52,26 @@ export class AppComponent {
         filter(isInitialized => isInitialized === true),
       );
   }
+
+  private migrateUserData() {
+    return this.dataStore.userData$.pipe(
+      take(1),
+      map(userData => {
+        const data: UserDataPatch = {};
+        if (!userData.uploadHost) {
+          data.uploadHost = 'mylog14';
+        }
+        if (!userData.recordPreset) {
+          data.recordPreset = RecordPreset.COMMON_COLD;
+        }
+        return data;
+      }),
+      switchMap(data => this.dataStore.updateUserData(data)),
+    );
+  }
+}
+
+interface UserDataPatch {
+  recordPreset?: RecordPreset;
+  uploadHost?: string;
 }
