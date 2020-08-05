@@ -21,7 +21,7 @@
     "notSet": "尚未設定",
     "noData": "暫無資料",
     "name": "姓名",
-    "email": "電子信箱",
+    "email": "電子郵件",
     "dateOfBirth": "出生日期",
     "editName": "修改姓名",
     "firstName": "名",
@@ -74,6 +74,7 @@
     "userSettings": "使用者設定",
     "otherInfo": "其他資訊",
     "resetAccount": "重設帳號",
+    "resetEmail": "重設電子郵件地址",
     "erasingAccount": "正在清除帳號資料...",
     "uploadProgress": "上傳進度"
   },

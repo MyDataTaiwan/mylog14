@@ -1,13 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import {
-  BehaviorSubject, combineLatest, defer, forkJoin, Observable,
-  of, Subject,
+  combineLatest, defer, forkJoin, Observable, of,
+  Subject,
 } from 'rxjs';
-import {
-  distinctUntilChanged, filter, map, switchMap, takeUntil,
-  tap,
-} from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { ShopInfo } from '@core/interfaces/shop-info';
 import { RewardService } from '@core/services/reward.service';
@@ -23,6 +20,7 @@ import {
 import { ToastService } from '@shared/services/toast.service';
 
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
+import { SetEmailComponent } from '../set-email/set-email.component';
 
 @Component({
   selector: 'app-reward',
@@ -31,10 +29,7 @@ import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 })
 export class RewardComponent implements OnInit, OnDestroy {
 
-  private readonly defaultShopInfo = { UUID: '', shopName: '', shopBranch: '' };
   private readonly destory$ = new Subject();
-  public scanEnabled$ = new BehaviorSubject<boolean>(true);
-  public shopInfo$ = new BehaviorSubject<ShopInfo>(this.defaultShopInfo);
   canRedeem = false;
 
   initRewardStatus$ = this.rewardService.initRewardStatus$;
@@ -71,16 +66,16 @@ export class RewardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.rewardService.getBalance().subscribe();
-    this.shopInfo$
+    this.rewardService.login()
       .pipe(
-        filter(shopInfo => shopInfo.UUID !== ''),
-        distinctUntilChanged((prev, curr) => prev.UUID === curr.UUID),
-        tap(() => this.scanEnabled$.next(false)),
-        switchMap(shopInfo => this.startRedeemWithLoadingPopover(shopInfo)),
-        tap(() => this.shopInfo$.next(this.defaultShopInfo)),
-        tap(() => this.scanEnabled$.next(true)),
-        takeUntil(this.destory$),
+        catchError(err => {
+          if (err?.error?.reason === 'WRONG_PASSWORD') {
+            return this.modalService.showModal(SetEmailComponent);
+          }
+          throw err;
+        }),
+        filter(data => data?.data?.email_updated !== true),
+        switchMap(() => this.rewardService.getBalance()),
       ).subscribe();
   }
 

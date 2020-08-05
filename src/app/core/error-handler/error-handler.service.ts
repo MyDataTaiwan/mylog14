@@ -22,18 +22,18 @@ export class ErrorHandlerService implements ErrorHandler {
     const i18nError = this.translateService.instant('error.error');
     if (error?.status) {
       debugMessage += `Error code: ${error.status}\n`;
-      userMessage += `${error.status}: `;
     }
     if (error?.error?.message) {
       debugMessage += `Error message: ${error.error.message}\n`;
-      userMessage += `${i18nError}: ${error.error.message}\n`;
     } else {
       debugMessage += `Error message: ${error.message}\n`;
       userMessage += `${i18nError}: ${error.message}\n`;
     }
     debugMessage += `Stack: ${error.stack}`;
     console.error(debugMessage);
-    this.toastService.showToast(userMessage, 'danger').subscribe();
+    if (userMessage.length > 0) {
+      this.toastService.showToast(userMessage, 'danger').subscribe();
+    }
     return throwError(userMessage);
   }
 

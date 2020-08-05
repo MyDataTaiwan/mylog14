@@ -32,6 +32,7 @@ import {
   QrScannerComponent,
 } from './components/qr-scanner/qr-scanner.component';
 import { RewardComponent } from './components/reward/reward.component';
+import { SetEmailComponent } from './components/set-email/set-email.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { RewardComponent } from './components/reward/reward.component';
     PopoverComponent,
     ProofItemComponent,
     RewardComponent,
+    SetEmailComponent,
     QrScannerComponent,
     FormlyFieldInputComponent,
   ],
@@ -70,6 +72,7 @@ import { RewardComponent } from './components/reward/reward.component';
     PopoverComponent,
     ProofItemComponent,
     RewardComponent,
+    SetEmailComponent,
     QrScannerComponent,
   ],
   providers: [BarcodeScanner],
