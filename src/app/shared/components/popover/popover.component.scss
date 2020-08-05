@@ -5,22 +5,24 @@ ion-content {
 }
 
 ion-grid {
-    width:100%;
-    height:100%;
-    overflow:scroll;
+    width: 100%;
+    height: 100%;
     align-items: center;
     justify-items: center;
+}
+
+img {
+    width: 75px;
+    height: 75px;
+    margin-top: 10%;
+    margin-bottom: 10%;
 }
 
 .message-box {
     display: flex;
     flex-direction: column;
     align-items: center;
-    img {
-        width:75px;
-        height:75px;
-        margin-top: 10%;
-    }
+    padding: 10px;
     .message-content {
         display: flex;
         flex-direction: column;
