@@ -77,7 +77,8 @@
     "resetAccount": "Reset Account",
     "resetEmail": "Reset Email",
     "erasingAccount": "Erasing Account Data...",
-    "uploadProgress": "Upload Progress"
+    "uploadProgress": "Upload Progress",
+    "sorryProblem": "Sorry, there was a problem..."
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -112,7 +113,9 @@
     "redeemInfo": "{{ point }} reward points could be used for redeeming a ${{ point }} NTD discount coupon for affiliated stores. Scan the QR code of the affilated store to redeem the coupon.",
     "resetAccount": "Are you sure you want to reset the account?",
     "resetAccountEraseWarning": "(All data will be erased!)",
-    "shareAt": "Shared at {{ time }}"
+    "shareAt": "Shared at {{ time }}",
+    "pleaseResetEmail": "The email address previously entered is currently unavailable. Please enter another email address.",
+    "canAccessRewardAfterResetEmail": "You could access the reward page after resetting the email address."
   },
   "error": {
     "error": "Error",

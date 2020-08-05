@@ -1,20 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { IonicModule } from '@ionic/angular';
 
-import { SetEmailComponent } from './set-email.component';
+import { EulaZhComponent } from './eula-zh.component';
 
-describe('SetEmailComponent', () => {
-  let component: SetEmailComponent;
-  let fixture: ComponentFixture<SetEmailComponent>;
+describe('EulaZhComponent', () => {
+  let component: EulaZhComponent;
+  let fixture: ComponentFixture<EulaZhComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SetEmailComponent],
+      declarations: [ EulaZhComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SetEmailComponent);
+    fixture = TestBed.createComponent(EulaZhComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

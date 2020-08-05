@@ -1,8 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, combineLatest, forkJoin, Observable } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of } from 'rxjs';
+import {
+  catchError, filter, map, switchMap, take,
+  tap,
+} from 'rxjs/operators';
 
+import { UserData } from '@core/interfaces/user-data';
 import {
   PrivateCouponService, UserAuth, UserCredential,
 } from '@numbersprotocol/private-coupon';
@@ -18,14 +23,16 @@ export class RewardService {
     .pipe(
       map(recordsByDate => Object.keys(recordsByDate).length),
     );
-  private readonly initRewardStatusRefresher$ = new BehaviorSubject(0);
-  initRewardStatus$ = combineLatest([this.daysRecorded$, this.initRewardStatusRefresher$])
+  private readonly initRewardStatusRefresher = new BehaviorSubject(0);
+  initRewardStatus$ = combineLatest([this.daysRecorded$, this.initRewardStatusRefresher])
     .pipe(
       switchMap(([days, _]) => this.canGetInitialBalance()
         .pipe(
+          catchError(() => of(null)),
           map(canGet => [days, canGet]),
         )
       ),
+      filter(([days, canGet]) => days != null && canGet != null),
       map(([days, canGet]) => {
         if (days < 7) {
           return 'pending';
@@ -83,19 +90,41 @@ export class RewardService {
   login(): Observable<UserAuth> {
     return this.getUserCredential()
       .pipe(
-        tap(e => console.log('userCredential', e)),
         switchMap(userCredential => this.privateCouponService.login(userCredential)),
       );
   }
 
   refreshInitRewardStatus(): void {
-    this.initRewardStatusRefresher$.next(0);
+    this.initRewardStatusRefresher.next(0);
   }
 
-  signup(): Observable<UserAuth> {
-    return this.getUserCredential()
+  signup(email: string): Observable<UserData> {
+    return this.createUserCredential(email)
       .pipe(
+        switchMap(userCredential => this.dataStore.updateUserData({
+          email: userCredential.email,
+          uuid: userCredential.password,
+        })
+          .pipe(
+            map(() => userCredential),
+          )),
         switchMap(userCredential => this.privateCouponService.signup(userCredential)),
+        catchError((signupError: HttpErrorResponse) => {
+          if (signupError.error.reason === 'USED_EMAIL') {
+            return this.login()
+              .pipe(
+                catchError(loginError => {
+                  if (loginError?.error?.reason === 'WRONG_PASSWORD') {
+                    throw new Error('error.emailUsed');
+                  }
+                  throw loginError;
+                })
+              );
+          }
+          throw signupError;
+        }),
+        map((userAuth: UserAuth) => ({ userId: userAuth?.userId })),
+        switchMap(userDataPatch => this.dataStore.updateUserData(userDataPatch)),
       );
   }
 

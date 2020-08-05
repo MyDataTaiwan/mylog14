@@ -20,7 +20,7 @@ import {
 import { ToastService } from '@shared/services/toast.service';
 
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
-import { SetEmailComponent } from '../set-email/set-email.component';
+import { ResetEmailComponent } from '../reset-email/reset-email.component';
 
 @Component({
   selector: 'app-reward',
@@ -59,8 +59,8 @@ export class RewardComponent implements OnInit, OnDestroy {
     private readonly modalCtrl: ModalController,
     private readonly modalService: ModalService,
     private readonly platform: Platform,
-    private readonly rewardService: RewardService,
     private readonly popoverService: PopoverService,
+    private readonly rewardService: RewardService,
     private readonly toastService: ToastService,
     private readonly translateService: TranslateService,
   ) { }
@@ -70,11 +70,12 @@ export class RewardComponent implements OnInit, OnDestroy {
       .pipe(
         catchError(err => {
           if (err?.error?.reason === 'WRONG_PASSWORD') {
-            return this.modalService.showModal(SetEmailComponent);
+            return this.modalService.showModal(ResetEmailComponent);
           }
           throw err;
         }),
-        filter(data => data?.data?.email_updated !== true),
+        filter(data => (data?.data?.email_updated || data?.token)),
+        tap(() => this.rewardService.refreshInitRewardStatus()),
         switchMap(() => this.rewardService.getBalance()),
       ).subscribe();
   }

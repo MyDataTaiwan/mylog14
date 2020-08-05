@@ -17,19 +17,11 @@ export class ErrorHandlerService implements ErrorHandler {
   ) { }
 
   handleError(error: any) {
-    let debugMessage = '';
-    let userMessage = '';
-    const i18nError = this.translateService.instant('error.error');
-    if (error?.status) {
-      debugMessage += `Error code: ${error.status}\n`;
-    }
-    if (error?.error?.message) {
-      debugMessage += `Error message: ${error.error.message}\n`;
-    } else {
-      debugMessage += `Error message: ${error.message}\n`;
-      userMessage += `${i18nError}: ${error.message}\n`;
-    }
-    debugMessage += `Stack: ${error.stack}`;
+    const isHttpError = error?.error?.message != null;
+    const message = (isHttpError) ? error.error.message : error.message;
+    const i18nMessage = this.translateService.instant(message);
+    const debugMessage = `Code: ${error.status}\n` + `Message: ${i18nMessage}\n` + `Stack: ${error.stack}`;
+    const userMessage = (isHttpError) ? '' : i18nMessage;
     console.error(debugMessage);
     if (userMessage.length > 0) {
       this.toastService.showToast(userMessage, 'danger').subscribe();

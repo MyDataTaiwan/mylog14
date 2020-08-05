@@ -76,7 +76,8 @@
     "resetAccount": "重設帳號",
     "resetEmail": "重設電子郵件地址",
     "erasingAccount": "正在清除帳號資料...",
-    "uploadProgress": "上傳進度"
+    "uploadProgress": "上傳進度",
+    "sorryProblem": "抱歉，出了一點問題..."
   },
   "description": {
     "protectYourData": "你的資料只屬於你，只在你同意的情況下分享資訊。",
@@ -111,7 +112,9 @@
     "redeemInfo": "{{ point }} 點獎勵點數可用於特約商家兌換 {{ point }} 元折扣。掃描商家 QR 條碼進行兌換。",
     "resetAccount": "你確定要重設帳號嗎？",
     "resetAccountEraseWarning": "（所有的資料都將被清除！）",
-    "shareAt": "分享於 {{ time }}"
+    "shareAt": "分享於 {{ time }}",
+    "pleaseResetEmail": "很抱歉，先前註冊的電子郵件地址目前無法使用。請重新輸入一個新的電子郵件地址。",
+    "canAccessRewardAfterResetEmail": "在重設電子郵件地址之後，您可以正常使用兌換功能。"
   },
   "error": {
     "error": "錯誤",
