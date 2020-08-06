@@ -188,7 +188,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   private showShopInfo(shopInfo: ShopInfo): Observable<any> {
     return this.popoverService.showPopover({
       i18nTitle: `${shopInfo.shopName}\n${shopInfo.shopBranch}`,
-      i18nMessage: 'title.redeem20Confirm',
+      i18nMessage: 'title.redeemConfirm',
       buttonSet: PopoverButtonSet.CONFIRM,
       dataOnConfirm: { redeem: true },
       dataOnCancel: { redeem: false },
