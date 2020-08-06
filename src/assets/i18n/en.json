@@ -78,7 +78,8 @@
     "resetEmail": "Reset Email",
     "erasingAccount": "Erasing Account Data...",
     "uploadProgress": "Upload Progress",
-    "sorryProblem": "Sorry, there was a problem..."
+    "sorryProblem": "Sorry, there was a problem...",
+    "shopInfo": "See Where to Redeem"
   },
   "description": {
     "protectYourData": "Own your data and share with consent.",
@@ -110,7 +111,7 @@
     "clickToGetInitialBalance": "Click to get {{ point }} points reward",
     "alreadyGotInitialBalance": "{{ point }} points reward received",
     "rewardEvent": "Keep records for {{ day }} days to earn {{ point }} reward points!",
-    "redeemInfo": "{{ point }} reward points could be used for redeeming a ${{ point }} NTD discount coupon for affiliated stores. Scan the QR code of the affilated store to redeem the coupon.",
+    "redeemInfo": "{{ point }} reward points could be used for redeeming a coupon for affiliated stores. Scan the QR code of the affilated store to redeem the coupon.",
     "resetAccount": "Are you sure you want to reset the account?",
     "resetAccountEraseWarning": "(All data will be erased!)",
     "shareAt": "Shared at {{ time }}",

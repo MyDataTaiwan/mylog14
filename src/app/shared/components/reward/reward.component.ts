@@ -6,6 +6,7 @@ import {
 } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
+import { Plugins } from '@capacitor/core';
 import { ShopInfo } from '@core/interfaces/shop-info';
 import { RewardService } from '@core/services/reward.service';
 import {
@@ -21,6 +22,8 @@ import { ToastService } from '@shared/services/toast.service';
 
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { ResetEmailComponent } from '../reset-email/reset-email.component';
+
+const { Browser } = Plugins;
 
 @Component({
   selector: 'app-reward',
@@ -109,6 +112,10 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   confirm() {
     this.modalCtrl.dismiss();
+  }
+
+  onViewShopClicked(): void {
+    Browser.open({ url: 'https://mydata.org.tw/version-test/mylogcoupon' });
   }
 
   private showShopInfoAndFilterCancel() {
