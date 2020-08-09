@@ -159,6 +159,23 @@
         "cm": "公分",
         "mL": "毫升"
       }
+    },
+    "healthDeclaration": {
+      "presetName": "健康聲明",
+      "dataGroup": {
+        "checklist": "過去十四天是否曾經",
+        "note": "筆記"
+      },
+      "bodyTemperature": "體溫",
+      "goAbroad": "出國",
+      "fever": "發燒",
+      "contactWithQuarantined": "接觸正在檢疫或隔離的人士",
+      "contactWithHighTravelRisk": "接觸過旅遊至高風險的人士",
+      "note": "附註",
+      "photo": "照片",
+      "unit": {
+        "°C": "°C"
+      }
     }
   }
 }

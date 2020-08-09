@@ -165,6 +165,23 @@
         "cm": "cm",
         "mL": "mL"
       }
+    },
+    "healthDeclaration": {
+      "presetName": "Health Declaration",
+      "dataGroup": {
+        "checklist": "Checklist",
+        "note": "Note"
+      },
+      "bodyTemperature": "Body Temperature",
+      "goAbroad": "Went aboard",
+      "fever": "Fever",
+      "contactWithQuarantined": "Contact with Qurantined",
+      "contactWithHighTravelRisk": "Contact with High Travel Risk",
+      "note": "Note",
+      "photo": "Photo",
+      "unit": {
+        "°C": "°C"
+      }
     }
   }
 }

@@ -1,0 +1,73 @@
+{
+    "templateName": "healthDeclaration",
+    "fields": [
+        {
+            "name": "bodyTemperature",
+            "icon": "thermometer-outline",
+            "type": "number",
+            "isKeyField": true,
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "defaultValue": null,
+            "valueRange": {
+                "max": 41,
+                "min": 34
+            },
+            "valueUnit": "°C"
+        },
+        {
+            "name": "goAbroad",
+            "icon": "airplane-outline",
+            "type": "boolean",
+            "isKeyField": false,
+            "dataGroup": "checklist",
+            "dataClass": "",
+            "defaultValue": false
+        },
+        {
+            "name": "fever",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "isKeyField": false,
+            "dataGroup": "checklist",
+            "dataClass": "",
+            "defaultValue": false
+        },
+        {
+            "name": "contactWithQuarantined",
+            "icon": "people-outline",
+            "type": "boolean",
+            "isKeyField": false,
+            "dataGroup": "checklist",
+            "dataClass": "",
+            "defaultValue": false
+        },
+        {
+            "name": "contactWithHighTravelRisk",
+            "icon": "people-outline",
+            "type": "boolean",
+            "isKeyField": false,
+            "dataGroup": "checklist",
+            "dataClass": "",
+            "defaultValue": false
+        },
+        {
+            "name": "note",
+            "icon": "pencil-outline",
+            "type": "string",
+            "isKeyField": false,
+            "dataGroup": "note",
+            "dataClass": "note",
+            "defaultValue": null
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "isKeyField": false,
+            "dataGroup": "photo",
+            "dataClass": "photo",
+            "defaultValue": null
+        }
+    ]
+}

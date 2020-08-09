@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import * as CommonCold from 'src/app/core/presets/common-cold.json';
+import * as HealthDeclaration
+  from 'src/app/core/presets/healthDeclaration.json';
 import * as HeartFailure from 'src/app/core/presets/heart-failure.json';
 
 import { Record } from '../classes/record';
@@ -9,6 +11,7 @@ import { RecordFieldType } from '../enums/record-field-type.enum';
 export const enum RecordPreset {
   COMMON_COLD = 'commonCold',
   HEART_FAILURE = 'heartFailure',
+  HEALTH_DECLARATION = 'healthDeclaration',
 }
 
 
@@ -18,7 +21,7 @@ export const enum RecordPreset {
 export class PresetService {
 
   public presets: string[] = [
-    'commonCold', 'heartFailure',
+    'commonCold', 'heartFailure', 'healthDeclaration',
   ];
 
   constructor() { }
@@ -32,6 +35,8 @@ export class PresetService {
         return this.initRecordWithCommonColdPreset(record);
       case RecordPreset.HEART_FAILURE:
         return this.initRecordWithHeartFailurePreset(record);
+      case RecordPreset.HEALTH_DECLARATION:
+        return this.initRecordWithHealthDeclarationPreset(record);
       default:
         return this.initRecordWithCommonColdPreset(record);
     }
@@ -56,6 +61,21 @@ export class PresetService {
   private initRecordWithHeartFailurePreset(record: Record): Record {
     record.setTemplateName(HeartFailure.templateName);
     HeartFailure.fields.forEach(field => record.addField(
+      field.name,
+      RecordFieldType[field.type],
+      field.isKeyField,
+      field.dataGroup,
+      field.dataClass,
+      field.defaultValue,
+      field.icon,
+      field.valueUnit,
+    ));
+    return record;
+  }
+
+  private initRecordWithHealthDeclarationPreset(record: Record): Record {
+    record.setTemplateName(HealthDeclaration.templateName);
+    HealthDeclaration.fields.forEach(field => record.addField(
       field.name,
       RecordFieldType[field.type],
       field.isKeyField,
