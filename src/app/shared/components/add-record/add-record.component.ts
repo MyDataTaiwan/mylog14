@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import {
-  filter, map, mergeMap, switchMap, take,
-  takeUntil, tap,
+  catchError, filter, map, mergeMap, switchMap,
+  take, takeUntil, tap,
 } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
@@ -39,6 +39,8 @@ export class AddRecordComponent implements OnInit, OnDestroy {
         if (field.type === RecordFieldType.photo) {
           return this.photoService.create()
             .pipe(
+              catchError(() => of(null)),
+              filter(data => data !== null),
               map(byteString => ({ [field.name]: byteString })),
             );
         } else {

@@ -21,7 +21,7 @@ export const enum RecordPreset {
 export class PresetService {
 
   public presets: string[] = [
-    'commonCold', 'heartFailure', 'healthDeclaration',
+    'commonCold', 'heartFailure',
   ];
 
   constructor() { }
