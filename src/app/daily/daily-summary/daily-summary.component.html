@@ -15,9 +15,9 @@
           <div>
             <ion-label class="ion-text-center" style="font-size: 12px;">
               {{ 'title.' + dailySummary.keyData.dataClass | translate }}
-              {{ 'preset.' + dailySummary.templateName + '.' + dailySummary.keyData.name | translate }}:
+              {{ 'dataTemplate.' + dailySummary.templateName + '.' + dailySummary.keyData.name | translate }}:
               {{ dailySummary.keyData.value }}
-              {{ 'preset.' + dailySummary.templateName + '.unit.' + dailySummary.keyData.unit | translate }}
+              {{ 'dataTemplate.' + dailySummary.templateName + '.unit.' + dailySummary.keyData.unit | translate }}
             </ion-label>
           </div>
         </ion-row>
@@ -28,7 +28,7 @@
     </ion-row>
     <ion-row hidden>
       <ion-label class="ion-text-center" style="font-size: 16px; width: 50vw;">
-        {{ 'preset.' + dailySummary.templateName + '.dataGroup.' + '' | translate }}:
+        {{ 'dataTemplate.' + dailySummary.templateName + '.dataGroup.' + '' | translate }}:
         <ng-container (click)="selectedSymptoms=!selectedSymptoms"
           *ngFor="let summary of dailySummary.summaries ; let isLast = last">
           {{ summary }}{{isLast ? '' : ('splitter' | translate) }} ...

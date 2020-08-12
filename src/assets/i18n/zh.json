@@ -119,12 +119,13 @@
     "emailUsed": "此信箱已於其他裝置被註冊，請使用其他的信箱。",
     "error": "錯誤"
   },
-  "preset": {
+  "dataTemplate": {
     "commonCold": {
-      "presetName": "普通感冒",
+      "dataTemplateName": "普通感冒",
       "dataGroup": {
+        "vitalSigns": "生理徵象",
         "symptoms": "症狀",
-        "note": "附註"
+        "additionalInformation": "附加資訊"
       },
       "bodyTemperature": "體溫",
       "coughing": "咳嗽",
@@ -138,10 +139,10 @@
       }
     },
     "heartFailure": {
-      "presetName": "心衰竭",
+      "dataTemplateName": "心衰竭",
       "dataGroup": {
         "vitalSigns": "生理徵象",
-        "note": "附註"
+        "additionalInformation": "附加資訊"
       },
       "SBP": "收縮壓",
       "DBP": "舒張壓",
@@ -161,10 +162,11 @@
       }
     },
     "healthDeclaration": {
-      "presetName": "健康聲明",
+      "dataTemplateName": "健康聲明",
       "dataGroup": {
+        "vitalSigns": "生理徵象",
         "checklist": "過去十四天是否曾經",
-        "note": "筆記"
+        "additionalInformation": "附加資訊"
       },
       "bodyTemperature": "體溫",
       "goAbroad": "出國",

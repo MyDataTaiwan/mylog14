@@ -6,7 +6,7 @@
         <ion-icon [name]="summary.icon"></ion-icon>
         <ion-label class="ion-text-start" *ngIf="summary.value != null">
           {{ summary.value }}
-          {{ 'preset.' + record.templateName + '.unit.' + summary.valueUnit | translate }}
+          {{ 'dataTemplate.' + record.templateName + '.unit.' + summary.valueUnit | translate }}
         </ion-label>
         <ion-label class="ion-text-start" *ngIf="summary.value == null">
           {{ 'title.recordNotTaken' | translate }}
@@ -23,7 +23,7 @@
       <ng-container *ngFor="let field of getAvailableFields(record)">
         <ion-item>
           <ion-label style="color: #F9AD35;">
-            {{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
+            {{ 'dataTemplate.' + record.templateName + '.' + field.name | translate }}</ion-label>
           <ion-label class="ion-text-center" style="color: #F9AD35;">
             <ng-container *ngIf="field.type !== 'boolean'">
               {{ field.value }}
@@ -32,7 +32,7 @@
               {{ ((field.value) ? 'title.yes' : 'title.no') | translate }}
             </ng-container>
             <ng-container *ngIf="field.valueUnit">
-              {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}
+              {{ 'dataTemplate.' + record.templateName + '.unit.' + field.valueUnit | translate }}
             </ng-container>
           </ion-label>
         </ion-item>

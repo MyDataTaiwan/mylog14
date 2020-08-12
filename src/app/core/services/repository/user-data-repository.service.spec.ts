@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { UserDataRepositoryService } from './user-data-repository.service';
-import { UserData } from '../../interfaces/user-data';
-import { RecordPreset } from '../preset.service';
-
 import { Plugins } from '@capacitor/core';
+
+import { UserData } from '../../interfaces/user-data';
+import { UserDataRepositoryService } from './user-data-repository.service';
 
 const { Storage } = Plugins;
 
@@ -28,7 +27,7 @@ fdescribe('get() if no previous saved data', () => {
       newUser: true,
       firstName: 'john',
       lastName: 'smith',
-      recordPreset: RecordPreset.COMMON_COLD
+      dataTemplateName: 'commonCold',
     };
 
     const expectedOutput = JSON.stringify(user);
@@ -51,7 +50,7 @@ fdescribe('save()', () => {
       newUser: true,
       firstName: 'john',
       lastName: 'smith',
-      recordPreset: RecordPreset.COMMON_COLD
+      dataTemplateName: 'commonCold',
     };
 
     const expectedOutput = JSON.stringify(user);
@@ -74,7 +73,7 @@ fdescribe('get() if there is saved data', () => {
       newUser: true,
       firstName: 'john',
       lastName: 'smith',
-      recordPreset: RecordPreset.COMMON_COLD
+      dataTemplateName: 'commonCold',
     };
 
     service.save(user).subscribe(x => {

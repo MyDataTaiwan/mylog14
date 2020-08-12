@@ -1,0 +1,16 @@
+<ion-item button (click)="onItemClicked()">
+  <ion-icon [name]="field.icon" slot="start"></ion-icon>
+  <ion-label>{{ 'dataTemplate.' + templateName + '.' + field.name | translate }}</ion-label>
+  <ion-toggle *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-toggle>
+  <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
+    {{ (field?.value) ? field.value : 'title.noData' | translate }}
+    <ng-container *ngIf="field.value && field.valueUnit">
+      {{ 'dataTemplate.' + templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
+  </ion-text>
+  <ng-container *ngIf="field.type === recordFieldType.photo">
+    <ion-thumbnail *ngIf="field.value">
+      <ion-img [src]="'data:image/jpeg;base64,' + field.value"></ion-img>
+    </ion-thumbnail>
+    <ion-text *ngIf="!field.value">{{ 'title.takePhoto' | translate }}</ion-text>
+  </ng-container>
+</ion-item>

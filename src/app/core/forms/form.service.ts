@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { DataTemplateField } from '@core/interfaces/data-template-field';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { RecordFieldType } from '../enums/record-field-type.enum';
-import { RecordField } from '../interfaces/record-field';
 
 export const enum UserDataFormField {
   NAME = 'Name',
@@ -20,8 +20,8 @@ export class FormService {
     private readonly translate: TranslateService,
   ) { }
 
-  createFormFieldsByRecordField(field: RecordField, templateName: string): FormlyFieldConfig[] {
-    const unit = (field.valueUnit) ? this.translate.instant('preset.' + templateName + '.unit.' + field.valueUnit) : '';
+  createFormFieldsByRecordField(field: DataTemplateField, templateName: string): FormlyFieldConfig[] {
+    const unit = (field.valueUnit) ? this.translate.instant('dataTemplate.' + templateName + '.unit.' + field.valueUnit) : '';
     const formFields: FormlyFieldConfig[] = [
       {
         key: field.name,

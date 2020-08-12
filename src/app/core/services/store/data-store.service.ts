@@ -2,10 +2,11 @@ import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, concat, forkJoin, Observable } from 'rxjs';
-import { first, map, switchMap, tap, toArray } from 'rxjs/operators';
+import { map, switchMap, tap, toArray } from 'rxjs/operators';
 
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { DailySummary } from '@core/interfaces/daily-summary';
+import { DataTemplate } from '@core/interfaces/data-template';
 import { RecordsByDate } from '@core/interfaces/records-by-date';
 import { SharedLink } from '@core/interfaces/shared-link';
 import { SummaryByDate } from '@core/interfaces/summary-by-date';
@@ -13,7 +14,7 @@ import { SummaryByDate } from '@core/interfaces/summary-by-date';
 import { Record } from '../../classes/record';
 import { KeyData } from '../../interfaces/key-data';
 import { UserData } from '../../interfaces/user-data';
-import { RecordPreset } from '../preset.service';
+import { DataTemplateService } from '../data-template.service';
 import {
   RecordRepositoryService,
 } from '../repository/record-repository.service';
@@ -26,9 +27,6 @@ import {
 })
 export class DataStoreService {
 
-  private readonly initialized = new BehaviorSubject<boolean>(false);
-  initialized$: Observable<boolean> = this.initialized;
-
   private readonly records = new BehaviorSubject<Record[]>([]);
   records$: Observable<Record[]> = this.records
     .pipe(
@@ -36,13 +34,17 @@ export class DataStoreService {
     );
 
   private readonly userData = new BehaviorSubject<UserData>({
-    firstName: '', lastName: '', recordPreset: RecordPreset.COMMON_COLD, newUser: true,
+    firstName: '', lastName: '', dataTemplateName: 'commonCold', newUser: true,
   });
   userData$: Observable<UserData> = this.userData;
+  dataTemplate$: Observable<DataTemplate> = this.userData$
+    .pipe(
+      map(userData => this.dataTemplateService.getDataTemplate(userData.dataTemplateName)),
+    );
 
   recordsByDate$: Observable<RecordsByDate> = this.records$
     .pipe(
-      map(records => records.filter(record => record.templateName === this.userData.getValue().recordPreset)),
+      map(records => records.filter(record => record.templateName === this.userData.getValue().dataTemplateName)),
       map(records => this.getRecordsByDate(records)),
     );
 
@@ -52,6 +54,7 @@ export class DataStoreService {
     );
 
   constructor(
+    private readonly dataTemplateService: DataTemplateService,
     private readonly recordRepo: RecordRepositoryService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
@@ -116,16 +119,7 @@ export class DataStoreService {
       );
   }
 
-  updateUserData(data: {}): Observable<UserData> {
-    return this.userDataRepo.get()
-      .pipe(
-        map(userData => ({ ...userData, ...data })),
-        switchMap(newUserData => this.userDataRepo.save(newUserData)),
-        tap(newUserData => this.userData.next(newUserData)),
-      );
-  }
-
-  initializeStore(): Observable<[UserData, Record[]]> {
+  initialize(): Observable<[UserData, Record[]]> {
     const initUserData$ = this.userDataRepo.get()
       .pipe(
         tap(userData => this.userData.next(userData)),
@@ -134,10 +128,16 @@ export class DataStoreService {
       .pipe(
         tap(records => this.records.next(records)),
       );
-    return forkJoin([initUserData$, initRecords$]).pipe(
-      first(),
-      tap(() => this.initialized.next(true)),
-    );
+    return forkJoin([initUserData$, initRecords$]);
+  }
+
+  updateUserData(data: {}): Observable<UserData> {
+    return this.userDataRepo.get()
+      .pipe(
+        map(userData => ({ ...userData, ...data })),
+        switchMap(newUserData => this.userDataRepo.save(newUserData)),
+        tap(newUserData => this.userData.next(newUserData)),
+      );
   }
 
   private getRecordsByDate(records: Record[]): RecordsByDate {
@@ -192,23 +192,28 @@ export class DataStoreService {
       value: null,
       unit: null,
     };
+    if (records.length === 0) {
+      return keyData;
+    }
+    const dataTemplate = this.dataTemplateService.getDataTemplate(records[0].templateName);
     records.forEach(record => {
-      const keyField = record.fields.find(field => field.isKeyField);
+      const keyField = record.fields.find(field => field.name === dataTemplate.keyFieldName);
+      const keyFieldTemplate = dataTemplate.fields.find(field => field.name === dataTemplate.keyFieldName);
       if (!keyData.dataClass) {
-        keyData.dataClass = keyField.dataClass;
-        keyData.name = keyField.name;
-        keyData.unit = keyField.valueUnit;
+        keyData.dataClass = keyFieldTemplate.dataClass;
+        keyData.name = keyFieldTemplate.name;
+        keyData.unit = keyFieldTemplate.valueUnit;
       }
       if (keyField.value === null) {
         return;
       }
       if (keyData.value === null) {
         keyData.value = +keyField.value;
-      } else if (keyField.dataClass === 'lowest' && keyData.value > keyField.value) {
+      } else if (keyFieldTemplate.dataClass === 'lowest' && keyData.value > keyField.value) {
         keyData.value = +keyField.value;
-      } else if (keyField.dataClass === 'highest' && keyData.value < keyField.value) {
+      } else if (keyFieldTemplate.dataClass === 'highest' && keyData.value < keyField.value) {
         keyData.value = +keyField.value;
-      } else if (keyField.dataClass === 'accumulated') {
+      } else if (keyFieldTemplate.dataClass === 'accumulated') {
         keyData.value += +keyField.value;
       }
     });
@@ -216,8 +221,7 @@ export class DataStoreService {
   }
 
   private getLatestPhoto(records: Record[]): string {
-    const reversedRecords = records.reverse();
-    const recordWithPhoto = reversedRecords.find(record =>
+    const recordWithPhoto = records.reverse().find(record =>
       record.fields.find(field =>
         field.type === RecordFieldType.photo && field.value
       )

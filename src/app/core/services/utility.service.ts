@@ -29,8 +29,8 @@ export class UtilityService {
     return this.dataStore.userData$
       .pipe(
         take(1),
-        map(userData => userData.recordPreset),
-        mergeMap(preset => this.recordService.create(preset)),
+        map(userData => userData.dataTemplateName),
+        map(dataTemplateName => this.recordService.create(dataTemplateName)),
         map(record => this.randomizeRecordData(record, daysBackward)),
         mergeMap(record => this.dataStore.pushRecord(record, false)),
         repeat(daysBackward * 10),
@@ -55,6 +55,7 @@ export class UtilityService {
 
   private randomizeRecordData(record: Record, daysBackward: number) {
     record.setProof(this.createRandomProof(daysBackward));
+    /* TODO
     record.fields.forEach(field => {
       let value = null;
       switch (field.type) {
@@ -77,8 +78,9 @@ export class UtilityService {
         default:
           break;
       }
-      record.setFieldValue(field.name, value);
-    });
+    record.setFieldValue(field.name, value);
+  });
+  */
     return record;
   }
 

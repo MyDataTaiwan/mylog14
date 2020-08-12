@@ -10,12 +10,10 @@ import {
   mergeMap, switchMap, take, takeUntil, tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
-import {
-  PresetService, RecordPreset,
-} from 'src/app/core/services/preset.service';
 
 import { Plugins } from '@capacitor/core';
 import { FormService, UserDataFormField } from '@core/forms/form.service';
+import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { UtilityService } from '@core/services/utility.service';
@@ -44,7 +42,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   readonly appVersion = version;
   readonly languages = this.languageService.getAvailableLanguages();
-  readonly recordPresets = this.presetService.presets;
+  readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;
@@ -83,7 +81,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly languageService: LanguageService,
     private readonly loadingService: LoadingService,
     private readonly popoverService: PopoverService,
-    private readonly presetService: PresetService,
+    private readonly dataTemplateService: DataTemplateService,
     private readonly router: Router,
     private readonly toastService: ToastService,
     private readonly utilityService: UtilityService,
@@ -137,8 +135,8 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.versionClick.next(true);
   }
 
-  presetSelected(event: CustomEvent): void {
-    this.updateFromPage.next({ recordPreset: event.detail.value });
+  dataTemplateSelected(event: CustomEvent): void {
+    this.updateFromPage.next({ dataTemplateName: event.detail.value });
   }
 
   uploadHostSelected(event: CustomEvent): void {
@@ -195,7 +193,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 export interface UserDataPatch {
   firstName?: string;
   lastName?: string;
-  recordPreset?: RecordPreset;
+  dataTemplateName?: string;
   email?: string;
   dateOfBirth?: string; // ISO 8601
   userId?: string;

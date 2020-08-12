@@ -69,11 +69,11 @@
         <ion-icon name="documents-outline" slot="start"></ion-icon>
         <ion-label>{{ 'title.selectRecordMode' | translate }}</ion-label>
         <ion-select *ngIf="showSelects"
-          [value]="(userDataView.recordPreset) ? userDataView.recordPreset : recordPresets[0]"
-          (ionChange)="presetSelected($event)" [cancelText]="'title.cancel' | translate"
+          [value]="(userDataView.dataTemplateName) ? userDataView.dataTemplateName : dataTemplates[0]"
+          (ionChange)="dataTemplateSelected($event)" [cancelText]="'title.cancel' | translate"
           [okText]="'title.confirm' | translate">
-          <ion-select-option *ngFor="let preset of recordPresets" [value]="preset">
-            {{ 'preset.' + preset + '.presetName' | translate }}
+          <ion-select-option *ngFor="let dataTemplateName of dataTemplateNames" [value]="dataTemplateName">
+            {{ 'dataTemplate.' + dataTemplateName + '.dataTemplateName' | translate }}
           </ion-select-option>
         </ion-select>
       </ion-item>

@@ -32,7 +32,7 @@ export class DailyPhotosComponent implements OnInit, OnDestroy {
       map(records => {
         if (records) {
           return records.filter(record =>
-            record.fields.find(field => field.type === RecordFieldType.photo && field.value)
+            record.fields.find(field => RecordFieldType.photo && field.value)
           );
         } else {
           return records;

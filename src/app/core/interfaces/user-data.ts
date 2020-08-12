@@ -1,10 +1,9 @@
-import { RecordPreset } from '../services/preset.service';
 import { SharedLink } from './shared-link';
 
 export interface UserData {
     firstName: string;
     lastName: string;
-    recordPreset: RecordPreset;
+    dataTemplateName: string;
     newUser: boolean;
     email?: string;
     uuid?: string;

@@ -1,7 +1,5 @@
-import { RecordFieldType } from '../enums/record-field-type.enum';
 import { Proof } from '../interfaces/proof';
 import { RecordField, RecordFieldValue } from '../interfaces/record-field';
-import { RecordFieldValueRange } from '../interfaces/record-field-value-range';
 
 export class Record {
 
@@ -16,38 +14,20 @@ export class Record {
         this.fields = [];
     }
 
-    addField(
-        name: string,
-        type: RecordFieldType,
-        isKeyField: boolean,
-        dataGroup: string,
-        dataClass: string,
-        defaultValue: RecordFieldValue,
-        icon?: string,
-        valueUnit?: string,
-        valueRange?: RecordFieldValueRange
-    ): void {
+    addField(name: string, type: string): void {
         this.fields.push({
             name,
-            icon,
             type,
-            isKeyField,
-            dataGroup,
-            dataClass,
-            defaultValue,
-            value: defaultValue,
-            valueUnit,
-            valueRange,
+            value: null,
         });
     }
 
-    setFieldValue(name: string, value: RecordFieldValue): void {
-        const field = this.fields.find(el => el.name === name);
-        if (field.type === 'number') {
-            field.value = +value;
-        } else {
-            field.value = value;
+    setFieldValue(fieldName: string, value: RecordFieldValue): void {
+        const field = this.fields.find(el => el.name === fieldName);
+        if (!field) {
+            throw new Error('Field name not found in record');
         }
+        field.value = value;
     }
 
     setProof(proof: Proof) {
@@ -60,7 +40,7 @@ export class Record {
     }
 
     resetFieldValues(): void {
-        this.fields.map(el => ({ ...el, value: el.defaultValue }));
+        this.fields.map(el => ({ ...el, value: null }));
     }
 
 }

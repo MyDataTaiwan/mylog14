@@ -15,6 +15,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CoreModule } from '../core/core.module';
 import { AddPhotoComponent } from './components/add-photo/add-photo.component';
 import {
+  AddRecordFieldItemComponent,
+} from './components/add-record-field-item/add-record-field-item.component';
+import {
   AddRecordComponent,
 } from './components/add-record/add-record.component';
 import {
@@ -43,6 +46,7 @@ import {
   declarations: [
     AddPhotoComponent,
     AddRecordComponent,
+    AddRecordFieldItemComponent,
     IonCenterItemComponent,
     MapComponent,
     PhotoViewerComponent,
@@ -72,6 +76,7 @@ import {
   exports: [
     AddPhotoComponent,
     AddRecordComponent,
+    AddRecordFieldItemComponent,
     IonCenterItemComponent,
     MapComponent,
     PhotoViewerComponent,

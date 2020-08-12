@@ -1,34 +1,28 @@
-<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true" (dismissClicked)="onClickCancel()">
+<app-header [headerTitle]="'title.dailyRecord' | translate" showDismissButton="true"
+  (dismissClicked)="onCancelClicked()">
 </app-header>
-<ion-content>
-  <ion-list *ngIf="record$ | async as record">
+<ion-content *ngIf="templateName$ | async as templateName">
+  <ion-list *ngIf="fieldGroups$ | async as fieldGroups">
     <app-proof-item [status]="proofStatus"></app-proof-item>
-    <ion-item *ngFor="let field of record.fields" button (click)="onClickEdit(field, record.templateName)">
-      <ion-icon [name]="field.icon" slot="start"></ion-icon>
-      <ion-label>{{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
-      <ion-toggle *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-toggle>
-      <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
-        {{ (field.value) ? field.value : 'title.noData' | translate }}
-        <ng-container *ngIf="field.value && field.valueUnit">
-          {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
-      </ion-text>
-      <ng-container *ngIf="field.type === recordFieldType.photo">
-        <ion-thumbnail *ngIf="field.value">
-          <ion-img [src]="'data:image/jpeg;base64,' + field.value"></ion-img>
-        </ion-thumbnail>
-        <ion-text *ngIf="!field.value">{{ 'title.takePhoto' | translate }}</ion-text>
-      </ng-container>
-    </ion-item>
+    <ng-container *ngFor="let fieldGroup of fieldGroups">
+      <ion-item-divider *ngIf="fieldGroup !== []">
+        <ion-label>
+          {{ 'dataTemplate.' + templateName + '.dataGroup.' + fieldGroup[0].dataGroup | translate }}
+        </ion-label>
+      </ion-item-divider>
+      <app-add-record-field-item *ngFor="let field of fieldGroup" [field]="field" [templateName]="templateName">
+      </app-add-record-field-item>
+    </ng-container>
   </ion-list>
 </ion-content>
 <ion-footer>
   <ion-grid fixed class="ion-text-center">
     <ion-row>
       <ion-col size="6">
-        <ion-button size="large" fill="outline" (click)="onClickClear()">{{ 'title.clear' | translate }}</ion-button>
+        <ion-button size="large" fill="outline" (click)="onClearClicked()">{{ 'title.clear' | translate }}</ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button size="large" (click)="onClickSubmit()">{{ 'title.submit' | translate }}</ion-button>
+        <ion-button size="large" (click)="onSubmitClicked()">{{ 'title.submit' | translate }}</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

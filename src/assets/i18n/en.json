@@ -125,12 +125,13 @@
     "ja": "日本語",
     "zh": "繁體中文"
   },
-  "preset": {
+  "dataTemplate": {
     "commonCold": {
-      "presetName": "Common Cold",
+      "dataTemplateName": "Common Cold",
       "dataGroup": {
+        "vitalSigns": "Vital Signs",
         "symptoms": "Symptoms",
-        "note": "Note"
+        "additionalInformation": "Additional Information"
       },
       "bodyTemperature": "Body Temperature",
       "coughing": "Cough",
@@ -144,10 +145,10 @@
       }
     },
     "heartFailure": {
-      "presetName": "Heart Failure",
+      "dataTemplateName": "Heart Failure",
       "dataGroup": {
         "vitalSigns": "Vital Signs",
-        "note": "Note"
+        "additionalInformation": "Additional Information"
       },
       "SBP": "Systolic Blood Pressure",
       "DBP": "Diastolic Blood Pressure",
@@ -167,10 +168,11 @@
       }
     },
     "healthDeclaration": {
-      "presetName": "Health Declaration",
+      "dataTemplateName": "Health Declaration",
       "dataGroup": {
+        "vitalSigns": "Vital Signs",
         "checklist": "Checklist",
-        "note": "Note"
+        "additionalInformation": "Additional Information"
       },
       "bodyTemperature": "Body Temperature",
       "goAbroad": "Went aboard",

@@ -24,7 +24,7 @@ export class GeolocationService {
   constructor(
   ) { }
 
-  getPosition(useCache = true): Observable<GeolocationPosition> {
+  getPosition(useCache = false): Observable<GeolocationPosition> {
     const cache = (this.isCachedPositionValid() && useCache);
     const position$ = (cache) ? of(this.cachedPosition) : from(Geolocation.getCurrentPosition(this.defaultGeolocationOptions));
     return position$

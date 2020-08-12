@@ -11,6 +11,7 @@ import {
 } from 'rxjs/operators';
 
 import { Plugins } from '@capacitor/core';
+import { Record } from '@core/classes/record';
 import { SharedLink } from '@core/interfaces/shared-link';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '@shared/services/toast.service';
@@ -192,8 +193,11 @@ export class UploadService {
       .pipe(
         map(([transactionHashes, jsons]) => transactionHashes.map((hash, idx) => {
           const formData = new FormData();
+          console.log((JSON.parse(jsons[idx]) as Record));
+          const templateName = (JSON.parse(jsons[idx]) as Record).templateName;
           formData.append('raw_content', jsons[idx]);
           formData.append('transaction_hash', hash);
+          formData.append('template_name', templateName);
           return formData;
         })),
         tap(payloads => this.cachedPayloads = payloads),
