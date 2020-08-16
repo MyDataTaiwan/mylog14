@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject, concat, forkJoin, Observable } from 'rxjs';
-import { first, map, switchMap, tap, toArray } from 'rxjs/operators';
+import { map, switchMap, tap, toArray } from 'rxjs/operators';
 
 import { RecordFieldType } from '@core/enums/record-field-type.enum';
 import { DailySummary } from '@core/interfaces/daily-summary';
@@ -13,7 +13,7 @@ import { SummaryByDate } from '@core/interfaces/summary-by-date';
 import { Record } from '../../classes/record';
 import { KeyData } from '../../interfaces/key-data';
 import { UserData } from '../../interfaces/user-data';
-import { RecordPreset } from '../preset.service';
+import { DataTemplateService } from '../data-template.service';
 import {
   RecordRepositoryService,
 } from '../repository/record-repository.service';
@@ -26,9 +26,6 @@ import {
 })
 export class DataStoreService {
 
-  private readonly initialized = new BehaviorSubject<boolean>(false);
-  initialized$: Observable<boolean> = this.initialized;
-
   private readonly records = new BehaviorSubject<Record[]>([]);
   records$: Observable<Record[]> = this.records
     .pipe(
@@ -36,13 +33,13 @@ export class DataStoreService {
     );
 
   private readonly userData = new BehaviorSubject<UserData>({
-    firstName: '', lastName: '', recordPreset: RecordPreset.COMMON_COLD, newUser: true,
+    firstName: '', lastName: '', dataTemplateName: this.dataTemplateService.dataTemplateNames[0], newUser: true,
   });
   userData$: Observable<UserData> = this.userData;
 
   recordsByDate$: Observable<RecordsByDate> = this.records$
     .pipe(
-      map(records => records.filter(record => record.templateName === this.userData.getValue().recordPreset)),
+      map(records => records.filter(record => record.templateName === this.userData.getValue().dataTemplateName)),
       map(records => this.getRecordsByDate(records)),
     );
 
@@ -52,6 +49,7 @@ export class DataStoreService {
     );
 
   constructor(
+    private readonly dataTemplateService: DataTemplateService,
     private readonly recordRepo: RecordRepositoryService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
@@ -125,7 +123,7 @@ export class DataStoreService {
       );
   }
 
-  initializeStore(): Observable<[UserData, Record[]]> {
+  initialize(): Observable<[UserData, Record[]]> {
     const initUserData$ = this.userDataRepo.get()
       .pipe(
         tap(userData => this.userData.next(userData)),
@@ -134,10 +132,7 @@ export class DataStoreService {
       .pipe(
         tap(records => this.records.next(records)),
       );
-    return forkJoin([initUserData$, initRecords$]).pipe(
-      first(),
-      tap(() => this.initialized.next(true)),
-    );
+    return forkJoin([initUserData$, initRecords$]);
   }
 
   private getRecordsByDate(records: Record[]): RecordsByDate {
@@ -193,7 +188,7 @@ export class DataStoreService {
       unit: null,
     };
     records.forEach(record => {
-      const keyField = record.fields.find(field => field.isKeyField);
+      const keyField = record.fields.find(field => field.name === record.keyFieldName);
       if (!keyData.dataClass) {
         keyData.dataClass = keyField.dataClass;
         keyData.name = keyField.name;

@@ -95,7 +95,7 @@ export class AddPhotoComponent implements OnInit, OnDestroy {
     return this.dataStore.userData$
       .pipe(
         take(1),
-        switchMap(userData => this.recordService.create(userData.recordPreset)),
+        switchMap(userData => this.recordService.create(userData.dataTemplateName)),
         tap(record => this.record.next(record)),
       );
   }

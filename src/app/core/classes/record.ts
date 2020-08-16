@@ -1,14 +1,16 @@
-import { RecordFieldType } from '../enums/record-field-type.enum';
+import { cloneDeep } from 'lodash';
+
 import { Proof } from '../interfaces/proof';
 import { RecordField, RecordFieldValue } from '../interfaces/record-field';
-import { RecordFieldValueRange } from '../interfaces/record-field-value-range';
 
 export class Record {
 
     timestamp: number;
     proof: Proof;
     templateName: string;
-    readonly fields: RecordField[];
+    keyFieldName: string;
+    dataGroups: string[];
+    fields: RecordField[];
 
     constructor(timestamp: number, proof?: Proof) {
         this.timestamp = timestamp;
@@ -16,29 +18,8 @@ export class Record {
         this.fields = [];
     }
 
-    addField(
-        name: string,
-        type: RecordFieldType,
-        isKeyField: boolean,
-        dataGroup: string,
-        dataClass: string,
-        defaultValue: RecordFieldValue,
-        icon?: string,
-        valueUnit?: string,
-        valueRange?: RecordFieldValueRange
-    ): void {
-        this.fields.push({
-            name,
-            icon,
-            type,
-            isKeyField,
-            dataGroup,
-            dataClass,
-            defaultValue,
-            value: defaultValue,
-            valueUnit,
-            valueRange,
-        });
+    setFields(fields: RecordField[]): void {
+        this.fields = cloneDeep(fields);
     }
 
     setFieldValue(name: string, value: RecordFieldValue): void {
@@ -59,8 +40,16 @@ export class Record {
         this.templateName = templateName;
     }
 
+    setKeyFieldName(keyFieldName: string): void {
+        this.keyFieldName = keyFieldName;
+    }
+
+    setDataGroups(dataGroups: string[]): void {
+        this.dataGroups = cloneDeep(dataGroups);
+    }
+
     resetFieldValues(): void {
-        this.fields.map(el => ({ ...el, value: el.defaultValue }));
+        this.fields.map(el => ({ ...el, value: null }));
     }
 
 }

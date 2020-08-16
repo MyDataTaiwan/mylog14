@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { defer, Observable, of } from 'rxjs';
-import { filter, first, map, switchMap, take } from 'rxjs/operators';
+import { first, map, switchMap, take } from 'rxjs/operators';
 
 import { Plugins, StatusBarStyle } from '@capacitor/core';
+import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
-import { RecordPreset } from '@core/services/preset.service';
 import { Platform } from '@ionic/angular';
 
 import { DataStoreService } from './core/services/store/data-store.service';
@@ -22,6 +22,7 @@ export class AppComponent {
 
   constructor(
     private readonly dataStore: DataStoreService,
+    private readonly dataTemplateService: DataTemplateService,
     private readonly platform: Platform,
     private readonly router: Router,
     private readonly languageService: LanguageService
@@ -38,7 +39,6 @@ export class AppComponent {
         }
         SplashScreen.hide();
       });
-    this.dataStore.initializeStore().subscribe();
   }
 
   private setStatusBarStyle(): Observable<void> {
@@ -47,9 +47,9 @@ export class AppComponent {
   }
 
   private dataInitialized(): Observable<any> {
-    return this.dataStore.initialized$
+    return this.dataTemplateService.initialize()
       .pipe(
-        filter(isInitialized => isInitialized === true),
+        switchMap(() => this.dataStore.initialize()),
       );
   }
 
@@ -61,8 +61,12 @@ export class AppComponent {
         if (!userData.uploadHost) {
           data.uploadHost = 'mylog14';
         }
-        if (!userData.recordPreset) {
-          data.recordPreset = RecordPreset.COMMON_COLD;
+        if (!userData.dataTemplateName) {
+          if (userData?.recordPreset) {
+            data.dataTemplateName = userData.recordPreset;
+          } else {
+            data.dataTemplateName = this.dataTemplateService.dataTemplateNames[0];
+          }
         }
         return data;
       }),
@@ -72,6 +76,6 @@ export class AppComponent {
 }
 
 interface UserDataPatch {
-  recordPreset?: RecordPreset;
+  dataTemplateName?: string;
   uploadHost?: string;
 }

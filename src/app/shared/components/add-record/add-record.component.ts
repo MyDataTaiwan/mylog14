@@ -143,7 +143,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.dataStore.userData$
       .pipe(
         take(1),
-        switchMap(userData => this.recordService.create(userData.recordPreset)),
+        switchMap(userData => this.recordService.create(userData.dataTemplateName)),
         tap(record => this.record.next(record)),
         takeUntil(this.destroy$),
       ).subscribe();

@@ -1,10 +1,10 @@
-import { RecordPreset } from '../services/preset.service';
 import { SharedLink } from './shared-link';
 
 export interface UserData {
     firstName: string;
     lastName: string;
-    recordPreset: RecordPreset;
+    dataTemplateName: string;
+    recordPreset?: string; // Deprecated, kept for migration from older version
     newUser: boolean;
     email?: string;
     uuid?: string;

@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Record } from '../classes/record';
-import { PresetService, RecordPreset } from './preset.service';
+import { DataTemplateService } from './data-template.service';
 import { ProofService } from './proof.service';
 import {
   RecordRepositoryService,
@@ -16,7 +16,7 @@ import {
 export class RecordService {
 
   constructor(
-    private readonly presetService: PresetService,
+    private readonly dataTemplateService: DataTemplateService,
     private readonly proofService: ProofService,
     private readonly recordRepo: RecordRepositoryService,
   ) { }
@@ -31,9 +31,9 @@ export class RecordService {
       );
   }
 
-  create(preset: RecordPreset): Observable<Record> {
+  create(dataTemplateName: string): Observable<Record> {
     const record = new Record(Date.now());
-    return of(this.presetService.initRecordWithPreset(record, preset));
+    return of(this.dataTemplateService.setRecordWithDataTemplate(record, dataTemplateName));
   }
 
   save(record: Record): Observable<Record[]> {

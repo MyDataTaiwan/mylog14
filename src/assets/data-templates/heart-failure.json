@@ -1,83 +1,72 @@
 {
     "templateName": "heartFailure",
+    "keyFieldName": "SBP",
+    "dataGroups": [
+        "vitalSigns",
+        "additionalInformation"
+    ],
     "fields": [
         {
             "name": "SBP",
             "icon": "pulse-outline",
             "type": "number",
-            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": "",
-            "defaultValue": null,
+            "dataClass": "highest",
             "valueUnit": "mmHg"
         },
         {
             "name": "DBP",
             "icon": "pulse-outline",
             "type": "number",
-            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": "",
-            "defaultValue": null,
+            "dataClass": "highest",
             "valueUnit": "mmHg"
         },
         {
             "name": "heartbeat",
             "icon": "heart-outline",
             "type": "number",
-            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": "",
-            "defaultValue": null,
+            "dataClass": "highest",
             "valueUnit": "bpm"
         },
         {
             "name": "bloodSugar",
             "icon": "medkit-outline",
             "type": "number",
-            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": "",
-            "defaultValue": null,
+            "dataClass": "highest",
             "valueUnit": "mg/dL"
         },
         {
             "name": "weight",
             "icon": "body-outline",
             "type": "number",
-            "isKeyField": false,
             "dataGroup": "vitalSigns",
-            "dataClass": "",
-            "defaultValue": null,
+            "dataClass": "highest",
             "valueUnit": "kg"
         },
         {
             "name": "urineVolume",
             "icon": "water-outline",
             "type": "number",
-            "isKeyField": true,
             "dataGroup": "vitalSigns",
             "dataClass": "accumulated",
-            "defaultValue": null,
             "valueUnit": "mL"
         },
         {
             "name": "note",
             "icon": "pencil-outline",
             "type": "string",
-            "isKeyField": false,
-            "dataGroup": "note",
-            "dataClass": "note",
-            "defaultValue": null
+            "dataGroup": "additionalInformation",
+            "dataClass": "note"
         },
         {
             "name": "photo",
             "icon": "camera-outline",
             "type": "photo",
-            "isKeyField": false,
-            "dataGroup": "photo",
-            "dataClass": "photo",
-            "defaultValue": null
+            "dataGroup": "additionalInformation",
+            "dataClass": "photo"
         }
     ]
 }

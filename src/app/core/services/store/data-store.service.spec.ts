@@ -1,9 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { DataStoreService } from './data-store.service';
+
 import { Record } from '../../classes/record';
 import { UserData } from '../../interfaces/user-data';
-import { RecordPreset } from '../preset.service';
-
+import { DataStoreService } from './data-store.service';
 
 describe('DataStoreService', () => {
 
@@ -48,7 +47,7 @@ fdescribe('createOrReplaceUserData()', () => {
     const userData: UserData = {
       firstName: 'John',
       lastName: 'Smith',
-      recordPreset: RecordPreset.COMMON_COLD,
+      dataTemplateName: 'commonCold',
       newUser: false
     };
 
@@ -70,14 +69,14 @@ fdescribe('createOrReplaceUserData()', () => {
     const existUserData: UserData = {
       firstName: 'Ronald',
       lastName: 'Weasly',
-      recordPreset: RecordPreset.COMMON_COLD,
+      dataTemplateName: 'commonCold',
       newUser: true
     };
 
     const replaceUser: UserData = {
       firstName: 'Percy',
       lastName: 'Weasly',
-      recordPreset: RecordPreset.HEART_FAILURE,
+      dataTemplateName: 'commonCold',
       newUser: false
     };
 
@@ -102,12 +101,12 @@ fdescribe('updateUserData() first & last name', () => {
     const existUserData: UserData = {
       firstName: 'Emily',
       lastName: 'Anthony',
-      recordPreset: RecordPreset.HEART_FAILURE,
+      dataTemplateName: 'heartFailure',
       newUser: true
     };
 
     service.createOrReplaceUserData(existUserData).subscribe(x => {
-      service.updateUserData({firstName: 'Charlie', lastName: 'Chaplin'}).subscribe(y => {
+      service.updateUserData({ firstName: 'Charlie', lastName: 'Chaplin' }).subscribe(y => {
         expect(y).not.toEqual(x);
 
         expect(y.firstName).not.toEqual(x.firstName);
@@ -118,7 +117,7 @@ fdescribe('updateUserData() first & last name', () => {
 
         expect(y.lastName).toEqual('Chaplin');
 
-        expect(y.recordPreset).toEqual(x.recordPreset);
+        expect(y.dataTemplateName).toEqual(x.dataTemplateName);
 
         expect(y.newUser).toEqual(x.newUser);
 
@@ -138,12 +137,12 @@ fdescribe('updateUserData() with nothing', () => {
     const existUserData: UserData = {
       firstName: 'Harry',
       lastName: 'Potter',
-      recordPreset: RecordPreset.COMMON_COLD,
+      dataTemplateName: 'commonCold',
       newUser: false
     };
 
     service.createOrReplaceUserData(existUserData).subscribe(x => {
-      service.updateUserData({ }).subscribe(y => {
+      service.updateUserData({}).subscribe(y => {
         expect(y).toEqual(x);
         done();
       });
@@ -160,29 +159,31 @@ fdescribe('updateUserData() with recordPresent and newUser', () => {
     const existingUserData: UserData = {
       firstName: 'Mary',
       lastName: 'Poppins',
-      recordPreset: RecordPreset.COMMON_COLD,
+      dataTemplateName: 'commonCold',
       newUser: true
     };
 
     service.createOrReplaceUserData(existingUserData).subscribe(x => {
-      service.updateUserData({recordPreset: RecordPreset.HEART_FAILURE, newUser: false}).subscribe({ next(y) {
+      service.updateUserData({ dataTemplateName: 'heartFailure', newUser: false }).subscribe({
+        next(y) {
 
-        expect(y).not.toEqual(x);
+          expect(y).not.toEqual(x);
 
-        expect(y.recordPreset).not.toEqual(x.recordPreset);
+          expect(y.dataTemplateName).not.toEqual(x.dataTemplateName);
 
-        expect(y.newUser).not.toEqual(x.newUser);
+          expect(y.newUser).not.toEqual(x.newUser);
 
-        expect(y.firstName).toEqual(x.firstName);
+          expect(y.firstName).toEqual(x.firstName);
 
-        expect(y.lastName).toEqual(y.lastName);
+          expect(y.lastName).toEqual(y.lastName);
 
-        expect(y.recordPreset).toEqual(RecordPreset.HEART_FAILURE);
+          expect(y.dataTemplateName).toEqual('heartFailure');
 
-        expect(y.newUser).toEqual(false);
+          expect(y.newUser).toEqual(false);
 
-        done();
-      }});
+          done();
+        }
+      });
     });
   });
 });

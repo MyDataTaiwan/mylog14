@@ -29,7 +29,7 @@ export class UtilityService {
     return this.dataStore.userData$
       .pipe(
         take(1),
-        map(userData => userData.recordPreset),
+        map(userData => userData.dataTemplateName),
         mergeMap(preset => this.recordService.create(preset)),
         map(record => this.randomizeRecordData(record, daysBackward)),
         mergeMap(record => this.dataStore.pushRecord(record, false)),

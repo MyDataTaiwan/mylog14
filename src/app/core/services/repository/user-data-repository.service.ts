@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { UserData } from '../../interfaces/user-data';
-import { RecordPreset } from '../preset.service';
+import { DataTemplateService } from '../data-template.service';
 import { LocalStorageService } from '../storage/local-storage.service';
 
 @Injectable({
@@ -16,12 +16,13 @@ export class UserDataRepositoryService {
     newUser: true,
     firstName: '',
     lastName: '',
-    recordPreset: RecordPreset.COMMON_COLD,
+    dataTemplateName: this.dataTemplateService.dataTemplateNames[0],
   };
   private readonly userData = new Subject<UserData>();
   userData$: Observable<UserData> = this.userData;
 
   constructor(
+    private readonly dataTemplateService: DataTemplateService,
     private readonly localStorage: LocalStorageService
   ) { }
 
