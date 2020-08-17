@@ -123,8 +123,9 @@
     "commonCold": {
       "presetName": "普通感冒",
       "dataGroup": {
+        "vitalSigns": "生理徵象",
         "symptoms": "症狀",
-        "note": "附註"
+        "additionalInformation": "附加資訊"
       },
       "bodyTemperature": "體溫",
       "coughing": "咳嗽",
@@ -141,7 +142,7 @@
       "presetName": "心衰竭",
       "dataGroup": {
         "vitalSigns": "生理徵象",
-        "note": "附註"
+        "additionalInformation": "附加資訊"
       },
       "SBP": "收縮壓",
       "DBP": "舒張壓",
@@ -163,14 +164,15 @@
     "healthDeclaration": {
       "presetName": "健康聲明",
       "dataGroup": {
+        "vitalSigns": "生理徵象",
         "checklist": "過去十四天是否曾經",
-        "note": "筆記"
+        "additionalInformation": "附加資訊"
       },
       "bodyTemperature": "體溫",
       "goAbroad": "出國",
       "fever": "發燒",
-      "contactWithQuarantined": "接觸正在檢疫或隔離的人士",
-      "contactWithHighTravelRisk": "接觸過旅遊至高風險的人士",
+      "contactWithQuarantined": "接觸正在檢疫或隔離者",
+      "contactWithHighTravelRisk": "接觸至高風險地區旅遊者",
       "note": "附註",
       "photo": "照片",
       "unit": {

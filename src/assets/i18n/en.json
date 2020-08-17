@@ -129,8 +129,9 @@
     "commonCold": {
       "presetName": "Common Cold",
       "dataGroup": {
+        "vitalSigns": "Vital Signs",
         "symptoms": "Symptoms",
-        "note": "Note"
+        "additionalInformation": "Additional Information"
       },
       "bodyTemperature": "Body Temperature",
       "coughing": "Cough",
@@ -147,7 +148,7 @@
       "presetName": "Heart Failure",
       "dataGroup": {
         "vitalSigns": "Vital Signs",
-        "note": "Note"
+        "additionalInformation": "Additional Information"
       },
       "SBP": "Systolic Blood Pressure",
       "DBP": "Diastolic Blood Pressure",
@@ -169,14 +170,15 @@
     "healthDeclaration": {
       "presetName": "Health Declaration",
       "dataGroup": {
-        "checklist": "Checklist",
-        "note": "Note"
+        "vitalSigns": "Vital Signs",
+        "checklist": "In the past 14 days, did you...",
+        "additionalInformation": "Additional Information"
       },
       "bodyTemperature": "Body Temperature",
-      "goAbroad": "Went aboard",
-      "fever": "Fever",
-      "contactWithQuarantined": "Contact with Qurantined",
-      "contactWithHighTravelRisk": "Contact with High Travel Risk",
+      "goAbroad": "Go aboard",
+      "fever": "Have a Fever",
+      "contactWithQuarantined": "Contact with People in Qurantine",
+      "contactWithHighTravelRisk": "Contact with High-Risk Area Travelers",
       "note": "Note",
       "photo": "Photo",
       "unit": {

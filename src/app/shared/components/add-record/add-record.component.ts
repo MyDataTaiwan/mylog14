@@ -30,6 +30,21 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   private readonly record = new BehaviorSubject<Record>(new Record(Date.now()));
   record$: Observable<Record> = this.record;
+  fieldGroups$: Observable<FieldGroup[]> = this.record
+    .pipe(
+      map(record => {
+        const fieldGroups = [];
+        record.dataGroups.forEach(dataGroup => fieldGroups.push({
+          name: dataGroup,
+          fields: record.fields.filter(field => field.dataGroup === dataGroup),
+        }));
+        return fieldGroups;
+      }),
+    );
+  templateName$ = this.record
+    .pipe(
+      map(record => record.templateName),
+    );
   recordFieldType = RecordFieldType;
 
   private readonly edit = new Subject<[RecordField, string]>();
@@ -167,4 +182,9 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.record.next(record);
   }
 
+}
+
+interface FieldGroup {
+  name: string;
+  fields: RecordField[];
 }
