@@ -1,7 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
+import { of } from 'rxjs';
+
 import { Record } from '../../classes/record';
 import { UserData } from '../../interfaces/user-data';
+import { RecordService } from '../record.service';
+import {
+  UserDataRepositoryService,
+} from '../repository/user-data-repository.service';
 import { DataStoreService } from './data-store.service';
 
 describe('DataStoreService', () => {
@@ -15,42 +21,47 @@ describe('DataStoreService', () => {
 });
 
 fdescribe('pushData()', () => {
-  let originalTimeOut;
+  let mockRecordService;
 
   beforeEach(() => {
-    originalTimeOut = jasmine.DEFAULT_TIMEOUT_INTERVAL;
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+    mockRecordService = jasmine.createSpyObj(['save']);
+    mockRecordService.save.and.returnValue(of({ timestamp: 20190619, fields: [] }));
   });
 
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: RecordService, useValue: mockRecordService }],
+  }));
 
   it('should push', async (done) => {
     const service: DataStoreService = TestBed.inject(DataStoreService);
 
     const record = new Record(20190619);
-    service.pushRecord(record).subscribe(x => {
+    service.pushRecord(record, false).subscribe(x => {
       expect(JSON.stringify(x[x.length - 1])).toEqual(JSON.stringify(record));
       done();
     });
   });
-  afterEach(() => {
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeOut;
-  });
 });
 
 fdescribe('createOrReplaceUserData()', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let mockUserDataRepositoryService;
+  const userData: UserData = {
+    firstName: 'John',
+    lastName: 'Smith',
+    dataTemplateName: 'commonCold',
+    newUser: false,
+  };
+  beforeEach(() => {
+    mockUserDataRepositoryService = jasmine.createSpyObj(['save']);
+    mockUserDataRepositoryService.save.and.returnValue(of(userData));
+  });
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: UserDataRepositoryService, useValue: mockUserDataRepositoryService }],
+  }));
 
   it('should create or replace', async (done) => {
     const service: DataStoreService = TestBed.inject(DataStoreService);
-
-    const userData: UserData = {
-      firstName: 'John',
-      lastName: 'Smith',
-      dataTemplateName: 'commonCold',
-      newUser: false
-    };
-
     const expectedOutput = JSON.stringify(userData);
 
     service.createOrReplaceUserData(userData).subscribe(x => {
@@ -61,24 +72,32 @@ fdescribe('createOrReplaceUserData()', () => {
 });
 
 fdescribe('createOrReplaceUserData()', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let mockUserDataRepositoryService;
+  const existUserData: UserData = {
+    firstName: 'Ronald',
+    lastName: 'Weasly',
+    dataTemplateName: 'commonCold',
+    newUser: true
+  };
+
+  const replaceUser: UserData = {
+    firstName: 'Percy',
+    lastName: 'Weasly',
+    dataTemplateName: 'commonCold',
+    newUser: false
+  };
+  beforeEach(() => {
+    mockUserDataRepositoryService = jasmine.createSpyObj(['save']);
+    mockUserDataRepositoryService.save.withArgs(existUserData).and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.withArgs(replaceUser).and.returnValue(of(replaceUser));
+  });
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: UserDataRepositoryService, useValue: mockUserDataRepositoryService }],
+  }));
 
   it('should replace', async (done) => {
     const service: DataStoreService = TestBed.inject(DataStoreService);
-
-    const existUserData: UserData = {
-      firstName: 'Ronald',
-      lastName: 'Weasly',
-      dataTemplateName: 'commonCold',
-      newUser: true
-    };
-
-    const replaceUser: UserData = {
-      firstName: 'Percy',
-      lastName: 'Weasly',
-      dataTemplateName: 'commonCold',
-      newUser: false
-    };
 
     const expectedReplacement = JSON.stringify(replaceUser);
 
@@ -93,34 +112,39 @@ fdescribe('createOrReplaceUserData()', () => {
 });
 
 fdescribe('updateUserData() first & last name', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let mockUserDataRepositoryService;
+  const existUserData: UserData = {
+    firstName: 'Emily',
+    lastName: 'Anthony',
+    dataTemplateName: 'heartFailure',
+    newUser: true,
+  };
+
+  const replaceUser: UserData = {
+    firstName: 'Charlie',
+    lastName: 'Chaplin',
+    dataTemplateName: 'heartFailure',
+    newUser: true,
+  };
+  beforeEach(() => {
+    mockUserDataRepositoryService = jasmine.createSpyObj(['get', 'save']);
+    mockUserDataRepositoryService.get.and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.withArgs(existUserData).and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.withArgs(replaceUser).and.returnValue(of(replaceUser));
+  });
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: UserDataRepositoryService, useValue: mockUserDataRepositoryService }],
+  }));
 
   it('should update user data', async (done) => {
     const service: DataStoreService = TestBed.inject(DataStoreService);
 
-    const existUserData: UserData = {
-      firstName: 'Emily',
-      lastName: 'Anthony',
-      dataTemplateName: 'heartFailure',
-      newUser: true
-    };
-
     service.createOrReplaceUserData(existUserData).subscribe(x => {
       service.updateUserData({ firstName: 'Charlie', lastName: 'Chaplin' }).subscribe(y => {
         expect(y).not.toEqual(x);
-
-        expect(y.firstName).not.toEqual(x.firstName);
-
-        expect(y.firstName).toEqual('Charlie');
-
-        expect(y.lastName).not.toEqual(x.lastName);
-
-        expect(y.lastName).toEqual('Chaplin');
-
-        expect(y.dataTemplateName).toEqual(x.dataTemplateName);
-
-        expect(y.newUser).toEqual(x.newUser);
-
+        expect(y).not.toEqual(existUserData);
+        expect(y).toEqual(replaceUser);
         done();
       });
     });
@@ -129,17 +153,25 @@ fdescribe('updateUserData() first & last name', () => {
 
 
 fdescribe('updateUserData() with nothing', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let mockUserDataRepositoryService;
+  const existUserData: UserData = {
+    firstName: 'Harry',
+    lastName: 'Potter',
+    dataTemplateName: 'commonCold',
+    newUser: false
+  };
+  beforeEach(() => {
+    mockUserDataRepositoryService = jasmine.createSpyObj(['get', 'save']);
+    mockUserDataRepositoryService.get.and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.and.returnValue(of(existUserData));
+  });
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: UserDataRepositoryService, useValue: mockUserDataRepositoryService }],
+  }));
 
   it('should do nothing', async (done) => {
     const service: DataStoreService = TestBed.inject(DataStoreService);
-
-    const existUserData: UserData = {
-      firstName: 'Harry',
-      lastName: 'Potter',
-      dataTemplateName: 'commonCold',
-      newUser: false
-    };
 
     service.createOrReplaceUserData(existUserData).subscribe(x => {
       service.updateUserData({}).subscribe(y => {
@@ -151,36 +183,71 @@ fdescribe('updateUserData() with nothing', () => {
 });
 
 fdescribe('updateUserData() with recordPresent and newUser', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  let mockUserDataRepositoryService;
+  const existUserData: UserData = {
+    firstName: 'Emily',
+    lastName: 'Anthony',
+    dataTemplateName: 'heartFailure',
+    newUser: true,
+  };
+
+  const replaceUser: UserData = {
+    firstName: 'Charlie',
+    lastName: 'Chaplin',
+    dataTemplateName: 'heartFailure',
+    newUser: true,
+  };
+  beforeEach(() => {
+    mockUserDataRepositoryService = jasmine.createSpyObj(['get', 'save']);
+    mockUserDataRepositoryService.get.and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.withArgs(existUserData).and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.withArgs(replaceUser).and.returnValue(of(replaceUser));
+  });
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: UserDataRepositoryService, useValue: mockUserDataRepositoryService }],
+  }));
+
+  it('should update user data', async (done) => {
+    const service: DataStoreService = TestBed.inject(DataStoreService);
+
+    service.createOrReplaceUserData(existUserData).subscribe(x => {
+      service.updateUserData({ firstName: 'Charlie', lastName: 'Chaplin' }).subscribe(y => {
+        expect(y).not.toEqual(x);
+        expect(y).not.toEqual(existUserData);
+        expect(y).toEqual(replaceUser);
+        done();
+      });
+    });
+  });
+});
+
+
+fdescribe('updateUserData() with nothing', () => {
+  let mockUserDataRepositoryService;
+  const existUserData: UserData = {
+    firstName: 'Mary',
+    lastName: 'Poppins',
+    dataTemplateName: 'commonCold',
+    newUser: true
+  };
+  beforeEach(() => {
+    mockUserDataRepositoryService = jasmine.createSpyObj(['get', 'save']);
+    mockUserDataRepositoryService.get.and.returnValue(of(existUserData));
+    mockUserDataRepositoryService.save.and.returnValue(of(existUserData));
+  });
+
+  beforeEach(() => TestBed.configureTestingModule({
+    providers: [{ provide: UserDataRepositoryService, useValue: mockUserDataRepositoryService }],
+  }));
 
   it('should udpate recordPresent and newUser', async (done) => {
     const service: DataStoreService = TestBed.inject(DataStoreService);
 
-    const existingUserData: UserData = {
-      firstName: 'Mary',
-      lastName: 'Poppins',
-      dataTemplateName: 'commonCold',
-      newUser: true
-    };
-
-    service.createOrReplaceUserData(existingUserData).subscribe(x => {
-      service.updateUserData({ dataTemplateName: 'heartFailure', newUser: false }).subscribe({
+    service.createOrReplaceUserData(existUserData).subscribe(x => {
+      service.updateUserData({}).subscribe({
         next(y) {
-
-          expect(y).not.toEqual(x);
-
-          expect(y.dataTemplateName).not.toEqual(x.dataTemplateName);
-
-          expect(y.newUser).not.toEqual(x.newUser);
-
-          expect(y.firstName).toEqual(x.firstName);
-
-          expect(y.lastName).toEqual(y.lastName);
-
-          expect(y.dataTemplateName).toEqual('heartFailure');
-
-          expect(y.newUser).toEqual(false);
-
+          expect(y).toEqual(x);
           done();
         }
       });
