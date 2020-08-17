@@ -13,7 +13,6 @@ import { SummaryByDate } from '@core/interfaces/summary-by-date';
 import { Record } from '../../classes/record';
 import { KeyData } from '../../interfaces/key-data';
 import { UserData } from '../../interfaces/user-data';
-import { DataTemplateService } from '../data-template.service';
 import {
   RecordRepositoryService,
 } from '../repository/record-repository.service';
@@ -32,9 +31,7 @@ export class DataStoreService {
       map(records => records.filter(record => (record.templateName))),
     );
 
-  private readonly userData = new BehaviorSubject<UserData>({
-    firstName: '', lastName: '', dataTemplateName: this.dataTemplateService.dataTemplateNames[0], newUser: true,
-  });
+  private readonly userData = new BehaviorSubject<UserData>(this.userDataRepo.defaultUserData);
   userData$: Observable<UserData> = this.userData;
 
   recordsByDate$: Observable<RecordsByDate> = this.records$
@@ -49,7 +46,6 @@ export class DataStoreService {
     );
 
   constructor(
-    private readonly dataTemplateService: DataTemplateService,
     private readonly recordRepo: RecordRepositoryService,
     private readonly userDataRepo: UserDataRepositoryService,
   ) {
