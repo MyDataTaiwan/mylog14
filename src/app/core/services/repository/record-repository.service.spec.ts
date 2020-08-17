@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { RecordRepositoryService } from './record-repository.service';
-import { Record } from '@core/classes/record';
-import { Meta } from '../../interfaces/meta';
-import { Plugins } from '@capacitor/core';
 
+import { Plugins } from '@capacitor/core';
+import { Record } from '@core/classes/record';
+
+import { Meta } from '../../interfaces/meta';
+import { RecordRepositoryService } from './record-repository.service';
 
 const { Storage } = Plugins;
 
@@ -37,7 +38,7 @@ fdescribe('save()', () => {
 
     const recordOutput = JSON.stringify(record);
 
-    service.save(record).subscribe(x => {
+    service.save(record, false).subscribe(x => {
       expect(JSON.stringify(x[x.length - 1])).toEqual(recordOutput);
       done();
     });
@@ -76,9 +77,9 @@ fdescribe('getJsonAll()', () => {
     const service: RecordRepositoryService = TestBed.inject(RecordRepositoryService);
 
     const newRecord = new Record(321);
-    service.save(newRecord).subscribe(x => {
+    service.save(newRecord, false).subscribe(x => {
       service.getJsonAll().subscribe(y => {
-        expect(JSON.stringify(x)).toEqual(JSON.stringify(y));
+        expect(x.map(el => JSON.stringify(el))).toEqual(y);
         done();
       });
     });
@@ -105,7 +106,7 @@ fdescribe('getAll()', () => {
 
     const newRecord = new Record(123);
 
-    service.save(newRecord).subscribe(x => {
+    service.save(newRecord, false).subscribe(x => {
       service.getAll().subscribe(y => {
         expect(x).toEqual(y);
         done();
@@ -141,7 +142,7 @@ fdescribe('get()', () => {
 
     const newRecordOutput = JSON.stringify(newRecord);
 
-    service.save(newRecord).subscribe(x => {
+    service.save(newRecord, false).subscribe(x => {
       service.get(meta).subscribe(y => {
         expect(JSON.stringify(y)).toEqual(newRecordOutput);
         done();
@@ -170,7 +171,7 @@ fdescribe('getJson()', () => {
       hash: 'f21773e620008909d8114096bcc7872fcc3b3ba9f63b00acbbee8649a3bdc94a'
     };
 
-    service.save(newRecord).subscribe(x => {
+    service.save(newRecord, false).subscribe(x => {
       service.getJson(meta).subscribe(y => {
         expect(y).toEqual(newRecordOuput);
         done();
