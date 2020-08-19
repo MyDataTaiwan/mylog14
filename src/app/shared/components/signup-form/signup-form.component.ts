@@ -60,10 +60,22 @@ export class SignupFormComponent implements OnInit, OnDestroy {
             switchMap(() => (res instanceof Error) ? throwError(res) : of(res)),
             takeUntil(this.destroy$),
           )),
+        switchMap(() => this.testLogin()),
       )
       .subscribe(() => {
         this.signupEvent.emit(true);
       });
+  }
+
+  private testLogin() {
+    return this.rewardService.login()
+      .pipe(
+        tap(r => console.log(r)),
+        catchError(err => {
+          console.log(err);
+          throw err;
+        }),
+      );
   }
 
 }
