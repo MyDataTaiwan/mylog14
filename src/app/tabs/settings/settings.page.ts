@@ -17,7 +17,7 @@ import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { UtilityService } from '@core/services/utility.service';
-import { IonDatetime } from '@ionic/angular';
+import { IonContent, IonDatetime } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
 import {
   PopoverButtonSet, PopoverService,
@@ -34,6 +34,7 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
+  @ViewChild(IonContent) content: IonContent;
 
   fakeDataDays = 1;
   private readonly destroy$ = new Subject();

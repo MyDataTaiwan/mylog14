@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar mode="ios" class="ion-align-item-center">
     <ion-buttons slot="start">
       <ion-button *ngIf="showBackButton" (click)="onBackButtonClick()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
@@ -7,8 +7,8 @@
       <ion-button *ngIf="showDismissButton" (click)="onDismissButtonClick()">
         <ion-icon slot="icon-only" name="close-outline"></ion-icon>
       </ion-button>
-    </ion-buttons>  
-    <ion-title class="ion-text-center">
+    </ion-buttons>
+    <ion-title class="ion-text-center ion-align-self-center">
       {{ headerTitle }}
     </ion-title>
     <ion-buttons slot="end">

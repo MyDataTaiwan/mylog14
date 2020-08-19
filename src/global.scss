@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,8 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.recordSaved{
-     
+.recordSaved {
   .alert-title {
     text-align: center;
   }
@@ -43,12 +42,10 @@
     -ms-flex-pack: center;
     justify-content: center;
   }
-
 }
 .popover-content {
   --min-width: 80%;
   // --min-height:  40% ;
-
 }
 .popover_class {
   // --min-hight: 300px !important;
@@ -62,9 +59,9 @@
   --min-width: 100%;
 
   width: 100% !important;
-  height:  30vw !important;
+  height: 30vw !important;
 }
-.Guide-modal{
+.Guide-modal {
   --background: transparent !important;
   --height: 100%;
   --width: 110%;
@@ -74,8 +71,7 @@
   // --width: 100%;
   // clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 40% 100%, 40% 91%, 18% 91%, 18% 100%, 0% 100%);
 
-
-   // --height: 80%;
+  // --height: 80%;
   // --width: 80%;
   // --border-radius: 25px;
   // clip-path: circle(11.9% at 13% 88%);
@@ -84,30 +80,66 @@
   // clip-path: circle(10.2% at 11% 11%);
   // clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 93% 55%, 39% 35%);
 
- // content:'';
+  // content:'';
   // position:absolute;
   // bottom:50%;
   // width:100%;
   // height:100%;
   // border-radius:100%;
-    // // --background: transparent !important;
-    // --background: "#FFff0f" !important;
-    // --height: 100%;
-    // --width: 100%;
-    // clip-path: polygon(33% 100%, 32% 78%, 63% 79%, 63% 99%, 100% 100%, 100% 1%, 0% 0%, 0% 100%);
+  // // --background: transparent !important;
+  // --background: "#FFff0f" !important;
+  // --height: 100%;
+  // --width: 100%;
+  // clip-path: polygon(33% 100%, 32% 78%, 63% 79%, 63% 99%, 100% 100%, 100% 1%, 0% 0%, 0% 100%);
 }
 
 .toast {
-    text-align: center;
-    font-weight: bold;
+  text-align: center;
+  font-weight: bold;
 }
 
-
-.picker-button.test{
-  background: forestgreen!important;
+.picker-button.test {
+  background: forestgreen !important;
   cursor: not-allowed;
   background-color: rgb(229, 229, 229) !important;
-  pointer-events:none;
-
+  pointer-events: none;
 }
 
+ion-label {
+  font-size: 18pt !important ;
+  h3 {
+    font-size: 18pt !important ;
+  }
+  h1 {
+    font-size: 26pt !important;
+    font-weight: 500;
+  }
+}
+
+ion-text {
+  font-size: 26pt;
+  font-weight: 500;
+}
+
+ion-button {
+  font-size: 22pt;
+  font-weight: 1000;
+}
+
+.input-form {
+  font-size: 22pt !important;
+}
+
+ion-card-title {
+  font-size: 22pt;
+  font-weight: 500;
+}
+
+ion-card-subtitle {
+  font-size: 14pt;
+  font-weight: 500;
+}
+
+ion-card-content {
+  font-size: 18pt;
+}

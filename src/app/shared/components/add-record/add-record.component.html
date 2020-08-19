@@ -11,13 +11,17 @@
       </ion-item-divider>
       <ion-item *ngFor="let field of fieldGroup.fields" button (click)="onClickEdit(field, templateName)">
         <ion-icon [name]="field.icon" slot="start"></ion-icon>
-        <ion-label>{{ 'preset.' + templateName + '.' + field.name | translate }}</ion-label>
+        <ion-label>
+          <h3>{{ 'preset.' + templateName + '.' + field.name | translate }}</h3>
+          <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
+            {{ (field.value) ? field.value : 'title.noData' | translate }}
+            <ng-container *ngIf="field.value && field.valueUnit">
+              {{ 'preset.' + templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
+          </ion-text>
+        </ion-label>
         <ion-toggle *ngIf="field.type === recordFieldType.boolean" [checked]="field.value"></ion-toggle>
-        <ion-text *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number">
-          {{ (field.value) ? field.value : 'title.noData' | translate }}
-          <ng-container *ngIf="field.value && field.valueUnit">
-            {{ 'preset.' + templateName + '.unit.' + field.valueUnit | translate }}</ng-container>
-        </ion-text>
+        <ion-icon size="large" name="pencil-outline"
+          *ngIf="field.type === recordFieldType.string || field.type === recordFieldType.number"></ion-icon>
         <ng-container *ngIf="field.type === recordFieldType.photo">
           <ion-thumbnail *ngIf="field.value">
             <ion-img [src]="'data:image/jpeg;base64,' + field.value"></ion-img>

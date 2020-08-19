@@ -12,9 +12,11 @@
 
       <ion-item>
         <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.email' | translate }}</ion-label>
-        <ion-text *ngIf="userDataView.email">{{ userDataView.email }}</ion-text>
-        <ion-text *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</ion-text>
+        <ion-label>
+          <h3>{{ 'title.email' | translate }}</h3>
+          <h1 *ngIf="userDataView.email">{{ userDataView.email }}</h1>
+          <p *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</p>
+        </ion-label>
       </ion-item>
 
       <ion-item (click)="onResetAccountClicked()" button>
@@ -30,19 +32,23 @@
 
       <ion-item (click)="onClickNameItem()" button>
         <ion-icon name="person-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.name' | translate }}</ion-label>
-        <ion-text *ngIf="userDataView.firstName || userDataView.lastName">
-          {{ userDataView.firstName + ' ' + userDataView.lastName }}
-        </ion-text>
-        <ion-text *ngIf="!userDataView.firstName && !userDataView.lastName">{{ 'title.notSet' | translate }}
-        </ion-text>
+        <ion-label>
+          <h3>{{ 'title.name' | translate }}</h3>
+          <h1 *ngIf="userDataView.firstName || userDataView.lastName">
+            {{ userDataView.firstName + ' ' + userDataView.lastName }}
+          </h1>
+          <h1 *ngIf="!userDataView.firstName && !userDataView.lastName">{{ 'title.notSet' | translate }}
+          </h1>
+        </ion-label>
       </ion-item>
 
       <ion-item (click)="dateOfBirthPicker.open()" lines="inset" button>
         <ion-icon name="calendar-outline" slot="start">
         </ion-icon>
-        <ion-label>{{ 'title.dateOfBirth' | translate }}</ion-label>
-        <ion-text *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</ion-text>
+        <ion-label>
+          <h3>{{ 'title.dateOfBirth' | translate }}</h3>
+        </ion-label>
+        <h1 *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</h1>
         <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
           (ionChange)="onChangeDateOfBirthPicker()" [cancelText]="'title.cancel' | translate"
           [doneText]="'title.confirm' | translate"></ion-datetime>
@@ -56,7 +62,9 @@
 
       <ion-item lines="inset">
         <ion-icon name="language-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.language' | translate }}</ion-label>
+        <ion-label>
+          <h3>{{ 'title.language' | translate }}</h3>
+        </ion-label>
         <ion-select [value]="userDataView.language" (ionChange)="onChangeLanguage($event)"
           [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
           <ion-select-option *ngFor="let language of languages" [value]="language">
@@ -67,7 +75,9 @@
 
       <ion-item lines="inset">
         <ion-icon name="documents-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.selectRecordMode' | translate }}</ion-label>
+        <ion-label>
+          <h3>{{ 'title.selectRecordMode' | translate }}</h3>
+        </ion-label>
         <ion-select *ngIf="showSelects"
           [value]="(userDataView.dataTemplateName) ? userDataView.dataTemplateName : dataTemplateNames[0]"
           (ionChange)="presetSelected($event)" [cancelText]="'title.cancel' | translate"
@@ -91,8 +101,10 @@
 
       <ion-item (click)="onClickVersion()" button>
         <ion-icon name="code-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.version' | translate }}</ion-label>
-        <ion-text>{{ appVersion }}</ion-text>
+        <ion-label>
+          <h3>{{ 'title.version' | translate }}</h3>
+          <h1>{{ appVersion }}</h1>
+        </ion-label>
       </ion-item>
 
       <ng-container *ngIf="showDeveloperOptions === true">
