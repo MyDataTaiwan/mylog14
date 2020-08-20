@@ -59,7 +59,7 @@ export class AppComponent {
       map(userData => {
         const data: UserDataPatch = {};
         if (!userData.uploadHost) {
-          data.uploadHost = 'mylog14';
+          data.uploadHost = 'api.logboard';
         }
         if (!userData.dataTemplateName) {
           if (userData?.recordPreset) {

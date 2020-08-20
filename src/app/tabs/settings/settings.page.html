@@ -118,8 +118,9 @@
           <ion-label>上傳測試設定</ion-label>
           <ion-select [value]="userDataView.uploadHost" okText="確定" cancelText="取消"
             (ionChange)="uploadHostSelected($event)">
-            <ion-select-option value="mylog14">Production</ion-select-option>
+            <ion-select-option value="api.logboard">Production</ion-select-option>
             <ion-select-option value="logboard-dev">Dev</ion-select-option>
+            <ion-select-option value="api.logboard-qa">QA</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item lines="inset">
