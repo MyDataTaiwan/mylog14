@@ -111,7 +111,8 @@
     "uploadingDataError": "Upload error. Please try again later.",
     "uploadingDataToCreateShareableLink": "Uploading data to create a shareable link...",
     "redeemConfirm": "Redeem coupon for this shop?",
-    "sorryProblem": "Sorry, there was a problem..."
+    "sorryProblem": "Sorry, there was a problem...",
+    "emailVerification": "A verification email has been sent to your email address."
   },
   "error": {
     "QRInvalidJSON": "Scanned Text is not the correct format",

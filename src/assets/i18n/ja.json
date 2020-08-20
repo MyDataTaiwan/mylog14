@@ -111,7 +111,8 @@
     "uploadingDataError": "アップロードでエラーが起きました。少し間をおいてもう一度試してみてください。",
     "uploadingDataToCreateShareableLink": "データをアップロードして共有可能なリンクを作成しています。",
     "redeemConfirm": "このお店でクーポンに交換しますか？",
-    "sorryProblem": "申し訳ないですが問題が生じました..."
+    "sorryProblem": "申し訳ないですが問題が生じました...",
+    "emailVerification": "登録したメールアドレスに認証メールを送りました。"
   },
   "error": {
     "QRInvalidJSON": "スキャンされたテキストは適切なフォーマットではありません。",

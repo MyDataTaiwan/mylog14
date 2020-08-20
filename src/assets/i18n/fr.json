@@ -111,7 +111,8 @@
     "uploadingDataError": "Erreur de téléchargement. Réessayez plus tard",
     "uploadingDataToCreateShareableLink": "Téléchargement des données pour créer un lien partageable...",
     "redeemConfirm": "Utiliser le coupon pour ce magasin?",
-    "sorryProblem": "Désolé, il y a eu un problème..."
+    "sorryProblem": "Désolé, il y a eu un problème...",
+    "emailVerification": "Un e-mail de vérification a été envoyé à votre adresse e-mail."
   },
   "error": {
     "QRInvalidJSON": "Le texte scanné n'est pas dans le bon format",

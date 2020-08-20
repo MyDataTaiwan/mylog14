@@ -4,11 +4,19 @@ import {
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { combineLatest, from, of, Subject, throwError } from 'rxjs';
-import { catchError, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  combineLatest, from, Observable, of, Subject,
+  throwError,
+} from 'rxjs';
+import {
+  catchError, filter, map, switchMap, takeUntil,
+  tap,
+} from 'rxjs/operators';
 
 import { RewardService } from '@core/services/reward.service';
+import { TranslateService } from '@ngx-translate/core';
 import { LoadingService } from '@shared/services/loading.service';
+import { ToastService } from '@shared/services/toast.service';
 
 @Component({
   selector: 'app-signup-form',
@@ -35,6 +43,8 @@ export class SignupFormComponent implements OnInit, OnDestroy {
     private readonly formBuilder: FormBuilder,
     private readonly loadingService: LoadingService,
     private readonly rewardService: RewardService,
+    private readonly toastService: ToastService,
+    private readonly translateService: TranslateService,
   ) { }
 
   ngOnInit() { }
@@ -61,19 +71,26 @@ export class SignupFormComponent implements OnInit, OnDestroy {
             takeUntil(this.destroy$),
           )),
         switchMap(() => this.testLogin()),
+        filter(loginPassed => loginPassed),
       )
       .subscribe(() => {
         this.signupEvent.emit(true);
       });
   }
 
-  private testLogin() {
+  private testLogin(): Observable<boolean> {
     return this.rewardService.login()
       .pipe(
-        tap(r => console.log(r)),
-        catchError(err => {
-          console.log(err);
-          throw err;
+        switchMap(userAuth => {
+          if (userAuth.userId === 'non_authenticated_user_mylog14coupon_test') {
+            const message = this.translateService.instant('description.emailVerification');
+            return this.toastService.showToast(message, 'secondary')
+              .pipe(
+                map(() => false),
+              );
+          } else {
+            return of(true);
+          }
         }),
       );
   }
