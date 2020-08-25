@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { PhotoService } from './photo.service';
 
-describe('PhotoService', () => {
+fdescribe('PhotoService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
