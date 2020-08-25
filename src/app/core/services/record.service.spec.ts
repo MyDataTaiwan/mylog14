@@ -8,7 +8,7 @@ import { RecordPreset } from './preset.service';
 
 const { Storage } = Plugins;
 
-describe('RecordService', () => {
+fdescribe('RecordService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
