@@ -17,7 +17,7 @@ describe('RecordRepositoryService', () => {
   });
 });
 
-fdescribe('save()', () => {
+describe('save()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -49,7 +49,7 @@ fdescribe('save()', () => {
   });
 });
 
-fdescribe('save()', () => {
+describe('save()', () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
 
@@ -61,7 +61,7 @@ fdescribe('save()', () => {
 });
 
 
-fdescribe('getJsonAll()', () => {
+describe('getJsonAll()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -89,7 +89,7 @@ fdescribe('getJsonAll()', () => {
   });
 });
 
-fdescribe('getAll()', () => {
+describe('getAll()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -118,7 +118,7 @@ fdescribe('getAll()', () => {
   });
 });
 
-fdescribe('get()', () => {
+describe('get()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -153,7 +153,7 @@ fdescribe('get()', () => {
   });
 });
 
-fdescribe('getJson()', () => {
+describe('getJson()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   afterEach(async () => await Storage.clear());

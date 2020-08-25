@@ -15,7 +15,7 @@ describe('DataStoreService', () => {
   });
 });
 
-fdescribe('pushData()', () => {
+describe('pushData()', () => {
   let originalTimeOut;
 
   beforeEach(() => {
@@ -39,7 +39,7 @@ fdescribe('pushData()', () => {
   });
 });
 
-fdescribe('createOrReplaceUserData()', () => {
+describe('createOrReplaceUserData()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should create or replace', async (done) => {
@@ -61,7 +61,7 @@ fdescribe('createOrReplaceUserData()', () => {
   });
 });
 
-fdescribe('createOrReplaceUserData()', () => {
+describe('createOrReplaceUserData()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should replace', async (done) => {
@@ -93,7 +93,7 @@ fdescribe('createOrReplaceUserData()', () => {
   });
 });
 
-fdescribe('updateUserData() first & last name', () => {
+describe('updateUserData() first & last name', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should update user data', async (done) => {
@@ -129,7 +129,7 @@ fdescribe('updateUserData() first & last name', () => {
 });
 
 
-fdescribe('updateUserData() with nothing', () => {
+describe('updateUserData() with nothing', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should do nothing', async (done) => {
@@ -151,7 +151,7 @@ fdescribe('updateUserData() with nothing', () => {
   });
 });
 
-fdescribe('updateUserData() with recordPresent and newUser', () => {
+describe('updateUserData() with recordPresent and newUser', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should udpate recordPresent and newUser', async (done) => {

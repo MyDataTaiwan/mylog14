@@ -14,7 +14,7 @@ describe('FileSystemService', () => {
   });
 });
 
-fdescribe('getFileHash', () => {
+describe('getFileHash', () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(async () => await Filesystem.deleteFile({
@@ -37,7 +37,7 @@ fdescribe('getFileHash', () => {
   });
 });
 
-fdescribe('getFileHash', () => {
+describe('getFileHash', () => {
 
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(async () => await Filesystem.deleteFile({
@@ -60,7 +60,7 @@ fdescribe('getFileHash', () => {
   });
 });
 
-fdescribe('getJsonData', () => {
+describe('getJsonData', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(async () => await Filesystem.deleteFile({
     path: 'file.txt',
@@ -84,7 +84,7 @@ fdescribe('getJsonData', () => {
   });
 });
 
-fdescribe('saveJsonData', () => {
+describe('saveJsonData', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('Json Data should save', (done) => {

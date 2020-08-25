@@ -18,7 +18,7 @@ describe('UserDataRepositoryService', () => {
   });
 });
 
-fdescribe('get() if no previous saved data', () => {
+describe('get() if no previous saved data', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should fail', (done) => {
@@ -40,7 +40,7 @@ fdescribe('get() if no previous saved data', () => {
   });
 });
 
-fdescribe('save()', () => {
+describe('save()', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(() => Storage.clear());
 
@@ -63,7 +63,7 @@ fdescribe('save()', () => {
   });
 });
 
-fdescribe('get() if there is saved data', () => {
+describe('get() if there is saved data', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(() => Storage.clear());
 

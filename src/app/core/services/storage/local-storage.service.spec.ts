@@ -13,7 +13,7 @@ describe('LocalStorageService', () => {
   });
 });
 
-fdescribe('getData', () => {
+describe('getData', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(async () => await Storage.clear());
 
@@ -35,7 +35,7 @@ fdescribe('getData', () => {
   });
 });
 
-fdescribe('setData', () => {
+describe('setData', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
   afterEach(async () => await Storage.clear());
 
