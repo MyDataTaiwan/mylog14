@@ -1,114 +1,231 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as JSZip from 'jszip';
-import { BehaviorSubject, defer, forkJoin, Observable, of, throwError } from 'rxjs';
-import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
-import { CachedFile } from '../interfaces/cached-file';
-import { RecordRepositoryService } from './repository/record-repository.service';
-import { UserDataRepositoryService } from './repository/user-data-repository.service';
+
+import {
+  BehaviorSubject, combineLatest, forkJoin, from, merge,
+  Observable, of, Subject,
+} from 'rxjs';
+import {
+  catchError, filter, map, mergeScan, retry,
+  switchMap, take, tap,
+} from 'rxjs/operators';
+
+import { Plugins } from '@capacitor/core';
+import { SharedLink } from '@core/interfaces/shared-link';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastService } from '@shared/services/toast.service';
+
+import {
+  RecordRepositoryService,
+} from './repository/record-repository.service';
+import { DataStoreService } from './store/data-store.service';
+
+const { Device } = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
-  private readonly generatedUrl = new BehaviorSubject<string>('');
-  public generatedUrl$ = this.generatedUrl.asObservable();
 
+  private readonly userCredential = new BehaviorSubject<UserCredential>(null);
+  userCredential$: Observable<UserCredential> = this.userCredential;
+
+  private isUploading = false;
+  private readonly uploadTrigger = new Subject();
+
+  doneRecordResetter = new Subject<number>();
+  private readonly uploadStatusUpdater = new Subject<number>();
+  private readonly uploadStatus = new BehaviorSubject<UploadStatus>(null);
+  uploadStatus$: Observable<UploadStatus> = this.uploadStatus;
+
+  token: string;
+  newSharedLink: SharedLink;
+  cachedPayloads: FormData[];
+  private ApiUrl = 'https://mylog14.numbersprotocol.io';
   constructor(
     private readonly http: HttpClient,
     private readonly recordRepo: RecordRepositoryService,
-    private readonly userDataRepo: UserDataRepositoryService,
-  ) { }
+    private readonly dataStore: DataStoreService,
+    private readonly toastService: ToastService,
+    private readonly translateService: TranslateService,
+  ) {
+    this.getUserCredential().subscribe(userCredential => this.userCredential.next(userCredential));
+    this.uploadStatusHandler().subscribe();
+    this.uploadHostHandler().subscribe();
+  }
 
-  private createCachedFiles() {
-    return of([]);
-    /*
-    return this.dataStore.metas$
+  startUpload(): boolean {
+    if (this.isUploading) {
+      return false;
+    }
+    this.upload()
+      .pipe(
+        catchError(err => {
+          this.isUploading = false;
+          this.resetUploadStatus();
+          throw new ErrorEvent('http', {
+            message: this.translateService.instant('description.uploadFailed'),
+          });
+        })
+      ).subscribe();
+    return true;
+  }
+
+  private uploadHostHandler() {
+    return this.dataStore.userData$
+      .pipe(
+        map(userData => userData.uploadHost),
+        filter(uploadHost => uploadHost != null),
+        tap(uploadHost => this.ApiUrl = `https://${uploadHost}.numbersprotocol.io`),
+        tap(() => console.log('Set upload host to', this.ApiUrl))
+      );
+  }
+
+  private upload() {
+    return forkJoin([this.createNewUserAndSharedLink(), this.createRecordPayloads()])
       .pipe(
         take(1),
-        map(metas => {
-          const now = Date.now();
-          const earliestTimeForUpload = now - 1000 * 86400 * 14; // Only upload  data in 14 Days
-          return metas.filter(meta => meta.timestamp > earliestTimeForUpload);
+        tap(() => {
+          this.isUploading = true;
+          this.newSharedLink.recordCount = this.cachedPayloads.length;
+          this.resetUploadStatus();
         }),
-        switchMap(metas => {
-          return forkJoin([
-            of(metas.map(meta => meta.path)),
-            this.recordRepo.getJsonAll(metas),
-            of(metas),
-          ]);
+        switchMap(() => this.login(this.newSharedLink.uid)),
+        switchMap(() =>
+          merge(
+            ...this.cachedPayloads.map(payload => this.postRecord(payload, this.token)),
+            this.doneRecordResetter
+          )
+        ),
+        mergeScan((arr, value) => {
+          return (value === 0) ? of(0) : of(arr + value);
+        }, 0),
+        tap(done => this.uploadStatusUpdater.next(done)),
+        filter(done => done === this.newSharedLink.recordCount),
+        switchMap(() => this.dataStore.pushSharedLink(this.newSharedLink)),
+        tap(() => {
+          this.isUploading = false;
         }),
-        map(([filenames, rawRecords, metas]) => {
-          const cachedFiles: CachedFile[] = [];
-          filenames.map((filename, idx) => cachedFiles.push({
-            filename,
-            type: 'json',
-            content: rawRecords[idx],
-            hash: metas[idx].hash,
-            transactionHash: metas[idx].transactionHash,
-          }));
-          return cachedFiles;
-        })
       );
-      */
   }
 
-  private createVerificationJson(cachedFiles: CachedFile[]): CachedFile {
-    const verification = {};
-    cachedFiles.forEach(cachedFile => {
-      verification[cachedFile.filename] = (cachedFile.transactionHash) ? cachedFile.transactionHash : '';
-    });
-    const verificationJson: CachedFile = {
-      filename: 'verification.json',
-      type: 'json',
-      content: JSON.stringify(verification),
-    };
-    return verificationJson;
+  private uploadStatusHandler() {
+    return this.uploadStatusUpdater
+      .pipe(
+        map(done => ({
+          total: this.uploadStatus.getValue()?.total,
+          done,
+        })),
+        tap(newStatus => this.uploadStatus.next(newStatus)),
+      );
+
   }
 
-  private createZip(cachedFiles: CachedFile[]): Observable<Blob> {
-    const zip = new JSZip();
-    const verificationJson = this.createVerificationJson(cachedFiles);
-    cachedFiles.push(verificationJson);
-    cachedFiles.forEach(cachedFile => {
-      zip.file(cachedFile.filename, cachedFile.content);
-    });
-    return defer(() => zip.generateAsync({ type: 'blob' }));
+  private resetUploadStatus() {
+    this.uploadStatus.next({ total: this.newSharedLink?.recordCount, done: 0 });
+    this.doneRecordResetter.next(0);
   }
 
-  private postArchive(blob: Blob) {
-    const hostUrl = {
-      LOCAL: 'http://127.0.0.1:8000',
-      DEV: 'https://logboard-dev.numbersprotocol.io',
-      PROD: 'https://mylog14.numbersprotocol.io',
-    };
-    const endpoint = '/api/v1/archives/';
+  private createSharedLink(uid: string, url: string, recordCount?: number): SharedLink {
+    const createTime = Date.now();
+    const expireDays = 3;
+    const expireTime = createTime + 86400 * 1000 * expireDays;
+    return { uid, url, createTime, expireTime, recordCount, };
+  }
+
+  private getUserCredential(): Observable<UserCredential> {
+    return combineLatest([
+      this.dataStore.userData$
+        .pipe(
+          map(userData => userData.email)
+        ),
+      from(Device.getInfo())
+        .pipe(
+          map(info => info.uuid)
+        ),
+    ]).pipe(
+      map(([email, uuid]) => ({ email, password: uuid })),
+    );
+  }
+
+  private createNewUserAndSharedLink(): Observable<SharedLink> {
+    const endpoint = this.ApiUrl + '/api/v1/users/';
     const formData = new FormData();
-    formData.append('file', blob, 'mylog.zip');
-    const hostType = 'PROD';
-    const url = hostUrl[hostType] + endpoint;
-    return this.http.post(url, formData)
+    formData.append('email', this.userCredential.getValue().email);
+    formData.append('password', this.userCredential.getValue().password);
+    return this.http.post<CreateUserResponse>(endpoint, formData)
       .pipe(
-        map((res: string) => res.replace(hostUrl.PROD, hostUrl[hostType])),
-        tap(logboardUrl => this.generatedUrl.next(logboardUrl)),
-        catchError(err => this.httpErrorHandler(err)),
+        map(createUserResponse => this.createSharedLink(createUserResponse.id, createUserResponse.href)),
+        tap(link => this.newSharedLink = link),
       );
   }
 
-  private httpErrorHandler(err: HttpErrorResponse) {
-    return throwError(err.message || 'server error');
-  }
-
-  uploadZip() {
-    return this.createCachedFiles()
+  private login(uid: string): Observable<string> {
+    const endpoint = this.ApiUrl + '/api/v1/auth/token/login/';
+    const formData = new FormData();
+    formData.append('id', uid);
+    formData.append('password', this.userCredential.getValue().password);
+    return this.http.post<LoginResponse>(endpoint, formData)
       .pipe(
-        switchMap(cachedFiles => this.createZip(cachedFiles)),
-        switchMap(blob => this.postArchive(blob)),
+        map(loginResponse => loginResponse.auth_token),
+        tap(token => this.token = token),
       );
   }
 
-  clearUrl() {
-    this.generatedUrl.next('');
+  private postRecord(payload: FormData, token: string): Observable<number> {
+    const endpoint = this.ApiUrl + '/api/v1/records/';
+    const headers = new HttpHeaders({
+      authorization: `token ${token}`,
+    });
+    return this.http.post<CreateRecordResponse>(endpoint, payload, { headers })
+      .pipe(
+        retry(5),
+        map(() => 1),
+      );
   }
 
+  private createRecordPayloads(): Observable<FormData[]> {
+    return forkJoin([
+      this.recordRepo.getTransactionHashes(),
+      this.recordRepo.getJsonAll(),
+    ])
+      .pipe(
+        map(([transactionHashes, jsons]) => transactionHashes.map((hash, idx) => {
+          const formData = new FormData();
+          formData.append('raw_content', jsons[idx]);
+          formData.append('transaction_hash', hash);
+          return formData;
+        })),
+        tap(payloads => this.cachedPayloads = payloads),
+      );
+  }
+
+}
+
+interface CreateRecordResponse {
+  id: number;
+  raw_content: string;
+  transaction_hash: string;
+  owner: string;
+}
+
+interface CreateUserResponse {
+  id: string;
+  username: string;
+  email: string;
+  href: string;
+}
+
+interface LoginResponse {
+  auth_token: string;
+}
+
+interface UserCredential {
+  email: string;
+  password: string;
+}
+
+interface UploadStatus {
+  total: number;
+  done: number;
 }

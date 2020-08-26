@@ -1,21 +1,28 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { forkJoin, Observable, of, Subject, timer } from 'rxjs';
+import {
+  combineLatest, concat, forkJoin, Observable, of,
+  Subject, timer,
+} from 'rxjs';
 import {
   buffer, debounceTime, filter, first, map,
-  switchMap, take, takeUntil, tap,
+  mergeMap, switchMap, take, takeUntil, tap,
 } from 'rxjs/operators';
 import { UserData } from 'src/app/core/interfaces/user-data';
-import {
-  PresetService, RecordPreset,
-} from 'src/app/core/services/preset.service';
 
 import { Plugins } from '@capacitor/core';
 import { FormService, UserDataFormField } from '@core/forms/form.service';
+import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
-import { IonDatetime } from '@ionic/angular';
-import { PopoverService } from '@shared/services/popover.service';
+import { UtilityService } from '@core/services/utility.service';
+import { IonContent, IonDatetime } from '@ionic/angular';
+import { LoadingService } from '@shared/services/loading.service';
+import {
+  PopoverButtonSet, PopoverService,
+} from '@shared/services/popover.service';
+import { ToastService } from '@shared/services/toast.service';
 
 import { version } from '../../../../package.json';
 
@@ -27,19 +34,19 @@ const { Browser } = Plugins;
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit, OnDestroy {
+  @ViewChild(IonContent) content: IonContent;
 
+  fakeDataDays = 1;
   private readonly destroy$ = new Subject();
 
   @ViewChild('dateOfBirthPicker') dateOfBirthPicker: IonDatetime;
 
   readonly appVersion = version;
   readonly languages = this.languageService.getAvailableLanguages();
-  readonly recordPresets = this.presetService.presets;
+  readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;
-
-  hasGeneratedSharedLink$: Observable<boolean>;
 
   showDeveloperOptions = false;
   private readonly versionClick = new Subject<boolean>();
@@ -71,10 +78,14 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   constructor(
     private readonly dataStore: DataStoreService,
+    private readonly dataTemplateService: DataTemplateService,
     private readonly formService: FormService,
     private readonly languageService: LanguageService,
+    private readonly loadingService: LoadingService,
     private readonly popoverService: PopoverService,
-    private readonly presetService: PresetService,
+    private readonly router: Router,
+    private readonly toastService: ToastService,
+    private readonly utilityService: UtilityService,
   ) { }
 
   ngOnInit() {
@@ -86,8 +97,21 @@ export class SettingsPage implements OnInit, OnDestroy {
     this.updateFromPopover.next(UserDataFormField.NAME);
   }
 
-  onClickEmailItem(): void {
-    this.updateFromPopover.next(UserDataFormField.EMAIL);
+  onResetAccountClicked(): void {
+    this.popoverService.showPopover({
+      i18nTitle: 'title.resetAccount',
+      i18nMessage: 'description.resetAccount',
+      i18nExtraMessage: 'description.resetAccountEraseWarning',
+      buttonSet: PopoverButtonSet.CONFIRM,
+      dataOnConfirm: { reset: true },
+      dataOnCancel: { reset: false },
+    }).pipe(
+      filter(data => data?.data?.reset),
+      mergeMap(() => this.eraseAccountWithLoading()),
+      mergeMap(() => this.languageService.init()),
+      mergeMap(() => this.router.navigate(['/onboarding'], { replaceUrl: true })),
+      takeUntil(this.destroy$),
+    ).subscribe();
   }
 
   onChangeDateOfBirthPicker(): void {
@@ -104,10 +128,6 @@ export class SettingsPage implements OnInit, OnDestroy {
       ).subscribe();
   }
 
-  onClickSharedLogboardLinkItem(): void {
-    // this.showPopover(SharedLinkPopoverPage);
-  }
-
   onClickAboutItem(): void {
     Browser.open({ url: 'https://mydata.org.tw/' });
   }
@@ -117,11 +137,39 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   presetSelected(event: CustomEvent): void {
-    this.updateFromPage.next({ recordPreset: event.detail.value });
+    this.updateFromPage.next({ dataTemplateName: event.detail.value });
   }
 
   uploadHostSelected(event: CustomEvent): void {
     this.updateFromPage.next({ uploadHost: event.detail.value });
+  }
+
+  // Dirty nested subscription since finalize operator unable to work in thi case.
+  onMagicButtonClicked(days: number): void {
+    const count = days * 10;
+    this.utilityService.gen(days)
+      .subscribe(
+        () => { },
+        () => { },
+        () => this.toastService.showToast(`已產生 ${count} 筆資料`, 'primary')
+          .pipe(
+            takeUntil(this.destroy$),
+          ).subscribe()
+      );
+  }
+
+  private eraseAccountWithLoading() {
+    return combineLatest([
+      this.showEraseAccountLoading(),
+      concat(this.dataStore.deleteAllRecords(), this.dataStore.deleteUserData()),
+    ])
+      .pipe(
+        mergeMap(([loading, _]) => loading.dismiss()),
+      );
+  }
+
+  private showEraseAccountLoading(): Observable<HTMLIonLoadingElement> {
+    return this.loadingService.showLoading('title.erasingAccount');
   }
 
   private showPopoverToEditField(userData: UserData, field: UserDataFormField): Observable<UserData> {
@@ -146,7 +194,7 @@ export class SettingsPage implements OnInit, OnDestroy {
 export interface UserDataPatch {
   firstName?: string;
   lastName?: string;
-  recordPreset?: RecordPreset;
+  dataTemplateName?: string;
   email?: string;
   dateOfBirth?: string; // ISO 8601
   userId?: string;
@@ -155,5 +203,4 @@ export interface UserDataPatch {
   startDate?: string; // yyyy-MM-dd
   endDate?: string; // yyyy-MM-dd
   uploadHost?: string;
-  generatedUrl?: string;
 }

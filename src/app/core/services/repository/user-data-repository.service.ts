@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+
 import { Observable, Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 import { UserData } from '../../interfaces/user-data';
 import { LocalStorageService } from '../storage/local-storage.service';
-import { RecordPreset } from '../preset.service';
-import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class UserDataRepositoryService {
     newUser: true,
     firstName: '',
     lastName: '',
-    recordPreset: RecordPreset.COMMON_COLD,
+    dataTemplateName: '',
   };
   private readonly userData = new Subject<UserData>();
   userData$: Observable<UserData> = this.userData;
@@ -30,5 +31,12 @@ export class UserDataRepositoryService {
   save(userData: UserData): Observable<UserData> {
     return this.localStorage.setData(userData, this.USER_DATA_REPOSITORY)
       .pipe(tap(u => this.userData.next(u)));
+  }
+
+  resetToDefault(): Observable<UserData> {
+    return this.localStorage.setData(this.defaultUserData, this.USER_DATA_REPOSITORY)
+      .pipe(
+        tap(u => this.userData.next(u)),
+      );
   }
 }

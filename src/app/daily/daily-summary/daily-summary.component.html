@@ -16,8 +16,10 @@
             <ion-label class="ion-text-center" style="font-size: 12px;">
               {{ 'title.' + dailySummary.keyData.dataClass | translate }}
               {{ 'preset.' + dailySummary.templateName + '.' + dailySummary.keyData.name | translate }}:
-              {{ dailySummary.keyData.value }}
-              {{ 'preset.' + dailySummary.templateName + '.unit.' + dailySummary.keyData.unit | translate }}
+              <h3>
+                {{ dailySummary.keyData.value }}
+                {{ 'preset.' + dailySummary.templateName + '.unit.' + dailySummary.keyData.unit | translate }}
+              </h3>
             </ion-label>
           </div>
         </ion-row>

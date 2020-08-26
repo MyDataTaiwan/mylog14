@@ -1,0 +1,17 @@
+<app-header [headerTitle]="'title.resetEmail' | translate" showDismissButton="true" (dismissClicked)="cancel()">
+</app-header>
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ 'title.sorryProblem' | translate }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div>{{ 'description.pleaseResetEmail' | translate }}</div>
+      <div>{{ 'description.canAccessRewardAfterResetEmail' | translate }}</div>
+    </ion-card-content>
+  </ion-card>
+  <div class="ion-justify-content-center">
+    <app-signup-form [title]="'title.resetEmail' | translate" [hideTermsAndConditions]="true"
+      (signupEvent)="onSignup()"></app-signup-form>
+  </div>
+</ion-content>

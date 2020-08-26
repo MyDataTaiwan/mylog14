@@ -1,0 +1,72 @@
+{
+    "templateName": "heartFailure",
+    "keyFieldName": "SBP",
+    "dataGroups": [
+        "vitalSigns",
+        "additionalInformation"
+    ],
+    "fields": [
+        {
+            "name": "SBP",
+            "icon": "pulse-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "mmHg"
+        },
+        {
+            "name": "DBP",
+            "icon": "pulse-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "mmHg"
+        },
+        {
+            "name": "heartbeat",
+            "icon": "heart-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "bpm"
+        },
+        {
+            "name": "bloodSugar",
+            "icon": "medkit-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "mg/dL"
+        },
+        {
+            "name": "weight",
+            "icon": "body-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "kg"
+        },
+        {
+            "name": "urineVolume",
+            "icon": "water-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "accumulated",
+            "valueUnit": "mL"
+        },
+        {
+            "name": "note",
+            "icon": "pencil-outline",
+            "type": "string",
+            "dataGroup": "additionalInformation",
+            "dataClass": "note"
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "dataGroup": "additionalInformation",
+            "dataClass": "photo"
+        }
+    ]
+}

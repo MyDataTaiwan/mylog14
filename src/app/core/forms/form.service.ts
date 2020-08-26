@@ -28,6 +28,9 @@ export class FormService {
         type: 'input',
         focus: true,
         templateOptions: {
+          attributes: {
+            class: 'input-form',
+          },
           placeholder: `${unit}`,
           type: this.getFormlyFieldType(field.type),
         },
@@ -77,6 +80,9 @@ export class FormService {
         key: 'firstName',
         type: 'input',
         templateOptions: {
+          attributes: {
+            class: 'input-form',
+          },
           label: this.translate.instant('title.firstName'),
           maxlength: 40,
           minlength: 1,
@@ -89,6 +95,9 @@ export class FormService {
         key: 'lastName',
         type: 'input',
         templateOptions: {
+          attributes: {
+            class: 'input-form',
+          },
           label: this.translate.instant('title.lastName'),
           maxlength: 40,
           minlength: 1,
@@ -107,6 +116,9 @@ export class FormService {
         key: 'email',
         type: 'input',
         templateOptions: {
+          attributes: {
+            class: 'input-form',
+          },
           label: this.translate.instant('title.email'),
           type: 'email',
           maxlength: 345,

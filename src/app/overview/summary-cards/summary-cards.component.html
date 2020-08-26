@@ -18,12 +18,12 @@
             </div>
             <div *ngIf="item.value.keyData.value">
               <ion-label color="dark">
-                <small>
-                  {{ 'title.' + item.value.keyData.dataClass | translate }}
-                  {{ 'preset.' + item.value.templateName + '.' + item.value.keyData.name | translate }}:
+                {{ 'title.' + item.value.keyData.dataClass | translate }}
+                {{ 'preset.' + item.value.templateName + '.' + item.value.keyData.name | translate }}:
+                <h3>
                   {{ item.value.keyData.value }}
                   {{ 'preset.' + item.value.templateName + '.unit.' + item.value.keyData.unit | translate }}
-                </small>
+                </h3>
               </ion-label>
             </div>
           </ion-card-content>

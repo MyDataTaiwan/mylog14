@@ -1,24 +1,21 @@
 import {
-  AfterViewInit, Component, ElementRef, EventEmitter, Input,
-  OnChanges, OnDestroy, OnInit, Output, SimpleChanges,
+  AfterViewInit, Component, ElementRef, OnDestroy, OnInit,
   ViewChild,
 } from '@angular/core';
 
 import jsQR from 'jsqr';
 import { defer, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { debounceTime, takeUntil, tap } from 'rxjs/operators';
 
-import { Platform } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-qr-scanner',
   templateUrl: './qr-scanner.component.html',
   styleUrls: ['./qr-scanner.component.scss'],
 })
-export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @Input() scanEnabled: boolean;
-  @Output() scanResult = new EventEmitter<string>();
   @ViewChild('video') video: ElementRef;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('fileinput') fileinput: ElementRef;
@@ -29,23 +26,23 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
   videoElement: any;
   scanOn = true;
 
+  dismissHandler$ = new Subject<string>();
   destroy$ = new Subject();
 
   constructor(
-    private readonly platform: Platform
-  ) {
-    const isInStandaloneMode = () =>
-      'standalone' in window.navigator && window.navigator['standalone'];
-    if (this.platform.is('ios') && isInStandaloneMode()) {
-      console.log('I am a an iOS PWA!');
-      // TODO (If we will release the App as PWA) ? Implement alternative for iOS PWA : Remove this platform check
-    }
-  }
+    private readonly modalCtrl: ModalController,
+  ) { }
 
   ngOnInit() {
+    this.dismissHandler$
+      .pipe(
+        debounceTime(50),
+        takeUntil(this.destroy$),
+      ).subscribe(data => this.modalCtrl.dismiss(data));
   }
 
   ngOnDestroy() {
+    this.scanOn = false;
     this.destroy$.next(true);
     this.destroy$.complete();
   }
@@ -54,17 +51,14 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
     this.canvasElement = this.canvas.nativeElement;
     this.canvasContext = this.canvasElement.getContext('2d');
     this.videoElement = this.video.nativeElement;
-    this.scanOn = this.scanEnabled;
+    this.scanOn = true;
     if (this.scanOn) {
       this.startScan();
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.scanOn = changes.scanEnabled.currentValue;
-    if (changes.scanEnabled.previousValue === false && this.scanOn === true) {
-      this.startScan();
-    }
+  cancel() {
+    this.modalCtrl.dismiss();
   }
 
   startScan() {
@@ -111,7 +105,7 @@ export class QrScannerComponent implements OnInit, AfterViewInit, OnDestroy, OnC
       });
 
       if (code) {
-        this.scanResult.emit(code.data);
+        this.dismissHandler$.next(code.data);
       }
     }
     if (this.scanOn) {

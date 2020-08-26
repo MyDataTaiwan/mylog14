@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { filter, map, switchMap, take } from 'rxjs/operators';
+import { iif, Observable, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -14,6 +14,10 @@ export class LanguageService {
 
   private readonly availableLanguages = ['en', 'fr', 'ja', 'zh'];
   private readonly browserLanguage = this.translateService.getBrowserLang();
+  language$ = this.dataStore.userData$
+    .pipe(
+      map(userData => (userData.language) ? userData.language : this.browserLanguage),
+    );
 
   constructor(
     private readonly dataStore: DataStoreService,
@@ -28,14 +32,6 @@ export class LanguageService {
         take(1),
         map(userData => (userData.language) ? userData.language : this.browserLanguage),
         switchMap(language => this.set(language)),
-      );
-  }
-
-  get(): Observable<string> {
-    return this.dataStore.userData$
-      .pipe(
-        take(1),
-        map(userData => userData.language),
       );
   }
 
@@ -55,8 +51,7 @@ export class LanguageService {
     return this.dataStore.userData$
       .pipe(
         take(1),
-        filter(userData => userData.language !== language),
-        switchMap(() => this.dataStore.updateUserData({ language })),
+        switchMap(userData => iif(() => userData.language !== language, this.dataStore.updateUserData({ language }), of([]))),
       );
   }
 

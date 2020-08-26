@@ -1,0 +1,65 @@
+{
+    "templateName": "healthDeclaration",
+    "keyFieldName": "bodyTemperature",
+    "dataGroups": [
+        "vitalSigns",
+        "checklist",
+        "additionalInformation"
+    ],
+    "fields": [
+        {
+            "name": "bodyTemperature",
+            "icon": "thermometer-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueRange": {
+                "max": 41,
+                "min": 34
+            },
+            "valueUnit": "°C"
+        },
+        {
+            "name": "goAbroad",
+            "icon": "airplane-outline",
+            "type": "boolean",
+            "dataGroup": "checklist",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "fever",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "checklist",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "contactWithQuarantined",
+            "icon": "people-outline",
+            "type": "boolean",
+            "dataGroup": "checklist",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "contactWithHighTravelRisk",
+            "icon": "people-outline",
+            "type": "boolean",
+            "dataGroup": "checklist",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "note",
+            "icon": "pencil-outline",
+            "type": "string",
+            "dataGroup": "additionalInformation",
+            "dataClass": "note"
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "dataGroup": "additionalInformation",
+            "dataClass": "photo"
+        }
+    ]
+}

@@ -44,6 +44,13 @@ export class RecordRepositoryService {
       );
   }
 
+  getTransactionHashes(): Observable<string[]> {
+    return this.getMetas()
+      .pipe(
+        map(metas => metas.map(meta => meta.transactionHash)),
+      );
+  }
+
   delete(record: Record): Observable<Record[]> {
     return this.getMetas()
       .pipe(
@@ -52,10 +59,13 @@ export class RecordRepositoryService {
       );
   }
 
-  save(record: Record): Observable<Record[]> {
+  save(record: Record, register = true): Observable<Record[]> {
     return this.saveRecordAndCreateMeta(record)
       .pipe(
-        switchMap(meta => forkJoin([this.getMetas(), this.attachTransactionHash(meta)])),
+        switchMap(meta => forkJoin([
+          this.getMetas(),
+          (register) ? this.attachTransactionHash(meta) : of(meta),
+        ])),
         map(([metas, meta]) => [...metas, meta].sort((a, b) => a.timestamp - b.timestamp)),
         switchMap(metas => this.saveMetas(metas)),
         switchMap(() => this.getAll()),
@@ -80,7 +90,7 @@ export class RecordRepositoryService {
     const meta = metas.find(el => el.timestamp === timestamp);
     const deleteRecord$ = (meta) ? this.fileSystem.deleteJsonData(meta.path) : of();
     const metaIdx = metas.findIndex(el => el.timestamp === timestamp);
-    if (metaIdx) {
+    if (metaIdx !== -1) {
       metas.splice(metaIdx, 1);
     }
     return deleteRecord$

@@ -1,12 +1,19 @@
 <ion-content>
   <ion-grid>
-    <div class="message-box">
+    <ion-row>
+      <ion-card-header>
+        <ion-card-title>{{ i18nTitle | translate }}</ion-card-title>
+      </ion-card-header>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
       <img *ngIf="icon" [src]='iconPath' />
-      <h4>{{ i18nTitle | translate }}</h4>
-      <div class="message-content">
-        <h6>{{ i18nMessage | translate }}</h6>
-      </div>
-    </div>
+    </ion-row>
+    <ion-row>
+      <ion-card-content>
+        <div>{{ i18nMessage | translate }}</div>
+        <div>{{ i18nExtraMessage | translate }}</div>
+      </ion-card-content>
+    </ion-row>
     <div class="form-box ion-justify-content-between" *ngIf="formFields && formModel">
       <form [formGroup]="form" (ngSubmit)="submit()">
         <formly-form [form]="form" [fields]="formFields" [model]="formModel" [options]="options"></formly-form>
@@ -19,10 +26,13 @@
       </form>
     </div>
     <div>
-      <h6>{{ i18nExtraMessage | translate }}</h6>
-      <ion-row *ngIf="buttonSet === 'confirm'" class="ion-justify-content-between">
-        <ion-button (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
-        <ion-button (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
+      <ion-row *ngIf="buttonSet === 'confirm'" class="ion-text-center">
+        <ion-col size="6">
+          <ion-button size="large" fill="outline" (click)="cancel()">{{ 'title.cancel' | translate }}</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button size="large" (click)="confirm()">{{ 'title.confirm' | translate }}</ion-button>
+        </ion-col>
       </ion-row>
     </div>
   </ion-grid>

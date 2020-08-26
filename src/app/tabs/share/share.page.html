@@ -1,0 +1,58 @@
+<app-header [headerTitle]="'title.shareData' | translate"></app-header>
+
+<ion-content>
+    <ion-list>
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>{{ 'title.shareData' | translate }}</ion-card-title>
+                <ion-card-subtitle *ngIf="recordCount$ | async as recordCount">
+                    {{ 'description.totalData' | translate: { count: recordCount } }}
+                </ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>{{ 'description.shareOnCloudTemporarily' | translate }}</ion-card-content>
+        </ion-card>
+        <ion-item *ngIf="progress$ | async as progress">
+            <ion-grid>
+                <ion-row>
+                    <ion-progress-bar color="primary" [value]="progress">
+                    </ion-progress-bar>
+                </ion-row>
+                <ion-row class="ion-justify-content-center">
+                    <ion-text>
+                        {{ 'title.uploadProgress' | translate }}: {{ progressPercentage$ | async }} %
+                    </ion-text>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+        <ion-item *ngFor="let link of sharedLinks$ | async">
+            <ion-grid>
+                <ion-row>
+                    <ion-note>
+                        {{ 'description.shareAt' | translate: { time: link.createTime | date: 'yyyy-MM-dd HH:mm:ssz' } }}
+                    </ion-note>
+                </ion-row>
+                <ion-row class="ion-justify-content-center">
+                    <div class="link">
+                        <input type="text" readonly [value]="link.uid">
+                    </div>
+                    <div class="paperclip" (click)="onCopyClicked(link.url)">
+                        <div>
+                            <img src="../../../assets/ui/link.svg">
+                        </div>
+                    </div>
+                </ion-row>
+            </ion-grid>
+        </ion-item>
+    </ion-list>
+</ion-content>
+<ion-footer>
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+            <ion-button class="upload-button" (click)="onUploadButtonClicked()" fill="solid" size="large"
+                [disabled]="!(recordCount$ | async)">
+                {{ 'title.uploadAndCreateSharedLink' | translate }}
+            </ion-button>
+        </ion-row>
+    </ion-grid>
+
+</ion-footer>

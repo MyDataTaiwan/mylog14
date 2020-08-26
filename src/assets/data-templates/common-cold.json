@@ -1,0 +1,65 @@
+{
+    "templateName": "commonCold",
+    "keyFieldName": "bodyTemperature",
+    "dataGroups": [
+        "vitalSigns",
+        "symptoms",
+        "additionalInformation"
+    ],
+    "fields": [
+        {
+            "name": "bodyTemperature",
+            "icon": "thermometer-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueRange": {
+                "max": 41,
+                "min": 34
+            },
+            "valueUnit": "°C"
+        },
+        {
+            "name": "coughing",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "runnyNose",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "nasalCongestion",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "sneezing",
+            "icon": "medkit-outline",
+            "type": "boolean",
+            "dataGroup": "symptoms",
+            "dataClass": "toggle"
+        },
+        {
+            "name": "note",
+            "icon": "pencil-outline",
+            "type": "string",
+            "dataGroup": "additionalInformation",
+            "dataClass": "note"
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "dataGroup": "additionalInformation",
+            "dataClass": "photo"
+        }
+    ]
+}

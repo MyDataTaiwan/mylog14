@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+
 import { defer, Observable } from 'rxjs';
-import { LoadingController } from '@ionic/angular';
 import { map, switchMap } from 'rxjs/operators';
+
+import { LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
@@ -22,14 +24,19 @@ export class LoadingService {
   }
 
   private createLoading(i18nMessage: string, dismissTime: number): Observable<HTMLIonLoadingElement> {
-    return defer(() => this.loadingCtrl.create({
-      message: this.translate.instant(i18nMessage),
-      duration: dismissTime,
-    }));
+    return this.translate.get(i18nMessage)
+      .pipe(
+        switchMap(message => this.loadingCtrl.create({
+          message,
+          duration: dismissTime,
+        })),
+      );
   }
 
   private presentLoading(loading: HTMLIonLoadingElement): Observable<HTMLIonLoadingElement> {
     return defer(() => loading.present())
-      .pipe(map(() => loading));
+      .pipe(
+        map(() => loading),
+      );
   }
 }

@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of, Subject } from 'rxjs';
 import {
-  filter, map, mergeMap, switchMap, take,
-  takeUntil, tap,
+  catchError, filter, map, mergeMap, switchMap,
+  take, takeUntil, tap,
 } from 'rxjs/operators';
 
 import { Record } from '@core/classes/record';
@@ -30,6 +30,21 @@ export class AddRecordComponent implements OnInit, OnDestroy {
 
   private readonly record = new BehaviorSubject<Record>(new Record(Date.now()));
   record$: Observable<Record> = this.record;
+  fieldGroups$: Observable<FieldGroup[]> = this.record
+    .pipe(
+      map(record => {
+        const fieldGroups = [];
+        record.dataGroups.forEach(dataGroup => fieldGroups.push({
+          name: dataGroup,
+          fields: record.fields.filter(field => field.dataGroup === dataGroup),
+        }));
+        return fieldGroups;
+      }),
+    );
+  templateName$ = this.record
+    .pipe(
+      map(record => record.templateName),
+    );
   recordFieldType = RecordFieldType;
 
   private readonly edit = new Subject<[RecordField, string]>();
@@ -39,6 +54,8 @@ export class AddRecordComponent implements OnInit, OnDestroy {
         if (field.type === RecordFieldType.photo) {
           return this.photoService.create()
             .pipe(
+              catchError(() => of(null)),
+              filter(data => data !== null),
               map(byteString => ({ [field.name]: byteString })),
             );
         } else {
@@ -141,7 +158,7 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.dataStore.userData$
       .pipe(
         take(1),
-        switchMap(userData => this.recordService.create(userData.recordPreset)),
+        switchMap(userData => this.recordService.create(userData.dataTemplateName)),
         tap(record => this.record.next(record)),
         takeUntil(this.destroy$),
       ).subscribe();
@@ -165,4 +182,9 @@ export class AddRecordComponent implements OnInit, OnDestroy {
     this.record.next(record);
   }
 
+}
+
+interface FieldGroup {
+  name: string;
+  fields: RecordField[];
 }
