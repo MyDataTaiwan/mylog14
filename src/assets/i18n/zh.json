@@ -112,7 +112,7 @@
     "uploadingDataToCreateShareableLink": "正在上傳資料並產生分享連結...",
     "redeemConfirm": "在此特約店面兌換折扣？",
     "sorryProblem": "抱歉，出了一點問題...",
-    "emailVerification": "驗證信已寄出到你的電子郵件信箱。"
+    "emailVerification": "驗證信已寄出，請至信箱收信並驗證後再次點擊”確認”進入"
   },
   "error": {
     "QRInvalidJSON": "掃描文字格式錯誤",
