@@ -9,20 +9,24 @@
       <ion-card-content>{{ 'description.rewardEvent' | translate: { day: 7, point: 20 } }}</ion-card-content>
       <ion-item>
         <ion-icon name="flash-outline" slot="start"></ion-icon>
-        <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label>
+        <ion-label  class="world">{{ 'title.canItBeRedeemed' | translate }}</ion-label></ion-item>
+      <ion-item>
+        <!-- <ion-icon name="flash-outline" slot="start"></ion-icon>
+        <ion-label>{{ 'title.canItBeRedeemed' | translate }}</ion-label> -->
         <ng-container *ngIf="pool$ | async as pool; else poolLoading">
-          <ion-text [color]="(+pool >= 1) ? 'primary' : 'secondary'">
+          <ion-text   class="world" [color]="(+pool >= 1) ? 'primary' : 'secondary'">
             {{ 'title.canRedeem' | translate: { pool: pool } }}</ion-text>
         </ng-container>
         <ng-template #poolLoading>
           <ion-spinner></ion-spinner>
         </ng-template>
       </ion-item>
+    
       <ng-container *ngIf="daysRecorded$ | async as daysRecorded; else daysRecordedLoading">
         <ion-item>
           <ion-icon name="pencil-outline" slot="start"></ion-icon>
-          <ion-label>{{ 'title.daysRecorded' | translate }}</ion-label>
-          <ion-text [color]="(daysRecorded >= 7) ? 'primary' : 'secondary'">
+          <ion-label  class="world" >{{ 'title.daysRecorded' | translate }}</ion-label>
+          <ion-text   class="world" [color]="(daysRecorded >= 7) ? 'primary' : 'secondary'">
             {{ daysRecorded$ | async }} / 7
           </ion-text>
         </ion-item>
@@ -33,7 +37,7 @@
       <ng-container *ngIf="initRewardStatus$ | async as initReward; else initRewardLoading">
         <ion-item *ngIf="initReward === 'pending'" class="ion-text-center">
           <ion-icon name="calendar-outline" color="secondary" slot="start"></ion-icon>
-          <ion-label color="secondary" *ngIf="daysRecorded$ | async as daysRecorded">
+          <ion-label class="world" color="secondary" *ngIf="daysRecorded$ | async as daysRecorded">
             {{ 'description.logMoreDaysForReward' | translate: { days: 7 - daysRecorded } }}</ion-label>
         </ion-item>
         <app-ion-center-item *ngIf="initReward === 'available'" button (click)="getInitialReward()">
