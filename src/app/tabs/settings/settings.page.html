@@ -1,7 +1,6 @@
-<app-header [headerTitle]="'title.settings' | translate">設定</app-header>
-
+<app-header [headerTitle]="'title.settings' | translate"></app-header>
 <ion-content>
-  <!-- <ng-container *ngIf="versionClick$ | async"></ng-container> -->
+  <ng-container *ngIf="versionClick$ | async"></ng-container>
   <ng-container *ngIf="userData$ | async as userDataView">
     <ion-list>
       <ion-item-divider>
