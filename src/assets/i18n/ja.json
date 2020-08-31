@@ -112,7 +112,7 @@
     "uploadingDataToCreateShareableLink": "データをアップロードして共有可能なリンクを作成しています。",
     "redeemConfirm": "このお店でクーポンに交換しますか？",
     "sorryProblem": "申し訳ないですが問題が生じました...",
-    "emailVerification": "登録したメールアドレスに認証メールを送りました。"
+    "emailVerification": "承認メールをあなた宛に送信しました。メールの「決定」ボタンを押して承認をお願いします。"
   },
   "error": {
     "QRInvalidJSON": "スキャンされたテキストは適切なフォーマットではありません。",
