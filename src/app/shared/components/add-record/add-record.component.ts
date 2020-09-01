@@ -18,7 +18,9 @@ import { RecordService } from '@core/services/record.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { ModalController } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
-import { PopoverIcon, PopoverService } from '@shared/services/popover.service';
+import {
+  PopoverButtonSet, PopoverIcon, PopoverService,
+} from '@shared/services/popover.service';
 
 @Component({
   selector: 'app-add-record',
@@ -136,12 +138,24 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   submitRecord(): Observable<any> {
-    return this.saveRecordWithLoading()
+    return this.confirmAddEmptyRecord()
       .pipe(
+        filter(data => data?.data === true),
+        mergeMap(() => this.saveRecordWithLoading()),
         mergeMap(() => this.showRecordSavedPopover()),
         mergeMap(() => this.modalCtrl.dismiss()),
         takeUntil(this.destroy$),
       );
+  }
+
+  private confirmAddEmptyRecord() {
+    return this.popoverService.showPopover({
+      i18nTitle: '',
+      i18nMessage: 'description.confirmEmpty',
+      buttonSet: PopoverButtonSet.CONFIRM,
+      dataOnConfirm: true,
+      dataOnCancel: false,
+    });
   }
 
   private saveRecordWithLoading(): Observable<any> {
