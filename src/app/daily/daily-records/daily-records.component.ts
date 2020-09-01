@@ -32,7 +32,7 @@ export class DailyRecordsComponent implements OnInit {
   }
 
   getFirstSummaryField(record: Record) {
-    return record.fields.find(field => field.name === record.keyFieldName);
+    return record.fields.find(field => field.name === this.dataStore.getKeyFieldName(record));
   }
 
   getAvailableFields(record: Record) {

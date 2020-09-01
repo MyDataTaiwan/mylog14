@@ -176,6 +176,19 @@ export class DataStoreService {
     return Math.floor((end - start) / (1000 * 3600 * 24));
   }
 
+  // WORKAROUND: prior to v0.12.3, records don't have keyFieldName
+  getKeyFieldName(record: Record): string {
+    if (!record.keyFieldName) {
+      const keyFieldReference = {
+        commonCold: 'bodyTemperature',
+        heartFailure: 'SBP',
+        healthDeclaration: 'bodyTemperature',
+      };
+      return keyFieldReference[record.templateName];
+    }
+    return record.keyFieldName;
+  }
+
   private getKeyData(records: Record[]): KeyData {
     const keyData: KeyData = {
       dataClass: null,
@@ -184,7 +197,7 @@ export class DataStoreService {
       unit: null,
     };
     records.forEach(record => {
-      const keyField = record.fields.find(field => field.name === record.keyFieldName);
+      const keyField = record.fields.find(field => field.name === this.getKeyFieldName(record));
       if (!keyData.dataClass) {
         keyData.dataClass = keyField.dataClass;
         keyData.name = keyField.name;

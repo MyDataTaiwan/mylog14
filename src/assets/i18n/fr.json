@@ -112,7 +112,8 @@
     "uploadingDataToCreateShareableLink": "Téléchargement des données pour créer un lien partageable...",
     "redeemConfirm": "Utiliser le coupon pour ce magasin?",
     "sorryProblem": "Désolé, il y a eu un problème...",
-    "emailVerification": "Un email de vérification a été envoyé à votre adresse. Merci de vérifier votre boite de réception et de cliquer sur 'confirmer' pour terminer la vérification."
+    "emailVerification": "Un email de vérification a été envoyé à votre adresse. Merci de vérifier votre boite de réception et de cliquer sur 'confirmer' pour terminer la vérification.",
+    "confirmEmpty": "L'enregistrement est vide. Souhaitez-vous quand même le sauvegarder?"
   },
   "error": {
     "QRInvalidJSON": "Le texte scanné n'est pas dans le bon format",

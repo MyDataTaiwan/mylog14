@@ -77,6 +77,12 @@ export class RewardComponent implements OnInit, OnDestroy {
           }
           throw err;
         }),
+        switchMap(data => {
+          if (data.userId === 'non_authenticated_user_mylog14coupon_test') {
+            return this.modalService.showModal(ResetEmailComponent);
+          }
+          return of(data);
+        }),
         filter(data => (data?.data?.email_updated || data?.token)),
         tap(() => this.rewardService.refreshInitRewardStatus()),
         switchMap(() => this.rewardService.getBalance()),

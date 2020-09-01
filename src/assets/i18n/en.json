@@ -112,7 +112,8 @@
     "uploadingDataToCreateShareableLink": "Uploading data to create a shareable link...",
     "redeemConfirm": "Redeem coupon for this shop?",
     "sorryProblem": "Sorry, there was a problem...",
-    "emailVerification": "A verification email has been sent to your email address. Please check your inbox and press 'Confirm' to complete the verification."
+    "emailVerification": "A verification email has been sent to your email address. Please check your inbox and press 'Confirm' to complete the verification.",
+    "confirmEmpty": "The record is empty. Would you like to save it anyway?"
   },
   "error": {
     "QRInvalidJSON": "Scanned Text is not the correct format",
