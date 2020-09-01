@@ -140,7 +140,6 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   submitRecord(): Observable<any> {
     return this.confirmAddEmptyRecord()
       .pipe(
-        filter(data => data?.data === true),
         mergeMap(() => this.saveRecordWithLoading()),
         mergeMap(() => this.showRecordSavedPopover()),
         mergeMap(() => this.modalCtrl.dismiss()),
@@ -149,13 +148,19 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   private confirmAddEmptyRecord() {
+    if (this.record.getValue().fields.find(field => field.value != null)) {
+      return of(true);
+    }
     return this.popoverService.showPopover({
       i18nTitle: '',
       i18nMessage: 'description.confirmEmpty',
       buttonSet: PopoverButtonSet.CONFIRM,
       dataOnConfirm: true,
       dataOnCancel: false,
-    });
+    })
+      .pipe(
+        filter(data => data?.data === true),
+      );
   }
 
   private saveRecordWithLoading(): Observable<any> {
