@@ -7,7 +7,7 @@ android {
         applicationId "tw.mydata.mylog14"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 29
+        versionCode 30
         versionName "0.13.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
