@@ -40,12 +40,12 @@
           <ion-label class="world" color="secondary" *ngIf="daysRecorded$ | async as daysRecorded">
             {{ 'description.logMoreDaysForReward' | translate: { days: 7 - daysRecorded } }}</ion-label>
         </ion-item>
-        <app-ion-center-item *ngIf="initReward === 'available'" button (click)="getInitialReward()">
+        <app-ion-center-item  class="world"  *ngIf="initReward === 'available'" button (click)="getInitialReward()">
           <ion-button fill="outline">{{ 'description.clickToGetInitialBalance' | translate: { point: 20 } }}
           </ion-button>
         </app-ion-center-item>
         <ion-item *ngIf="initReward === 'done'" class="ion-text-center">
-          <ion-icon name="checkmark-outline" color="success" slot="start"></ion-icon>
+          <ion-icon class="world"  name="checkmark-outline" color="success" slot="start"></ion-icon>
           <ion-label color="success">{{ 'description.alreadyGotInitialBalance' | translate: { point: 20 } }}
           </ion-label>
         </ion-item>

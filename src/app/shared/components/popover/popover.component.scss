@@ -3,7 +3,16 @@ ion-content {
     margin-top: 50vh;
     padding: 10px;
 }
-
+ion-button{
+    width: 100%;
+    --padding-end	: 0;
+--padding-start	: 0;
+height: 95px;
+margin: 0;
+white-space: normal;
+word-break: break-all !important;
+word-wrap: break-word !important;
+}
 ion-grid {
     width: 100%;
     height: 100%;
