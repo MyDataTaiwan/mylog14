@@ -77,7 +77,8 @@
     "fontSize": "字體大小",
     "small": "小",
     "medium": "中",
-    "large": "大"
+    "large": "大",
+    "veryLarge": "特大"
   },
   "description": {
     "addingDataAndVerifiableInformation": "新增資料與驗證資訊中...",

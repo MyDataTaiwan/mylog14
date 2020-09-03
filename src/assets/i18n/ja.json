@@ -74,7 +74,12 @@
     "uploadProgress": "アップロードの進行状況",
     "userSettings": "利用者設定",
     "version": "バージョン",
-    "yes": "はい"
+    "yes": "はい",
+    "fontSize": "文字サイズ",
+    "small": "小",
+    "medium": "中",
+    "large": "大",
+    "veryLarge": "Very Large"
   },
   "description": {
     "addingDataAndVerifiableInformation": "新しい記録と検証データを追加...",

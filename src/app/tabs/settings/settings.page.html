@@ -13,7 +13,7 @@
         <ion-icon name="mail-outline" slot="start"></ion-icon>
         <ion-label>
           <h3>{{ 'title.email' | translate }}</h3>
-          <h1 *ngIf="userDataView.email">{{ userDataView.email }}</h1>
+          <h3 *ngIf="userDataView.email">{{ userDataView.email }}</h3>
           <p *ngIf="!userDataView.email">{{ 'title.notSet' | translate }}</p>
         </ion-label>
       </ion-item>
@@ -47,7 +47,7 @@
         <ion-label>
           <h3>{{ 'title.dateOfBirth' | translate }}</h3>
         </ion-label>
-        <h1 *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</h1>
+        <h3 *ngIf="!userDataView.dateOfBirth">{{ 'title.notSet' | translate }}</h3>
         <ion-datetime [hidden]="!userDataView.dateOfBirth" #dateOfBirthPicker [value]="userDataView.dateOfBirth"
           (ionChange)="onChangeDateOfBirthPicker()" [cancelText]="'title.cancel' | translate"
           [doneText]="'title.confirm' | translate"></ion-datetime>

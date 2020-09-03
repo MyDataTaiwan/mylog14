@@ -1,26 +1,22 @@
-import { ApplicationRef, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 
+import { DomController } from '@ionic/angular';
+
 import { DataStoreService } from './store/data-store.service';
 
-interface FontSizeConfig {
-  size1: string;
-  size2: string;
-  size3: string;
+interface StyleConfig {
+  variable: string;
+  value: string;
 }
-
-interface FontSizeConfigSet {
-  small: FontSizeConfig;
-  medium: FontSizeConfig;
-  large: FontSizeConfig;
-}
-
-enum FontSize {
-  SIZE1 = 'size1',
-  SIZE2 = 'size2',
-  SIZE3 = 'size3',
+interface StyleConfigCollection {
+  small: StyleConfig[];
+  medium: StyleConfig[];
+  large: StyleConfig[];
+  veryLarge: StyleConfig[];
 }
 
 
@@ -29,77 +25,79 @@ enum FontSize {
 })
 export class StyleService {
 
-  fontSizeConfigSet: FontSizeConfigSet = {
-    small: {
-      size1: '18px',
-      size2: '14px',
-      size3: '10px',
-    },
-    medium: {
-      size1: '22px',
-      size2: '18px',
-      size3: '14px',
-    },
-    large: {
-      size1: '26px',
-      size2: '22px',
-      size3: '18px',
-    },
+  // It is intended that small & medium has the same size, since there's only two size [small, large] in this version
+  styleConfigCollection: StyleConfigCollection = {
+    small: [
+      {
+        variable: '--font-size-1',
+        value: '18pt',
+      },
+      {
+        variable: '--font-size-2',
+        value: '18pt',
+      },
+      {
+        variable: '--font-size-3',
+        value: '14pt',
+      },
+    ],
+    medium: [
+      {
+        variable: '--font-size-1',
+        value: '22pt',
+      },
+      {
+        variable: '--font-size-2',
+        value: '18pt',
+      },
+      {
+        variable: '--font-size-3',
+        value: '14pt',
+      },
+    ],
+    large: [
+      {
+        variable: '--font-size-1',
+        value: '26pt',
+      },
+      {
+        variable: '--font-size-2',
+        value: '22pt',
+      },
+      {
+        variable: '--font-size-3',
+        value: '18pt',
+      },
+    ],
+    veryLarge: [
+      {
+        variable: '--font-size-1',
+        value: '30pt',
+      },
+      {
+        variable: '--font-size-2',
+        value: '26pt',
+      },
+      {
+        variable: '--font-size-3',
+        value: '22pt',
+      },
+    ]
   };
 
-  styleConfigs = [
-    {
-      selectorsList: [
-        'ion-text',
-      ],
-      fontSize: FontSize.SIZE1,
-      fontWeight: 500,
-    },
-    {
-      selectorsList: [
-        'ion-button',
-        'ion-card-title',
-        '.input-form',
-      ],
-      fontSize: FontSize.SIZE2,
-      fontWeight: 500,
-    },
-    {
-      selectorsList: [
-        'h3',
-        'ion-select',
-        'ion-select::part(placeholder)::first-letter',
-        'ion-datetime',
-        'ion-card-subtitle',
-        'ion-card-content',
-      ],
-      fontSize: FontSize.SIZE3,
-    },
-  ];
-
   constructor(
-    private readonly applicationRef: ApplicationRef,
     private readonly dataStore: DataStoreService,
+    private readonly domCtrl: DomController,
+    @Inject(DOCUMENT) private readonly document: Document,
   ) { }
 
-  private getFontSizeConfig(fontSize: string): string {
-    return this.fontSizeConfigSet[fontSize];
-  }
-
   setFontSize(fontSize: string): void {
-    const fontSizeConfig = this.getFontSizeConfig(fontSize);
-    this.styleConfigs.forEach(styleConfig => {
-      styleConfig.selectorsList.forEach(selectors => {
-        const nodeList = document.querySelectorAll(selectors) as NodeListOf<HTMLElement>;
-        nodeList.forEach(el => {
-          el.style.setProperty('font-size', fontSizeConfig[styleConfig.fontSize], 'important');
-          if (styleConfig.fontWeight) {
-            el.style.setProperty('font-weight', `${styleConfig.fontWeight}`, 'important');
-          }
-        });
+    this.domCtrl.write(() => {
+      const styleConfigs: StyleConfig[] = this.styleConfigCollection[fontSize] || [];
+      styleConfigs.forEach(styleConfig => {
+        this.document.documentElement.style.setProperty(styleConfig.variable, styleConfig.value, 'important');
       });
     });
-    this.applicationRef.tick();
   }
 
   updateFontSize(): Observable<any> {

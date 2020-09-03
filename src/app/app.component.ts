@@ -34,12 +34,12 @@ export class AppComponent {
       .pipe(
         switchMap(() => this.languageService.init()),
         switchMap(() => this.migrateUserData()),
+        switchMap(() => this.styleService.updateFontSize()),
       )
       .subscribe(userData => {
         if (userData.newUser) {
           this.router.navigate(['/onboarding'], { replaceUrl: true });
         }
-        this.styleService.setFontSize(userData.fontSize);
         SplashScreen.hide();
       });
   }
@@ -72,7 +72,7 @@ export class AppComponent {
           }
         }
         if (!userData.fontSize) {
-          data.fontSize = 'medium';
+          data.fontSize = 'small';
         }
         return data;
       }),

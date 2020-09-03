@@ -78,7 +78,8 @@
     "fontSize": "Font Size",
     "small": "Small",
     "medium": "Medium",
-    "large": "Large"
+    "large": "Large",
+    "veryLarge": "Very Large"
   },
   "description": {
     "addingDataAndVerifiableInformation": "Adding new data and integrity information...",

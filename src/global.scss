@@ -25,6 +25,19 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@font-face {
+  font-family: "NotoSans-Regular";
+  src: url("./assets/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans-Bold";
+  src: url("./assets/fonts/NotoSans-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .recordSaved {
   .alert-title {
     text-align: center;
@@ -71,4 +84,89 @@
   cursor: not-allowed;
   background-color: rgb(229, 229, 229) !important;
   pointer-events: none;
+}
+
+:root {
+  --font-size-1: 22pt;
+  --font-size-2: 18pt;
+  --font-size-3: 14pt;
+  --font-weight-heavy: 500;
+  --ion-font-family: "NotoSans-Regular", "Roboto", "Helvetica-Neue", "sans-serif";
+}
+
+ion-text {
+  font-size: var(--font-size-1) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-1) + 6pt);
+}
+
+ion-button {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+ion-card-title {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+.input-form {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+h2 {
+  font-size: var(--font-size-2) !important;
+  font-weight: var(--font-weight-heavy) !important;
+  line-height: calc(var(--font-size-2) + 6pt);
+}
+
+h3 {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+.alert-radio-label {
+  font-size: var(--font-size-3) !important;
+}
+
+.alert-button {
+  font-size: var(--font-size-3) !important;
+}
+
+ion-label {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+  h3 {
+    font-size: var(--font-size-3) !important;
+    line-height: calc(var(--font-size-3) + 6pt);
+  }
+}
+
+ion-datetime {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-select {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-select::part(placeholder)::first-letter {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-card-subtitle {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
+}
+
+ion-card-content {
+  font-size: var(--font-size-3) !important;
+  line-height: calc(var(--font-size-3) + 6pt);
 }

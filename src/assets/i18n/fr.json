@@ -74,7 +74,12 @@
     "uploadProgress": "Télécharger vos progrès",
     "userSettings": "Paramètres utilisateur",
     "version": "Version",
-    "yes": "Oui"
+    "yes": "Oui",
+    "fontSize": "Taille de police",
+    "small": "Petite",
+    "medium": "Moyenne",
+    "large": "Grande",
+    "veryLarge": "Very Large"
   },
   "description": {
     "addingDataAndVerifiableInformation": "Ajout de nouvelles données et informations d'intégrité",

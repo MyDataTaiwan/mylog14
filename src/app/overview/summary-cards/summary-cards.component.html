@@ -11,9 +11,7 @@
           <ion-card-content class="ion-text-center">
             <div>
               <ion-label color="dark">
-                <small>
-                  {{ item.value.recordsCount }} {{ 'title.recordsCount' | translate }}
-                </small>
+                {{ item.value.recordsCount }} {{ 'title.recordsCount' | translate }}
               </ion-label>
             </div>
             <div *ngIf="item.value.keyData.value">

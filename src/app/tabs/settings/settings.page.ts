@@ -45,7 +45,8 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly appVersion = version;
   readonly languages = this.languageService.getAvailableLanguages();
   readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
-  readonly fontSizes = ['small', 'medium', 'large'];
+  // Supported sizes: ['small', 'medium', 'large', 'veryLarge'];
+  readonly fontSizes = ['small', 'large'];
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;

@@ -6,11 +6,13 @@ import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
 import { DataStoreService } from '@core/services/store/data-store.service';
 import { UploadService } from '@core/services/upload.service';
+import { UntilDestroy } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { ToastService } from '@shared/services/toast.service';
 
 const { Clipboard } = Plugins;
 
+@UntilDestroy()
 @Component({
   selector: 'app-share',
   templateUrl: './share.page.html',
