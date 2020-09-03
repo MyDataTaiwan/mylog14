@@ -73,7 +73,11 @@
     "uploadProgress": "上傳進度",
     "userSettings": "使用者設定",
     "version": "版本",
-    "yes": "是"
+    "yes": "是",
+    "fontSize": "字體大小",
+    "small": "小",
+    "medium": "中",
+    "large": "大"
   },
   "description": {
     "addingDataAndVerifiableInformation": "新增資料與驗證資訊中...",

@@ -11,6 +11,7 @@ export interface UserData {
     dateOfBirth?: string; // ISO 8601
     userId?: string;
     language?: string;
+    fontSize?: string;
     timezone?: string;
     startDate?: string; // yyyy-MM-dd
     endDate?: string; // yyyy-MM-dd

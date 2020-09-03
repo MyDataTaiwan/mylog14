@@ -108,11 +108,13 @@ ion-datetime {
   font-size: 18pt !important ;
 }
 ion-select::part(placeholder)::first-letter {
-        font-size: 18pt !important ;
+  font-size: 18pt !important ;
 }
 ion-select {
-        font-size: 18pt !important ;
+  font-size: 18pt !important ;
 }
+
+/*
 ion-label {
   font-size: 18pt !important ;
   h3 {
@@ -123,6 +125,7 @@ ion-label {
     font-weight: 500;
   }
 }
+*/
 
 ion-text {
   font-size: 26pt;

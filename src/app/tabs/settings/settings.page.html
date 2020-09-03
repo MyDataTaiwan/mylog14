@@ -87,6 +87,19 @@
         </ion-select>
       </ion-item>
 
+      <ion-item lines="inset">
+        <ion-icon name="documents-outline" slot="start"></ion-icon>
+        <ion-label class="font-l1">
+          <h3 class="font-l1">{{ 'title.fontSize' | translate }}</h3>
+        </ion-label>
+        <ion-select *ngIf="showSelects" [value]="userDataView.fontSize" (ionChange)="fontSizeSelected($event)"
+          [cancelText]="'title.cancel' | translate" [okText]="'title.confirm' | translate">
+          <ion-select-option *ngFor="let fontsize of fontSizes" [value]="fontsize">
+            {{ 'title.' + fontsize | translate }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+
       <ion-item-divider>
         <ion-label>
           {{ 'title.otherInfo' | translate }}

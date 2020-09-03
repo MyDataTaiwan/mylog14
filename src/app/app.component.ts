@@ -7,6 +7,7 @@ import { first, map, switchMap, take } from 'rxjs/operators';
 import { Plugins, StatusBarStyle } from '@capacitor/core';
 import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
+import { StyleService } from '@core/services/style.service';
 import { Platform } from '@ionic/angular';
 
 import { DataStoreService } from './core/services/store/data-store.service';
@@ -25,7 +26,8 @@ export class AppComponent {
     private readonly dataTemplateService: DataTemplateService,
     private readonly platform: Platform,
     private readonly router: Router,
-    private readonly languageService: LanguageService
+    private readonly languageService: LanguageService,
+    private readonly styleService: StyleService,
   ) {
     this.setStatusBarStyle().subscribe();
     this.dataInitialized()
@@ -37,6 +39,7 @@ export class AppComponent {
         if (userData.newUser) {
           this.router.navigate(['/onboarding'], { replaceUrl: true });
         }
+        this.styleService.setFontSize(userData.fontSize);
         SplashScreen.hide();
       });
   }
@@ -68,14 +71,19 @@ export class AppComponent {
             data.dataTemplateName = this.dataTemplateService.dataTemplateNames[0];
           }
         }
+        if (!userData.fontSize) {
+          data.fontSize = 'medium';
+        }
         return data;
       }),
       switchMap(data => this.dataStore.updateUserData(data)),
     );
   }
+
 }
 
 interface UserDataPatch {
   dataTemplateName?: string;
   uploadHost?: string;
+  fontSize?: string;
 }

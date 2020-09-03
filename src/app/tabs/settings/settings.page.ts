@@ -16,6 +16,7 @@ import { FormService, UserDataFormField } from '@core/forms/form.service';
 import { DataTemplateService } from '@core/services/data-template.service';
 import { LanguageService } from '@core/services/language.service';
 import { DataStoreService } from '@core/services/store/data-store.service';
+import { StyleService } from '@core/services/style.service';
 import { UtilityService } from '@core/services/utility.service';
 import { IonContent, IonDatetime } from '@ionic/angular';
 import { LoadingService } from '@shared/services/loading.service';
@@ -44,6 +45,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   readonly appVersion = version;
   readonly languages = this.languageService.getAvailableLanguages();
   readonly dataTemplateNames = this.dataTemplateService.dataTemplateNames;
+  readonly fontSizes = ['small', 'medium', 'large'];
   showSelects = true;
 
   userData$: Observable<UserData> = this.dataStore.userData$;
@@ -85,6 +87,7 @@ export class SettingsPage implements OnInit, OnDestroy {
     private readonly popoverService: PopoverService,
     private readonly router: Router,
     private readonly toastService: ToastService,
+    private readonly styleService: StyleService,
     private readonly utilityService: UtilityService,
   ) { }
 
@@ -138,6 +141,11 @@ export class SettingsPage implements OnInit, OnDestroy {
 
   presetSelected(event: CustomEvent): void {
     this.updateFromPage.next({ dataTemplateName: event.detail.value });
+  }
+
+  fontSizeSelected(event: CustomEvent): void {
+    this.updateFromPage.next({ fontSize: event.detail.value });
+    this.styleService.setFontSize(event.detail.value);
   }
 
   uploadHostSelected(event: CustomEvent): void {
@@ -203,4 +211,5 @@ export interface UserDataPatch {
   startDate?: string; // yyyy-MM-dd
   endDate?: string; // yyyy-MM-dd
   uploadHost?: string;
+  fontSize?: string;
 }
