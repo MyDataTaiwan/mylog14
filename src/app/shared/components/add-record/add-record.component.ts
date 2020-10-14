@@ -98,11 +98,19 @@ export class AddRecordComponent implements OnInit, OnDestroy {
   }
 
   onClickEdit(field: RecordField, templateName: string) {
-    if (field.type === this.recordFieldType.boolean) {
+    if (field.type === this.recordFieldType.option) {
+      return;
+    } else if (field.type === this.recordFieldType.boolean) {
       field.value = !field.value;
     } else {
       this.edit.next([field, templateName]);
     }
+  }
+
+  onOptionChanged(event: CustomEvent, field: RecordField) {
+    const data = {};
+    data[field.name] = event.detail.value;
+    this.updateRecordFields(data);
   }
 
   private createProof() {

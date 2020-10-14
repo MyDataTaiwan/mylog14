@@ -201,17 +201,24 @@
       },
       "SBP": "Systolic Blood Pressure",
       "DBP": "Diastolic Blood Pressure",
+      "dizziness": "Dizziness",
+      "palpitation": "Palpitation",
       "note": "Note",
       "photo": "Photo",
       "options": {
+        "none": "None",
         "mild": "Mild",
         "moderate": "Moderate",
         "severe": "Severe"
       },
       "optionDescriptions": {
+        "none": "",
         "mild": "Slightly uncomfortable and recover immediately",
         "moderate": "Uncomfortable and lasting for over 1 min",
         "severe": "Unable to walk"
+      },
+      "unit": {
+        "mmHg": "mmHg"
       }
     }
   }

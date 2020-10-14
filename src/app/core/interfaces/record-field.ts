@@ -15,5 +15,6 @@ export interface RecordField {
     value: RecordFieldValue;
     readonly valueUnit?: string;
     readonly valueRange?: RecordFieldValueRange;
+    readonly options?: string[];
 }
 

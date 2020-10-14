@@ -30,6 +30,7 @@
             "dataGroup": "specialSymptoms",
             "dataClass": "option",
             "options": [
+                "none",
                 "mild",
                 "moderate",
                 "severe"
@@ -42,6 +43,7 @@
             "dataGroup": "specialSymptoms",
             "dataClass": "option",
             "options": [
+                "none",
                 "mild",
                 "moderate",
                 "severe"

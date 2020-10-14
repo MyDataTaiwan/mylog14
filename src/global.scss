@@ -170,3 +170,21 @@ ion-card-content {
   font-size: var(--font-size-3) !important;
   line-height: calc(var(--font-size-3) + 6pt);
 }
+
+.alert-radio-label {
+  white-space: normal !important;
+}
+
+.alert-wrapper {
+  width: 100% !important;
+  height: 80% !important;
+}
+
+.alert-radio-button {
+  height: 101px !important;
+}
+
+.alert-radio-group {
+  max-height: 100% !important;
+  height: 100% !important;
+}

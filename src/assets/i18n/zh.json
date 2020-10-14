@@ -195,17 +195,24 @@
       },
       "SBP": "收縮壓",
       "DBP": "舒張壓",
+      "dizziness": "暈眩",
+      "palpitation": "心悸",
       "note": "附註",
       "photo": "照片",
       "options": {
+        "none": "無",
         "mild": "低",
         "moderate": "中",
         "severe": "高"
       },
       "optionDescriptions": {
+        "none": "",
         "mild": "輕微且立即恢復",
         "moderate": "感到不舒服且持續超過一分鐘",
         "severe": "無法行走"
+      },
+      "unit": {
+        "mmHg": "mmHg"
       }
     }
   }

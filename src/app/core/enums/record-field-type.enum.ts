@@ -3,4 +3,5 @@ export enum RecordFieldType {
     string = 'string',
     boolean = 'boolean',
     photo = 'photo',
+    option = 'option',
 }

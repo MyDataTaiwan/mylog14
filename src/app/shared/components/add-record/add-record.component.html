@@ -28,6 +28,15 @@
           </ion-thumbnail>
           <ion-text *ngIf="!field.value">{{ 'title.takePhoto' | translate }}</ion-text>
         </ng-container>
+        <ion-select *ngIf="field.type === recordFieldType.option" [value]="field.value || field.options[0]"
+          (ionChange)="onOptionChanged($event, field)" [cancelText]="'title.cancel' | translate"
+          [okText]="'title.confirm' | translate">
+          <ion-select-option *ngFor="let option of field.options" [value]="option">
+            {{ 'preset.' + templateName + '.options.' + option | translate }}
+            <ng-container *ngIf="option !== field.options[0]">-</ng-container>
+            {{ 'preset.' + templateName + '.optionDescriptions.' + option | translate }}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
     </ng-container>
   </ion-list>

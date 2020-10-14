@@ -25,11 +25,14 @@
           <ion-label style="color: #F9AD35;">
             {{ 'preset.' + record.templateName + '.' + field.name | translate }}</ion-label>
           <ion-label class="ion-text-center" style="color: #F9AD35;">
-            <ng-container *ngIf="field.type !== 'boolean'">
+            <ng-container *ngIf="field.type !== 'boolean' && field.type !== 'option'">
               {{ field.value }}
             </ng-container>
             <ng-container *ngIf="field.type === 'boolean'">
               {{ ((field.value) ? 'title.yes' : 'title.no') | translate }}
+            </ng-container>
+            <ng-container *ngIf="field.type === 'option'">
+              {{ 'preset.' + record.templateName + '.options.' + field.value | translate }}
             </ng-container>
             <ng-container *ngIf="field.valueUnit">
               {{ 'preset.' + record.templateName + '.unit.' + field.valueUnit | translate }}
