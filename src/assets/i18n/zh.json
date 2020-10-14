@@ -185,6 +185,28 @@
       "unit": {
         "°C": "°C"
       }
+    },
+    "npc": {
+      "presetName": "鼻咽癌",
+      "dataGroup": {
+        "vitalSigns": "生理徵象",
+        "specialSymptoms": "特殊症狀",
+        "additionalInformation": "附加資訊"
+      },
+      "SBP": "收縮壓",
+      "DBP": "舒張壓",
+      "note": "附註",
+      "photo": "照片",
+      "options": {
+        "mild": "低",
+        "moderate": "中",
+        "severe": "高"
+      },
+      "optionDescriptions": {
+        "mild": "輕微且立即恢復",
+        "moderate": "感到不舒服且持續超過一分鐘",
+        "severe": "無法行走"
+      }
     }
   }
 }

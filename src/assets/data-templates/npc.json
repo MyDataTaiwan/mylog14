@@ -1,0 +1,65 @@
+{
+    "templateName": "npc",
+    "keyFieldName": "SBP",
+    "dataGroups": [
+        "vitalSigns",
+        "specialSymptoms",
+        "additionalInformation"
+    ],
+    "fields": [
+        {
+            "name": "SBP",
+            "icon": "pulse-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "mmHg"
+        },
+        {
+            "name": "DBP",
+            "icon": "pulse-outline",
+            "type": "number",
+            "dataGroup": "vitalSigns",
+            "dataClass": "highest",
+            "valueUnit": "mmHg"
+        },
+        {
+            "name": "dizziness",
+            "icon": "medkit-outline",
+            "type": "option",
+            "dataGroup": "specialSymptoms",
+            "dataClass": "option",
+            "options": [
+                "mild",
+                "moderate",
+                "severe"
+            ]
+        },
+        {
+            "name": "palpitation",
+            "icon": "heart-outline",
+            "type": "option",
+            "dataGroup": "specialSymptoms",
+            "dataClass": "option",
+            "options": [
+                "mild",
+                "moderate",
+                "severe"
+            ]
+        },
+        {
+            "name": "note",
+            "icon": "pencil-outline",
+            "type": "string",
+            "dataGroup": "additionalInformation",
+            "dataClass": "note"
+        },
+        {
+            "name": "photo",
+            "icon": "camera-outline",
+            "type": "photo",
+            "dataGroup": "additionalInformation",
+            "dataClass": "photo"
+        }
+    ]
+}

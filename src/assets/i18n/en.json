@@ -191,6 +191,28 @@
       "unit": {
         "°C": "°C"
       }
+    },
+    "npc": {
+      "presetName": "Nasopharyngeal Carcinoma",
+      "dataGroup": {
+        "vitalSigns": "Vital Signs",
+        "specialSymptoms": "Special symptoms",
+        "additionalInformation": "Additional Information"
+      },
+      "SBP": "Systolic Blood Pressure",
+      "DBP": "Diastolic Blood Pressure",
+      "note": "Note",
+      "photo": "Photo",
+      "options": {
+        "mild": "Mild",
+        "moderate": "Moderate",
+        "severe": "Severe"
+      },
+      "optionDescriptions": {
+        "mild": "Slightly uncomfortable and recover immediately",
+        "moderate": "Uncomfortable and lasting for over 1 min",
+        "severe": "Unable to walk"
+      }
     }
   }
 }
