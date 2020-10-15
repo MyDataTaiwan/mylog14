@@ -176,12 +176,13 @@ ion-card-content {
 }
 
 .alert-wrapper {
-  width: 100% !important;
+  width: 90% !important;
   height: 80% !important;
+  max-width: 100% !important;
 }
 
 .alert-radio-button {
-  height: 101px !important;
+  height: 110px !important;
 }
 
 .alert-radio-group {
