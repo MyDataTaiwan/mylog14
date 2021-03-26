@@ -133,7 +133,7 @@ export class SettingsPage implements OnInit, OnDestroy {
   }
 
   onClickAboutItem(): void {
-    Browser.open({ url: 'https://mydata.org.tw/' });
+    Browser.open({ url: 'https://numbersprotocol.io/' });
   }
 
   onClickVersion(): void {

@@ -14,7 +14,7 @@ import { Record } from '../classes/record';
 export class DataTemplateService {
 
   readonly dataTemplateNames: string[] = [
-    'commonCold', 'heartFailure', 'healthDeclaration', 'npc',
+    'heartFailure', 'commonCold','healthDeclaration', 'npc',
   ];
   dataTemplates: DataTemplate[];
 
