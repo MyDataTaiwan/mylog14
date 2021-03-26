@@ -13,7 +13,7 @@
   </defs>
   <g id="add_icon" clip-path="url(#clip-add_icon)">
     <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Ellipse_277)">
-      <circle id="Ellipse_277-2" data-name="Ellipse 277" cx="9.5" cy="9.5" r="9.5" transform="matrix(-0.98, -0.21, 0.21, -0.98, 18.58, 22.54)" fill="#f9ad35"/>
+      <circle id="Ellipse_277-2" data-name="Ellipse 277" cx="9.5" cy="9.5" r="9.5" transform="matrix(-0.98, -0.21, 0.21, -0.98, 18.58, 22.54)" fill="#8EC3C3"/>
     </g>
     <g id="Group_806" data-name="Group 806" transform="translate(7 7)">
       <line id="Line_112" data-name="Line 112" y2="8.891" transform="translate(4.58 0)" fill="none" stroke="#fcf9f9" stroke-linecap="round" stroke-width="4"/>

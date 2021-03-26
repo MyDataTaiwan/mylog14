@@ -1,5 +1,7 @@
 <ion-content>
-  <app-animation></app-animation>
+  <!-- <app-animation></app-animation> -->
+  <img src="../../assets/LIFEBOX_splash.svg" />
+
   <ng-container *ngIf="summaryByDate$ | async | keyvalue as summaryByDate">
     <app-summary-cards *ngIf="summaryByDate.length > 0"></app-summary-cards>
     <app-add-data-hint *ngIf="summaryByDate.length === 0"></app-add-data-hint>
