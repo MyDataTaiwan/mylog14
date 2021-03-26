@@ -4,11 +4,11 @@ android {
     buildToolsVersion = '29.0.2'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "tw.mydata.mylog14"
+        applicationId "io.numbersprotocol.lifebox"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 33
-        versionName "0.14.1"
+        versionCode 36
+        versionName "0.14.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
